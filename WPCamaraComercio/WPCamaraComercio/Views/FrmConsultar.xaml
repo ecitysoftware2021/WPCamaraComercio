@@ -64,12 +64,13 @@
                     FontWeight="Bold" 
                     Margin="70,300,0,0"
                         />
-            <Image  Source="{Binding imgIdentificacion}"
+            <Image  Source="../Images/Others/ok.png"
+                    Tag="{Binding Tag1}"
                     Width="45"
                     Height="45"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="0,260,400,0"
+                    Margin="0,310,350,0"
                     x:Name="imgIdentificacion"
                     PreviewStylusDown="imgIdentificacion_PreviewStylusDown"
                     />
@@ -82,13 +83,15 @@
                     FontSize="55" 
                     Margin="80,300,0,0"
                         />
-            <Image  Source="{Binding imgNombre}"
+            <Image  
+                    Source="../Images/Others/circulo.png"
                     x:Name="imgNombre"
                     Width="45"
                     Height="45"
+                    Tag="N"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="540,260,0,0"
+                    Margin="600,310,0,0"
                     PreviewStylusDown="imgNombre_PreviewStylusDown"
                     />
             <TextBlock TextWrapping="WrapWithOverflow" 

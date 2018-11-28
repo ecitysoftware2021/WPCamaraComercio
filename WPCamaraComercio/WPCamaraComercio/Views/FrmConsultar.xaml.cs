@@ -44,7 +44,7 @@ namespace WPCamaraComercio.Views
         private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
 
         /// <summary>
-        /// Evento que me inicia el timer
+        /// Evento que me inicia el timer 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -53,9 +53,9 @@ namespace WPCamaraComercio.Views
             try
             {
                 Utilities.Timer(tbTimer);
-                img.imgIdentificacion = GetImage(true);
-                img.imgNombre = GetImage(false);
-                this.DataContext = img;
+                img.Tag1 = "S";
+                img.Tag2 = "N";
+                DataContext = img;
             }
             catch (Exception ex)
             {
@@ -70,9 +70,22 @@ namespace WPCamaraComercio.Views
         /// <param name="e"></param>
         private void imgIdentificacion_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
-            img.imgIdentificacion = GetImage(true);
-            img.imgNombre = GetImage(false);
-            this.DataContext = img;
+            string tag = img.Tag1;
+
+            if (tag.Equals("S"))
+            {
+                img.Tag1 = "N";
+                imgIdentificacion.Source = Utilities.SetButtonImage("Others", "circulo", "png");
+                img.Tag2 = "S";
+                imgNombre.Source = Utilities.SetButtonImage("Others", "ok", "png");
+            }
+            else
+            {
+                img.Tag1 = "S";
+                imgIdentificacion.Source = Utilities.SetButtonImage("Others", "ok", "png");
+                img.Tag2 = "N";
+                imgNombre.Source = Utilities.SetButtonImage("Others", "circulo", "png");
+            }
         }
 
         /// <summary>
@@ -82,9 +95,22 @@ namespace WPCamaraComercio.Views
         /// <param name="e"></param>
         private void imgNombre_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
-            img.imgIdentificacion = GetImage(false);
-            img.imgNombre = GetImage(true);
-            this.DataContext = img;
+            string tag = img.Tag2;
+
+            if (tag.Equals("S"))
+            {
+                img.Tag2 = "N";
+                imgNombre.Source = Utilities.SetButtonImage("Others", "circulo", "png");
+                img.Tag1 = "S";
+                imgIdentificacion.Source = Utilities.SetButtonImage("Others", "ok", "png");
+            }
+            else
+            {
+                img.Tag2 = "S";
+                imgNombre.Source = Utilities.SetButtonImage("Others", "ok", "png");
+                img.Tag1 = "N";
+                imgIdentificacion.Source = Utilities.SetButtonImage("Others", "circulo", "png");
+            }
         }
         #endregion
 
@@ -127,23 +153,6 @@ namespace WPCamaraComercio.Views
             {
                 utilities.saveLogError("BtnExit_PreviewStylusDown", "FrmSearch", ex.ToString());
             }
-        }
-        #endregion
-
-        #region "Métodos"
-        /// <summary>
-        /// Método que me retorna la dirección de la imagen 
-        /// </summary>
-        /// <param name="flag"></param>
-        /// <returns></returns>
-        private string GetImage(bool flag)
-        {
-                if (!flag)
-                {
-                    return "/WPCamaraComercio;component/Images/Others/circulo.png";
-                }
-
-                return "/WPCamaraComercio;component/Images/Others/ok.png";
         }
         #endregion
 

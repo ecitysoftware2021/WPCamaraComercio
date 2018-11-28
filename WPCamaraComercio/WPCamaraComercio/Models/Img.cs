@@ -8,7 +8,7 @@ namespace WPCamaraComercio.Models
 {
     public class Img
     {
-        public string imgNombre { get; set; }
-        public string imgIdentificacion { get; set; }
+        public string Tag1 { get; set; }
+        public string Tag2 { get; set; }
     }
 }

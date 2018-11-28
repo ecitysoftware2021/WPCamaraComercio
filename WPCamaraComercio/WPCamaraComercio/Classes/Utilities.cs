@@ -91,6 +91,23 @@ namespace WPCamaraComercio.Classes
         }
 
         /// <summary>
+        /// Se usa para cambiar la imagen de un botón
+        /// </summary>
+        /// <param name="folder">nombre de la carpeta donde está la imagen ex: Buttons</param>
+        /// <param name="path">nombre de la imagen ex: b-consultar</param>
+        /// <param name="ext">tipo de extensión de la imagen ex: png</param>
+        /// <returns></returns>
+        public static BitmapImage SetButtonImage(string folder, string path, string ext)
+        {
+            BitmapImage logo = new BitmapImage();
+            logo.BeginInit();
+            logo.UriSource = new Uri(string.Concat("/WPCamaraComercio;component/Images/", folder, "/", path, ".", ext), UriKind.Relative);
+            logo.EndInit();
+
+            return logo;
+        }
+
+        /// <summary>
         /// Método que me llama a la clase CLSPrint para imprimir la factura
         /// </summary>
         public void ImprimirComprobante()
