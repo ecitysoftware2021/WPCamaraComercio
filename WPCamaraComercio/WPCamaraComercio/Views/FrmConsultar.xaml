@@ -70,7 +70,7 @@
                     Height="45"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="0,310,350,0"
+                    Margin="0,310,300,0"
                     x:Name="imgIdentificacion"
                     PreviewStylusDown="imgIdentificacion_PreviewStylusDown"
                     />
@@ -88,10 +88,10 @@
                     x:Name="imgNombre"
                     Width="45"
                     Height="45"
-                    Tag="N"
-                    HorizontalAlignment="Center"
+                    Tag="{Binding Tag2}"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Margin="600,310,0,0"
+                    Margin="0,310,280,0"
                     PreviewStylusDown="imgNombre_PreviewStylusDown"
                     />
             <TextBlock TextWrapping="WrapWithOverflow" 
