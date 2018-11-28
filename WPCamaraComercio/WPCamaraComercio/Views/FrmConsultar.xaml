@@ -1,0 +1,164 @@
+﻿<Window x:Class="WPCamaraComercio.Views.FrmConsultar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPCamaraComercio.Views"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        xmlns:k="clr-namespace:WPCamaraComercio.Keyboard"
+        mc:Ignorable="d"
+        Title="FrmConsultar" WindowStyle="None"
+        WindowState="Maximized"
+        Height="2064.095" 
+        Width="1250.599"
+        WindowStartupLocation="CenterScreen"
+        PreviewStylusDown="Window_PreviewStylusDown"
+        Loaded="Window_Loaded"
+        >
+    <Window.Background>
+        <ImageBrush ImageSource="../Images/Backgrounds/fondo2.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="GridOpcion">
+            <Image x:Name="BtnExit"
+                   Source="../Images/Buttons/btn_salir.png"
+                   Grid.Column="0"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Top" 
+                   Width="200"
+                   Height="80" 
+                   Margin="0,20,25,0"
+                   Stretch="Uniform"
+                   PreviewStylusDown="BtnExit_PreviewStylusDown"/>
+            <TextBlock x:Name="tbTimer"
+                       FontSize="35"
+                        HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="0,0,30,0" FontFamily="Arial" Foreground="#FF4B4BEE" FontWeight="Bold"/>
+            <Image x:Name="BtnBack"
+                   Source="../Images/Buttons/atras.png"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Width="200"
+                   Height="80"  
+                   Margin="25,20,0,0" 
+                   Stretch="Uniform"
+                   PreviewStylusDown="BtnBack_PreviewStylusDown"
+                   Visibility="Visible"/>
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="Buscar por:" 
+                    Foreground="Black" 
+                    FontSize="55" 
+                    FontWeight="Bold" 
+                    Margin="70,300,0,0"
+                        />
+            <Image  Source="{Binding imgIdentificacion}"
+                    Width="45"
+                    Height="45"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0,260,400,0"
+                    x:Name="imgIdentificacion"
+                    PreviewStylusDown="imgIdentificacion_PreviewStylusDown"
+                    />
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="Identificación" 
+                    Foreground="Black" 
+                    FontSize="55" 
+                    Margin="80,300,0,0"
+                        />
+            <Image  Source="{Binding imgNombre}"
+                    x:Name="imgNombre"
+                    Width="45"
+                    Height="45"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="540,260,0,0"
+                    PreviewStylusDown="imgNombre_PreviewStylusDown"
+                    />
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="Nombre" 
+                    Foreground="Black" 
+                    FontSize="55" 
+                    Margin="0,300,70,0"
+                        />
+        </Grid>
+        <Grid Grid.Row="1">
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="Ingrese NIT/Cédula sin dígito de verificación" 
+                    Foreground="Black" 
+                    FontSize="75" 
+                    FontWeight="Bold" 
+                    Margin="0,0,0,0"
+                    Height="240"
+                    Width="850"
+                        />
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Bottom" 
+                    TextAlignment="Center"
+                    Text="Por favor, toque el recuadro para iniciar" 
+                    Foreground="Red" 
+                    FontSize="55" 
+                    FontWeight="Bold" 
+                    Margin="0,0,0,0"
+                        />
+        </Grid>
+        <Grid Grid.Row="2">
+            <TextBox HorizontalAlignment="Center" 
+                     TextAlignment="Center"
+                     Height="70" 
+                     Margin="0,50,0,0" 
+                     TextWrapping="Wrap"
+                     TabIndex="0"
+                     VerticalAlignment="Top" 
+                     Width="615"
+                     x:Name="TxtParameter" 
+                     FontSize="35" 
+                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="True" 
+                     Foreground="Black" 
+                     FontWeight="Bold" 
+                     FontFamily="Arial" 
+                     CaretBrush="#FFB2B0B8"/>
+
+            <Image gif:ImageBehavior.AnimatedSource="../Images/Gif/lg.ajax-spinner-preloader.gif"
+                   Name="load_gif"
+                   HorizontalAlignment="Center"
+                   Height="250" 
+                   Margin="0,0,0,0"
+                   VerticalAlignment="Bottom"
+                   Visibility="Hidden" 
+                   Width="300"/>
+            <Image x:Name="BtnConsultar"
+                   Source="../Images/Buttons/consultar.png"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Bottom" 
+                   Width="450"
+                   Height="200" 
+                   Margin="0,0,0,0"
+                   PreviewMouseDown="BtnConsultar_PreviewMouseDown"
+                   />
+        </Grid>
+    </Grid>
+</Window>
