@@ -101,9 +101,7 @@ namespace WPCamaraComercio
             {
                 return new List<string> {
 
-                @"Images/Backgrounds/Publicidad-01.jpg",
-                @"Images/Backgrounds/Publicidad-02.jpg",
-                @"Images/Backgrounds/Publicidad-03.jpg"
+                @"Images/Backgrounds/fondo01.jpg"
                 };
             }
             catch (Exception ex)

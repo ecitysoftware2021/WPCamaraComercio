@@ -55,6 +55,7 @@ namespace WPCamaraComercio.Views
                 Utilities.Timer(tbTimer);
                 img.imgIdentificacion = GetImage(true);
                 img.imgNombre = GetImage(false);
+                this.DataContext = img;
             }
             catch (Exception ex)
             {
@@ -71,6 +72,7 @@ namespace WPCamaraComercio.Views
         {
             img.imgIdentificacion = GetImage(true);
             img.imgNombre = GetImage(false);
+            this.DataContext = img;
         }
 
         /// <summary>
@@ -82,6 +84,7 @@ namespace WPCamaraComercio.Views
         {
             img.imgIdentificacion = GetImage(false);
             img.imgNombre = GetImage(true);
+            this.DataContext = img;
         }
         #endregion
 
@@ -137,10 +140,10 @@ namespace WPCamaraComercio.Views
         {
                 if (!flag)
                 {
-                    return "/Images/Others/circulo.png";
+                    return "/WPCamaraComercio;component/Images/Others/circulo.png";
                 }
 
-                return "/Images/Others/ok.png";
+                return "/WPCamaraComercio;component/Images/Others/ok.png";
         }
         #endregion
 

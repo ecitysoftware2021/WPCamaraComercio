@@ -70,10 +70,10 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+               Utilities.ResetTimer();
                 Dispatcher.BeginInvoke((Action)delegate
                 {
-                    Utilities.ResetTimer();
-                    FrmMenu menu = new FrmMenu();
+                    FrmConsultar menu = new FrmConsultar();
                     menu.Show();
                     this.Close();
                 });
