@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
-
+//
 namespace WPCamaraComercio.Views
 {
     /// <summary>
