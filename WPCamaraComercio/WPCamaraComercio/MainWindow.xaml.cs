@@ -100,7 +100,7 @@ namespace WPCamaraComercio
             try
             {
                 return new List<string> {
-                "/WPCamaraComercio;component/Images/Backgrounds/fondo01.jpg"
+                "/WPCamaraComercio;component/Images/Backgrounds/fondo1.jpg"
                 };
             }
             catch (Exception ex)

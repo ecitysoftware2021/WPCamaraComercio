@@ -44,7 +44,7 @@ namespace WPCamaraComercio.Views
         private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
 
         /// <summary>
-        /// Evento que me inicia el timer 
+        /// Evento que me inicia el timer y asigna tag a las opciones
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -159,7 +159,24 @@ namespace WPCamaraComercio.Views
         #region "ButtonConsult"
         private void BtnConsultar_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            try
+            {
+                if (string.IsNullOrEmpty(TxtNitCedula.Text))
+                {
+                    FrmModal modal = new FrmModal("Debe de ingresar el NIT ó Cédula");
+                    modal.ShowDialog();
+                }
+                else
+                {
+                    load_gif.Visibility = Visibility.Visible;
 
+
+                }
+            }
+            catch (Exception ex)
+            {
+                utilities.saveLogError("BtnConsultar_PreviewMouseDown", "FrmSearch", ex.ToString());
+            }
         }
         #endregion
     }
