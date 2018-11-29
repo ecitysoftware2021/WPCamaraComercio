@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -32,7 +33,6 @@ namespace WPCamaraComercio.Views
             InitializeComponent();
             utilities = new Utilities();
             img = new Img();
-            TxtNombre.Visibility = Visibility.Hidden;
         }
         #endregion
 
@@ -57,6 +57,7 @@ namespace WPCamaraComercio.Views
                 img.Tag1 = "S";
                 img.Tag2 = "N";
                 DataContext = img;
+
             }
             catch (Exception ex)
             {
@@ -81,6 +82,7 @@ namespace WPCamaraComercio.Views
                 imgNombre.Source = Utilities.SetButtonImage("Others", "ok", "png");
                 TxtNombre.Visibility = Visibility.Visible;
                 TxtIdentificacion.Visibility = Visibility.Hidden;
+                TxtIdentificacion.Text = string.Empty;
             }
             else
             {
@@ -90,6 +92,7 @@ namespace WPCamaraComercio.Views
                 imgNombre.Source = Utilities.SetButtonImage("Others", "circulo", "png");
                 TxtNombre.Visibility = Visibility.Hidden;
                 TxtIdentificacion.Visibility = Visibility.Visible;
+                TxtNombre.Text = string.Empty;
             }
         }
 
@@ -110,6 +113,7 @@ namespace WPCamaraComercio.Views
                 imgIdentificacion.Source = Utilities.SetButtonImage("Others", "ok", "png");
                 TxtNombre.Visibility = Visibility.Hidden;
                 TxtIdentificacion.Visibility = Visibility.Visible;
+
             }
             else
             {
@@ -119,6 +123,7 @@ namespace WPCamaraComercio.Views
                 imgIdentificacion.Source = Utilities.SetButtonImage("Others", "circulo", "png");
                 TxtNombre.Visibility = Visibility.Visible;
                 TxtIdentificacion.Visibility = Visibility.Hidden;
+                TxtIdentificacion.Text = string.Empty;
             }
         }
         #endregion
