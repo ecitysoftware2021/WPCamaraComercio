@@ -32,6 +32,7 @@ namespace WPCamaraComercio.Views
             InitializeComponent();
             utilities = new Utilities();
             img = new Img();
+            TxtNombre.Visibility = Visibility.Hidden;
         }
         #endregion
 
@@ -78,6 +79,8 @@ namespace WPCamaraComercio.Views
                 imgIdentificacion.Source = Utilities.SetButtonImage("Others", "circulo", "png");
                 img.Tag2 = "S";
                 imgNombre.Source = Utilities.SetButtonImage("Others", "ok", "png");
+                TxtNombre.Visibility = Visibility.Visible;
+                TxtIdentificacion.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -85,6 +88,8 @@ namespace WPCamaraComercio.Views
                 imgIdentificacion.Source = Utilities.SetButtonImage("Others", "ok", "png");
                 img.Tag2 = "N";
                 imgNombre.Source = Utilities.SetButtonImage("Others", "circulo", "png");
+                TxtNombre.Visibility = Visibility.Hidden;
+                TxtIdentificacion.Visibility = Visibility.Visible;
             }
         }
 
@@ -103,6 +108,8 @@ namespace WPCamaraComercio.Views
                 imgNombre.Source = Utilities.SetButtonImage("Others", "circulo", "png");
                 img.Tag1 = "S";
                 imgIdentificacion.Source = Utilities.SetButtonImage("Others", "ok", "png");
+                TxtNombre.Visibility = Visibility.Hidden;
+                TxtIdentificacion.Visibility = Visibility.Visible;
             }
             else
             {
@@ -110,6 +117,8 @@ namespace WPCamaraComercio.Views
                 imgNombre.Source = Utilities.SetButtonImage("Others", "ok", "png");
                 img.Tag1 = "N";
                 imgIdentificacion.Source = Utilities.SetButtonImage("Others", "circulo", "png");
+                TxtNombre.Visibility = Visibility.Visible;
+                TxtIdentificacion.Visibility = Visibility.Hidden;
             }
         }
         #endregion
@@ -161,7 +170,13 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                if (string.IsNullOrEmpty(TxtNitCedula.Text))
+                if (string.IsNullOrEmpty(TxtIdentificacion.Text))
+                {
+                    FrmModal modal = new FrmModal("Debe de ingresar el NIT ó Cédula");
+                    modal.ShowDialog();
+                }
+                else
+                if (string.IsNullOrEmpty(TxtNombre.Text))
                 {
                     FrmModal modal = new FrmModal("Debe de ingresar el NIT ó Cédula");
                     modal.ShowDialog();
