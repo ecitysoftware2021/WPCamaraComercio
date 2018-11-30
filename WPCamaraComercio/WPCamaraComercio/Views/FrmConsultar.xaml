@@ -107,7 +107,9 @@
                         />
         </Grid>
         <Grid Grid.Row="1">
-            <TextBlock TextWrapping="WrapWithOverflow" 
+            <TextBlock
+                    x:Name="txtTitle"
+                    TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
                     TextAlignment="Center"

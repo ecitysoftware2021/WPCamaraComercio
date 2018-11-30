@@ -145,9 +145,6 @@
     <Compile Include="Views\FrmPagoCancelado.xaml.cs">
       <DependentUpon>FrmPagoCancelado.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmPagoDatafono.xaml.cs">
-      <DependentUpon>FrmPagoDatafono.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FrmPagoEfectivo.xaml.cs">
       <DependentUpon>FrmPagoEfectivo.xaml</DependentUpon>
     </Compile>
@@ -195,10 +192,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmPagoCancelado.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FrmPagoDatafono.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
