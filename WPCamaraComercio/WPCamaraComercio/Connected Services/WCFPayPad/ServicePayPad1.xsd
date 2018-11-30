@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="TblDipMap">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Category" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CinemaId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Date" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateFormat" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Day" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Duration" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Gener" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Group" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Hour" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="HourFunction" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HourMillitar" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="IsCard" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Language" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Letter" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MovieName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PointOfSale" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RoomId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="RoomName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Secuence" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="TblDipMapId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TblDipMap" nillable="true" type="tns:TblDipMap" />
+  <xs:complexType name="ArrayOfTblSeat">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TblSeat" nillable="true" type="tns:TblSeat" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTblSeat" nillable="true" type="tns:ArrayOfTblSeat" />
+  <xs:complexType name="TblSeat">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodTarifa" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsPay" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsReserved" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Letter" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Number" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Price" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Secuence" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TblDipMapId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="TblSeatId" type="xs:int" />
+      <xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TblSeat" nillable="true" type="tns:TblSeat" />
+</xs:schema>

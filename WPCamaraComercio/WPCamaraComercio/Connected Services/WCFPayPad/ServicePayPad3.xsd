@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad" />
+  <xs:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" />
+  <xs:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/" />
+  <xs:element name="InsertarTransaccion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WCFPayPad" minOccurs="0" name="objTrasanction" nillable="true" type="q1:CLSTransaction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarTransaccionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarTransaccionResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarTransaccionData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WCFPayPad" minOccurs="0" name="objTrasanction" nillable="true" type="q2:CLSDatosTransaction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarTransaccionDataResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarAuditoria">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IDTransaccion" type="xs:int" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WCFPayPad" minOccurs="0" name="IDEstadoAuditoria" type="q3:CLSEstado.EstadoAuditoria" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarAuditoriaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarAuditoriaResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsultaEstadoFactura">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IDCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="IDTramite" type="xs:int" />
+        <xs:element minOccurs="0" name="Referencia" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsultaEstadoFacturaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConsultaEstadoFacturaResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarEstadoTransaccion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IDTransaccion" type="xs:int" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WCFPayPad" minOccurs="0" name="IDEstadoAuditoria" type="q4:CLSEstado.EstadoTransaction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarEstadoTransaccionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActualizarEstadoTransaccionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertException">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IDCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="Exception" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertExceptionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertExceptionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarDetalleTransaccion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IDTransaccion" type="xs:int" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WCFPayPad" minOccurs="0" name="Estado" type="q5:CLSEstado.EstadoDetalle" />
+        <xs:element minOccurs="0" name="Valor" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarDetalleTransaccionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarDetalleTransaccionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarAlerta">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="alerta" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sucursal" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="CreadoPor" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarAlertaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarAlertaResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnviarCorreo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="mensaje" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sucursal" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="CreadoPor" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnviarCorreoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EnviarCorreoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnviarCorreoV2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="asunto" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="mensaje" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnviarCorreoV2Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="EnviarCorreoV2Result" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarControlBillete">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="idDenominacion" type="xs:int" />
+        <xs:element minOccurs="0" name="Baul" type="xs:boolean" />
+        <xs:element minOccurs="0" name="Eliminado" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarControlBilleteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarControlBilleteResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarControlMonedas">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idDenominacion" type="xs:int" />
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="operacion" type="xs:int" />
+        <xs:element minOccurs="0" name="cantidad" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarControlMonedasResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarControlMonedasResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarControlDispenser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idDenominacion" type="xs:int" />
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="operacion" type="xs:int" />
+        <xs:element minOccurs="0" name="cantidad" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarControlDispenserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarControlDispenserResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OperationControlDispenser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idDenominacion" type="xs:int" />
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="operacion" type="xs:int" />
+        <xs:element minOccurs="0" name="cantidad" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OperationControlDispenserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" minOccurs="0" name="OperationControlDispenserResult" nillable="true" type="q6:ArrayOfClSMinDenomination" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizacionArqueo">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizacionArqueoResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConteoBaul">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConteoBaulResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConteoBaulResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarControlAlarma">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FechaInicio" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="FechaFin" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="CreadoPor" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="idEstado" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarControlAlarmaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarControlAlarmaResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsultarTransaccionesUsuario">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="cedula" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fecha" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsultarTransaccionesUsuarioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConsultarTransaccionesUsuarioResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsultarEstadoReferencia">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="referencia" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConsultarEstadoReferenciaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConsultarEstadoReferenciaResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarTransaccionDispenser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WCFPayPad" minOccurs="0" name="datos" nillable="true" type="q7:CLSTransactionDispenser" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarTransaccionDispenserResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarTransaccionDispenser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idTransaccion" type="xs:int" />
+        <xs:element minOccurs="0" name="valor" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarTransaccionDispenserResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BilletesBaul">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BilletesBaulResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BilletesBaulResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReiniciarBaul">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReiniciarBaulResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DatosTransaccionCM">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idCompra" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DatosTransaccionCMResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="DatosTransaccionCMResult" nillable="true" type="q8:sp_DatosTransaccionCM_Result" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataControlScreen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="correspondentId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataControlScreenResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" minOccurs="0" name="GetDataControlScreenResult" nillable="true" type="q9:CLSDataControlScreen" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarTransaccionCotrafa">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WCFPayPad" minOccurs="0" name="objTrasanction" nillable="true" type="q10:CLSTransaction" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarTransaccionCotrafaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarTransaccionCotrafaResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertDataProcinal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" minOccurs="0" name="infoProcinal" nillable="true" type="q11:InfoProcinal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertDataProcinalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WCFPayPad" minOccurs="0" name="InsertDataProcinalResult" nillable="true" type="q12:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataReceiptProcinal">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="correspondentId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataReceiptProcinalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDataReceiptProcinalResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBaul">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="correspondentId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBaulResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" minOccurs="0" name="GetBaulResult" nillable="true" type="q13:ArrayOfQuantityDenom" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArqueoBaul">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="correspondentId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArqueoBaulResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetArqueoBaulResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMailDanone">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" minOccurs="0" name="data" nillable="true" type="q14:DanoneData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMailDanoneResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarTransaccionPaises">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="paises" nillable="true" type="q15:Tbl_TransaccionPaices" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarTransaccionPaisesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarTransaccionPaisesResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarTransaccionPaises">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="idTransaccion" type="xs:int" />
+        <xs:element minOccurs="0" name="valor" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActualizarTransaccionPaisesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FinalizarTransaccionPaises">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="idTransaccion" type="xs:int" />
+        <xs:element minOccurs="0" name="idEstado" type="xs:int" />
+        <xs:element minOccurs="0" name="valorDevuelto" type="xs:decimal" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FinalizarTransaccionPaisesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -71,6 +71,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -92,6 +93,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connected Services\WCFCamaraComercio\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\WCFPayPad\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="DataModel\CamaraComercioADO.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -116,11 +127,29 @@
     <Compile Include="Views\FrmConsultar.xaml.cs">
       <DependentUpon>FrmConsultar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrmDatosPago.xaml.cs">
+      <DependentUpon>FrmDatosPago.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmInformacionEmpresa.xaml.cs">
+      <DependentUpon>FrmInformacionEmpresa.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmMenu.xaml.cs">
       <DependentUpon>FrmMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmModal.xaml.cs">
       <DependentUpon>FrmModal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmModalValidacion.xaml.cs">
+      <DependentUpon>FrmModalValidacion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmPagoCancelado.xaml.cs">
+      <DependentUpon>FrmPagoCancelado.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmPagoDatafono.xaml.cs">
+      <DependentUpon>FrmPagoDatafono.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmPagoEfectivo.xaml.cs">
+      <DependentUpon>FrmPagoEfectivo.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +174,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FrmDatosPago.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmInformacionEmpresa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\FrmMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -152,6 +189,22 @@
     <Page Include="Views\FrmModal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FrmModalValidacion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmPagoCancelado.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmPagoDatafono.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmPagoEfectivo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -176,10 +229,67 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CamaraComercioADO.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.wsdl" />
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFCamaraComercio\WPCamaraComercio.WCFCamaraComercio.RespuestaConsulta.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WCFCamaraComercio\WPCamaraComercio.WCFCamaraComercio.RespuestaDetalle.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad.wsdl" />
+    <None Include="Connected Services\WCFPayPad\ServicePayPad.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.CLSDataControlScreen.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.ClSMinDenomination.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.QuantityDenom.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.sp_DatosTransaccionCM_Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="DataModel\CamaraComercioADO.edmx.diagram">
       <DependentUpon>CamaraComercioADO.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -270,6 +380,20 @@
     <Resource Include="Images\Gif\tocarPantallaGIF.gif" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.disco" />
+    <None Include="Connected Services\WCFCamaraComercio\configuration91.svcinfo" />
+    <None Include="Connected Services\WCFCamaraComercio\configuration.svcinfo" />
+    <None Include="Connected Services\WCFCamaraComercio\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad.disco" />
+    <None Include="Connected Services\WCFPayPad\configuration91.svcinfo" />
+    <None Include="Connected Services\WCFPayPad\configuration.svcinfo" />
+    <None Include="Connected Services\WCFPayPad\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="DataContext\BDCamaraComercio.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -313,6 +437,13 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\WCFCamaraComercio\" />
+    <WCFMetadataStorage Include="Connected Services\WCFPayPad\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
