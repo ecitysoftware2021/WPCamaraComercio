@@ -36,7 +36,7 @@
                    VerticalAlignment="Top" 
                    Width="200"
                    Height="80" 
-                   Margin="0,20,25,0"
+                   Margin="0,40,25,0"
                    Stretch="Uniform"
                    PreviewStylusDown="BtnExit_PreviewStylusDown"/>
             <TextBlock x:Name="tbTimer"
@@ -50,7 +50,7 @@
                    VerticalAlignment="Top" 
                    Width="200"
                    Height="80"  
-                   Margin="25,20,0,0" 
+                   Margin="25,40,0,0" 
                    Stretch="Uniform"
                    PreviewStylusDown="BtnBack_PreviewStylusDown"
                    Visibility="Visible"/>
@@ -80,7 +80,7 @@
                     TextAlignment="Center"
                     Text="Identificación" 
                     Foreground="Black" 
-                    FontSize="55" 
+                    FontSize="50" 
                     Margin="80,300,0,0"
                         />
             <Image  
@@ -100,7 +100,7 @@
                     TextAlignment="Center"
                     Text="Nombre" 
                     Foreground="Black" 
-                    FontSize="55" 
+                    FontSize="50" 
                     Margin="0,300,70,0"
                         />
         </Grid>
@@ -111,9 +111,9 @@
                     TextAlignment="Center"
                     Text="Ingrese NIT/Cédula sin dígito de verificación" 
                     Foreground="Black" 
-                    FontSize="75" 
+                    FontSize="65" 
                     FontWeight="Bold" 
-                    Margin="0,0,0,0"
+                    Margin="0,0,0,90"
                     Height="240"
                     Width="850"
                         />
@@ -123,7 +123,7 @@
                     TextAlignment="Center"
                     Text="Por favor, toque el recuadro para iniciar" 
                     Foreground="Red" 
-                    FontSize="55" 
+                    FontSize="40" 
                     FontWeight="Bold" 
                     Margin="0,0,0,0"
                         />
@@ -134,7 +134,7 @@
                      Height="70" 
                      Margin="0,50,0,0" 
                      TextWrapping="Wrap"
-                     TabIndex="1"
+                     TabIndex="0"
                      VerticalAlignment="Top" 
                      Width="415"
                      x:Name="TxtIdentificacion" 
@@ -143,7 +143,7 @@
                      Background="#FFE3E3E6" 
                      Foreground="#FF282887" 
                      FontWeight="Bold" FontFamily="Arial" CaretBrush="#FFB2B0B8"/>
-            <TextBox HorizontalAlignment="Center" 
+            <!--<TextBox HorizontalAlignment="Center" 
                      TextAlignment="Center"
                      Height="70" 
                      Margin="0,50,0,0" 
@@ -159,7 +159,7 @@
                      FontFamily="Arial" 
                      CaretBrush="#FFB2B0B8"
                      Visibility="Hidden"
-                     />
+                     />-->
 
             <Image gif:ImageBehavior.AnimatedSource="../Images/Gif/lg.ajax-spinner-preloader.gif"
                    Name="load_gif"

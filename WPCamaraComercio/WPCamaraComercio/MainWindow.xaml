@@ -17,5 +17,23 @@
         <Grid.Background>
             <ImageBrush ImageSource="{Binding sourse}"/>
         </Grid.Background>
+        <Grid>
+            <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/tocarPantallaGIF.gif"
+                   Height="400" 
+                   Width="350"
+                   Margin="0,0,20,0"
+                   VerticalAlignment="Bottom"
+                   Visibility="Visible"
+                   HorizontalAlignment="Right"
+                   />
+            <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/tocarPantallaGIF.gif"
+                   Height="400" 
+                   Width="350"
+                   Margin="20,0,0,0"
+                   VerticalAlignment="Bottom"
+                   Visibility="Visible"
+                   HorizontalAlignment="Left"
+                   />
+        </Grid>
     </Grid>
 </Window>
