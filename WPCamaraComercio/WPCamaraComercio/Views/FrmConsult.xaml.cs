@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
-using WPCamaraComercio.Models;
+using WPCamaraComercio.Keyboard;
 //
 namespace WPCamaraComercio.Views
 {
@@ -25,15 +25,18 @@ namespace WPCamaraComercio.Views
         #region References
 
         Utilities utilities;
+        TouchScreenKeyNumeric numericKey;
 
         #endregion
 
-        #region "Constructor"
+        #region LoadMethods
+
         public FrmConsult()
         {
             InitializeComponent();
             utilities = new Utilities();
         }
+
         #endregion
 
         #region Timer
@@ -42,114 +45,7 @@ namespace WPCamaraComercio.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Utilities.Timer(tbTimer);
-                img = new Img
-                {
-                    Tag1 = "S",
-                    Tag2 = "N"
-                };
-                DataContext = img;
-            }
-            catch (Exception ex)
-            {
-                utilities.saveLogError("Window_Loaded", "FrmSearch", ex.ToString());
-            }
-        }
-
-        #endregion
-
-        #region Events
-
-        /// <summary>
-        /// Evento que me cambian la opción elegida
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void imgIdentificacion_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            string tag = img.Tag1;
-
-            if (tag.Equals("S"))
-            {
-                img.Tag1 = "N";
-                imgIdentificacion.Source = Utilities.SetButtonImage("Others", "circulo", "png");
-                img.Tag2 = "S";
-                imgNombre.Source = Utilities.SetButtonImage("Others", "ok", "png");
-                //  TxtNombre.Visibility = Visibility.Visible;
-                TxtIdentificacion.Visibility = Visibility.Hidden;
-                TxtIdentificacion.Text = string.Empty;
-            }
-            else
-            {
-                img.Tag1 = "S";
-                imgIdentificacion.Source = Utilities.SetButtonImage("Others", "ok", "png");
-                img.Tag2 = "N";
-                imgNombre.Source = Utilities.SetButtonImage("Others", "circulo", "png");
-                // TxtNombre.Visibility = Visibility.Hidden;
-                TxtIdentificacion.Visibility = Visibility.Visible;
-                // TxtNombre.Text = string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Evento que me cambian la opción elegida
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void imgNombre_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            string tag = img.Tag2;
-
-            if (tag.Equals("S"))
-            {
-                img.Tag2 = "N";
-                imgNombre.Source = Utilities.SetButtonImage("Others", "circulo", "png");
-                img.Tag1 = "S";
-                imgIdentificacion.Source = Utilities.SetButtonImage("Others", "ok", "png");
-                //TxtNombre.Visibility = Visibility.Hidden;
-                TxtIdentificacion.Visibility = Visibility.Visible;
-
-            }
-            else
-            {
-                img.Tag2 = "S";
-                imgNombre.Source = Utilities.SetButtonImage("Others", "ok", "png");
-                img.Tag1 = "N";
-                imgIdentificacion.Source = Utilities.SetButtonImage("Others", "circulo", "png");
-                // TxtNombre.Visibility = Visibility.Visible;
-                TxtIdentificacion.Visibility = Visibility.Hidden;
-                TxtIdentificacion.Text = string.Empty;
-            }
-        }
-
-        private void BtnConsultar_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(TxtIdentificacion.Text))
-                {
-                    FrmModal modal = new FrmModal("Debe de ingresar el NIT ó Cédula");
-                    modal.ShowDialog();
-                }
-                //else
-                //if (string.IsNullOrEmpty(TxtNombre.Text))
-                //{
-                //    FrmModal modal = new FrmModal("Debe de ingresar el NIT ó Cédula");
-                //    modal.ShowDialog();
-                //}
-                else
-                {
-                    load_gif.Visibility = Visibility.Visible;
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                utilities.saveLogError("BtnConsultar_PreviewMouseDown", "FrmSearch", ex.ToString());
-            }
+            Utilities.Timer(tbTimer);
         }
 
         #endregion
@@ -175,5 +71,126 @@ namespace WPCamaraComercio.Views
 
         #endregion
 
+        #region Events
+
+        private void Txt_GotFocus(object sender, RoutedEventArgs e) => lblError.Visibility = Visibility.Hidden;
+
+        private void chkIdentification_PreviewStylusDown(object sender, StylusDownEventArgs e)
+        {
+            string tag = chkIdentification.Tag.ToString();
+            string identificationTag, nameTag, identificationPath, namePath;
+            switch (tag)
+            {
+                case "S":
+                    identificationTag = "N";
+                    nameTag = "S";
+                    identificationPath = "circulo";
+                    namePath = "ok";
+                    ChangeStateTextbox(TxtIdentificacion);
+                    ChangeStateTextbox(TxtName, true);
+                    break;
+                case "N":
+                    identificationTag = "S";
+                    nameTag = "N";
+                    identificationPath = "ok";
+                    namePath = "circulo";
+                    ChangeStateTextbox(TxtIdentificacion, true);
+                    ChangeStateTextbox(TxtName);
+                    break;
+                default:
+                    identificationTag = "N";
+                    nameTag = "S";
+                    identificationPath = "circulo";
+                    namePath = "ok";
+                    ChangeStateTextbox(TxtIdentificacion);
+                    ChangeStateTextbox(TxtName, true);
+                    break;
+            }
+
+            chkIdentification.Tag = identificationTag;
+            chkName.Tag = nameTag;
+            chkIdentification.Source = Utilities.SetButtonImage("Others", identificationPath, "png");
+            chkName.Source = Utilities.SetButtonImage("Others", namePath, "png");
+        }
+
+        private void chkName_PreviewStylusDown(object sender, StylusDownEventArgs e)
+        {
+            string tag = chkName.Tag.ToString();
+            string identificationTag, nameTag, identificationPath, namePath;
+            switch (tag)
+            {
+                case "S":
+                    identificationTag = "S";
+                    nameTag = "N";
+                    identificationPath = "ok";
+                    namePath = "circulo";
+                    ChangeStateTextbox(TxtIdentificacion, true);
+                    ChangeStateTextbox(TxtName);
+                    break;
+                case "N":
+                    identificationTag = "N";
+                    nameTag = "S";
+                    identificationPath = "circulo";
+                    namePath = "ok";
+                    ChangeStateTextbox(TxtIdentificacion);
+                    ChangeStateTextbox(TxtName, true);
+                    break;
+                default:
+                    identificationTag = "S";
+                    nameTag = "N";
+                    identificationPath = "ok";
+                    namePath = "circulo";
+                    ChangeStateTextbox(TxtIdentificacion, true);
+                    ChangeStateTextbox(TxtName);
+                    break;
+            }
+
+            chkIdentification.Tag = identificationTag;
+            chkName.Tag = nameTag;
+            chkIdentification.Source = Utilities.SetButtonImage("Others", identificationPath, "png");
+            chkName.Source = Utilities.SetButtonImage("Others", namePath, "png");
+        }
+
+        private void BtnConsultar_PreviewStylusDown(object sender, StylusDownEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(TxtIdentificacion.Text) && string.IsNullOrEmpty(TxtName.Text))
+                {
+                    lblError.Visibility = Visibility.Visible;
+                    return;
+                }
+
+                load_gif.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                utilities.saveLogError("BtnConsultar_PreviewMouseDown", "FrmSearch", ex.ToString());
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Cambia el estado del textbox que se le envía
+        /// </summary>
+        /// <param name="txt">textbox a ocultar/mostrar</param>
+        /// <param name="state">false(pred.)oculta y true muestra</param>
+        private void ChangeStateTextbox(TextBox txt, bool state = false)
+        {
+            txt.Text = string.Empty;
+            if (!state)
+            {
+                txt.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                txt.Visibility = Visibility.Visible;
+            }
+        } 
+
+        #endregion
     }
 }

@@ -73,7 +73,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Margin="0,310,300,0"
-                    PreviewStylusDown="imgIdentificacion_PreviewStylusDown"
+                    PreviewStylusDown="chkIdentification_PreviewStylusDown"
                     />
             <TextBlock TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Center" 
@@ -82,8 +82,7 @@
                     Text="Identificación" 
                     Foreground="Black" 
                     FontSize="50" 
-                    Margin="80,300,0,0"
-                        />
+                    Margin="80,300,0,0"/>
             <Image  x:Name="chkName"
                     Source="/WPCamaraComercio;component/Images/Others/circulo.png"
                     Width="45"
@@ -92,8 +91,7 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Margin="0,310,280,0"
-                    PreviewStylusDown="imgNombre_PreviewStylusDown"
-                    />
+                    PreviewStylusDown="chkName_PreviewStylusDown"/>
             <TextBlock TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Right" 
                     VerticalAlignment="Center" 
@@ -101,8 +99,7 @@
                     Text="Nombre" 
                     Foreground="Black" 
                     FontSize="50" 
-                    Margin="0,300,70,0"
-                        />
+                    Margin="0,300,70,0"/>
         </Grid>
         <Grid Grid.Row="1">
             <TextBlock
@@ -119,49 +116,59 @@
                     Height="240"
                     Width="850"
                         />
-            <TextBlock TextWrapping="WrapWithOverflow" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Bottom" 
-                    TextAlignment="Center"
+            <TextBlock HorizontalAlignment="Center" 
+                    VerticalAlignment="Bottom"
                     Text="Por favor, toque el recuadro para iniciar" 
                     Foreground="Red" 
                     FontSize="40" 
-                    FontWeight="Bold" 
-                    Margin="0,0,0,0"
-                        />
+                    FontWeight="Bold"/>
         </Grid>
         <Grid Grid.Row="2">
-            <TextBox HorizontalAlignment="Center" 
+            <TextBox x:Name="TxtIdentificacion" 
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Center" 
                      TextAlignment="Center"
-                     Height="70" 
                      Margin="0,50,0,0" 
+                     Width="450"
+                     Height="70" 
                      TextWrapping="Wrap"
                      TabIndex="0"
-                     VerticalAlignment="Top" 
-                     Width="415"
-                     x:Name="TxtIdentificacion" 
                      FontSize="35" 
                      Background="#FFE3E3E6" 
-                     Foreground="#FF282887" 
-                     FontWeight="Bold" FontFamily="Arial" CaretBrush="#FFB2B0B8"/>
-            <!--<TextBox HorizontalAlignment="Center" 
-                     TextAlignment="Center"
-                     Height="70" 
-                     Margin="0,50,0,0" 
-                     TextWrapping="Wrap"
-                     TabIndex="2"
-                     VerticalAlignment="Top" 
-                     Width="615"
-                     x:Name="TxtNombre" 
-                     FontSize="35" 
-                     k:TouchScreenKeyboard.TouchScreenKeyboard="True" 
-                     Foreground="Black" 
-                     FontWeight="Bold" 
-                     FontFamily="Arial" 
+                     Foreground="#FF282887"
                      CaretBrush="#FFB2B0B8"
-                     Visibility="Hidden"
-                     />-->
-
+                     GotFocus="Txt_GotFocus"
+                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="True"/>
+            <TextBlock x:Name="lblError"
+                       Text="Este campo es obligatorio"
+                       Foreground="Red"
+                       FontSize="30"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,220"
+                       Visibility="Hidden"/>
+            <TextBox Height="5" 
+                     Width="5"
+                     TabIndex="1"/>
+            <TextBox x:Name="TxtName" 
+                     VerticalAlignment="Top" 
+                     HorizontalAlignment="Center" 
+                     TextAlignment="Center"
+                     Margin="0,50,0,0" 
+                     Width="450"
+                     Height="70" 
+                     TextWrapping="Wrap"
+                     TabIndex="0"
+                     FontSize="35" 
+                     Background="#FFE3E3E6" 
+                     Foreground="#FF282887"
+                     CaretBrush="#FFB2B0B8"
+                     GotFocus="Txt_GotFocus"
+                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="True"
+                     Visibility="Hidden"/>
+            <TextBox Height="5" 
+                     Width="5"
+                     TabIndex="3"/>
             <Image gif:ImageBehavior.AnimatedSource="../Images/Gif/lg.ajax-spinner-preloader.gif"
                    Name="load_gif"
                    HorizontalAlignment="Center"
@@ -176,9 +183,7 @@
                    VerticalAlignment="Bottom" 
                    Width="450"
                    Height="160" 
-                   Margin="0,0,0,0"
-                   PreviewStylusDown="BtnConsultar_PreviewStylusDown"
-                   />
+                   PreviewStylusDown="BtnConsultar_PreviewStylusDown"/>
         </Grid>
     </Grid>
 </Window>
