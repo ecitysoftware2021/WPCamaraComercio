@@ -3,11 +3,14 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Linq;
 
 namespace WPCamaraComercio.Keyboard
 {
     class TouchScreenKeyboard : Window
     {
+        static Window window;
+
         #region Property & Variable & Constructor
 
         private static int _position;
@@ -605,14 +608,14 @@ namespace WPCamaraComercio.Keyboard
                     }
                     ct = (FrameworkElement)ct.Parent;
                 }
-
+                window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
                 _InstanceObject = new TouchScreenKeyboard();
                 _InstanceObject.AllowsTransparency = true;
                 _InstanceObject.WindowStyle = WindowStyle.None;
                 _InstanceObject.ShowInTaskbar = false;
                 _InstanceObject.ShowInTaskbar = false;
                 _InstanceObject.Topmost = true;
-
+                window.IsEnabled = false;
                 host.LayoutUpdated += new EventHandler(tb_LayoutUpdated);
             }
 
