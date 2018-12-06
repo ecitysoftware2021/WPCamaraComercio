@@ -124,14 +124,14 @@
     <Compile Include="Keyboard\TouchScreenKeyboard.cs" />
     <Compile Include="Keyboard\TouchScreenKeyNumeric.cs" />
     <Compile Include="Models\Img.cs" />
-    <Compile Include="Views\FrmConsultar.xaml.cs">
-      <DependentUpon>FrmConsultar.xaml</DependentUpon>
+    <Compile Include="Views\FrmConsult.xaml.cs">
+      <DependentUpon>FrmConsult.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmDatosPago.xaml.cs">
-      <DependentUpon>FrmDatosPago.xaml</DependentUpon>
+    <Compile Include="Views\FrmPaymentData.xaml.cs">
+      <DependentUpon>FrmPaymentData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmInformacionEmpresa.xaml.cs">
-      <DependentUpon>FrmInformacionEmpresa.xaml</DependentUpon>
+    <Compile Include="Views\FrmInformationCompany.xaml.cs">
+      <DependentUpon>FrmInformationCompany.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmMenu.xaml.cs">
       <DependentUpon>FrmMenu.xaml</DependentUpon>
@@ -139,14 +139,14 @@
     <Compile Include="Views\FrmModal.xaml.cs">
       <DependentUpon>FrmModal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmModalValidacion.xaml.cs">
-      <DependentUpon>FrmModalValidacion.xaml</DependentUpon>
+    <Compile Include="Views\FrmModalValidation.xaml.cs">
+      <DependentUpon>FrmModalValidation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmPagoCancelado.xaml.cs">
-      <DependentUpon>FrmPagoCancelado.xaml</DependentUpon>
+    <Compile Include="Views\FrmCancelledPayment.xaml.cs">
+      <DependentUpon>FrmCancelledPayment.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmPagoEfectivo.xaml.cs">
-      <DependentUpon>FrmPagoEfectivo.xaml</DependentUpon>
+    <Compile Include="Views\FrmPayment.xaml.cs">
+      <DependentUpon>FrmPayment.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -167,15 +167,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FrmConsultar.xaml">
+    <Page Include="Views\FrmConsult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FrmDatosPago.xaml">
+    <Page Include="Views\FrmPaymentData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FrmInformacionEmpresa.xaml">
+    <Page Include="Views\FrmInformationCompany.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,15 +187,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FrmModalValidacion.xaml">
+    <Page Include="Views\FrmModalValidation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FrmPagoCancelado.xaml">
+    <Page Include="Views\FrmCancelledPayment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FrmPagoEfectivo.xaml">
+    <Page Include="Views\FrmPayment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

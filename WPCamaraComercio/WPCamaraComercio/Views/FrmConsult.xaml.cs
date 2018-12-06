@@ -18,9 +18,9 @@ using WPCamaraComercio.Models;
 namespace WPCamaraComercio.Views
 {
     /// <summary>
-    /// Lógica de interacción para FrmConsultar.xaml
+    /// Lógica de interacción para FrmConsult.xaml
     /// </summary>
-    public partial class FrmConsultar : Window
+    public partial class FrmConsult : Window
     {
         #region "Referencias"
         Utilities utilities;
@@ -28,7 +28,7 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region "Constructor"
-        public FrmConsultar()
+        public FrmConsult()
         {
             InitializeComponent();
             utilities = new Utilities();

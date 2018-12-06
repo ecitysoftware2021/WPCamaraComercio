@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace WPCamaraComercio.Views
 {
     /// <summary>
-    /// Lógica de interacción para FrmPagoEfectivo.xaml
+    /// Lógica de interacción para FrmPaymentData.xaml
     /// </summary>
-    public partial class FrmPagoEfectivo : Window
+    public partial class FrmPaymentData : Window
     {
-        public FrmPagoEfectivo()
+        public FrmPaymentData()
         {
             InitializeComponent();
         }

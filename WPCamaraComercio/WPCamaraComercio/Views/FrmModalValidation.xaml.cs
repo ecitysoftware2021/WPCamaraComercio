@@ -18,12 +18,12 @@ namespace WPCamaraComercio.Views
     /// <summary>
     /// Lógica de interacción para FrmModalValidacion.xaml
     /// </summary>
-    public partial class FrmModalValidacion : Window
+    public partial class FrmModalValidation : Window
     {
         Utilities utilities;
 
         #region "Constructor"
-        public FrmModalValidacion(string message)
+        public FrmModalValidation(string message)
         {
             InitializeComponent();
             LblMessage.Text = message;
