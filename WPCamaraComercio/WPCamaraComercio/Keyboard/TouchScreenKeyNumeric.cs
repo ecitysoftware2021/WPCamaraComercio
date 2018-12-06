@@ -3,11 +3,14 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Linq;
 
 namespace WPCamaraComercio.Keyboard
 {
     public class TouchScreenKeyNumeric : Window
     {
+        static Window window;
+
         #region Property & Variable & Constructor
 
         private static int _position;
@@ -110,6 +113,7 @@ namespace WPCamaraComercio.Keyboard
         public TouchScreenKeyNumeric()
         {
             isShow = true;
+            Topmost = true;
             this.Width = WidthTouchKeyboard;
             this.Height = 420;
         }
@@ -117,7 +121,6 @@ namespace WPCamaraComercio.Keyboard
         static TouchScreenKeyNumeric()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TouchScreenKeyNumeric), new FrameworkPropertyMetadata(typeof(TouchScreenKeyNumeric)));
-
             SetCommandBinding();
         }
         #endregion
@@ -222,6 +225,7 @@ namespace WPCamaraComercio.Keyboard
                 if (_InstanceObject != null)
                 {
                     _InstanceObject.Close();
+                    window.IsEnabled = true;
                     _InstanceObject = null;
                 }
                 _CurrentControl.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
@@ -319,8 +323,6 @@ namespace WPCamaraComercio.Keyboard
 
         }
 
-
-
         static void OnGotFocus(object sender, RoutedEventArgs e)
         {
             Control host = sender as Control;
@@ -351,13 +353,14 @@ namespace WPCamaraComercio.Keyboard
                     ct = (FrameworkElement)ct.Parent;
                 }
 
+                window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
                 _InstanceObject = new TouchScreenKeyNumeric();
                 _InstanceObject.AllowsTransparency = true;
                 _InstanceObject.WindowStyle = WindowStyle.None;
                 _InstanceObject.ShowInTaskbar = false;
                 _InstanceObject.ShowInTaskbar = false;
                 _InstanceObject.Topmost = true;
-
+                window.IsEnabled = false;
                 host.LayoutUpdated += new EventHandler(tb_LayoutUpdated);
             }
         }

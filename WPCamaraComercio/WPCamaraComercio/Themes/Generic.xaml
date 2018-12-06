@@ -87,7 +87,7 @@
         <Setter Property="Background" Value="#f1f1f1"/>
         <Setter Property="Width" Value="820"/>
         <Setter Property="Height" Value="290"/>
-
+        <Setter Property="Topmost" Value="True"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -329,6 +329,7 @@
         <Setter Property="Background" Value="#f1f1f1"/>
         <Setter Property="Width" Value="820"/>
         <Setter Property="Height" Value="290"/>
+        <Setter Property="Topmost" Value="True"/>
 
         <Setter Property="Template">
             <Setter.Value>
