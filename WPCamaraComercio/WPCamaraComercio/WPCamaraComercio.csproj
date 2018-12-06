@@ -62,8 +62,9 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -84,8 +85,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WpfAnimatedGif, Version=1.4.17.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WpfAnimatedGif.1.4.17\lib\net\WpfAnimatedGif.dll</HintPath>
+    <Reference Include="WpfAnimatedGif, Version=1.4.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.16\lib\net\WpfAnimatedGif.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -102,24 +104,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\CamaraComercioADO.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CamaraComercioADO.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\CamaraComercioADO.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CamaraComercioADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\CamaraComercioADO.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CamaraComercioADO.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\Tbl_LogError.cs">
-      <DependentUpon>CamaraComercioADO.tt</DependentUpon>
     </Compile>
     <Compile Include="Keyboard\TouchScreenKeyboard.cs" />
     <Compile Include="Keyboard\TouchScreenKeyNumeric.cs" />
@@ -164,8 +148,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmConsult.xaml">
       <SubType>Designer</SubType>
@@ -218,10 +202,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="DataModel\CamaraComercioADO.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CamaraComercioADO.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.wsdl" />
     <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.xsd">
       <SubType>Designer</SubType>
@@ -277,9 +257,6 @@
     </None>
     <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.sp_DatosTransaccionCM_Result.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="DataModel\CamaraComercioADO.edmx.diagram">
-      <DependentUpon>CamaraComercioADO.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
@@ -387,23 +364,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="DataContext\BDCamaraComercio.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DataContext\BDCamaraComercio_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>BDCamaraComercio.mdf</DependentUpon>
-    </Content>
-    <Content Include="DataModel\CamaraComercioADO.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CamaraComercioADO.edmx</DependentUpon>
-      <LastGenOutput>CamaraComercioADO.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataModel\CamaraComercioADO.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CamaraComercioADO.edmx</DependentUpon>
-      <LastGenOutput>CamaraComercioADO.cs</LastGenOutput>
-    </Content>
     <Resource Include="Images\Others\circulo.png" />
     <Resource Include="Images\Buttons\backspace.png" />
     <Resource Include="Images\Buttons\ok.png" />

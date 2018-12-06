@@ -49,7 +49,7 @@
                    Height="500" 
                    Margin="0,0,0,0"
                    Grid.Row="1"
-                   PreviewMouseDown="BtnCamara_PreviewMouseDown"
+                   PreviewStylusDown="BtnCamara_PreviewStylusDown"
                    />
     </Grid>
 </Window>

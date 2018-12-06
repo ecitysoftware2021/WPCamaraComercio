@@ -143,7 +143,6 @@
                      Width="415"
                      x:Name="TxtIdentificacion" 
                      FontSize="35" 
-                     k:TouchScreenKeyboard.TouchScreenKeyboard = "True" 
                      Background="#FFE3E3E6" 
                      Foreground="#FF282887" 
                      FontWeight="Bold" FontFamily="Arial" CaretBrush="#FFB2B0B8"/>

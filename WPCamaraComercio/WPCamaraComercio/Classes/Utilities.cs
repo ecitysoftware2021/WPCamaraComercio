@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using WPCamaraComercio.DataModel;
 using WPCamaraComercio.Views;
 
 namespace WPCamaraComercio.Classes
@@ -142,19 +141,19 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                using (BDCamaraComercioEntities conexion = new BDCamaraComercioEntities())
-                {
-                    Tbl_LogError error = new Tbl_LogError();
-                    error.Message = Mensaje;
-                    error.NameClass = Clase;
-                    error.NameMethod = Metodo;
-                    error.IDCorresponsal = Convert.ToInt32(GetConfiguration("IDCorresponsal"));
-                    error.Fecha = DateTime.Now;
-                    error.State = false;
+                //using (BDCamaraComercioEntities conexion = new BDCamaraComercioEntities())
+                //{
+                //    Tbl_LogError error = new Tbl_LogError();
+                //    error.Message = Mensaje;
+                //    error.NameClass = Clase;
+                //    error.NameMethod = Metodo;
+                //    error.IDCorresponsal = Convert.ToInt32(GetConfiguration("IDCorresponsal"));
+                //    error.Fecha = DateTime.Now;
+                //    error.State = false;
 
-                    conexion.Tbl_LogError.Add(error);
-                    conexion.SaveChanges();
-                }
+                //    conexion.Tbl_LogError.Add(error);
+                //    conexion.SaveChanges();
+                //}
 
                 FrmModal fail = new FrmModal(Mensaje);
                 fail.ShowDialog();
