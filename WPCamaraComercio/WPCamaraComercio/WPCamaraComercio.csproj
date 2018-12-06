@@ -108,6 +108,7 @@
     <Compile Include="Keyboard\TouchScreenKeyboard.cs" />
     <Compile Include="Keyboard\TouchScreenKeyNumeric.cs" />
     <Compile Include="Models\Img.cs" />
+    <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Views\FrmConsult.xaml.cs">
       <DependentUpon>FrmConsult.xaml</DependentUpon>
     </Compile>
@@ -268,9 +269,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\Buttons\atras.png" />
     <Resource Include="Images\Buttons\btnCancelar.png" />
