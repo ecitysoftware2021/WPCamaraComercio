@@ -64,16 +64,15 @@
                     Foreground="Black" 
                     FontSize="55" 
                     FontWeight="Bold" 
-                    Margin="70,300,0,0"
-                        />
-            <Image  Source="../Images/Others/ok.png"
-                    Tag="{Binding Tag1}"
+                    Margin="70,300,0,0"/>
+            <Image  x:Name="chkIdentification"
+                    Source="/WPCamaraComercio;component/Images/Others/ok.png"
+                    Tag="S"
                     Width="45"
                     Height="45"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Margin="0,310,300,0"
-                    x:Name="imgIdentificacion"
                     PreviewStylusDown="imgIdentificacion_PreviewStylusDown"
                     />
             <TextBlock TextWrapping="WrapWithOverflow" 
@@ -85,12 +84,11 @@
                     FontSize="50" 
                     Margin="80,300,0,0"
                         />
-            <Image  
-                    Source="../Images/Others/circulo.png"
-                    x:Name="imgNombre"
+            <Image  x:Name="chkName"
+                    Source="/WPCamaraComercio;component/Images/Others/circulo.png"
                     Width="45"
                     Height="45"
-                    Tag="{Binding Tag2}"
+                    Tag="N"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Margin="0,310,280,0"
@@ -179,7 +177,7 @@
                    Width="450"
                    Height="160" 
                    Margin="0,0,0,0"
-                   PreviewMouseDown="BtnConsultar_PreviewMouseDown"
+                   PreviewStylusDown="BtnConsultar_PreviewStylusDown"
                    />
         </Grid>
     </Grid>
