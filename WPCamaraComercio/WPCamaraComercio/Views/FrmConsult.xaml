@@ -23,10 +23,10 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="585*"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="650*"/>
+            <RowDefinition Height="521*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" x:Name="GridOpcion">
             <Image x:Name="BtnExit"
@@ -72,9 +72,8 @@
                     Height="45"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="0,310,300,0"
-                    PreviewStylusDown="chkIdentification_PreviewStylusDown"
-                    />
+                    Margin="0,310,250,0"
+                    PreviewStylusDown="chkIdentification_PreviewStylusDown"/>
             <TextBlock TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
@@ -82,7 +81,7 @@
                     Text="Identificación" 
                     Foreground="Black" 
                     FontSize="50" 
-                    Margin="80,300,0,0"/>
+                    Margin="100,300,0,0"/>
             <Image  x:Name="chkName"
                     Source="/WPCamaraComercio;component/Images/Others/circulo.png"
                     Width="45"
@@ -90,7 +89,7 @@
                     Tag="N"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Margin="0,310,280,0"
+                    Margin="0,310,260,0"
                     PreviewStylusDown="chkName_PreviewStylusDown"/>
             <TextBlock TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Right" 
@@ -145,10 +144,10 @@
                        FontSize="30"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       Margin="0,0,0,220"
+                       Margin="0,0,0,210"
                        Visibility="Hidden"/>
-            <TextBox Height="5" 
-                     Width="5"
+            <TextBox Height="1" 
+                     Width="1"
                      TabIndex="1"/>
             <TextBox x:Name="TxtName" 
                      VerticalAlignment="Top" 
@@ -164,10 +163,10 @@
                      Foreground="#FF282887"
                      CaretBrush="#FFB2B0B8"
                      GotFocus="Txt_GotFocus"
-                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="True"
+                     k:TouchScreenKeyboard.TouchScreenKeyboard="True"
                      Visibility="Hidden"/>
-            <TextBox Height="5" 
-                     Width="5"
+            <TextBox Height="1" 
+                     Width="1"
                      TabIndex="3"/>
             <Image gif:ImageBehavior.AnimatedSource="../Images/Gif/lg.ajax-spinner-preloader.gif"
                    Name="load_gif"
