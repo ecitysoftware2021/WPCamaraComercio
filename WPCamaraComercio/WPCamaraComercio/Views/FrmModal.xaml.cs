@@ -20,30 +20,31 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class FrmModal : Window
     {
-        #region "Referencias"
-        private Utilities utilities;
+        #region References
+        Window w;
         #endregion
 
-        #region "Constructor
-        public FrmModal(string mensaje)
+        #region LoadMethods
+        public FrmModal(string mensaje, Window w, bool state = false)
         {
             InitializeComponent();
             LblMessage.Text = mensaje;
-            utilities = new Utilities();
+            this.w = w;
+            Dispatcher.BeginInvoke((Action)delegate
+            {
+                w.Opacity = 0.6;
+            });
         }
         #endregion
 
-        #region "Button"
+        #region Events
         private void Image_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
-            try
+            Dispatcher.BeginInvoke((Action)delegate
             {
-                DialogResult = true;
-            }
-            catch (Exception ex)
-            {
-                utilities.saveLogError("Image_PreviewStylusDown", "FrmModal", ex.ToString());
-            }
+                w.Opacity = 1;
+            });
+            DialogResult = true;
         }
         #endregion
     }

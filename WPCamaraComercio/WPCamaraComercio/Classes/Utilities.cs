@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WPCamaraComercio.Views;
+using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.Classes
 {
@@ -25,9 +26,44 @@ namespace WPCamaraComercio.Classes
         public static DispatcherTimer timer;
         
         public static int CorrespondentId = int.Parse(GetConfiguration("IDCorresponsal"));
+
+        public static RespuestaConsulta RespuestaConsulta { get; set; }
         #endregion
 
-        #region "Eventos"
+        #region GeneralEvents
+
+        /// <summary>
+        /// Se usa para abrir la modal de información/error
+        /// </summary>
+        /// <param name="Message">mensaje para ser mostrado</param>
+        public static void OpenModal(string Message, Window w, bool state = false)
+        {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                FrmModal modal = new FrmModal(Message, w, state);
+                modal.ShowDialog();
+            }));
+            return;
+        }
+
+        /// <summary>
+        /// Se usa para ocultar o mostrar la modal de carga
+        /// </summary>
+        /// <param name="window">objeto de la clase FrmLoading  </param>
+        /// <param name="state">para saber si se oculta o se muestra true:muestra, false: oculta</param>
+        public static void Loading(Window window, bool state, Window w)
+        {
+            if (state)
+            {
+                window.Show();
+                w.IsEnabled = false;
+            }
+            else
+            {
+                window.Hide();
+                w.IsEnabled = true;
+            }
+        }
         /// <summary>
         /// Método que me busca en el appConfing 
         /// </summary>
@@ -78,15 +114,27 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         public static void GoToInicial()
         {
-            Process pc = new Process();
-            Process pn = new Process();
-            ProcessStartInfo si = new ProcessStartInfo();
-            si.FileName = Path.Combine(Directory.GetCurrentDirectory(), "WPCamaraComercio.exe");
-            pn.StartInfo = si;
-            pn.Start();
-            pc = Process.GetCurrentProcess();
-            pc.Kill();
+            var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                MainWindow main = new MainWindow();
+                main.Show();
+                window.Close();
+                CloseWindows(main.Title);
+            }));
+            GC.Collect();
 
+        }
+
+        public static void CloseWindows(string Title)
+        {
+            foreach (Window w in Application.Current.Windows)
+            {
+                if (w.IsLoaded && w.Title != Title)
+                {
+                    w.Close();
+                }
+            }
         }
 
         /// <summary>
@@ -139,8 +187,8 @@ namespace WPCamaraComercio.Classes
         /// <param name="Mensaje"></param>
         public void saveLogError(string Metodo, string Clase, string Mensaje)
         {
-            try
-            {
+            //try
+            //{
                 //using (BDCamaraComercioEntities conexion = new BDCamaraComercioEntities())
                 //{
                 //    Tbl_LogError error = new Tbl_LogError();
@@ -155,14 +203,14 @@ namespace WPCamaraComercio.Classes
                 //    conexion.SaveChanges();
                 //}
 
-                FrmModal fail = new FrmModal(Mensaje);
-                fail.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                FrmModal fail = new FrmModal(Mensaje);
-                fail.ShowDialog();
-            }
+            //    FrmModal fail = new FrmModal(Mensaje);
+            //    fail.ShowDialog();
+            //}
+            //catch (Exception ex)
+            //{
+            //    FrmModal fail = new FrmModal(Mensaje);
+            //    fail.ShowDialog();
+            //}
         }
         #endregion
     }

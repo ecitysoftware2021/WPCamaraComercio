@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Keyboard;
+using WPCamaraComercio.Service;
+using WPCamaraComercio.WCFCamaraComercio;
 //
 namespace WPCamaraComercio.Views
 {
@@ -26,6 +28,10 @@ namespace WPCamaraComercio.Views
 
         Utilities utilities;
         TouchScreenKeyNumeric numericKey;
+        WCFServices services;
+        FrmLoading frmLoading;
+        tipo_busqueda searchType;
+        string searchString;
 
         #endregion
 
@@ -34,6 +40,10 @@ namespace WPCamaraComercio.Views
         public FrmConsult()
         {
             InitializeComponent();
+            searchString = TxtIdentificacion.Text;
+            searchType = tipo_busqueda.Nit;
+            frmLoading = new FrmLoading();
+            services = new WCFServices();
             utilities = new Utilities();
         }
 
@@ -153,6 +163,7 @@ namespace WPCamaraComercio.Views
 
         private void BtnConsultar_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
+            bool state = false;
             try
             {
                 if (string.IsNullOrEmpty(TxtIdentificacion.Text) && string.IsNullOrEmpty(TxtName.Text))
@@ -161,7 +172,14 @@ namespace WPCamaraComercio.Views
                     return;
                 }
 
-                load_gif.Visibility = Visibility.Visible;
+                state = chkIdentification.Tag.ToString().Equals("S");
+                if (!state)
+                {
+                    searchString = TxtName.Text;
+                    searchType = tipo_busqueda.Nombre;
+                }
+
+                ConsultInformation();
             }
             catch (Exception ex)
             {
@@ -177,7 +195,7 @@ namespace WPCamaraComercio.Views
         /// Cambia el estado del textbox que se le envía
         /// </summary>
         /// <param name="txt">textbox a ocultar/mostrar</param>
-        /// <param name="state">false(pred.)oculta y true muestra</param>
+        /// <param name="state">false(default)oculta y true muestra</param>
         private void ChangeStateTextbox(TextBox txt, bool state = false)
         {
             txt.Text = string.Empty;
@@ -189,7 +207,40 @@ namespace WPCamaraComercio.Views
             {
                 txt.Visibility = Visibility.Visible;
             }
-        } 
+        }
+
+        private async void ConsultInformation()
+        {
+            var task = services.ConsultInformation(searchString, searchType);
+            Utilities.Loading(frmLoading, true, this);
+            if (await Task.WhenAny(task, Task.Delay(10000)) == task)
+            {
+                var response = task.Result;
+                if (response.IsSuccess)
+                {
+                    Utilities.Loading(frmLoading, false, this);
+                    Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
+                    await Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        Utilities.ResetTimer();
+                    });
+                    GC.Collect();
+                }
+                else
+                {
+                    Utilities.Loading(frmLoading, false, this);
+                    Utilities.OpenModal(string.Concat("No se encontraron registros con este número de identificación",
+                        Environment.NewLine, "Por favor intentelo de nuevo."), this);
+                }
+            }
+            else
+            {
+                Utilities.Loading(frmLoading, false, this);
+                Utilities.OpenModal(string.Concat("Lo sentimos, ",
+                        Environment.NewLine, "No se pudo establecer conexión con el servicio.",
+                        Environment.NewLine, "Por favor intentelo de nuevo."), this);
+            }
+        }
 
         #endregion
     }

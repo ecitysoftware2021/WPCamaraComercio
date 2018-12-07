@@ -13,8 +13,7 @@
         Width="1250.599"
         WindowStartupLocation="CenterScreen"
         PreviewStylusDown="Window_PreviewStylusDown"
-        Loaded="Window_Loaded"
-        >
+        Loaded="Window_Loaded">
     <Window.Background>
         <ImageBrush ImageSource="../Images/Backgrounds/fondo2.jpg"/>
     </Window.Background>
