@@ -110,6 +110,9 @@
     <Compile Include="Views\FrmConsult.xaml.cs">
       <DependentUpon>FrmConsult.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrmLoading.xaml.cs">
+      <DependentUpon>FrmLoading.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmPaymentData.xaml.cs">
       <DependentUpon>FrmPaymentData.xaml</DependentUpon>
     </Compile>
@@ -151,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmConsult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmLoading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
