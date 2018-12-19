@@ -28,6 +28,40 @@ namespace WPCamaraComercio.Classes
         public static int CorrespondentId = int.Parse(GetConfiguration("IDCorresponsal"));
 
         public static RespuestaConsulta RespuestaConsulta { get; set; }
+
+        public static Resultado[] Result { get; set; }
+
+        public static string search { get; set; }
+
+        public static IEnumerable<Resultado> ConsultResult { get; set; }
+
+        static string _Matricula;
+
+        public string Matricula
+        {
+            get
+            {
+                return _Matricula;
+            }
+            set
+            {
+                _Matricula = value;
+            }
+        }
+
+        static string _Tpcm;
+
+        public string Tpcm
+        {
+            get
+            {
+                return _Tpcm;
+            }
+            set
+            {
+                _Tpcm = value;
+            }
+        }
         #endregion
 
         #region GeneralEvents

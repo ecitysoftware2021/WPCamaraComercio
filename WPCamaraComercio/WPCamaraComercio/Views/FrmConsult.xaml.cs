@@ -32,6 +32,7 @@ namespace WPCamaraComercio.Views
         FrmLoading frmLoading;
         tipo_busqueda searchType;
         string searchString;
+        NavigationService navigateService;
 
         #endregion
 
@@ -45,6 +46,7 @@ namespace WPCamaraComercio.Views
             frmLoading = new FrmLoading();
             services = new WCFServices();
             utilities = new Utilities();
+            navigateService = new NavigationService(this);
         }
 
         #endregion
@@ -220,11 +222,48 @@ namespace WPCamaraComercio.Views
                 {
                     Utilities.Loading(frmLoading, false, this);
                     Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
-                    await Dispatcher.BeginInvoke((Action)delegate
+                    if (Utilities.RespuestaConsulta.response.resultados.Count() > 1)
                     {
+                        Utilities.Result = Utilities.RespuestaConsulta.response.resultados;
+                        Utilities.search = TxtIdentificacion.Text;
                         Utilities.ResetTimer();
-                    });
-                    GC.Collect();
+                        navigateService.NavigationTo("FrmCoincidence");
+                    }
+                    else
+                    {
+                        if (searchType == tipo_busqueda.Nit)
+                        {
+                            Utilities.ConsultResult = Utilities.RespuestaConsulta.response.resultados.Where(r => r.nit == r.nit);
+                            foreach (var item in Utilities.ConsultResult)
+                            {
+                                utilities.Matricula = item.matricula;
+                                utilities.Tpcm = item.tpcm;
+                            }
+                        }
+                        else
+                        {
+                            if (Utilities.RespuestaConsulta.response.resultados.Count() == 1)
+                            {
+                                Utilities.ConsultResult = Utilities.RespuestaConsulta.response.resultados.Where(r => r.nit == r.nit);
+                            }
+                            else
+                            {
+                                Utilities.ConsultResult = Utilities.RespuestaConsulta.response.resultados.Where(r => r.nit == TxtIdentificacion.Text);
+
+                                if (searchType == tipo_busqueda.Nombre && Utilities.ConsultResult.Count() < 1)
+                                {
+                                    Utilities.ConsultResult = Utilities.RespuestaConsulta.response.resultados.Where(r => r.nombre == TxtIdentificacion.Text);
+                                }
+                            }
+                            foreach (var item in Utilities.ConsultResult)
+                            {
+                                utilities.Matricula = item.matricula;
+                                utilities.Tpcm = item.tpcm;
+                            }
+                        }
+                        Utilities.ResetTimer();
+                        navigateService.NavigationTo("FrmInformationCompany");
+                    }
                 }
                 else
                 {

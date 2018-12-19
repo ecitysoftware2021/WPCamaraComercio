@@ -107,6 +107,13 @@
     </Compile>
     <Compile Include="Keyboard\TouchScreenKeyboard.cs" />
     <Compile Include="Keyboard\TouchScreenKeyNumeric.cs" />
+    <Compile Include="Models\Coincidence.cs" />
+    <Compile Include="Service\NavigationService.cs" />
+    <Compile Include="Service\Response.cs" />
+    <Compile Include="Service\WCFServices.cs" />
+    <Compile Include="Views\FrmCoincidence.xaml.cs">
+      <DependentUpon>FrmCoincidence.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmConsult.xaml.cs">
       <DependentUpon>FrmConsult.xaml</DependentUpon>
     </Compile>
@@ -150,6 +157,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmCoincidence.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -274,10 +285,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Service\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\Buttons\atras.png" />
     <Resource Include="Images\Buttons\btnCancelar.png" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WPCamaraComercio.Views;
 
 namespace WPCamaraComercio.Service
 {
@@ -32,13 +33,13 @@ namespace WPCamaraComercio.Service
                 switch (page)
                 {
                     case "FrmMenu":
-                        //FrmMenu frmMenu = new FrmMenu();
-                        //frmMenu.Show();
-                        //break;
+                        FrmMenu frmMenu = new FrmMenu();
+                        frmMenu.Show();
+                        break;
                     case "FrmConsult":
-                        //FrmConsult frmConsult = new FrmConsult();
-                        //frmConsult.Show();
-                        //break;
+                        FrmConsult frmConsult = new FrmConsult();
+                        frmConsult.Show();
+                        break;
                     case "FrmInitial":
                         //FrmInitial frmInitial = new FrmInitial();
                         //frmInitial.Show();
@@ -47,10 +48,10 @@ namespace WPCamaraComercio.Service
                         //FrmDetails frmDetails = new FrmDetails();
                         //frmDetails.Show();
                         //break;
-                    case "FrmPoll":
-                        //FrmPoll frmPoll = new FrmPoll();
-                        //frmPoll.Show();
-                        //break;
+                    case "FrmInformationCompany":
+                        FrmInformationCompany frmInformationCompany = new FrmInformationCompany();
+                        frmInformationCompany.Show();
+                        break;
                     case "FrmPay":
                         //FrmPay frmPay = new FrmPay();
                         //frmPay.Show();
@@ -63,9 +64,9 @@ namespace WPCamaraComercio.Service
                         //FrmFinishTransaction frmFinishTransaction = new FrmFinishTransaction();
                         //frmFinishTransaction.Show();
                         break;
-                    case "FrmCodeBarDetail":
-                        //FrmCodeBarDetail frmCodeBarDetail = new FrmCodeBarDetail();
-                        //frmCodeBarDetail.Show();
+                    case "FrmCoincidence":
+                        FrmCoincidence frmCoincidence = new FrmCoincidence();
+                        frmCoincidence.Show();
                         break;
                     case "FrmLoading":
                         //FrmLoading frmLoading = new FrmLoading();
