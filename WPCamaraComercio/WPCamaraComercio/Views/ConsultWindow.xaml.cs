@@ -23,5 +23,10 @@ namespace WPCamaraComercio.Views
         {
             InitializeComponent();
         }
+
+        private void TxtIdentificacion_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
