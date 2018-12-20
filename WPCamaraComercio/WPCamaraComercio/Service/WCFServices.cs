@@ -42,5 +42,39 @@ namespace WPCamaraComercio.Service
 
             return task;
         }
+
+        public Task<Response> ConsultDetailMerchant(PeticionDetalle detailPetition)
+        {
+            Task<Response> task = null;
+            task = Task.Run(() =>
+            {
+                Response response = new Response();
+
+                try
+                {
+                    var r = WCFCamara.GetDetalleComerciante(detailPetition);
+                    if (r != null)
+                    {
+                        response.IsSuccess = true;
+                        response.Result = r;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.IsSuccess = false;
+                    response.Result = null;
+                    response.Message = ex.Message;
+                }
+
+                return response;
+            });
+
+            return task;
+        }
+
     }
 }

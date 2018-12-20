@@ -62,6 +62,8 @@ namespace WPCamaraComercio.Classes
                 _Tpcm = value;
             }
         }
+
+        public static RespuestaDetalle DetailResponse { get; set; }
         #endregion
 
         #region GeneralEvents

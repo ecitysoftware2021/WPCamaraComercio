@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Service;
+using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.Views
 {
@@ -22,11 +23,20 @@ namespace WPCamaraComercio.Views
     public partial class FrmInformationCompany : Window
     {
         NavigationService navigationService;
+        WCFServices services;
+        string matricula, tpcm;
 
         public FrmInformationCompany()
         {
             InitializeComponent();
             navigationService = new NavigationService(this);
+            services = new WCFServices();
+            foreach (var consult in Utilities.ConsultResult)
+            {
+                matricula = consult.matricula;
+                tpcm = consult.tpcm;
+            }
+                
         }
 
         #region Timer
@@ -54,7 +64,26 @@ namespace WPCamaraComercio.Views
 
         private void BtnContinue_StylusDown(object sender, StylusDownEventArgs e)
         {
+            ConsultInformation();
+        }
 
+        private async void ConsultInformation()
+        {
+            PeticionDetalle petition = new PeticionDetalle();
+            petition.Matricula = matricula;
+            petition.Tpcm = tpcm;
+
+            var task = services.ConsultDetailMerchant(petition);
+            //Utilities.Loading(frmLoading, true, this);
+            if (await Task.WhenAny(task, Task.Delay(10000)) == task)
+            {
+                var response = task.Result;
+                if (response.IsSuccess)
+                {
+                    //Utilities.Loading(frmLoading, false, this);
+                    Utilities.DetailResponse = (RespuestaDetalle)response.Result;
+                }
+            }
         }
 
     }
