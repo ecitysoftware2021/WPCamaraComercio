@@ -32,8 +32,7 @@
                    Width="230"
                    Height="70" 
                    Margin="0,0,20,0"
-                   Stretch="Uniform"
-                   PreviewStylusDown="BtnExit_PreviewStylusDown"/>
+                   Stretch="Uniform"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -54,8 +53,7 @@
                     Height="60"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Margin="0,0,300,150"
-                    PreviewStylusDown="chkIdentification_PreviewStylusDown"/>
+                    Margin="0,0,300,150" />
 
             <TextBlock TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Center" 
@@ -73,8 +71,7 @@
                     Tag="N"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Margin="0,0,290,150"
-                    PreviewStylusDown="chkName_PreviewStylusDown"/>
+                    Margin="0,0,290,150"/>
 
             <TextBlock TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Right" 
@@ -112,8 +109,7 @@
                      FontSize="35" 
                      Background="#FFE3E3E6" 
                      Foreground="#FF282887"
-                     CaretBrush="#FFB2B0B8"
-                     GotFocus="Txt_GotFocus"/>
+                     CaretBrush="#FFB2B0B8"/>
 
             <Image x:Name="BtnConsultar"
                    Source="../Images/Buttons/b-Consultar.png"
@@ -121,8 +117,7 @@
                    VerticalAlignment="Bottom" 
                    Width="450"
                    Height="130" 
-                   Margin="0,0,100,10" 
-                   PreviewStylusDown="BtnConsultar_PreviewStylusDown"/>
+                   Margin="0,0,100,10" />
 
         </Grid>
 
@@ -134,7 +129,8 @@
                    FontWeight="Bold" 
                    FontSize="60" 
                    Foreground="#FF000084"
-                   TextWrapping="WrapWithOverflow" FontFamily="Arial"
+                   TextWrapping="WrapWithOverflow" 
+                   FontFamily="Arial"
                    Margin="0,0,0,110"/>
 
             <TextBlock 
@@ -194,7 +190,6 @@
                 Height="150" Width="150"
                 Visibility="Hidden"
                 Source="/Images/Buttons/left.png"
-                PreviewStylusDown="btnPrev_PreviewStylusDown"
                 />
             <Image  Grid.Column="1"
                 Margin="0,0,30,0"
@@ -206,7 +201,7 @@
                 Grid.RowSpan="1"
                 Visibility="Visible"
                 Source="/Images/Buttons/right.png"
-                    PreviewStylusDown="btnNext_PreviewStylusDown"
+               
                     />
             <TextBlock Height="20" Visibility="Visible" Margin="540,0,0,33" Name="tbCurrentPage" 
                    VerticalAlignment="Bottom"  Grid.Column="1"  />
@@ -223,7 +218,7 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top"
                     ItemsSource="{Binding}"
-                    SelectionChanged="lv_Files_SelectionChanged"
+                    
                       >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

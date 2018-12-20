@@ -12,8 +12,7 @@
         Height="2064.095" 
         Width="1250.599"
         WindowStartupLocation="CenterScreen"
-        PreviewStylusDown="Window_PreviewStylusDown"
-        Loaded="Window_Loaded">
+        PreviewStylusDown="Window_PreviewStylusDown">
     <Window.Background>
         <ImageBrush ImageSource="../Images/Backgrounds/fondo2.jpg"/>
     </Window.Background>
@@ -165,14 +164,6 @@
             <TextBox Height="1" 
                      Width="1"
                      TabIndex="3"/>
-            <Image gif:ImageBehavior.AnimatedSource="../Images/Gif/lg.ajax-spinner-preloader.gif"
-                   Name="load_gif"
-                   HorizontalAlignment="Center"
-                   Height="250" 
-                   Margin="0,0,0,0"
-                   VerticalAlignment="Bottom"
-                   Visibility="Hidden" 
-                   Width="300"/>
             <Image x:Name="BtnConsultar"
                    Source="../Images/Buttons/consultar.png"
                    HorizontalAlignment="Center" 
