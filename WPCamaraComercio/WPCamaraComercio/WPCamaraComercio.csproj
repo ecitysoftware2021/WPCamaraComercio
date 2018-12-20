@@ -111,6 +111,9 @@
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Response.cs" />
     <Compile Include="Service\WCFServices.cs" />
+    <Compile Include="Views\ConsultWindow.xaml.cs">
+      <DependentUpon>ConsultWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmCoincidence.xaml.cs">
       <DependentUpon>FrmCoincidence.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConsultWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -285,7 +292,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\bg-blanck.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Buttons\atras.png" />
     <Resource Include="Images\Buttons\btnCancelar.png" />
@@ -389,7 +398,6 @@
     <Resource Include="Images\Buttons\ITAGUI1.png" />
     <Resource Include="Images\Buttons\ITAGUI2.png" />
     <Resource Include="Images\Backgrounds\fondo1.jpg" />
-    <Resource Include="Images\Backgrounds\fondo2.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -412,6 +420,16 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\WCFCamaraComercio\" />
     <WCFMetadataStorage Include="Connected Services\WCFPayPad\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\left.png" />
+    <Resource Include="Images\Buttons\right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\b-Consultar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\fondo2.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

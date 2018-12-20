@@ -61,8 +61,8 @@ namespace WPCamaraComercio
             {
                 Dispatcher.BeginInvoke((Action)delegate
                 {
-                    FrmMenu Menu = new FrmMenu();
-                    Menu.Show();
+                    ConsultWindow consult = new ConsultWindow();
+                    consult.Show();
                     this.Close();
                 });
                 GC.Collect();

@@ -135,8 +135,7 @@
                      Background="#FFE3E3E6" 
                      Foreground="#FF282887"
                      CaretBrush="#FFB2B0B8"
-                     GotFocus="Txt_GotFocus"
-                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="True"/>
+                     GotFocus="Txt_GotFocus"/>
             <TextBlock x:Name="lblError"
                        Text="Este campo es obligatorio"
                        Foreground="Red"
@@ -162,7 +161,6 @@
                      Foreground="#FF282887"
                      CaretBrush="#FFB2B0B8"
                      GotFocus="Txt_GotFocus"
-                     k:TouchScreenKeyboard.TouchScreenKeyboard="True"
                      Visibility="Hidden"/>
             <TextBox Height="1" 
                      Width="1"
