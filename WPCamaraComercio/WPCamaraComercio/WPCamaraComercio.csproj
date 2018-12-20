@@ -117,6 +117,9 @@
     <Compile Include="Views\FrmConsult.xaml.cs">
       <DependentUpon>FrmConsult.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrmDetailCompany.xaml.cs">
+      <DependentUpon>FrmDetailCompany.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmLoading.xaml.cs">
       <DependentUpon>FrmLoading.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmConsult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmDetailCompany.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

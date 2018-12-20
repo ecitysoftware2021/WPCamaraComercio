@@ -1,0 +1,545 @@
+﻿<Window x:Class="WPCamaraComercio.Views.FrmDetailCompany"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPCamaraComercio.Views"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        mc:Ignorable="d"
+        Title="FrmDetailCompany" 
+        WindowStyle="None"
+        WindowState="Maximized"
+        Loaded="Window_Loaded"
+        PreviewStylusDown="Window_PreviewStylusDown"
+        Height="2064.095" 
+        Width="1250.599">
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/Backgrounds/fondo2.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="550" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="450"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+            <Image x:Name="BtnExit"
+                   Source="/Images/Buttons/btn_salir.png"
+                   Grid.Column="0"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Center" 
+                   Width="200"
+                   Height="80" 
+                   Margin="0,25,25,0"
+                   Stretch="Uniform"
+                   PreviewStylusDown="BtnExit_PreviewStylusDown"/>
+            <TextBlock x:Name="tbTimer"
+                       FontSize="35"
+                       Foreground="#fff"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0,100,10,0"/>
+            <Image x:Name="BtnBack"
+                   Source="../Images/Buttons/btn_atras.png"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center" 
+                   Width="200"
+                   Height="80"  
+                   Margin="25,25,0,0" 
+                   Stretch="Uniform"
+                   PreviewStylusDown="BtnBack_PreviewStylusDown"
+                   Visibility="Visible"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    Margin="0,90,0,0"
+                    FontSize="60"                    
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Foreground="#000"
+                    Name="Lbl"
+                    Text="Certificados"/>
+            <TextBlock VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Margin="20,250,0,0"
+                    FontSize="30"                    
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Foreground="#000"
+                    Name="LblData1"
+                    Text="data1"/>
+            <TextBlock VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Margin="20,400,0,0"
+                    FontSize="30"                    
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Foreground="#000"
+                    Name="LblData2"
+                    Text="data2"/>
+            <Image Source="/Images/Buttons/comerciante.png" 
+                   Name="BtnComerciant"
+                   Margin="0,0,0,0"
+                   Width="400"
+                   StylusDown=""
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   />
+            <Image Source="/Images/Buttons/establecimiento.png" 
+                   Name="BtnEstablish"
+                   Margin="0,0,0,0"
+                   Width="450"
+                   StylusDown=""
+                   Grid.Column="1"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   />
+            <!--<Image Source="/Images/unchecked.png" 
+                   Grid.Column="1"
+                   Width="50"
+                   Name="BtnSelectedAll"
+                   Margin="200,0,0,0"
+                   StylusDown="BtnSelectedAll_StylusDown"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Left"
+                   />
+            <TextBlock VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Margin="0,0,30,0"
+                    FontSize="30"                    
+                    Grid.Column="1"
+                    FontWeight="Bold"
+                    Foreground="Red"                    
+                    Text="Seleccionar Todo"/>-->
+        </Grid>
+
+        <Grid Grid.Row="2" x:Name="GrdVigencias" Grid.Column="0" 
+              Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="TbVigencia"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,0"
+                   Grid.ColumnSpan="2"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   Text="NOMBRE CERTIFICADO"
+                   FontSize="30"
+                   FontWeight="Bold"   
+                   Foreground="#FF003F6B"/>
+            <!--<TextBlock x:Name="TbStateV"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   Text="ESTADO"
+                   FontSize="30"
+                   Grid.Column="1"
+                   FontWeight="Bold"   
+                   Foreground="#FF003F6B"/>-->
+            <TextBlock x:Name="TbAmountVigencia"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Text="VALOR"
+                FontSize="30"
+                Grid.Column="2"
+                FontWeight="Bold"   
+                Foreground="#FF003F6B"/>
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Text="CANTIDAD"
+                FontSize="30"
+                Grid.Column="3"
+                FontWeight="Bold"   
+                Foreground="#FF003F6B"/>
+            <ListView x:Name="LvVigencias" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Top"
+                  ItemsSource="{Binding}"
+                  Margin="0,0,0,0"
+                      Grid.Row="1"
+                      Grid.ColumnSpan="7"
+                  Background="Transparent"
+                  BorderBrush="Transparent"
+                  AutomationProperties.AutomationId="ItemGridView"
+                  AutomationProperties.Name="Grouped Items">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <!--<EventSetter Event="PreviewStylusDown"
+                         Handler="ListViewItem_PreviewStylusDown" />-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentPresenter>
+                                    </ContentPresenter>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1"
+                                 HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" 
+                                VerticalAlignment="Stretch" 
+                                HorizontalAlignment="Stretch">
+                            <Grid HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,0,0"
+                                  Width="1000"
+                                  Height="80"
+                                  Tag="{Binding Tag}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Background>
+                                    <ImageBrush 
+                                        Stretch="UniformToFill" />
+                                </Grid.Background>
+                                <TextBlock Text="{Binding Vigencia}"
+                                           FontSize="30"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"                                           
+                                           VerticalAlignment="Center"
+                                           Margin="0,0,90,0"
+                                           Grid.ColumnSpan="2"
+                                           />
+                                <!--<TextBlock Text="{Binding Estado}"
+                                           FontSize="30"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="1"
+                                           Margin="0,0,0,0"/>-->
+                                <TextBlock Text="{Binding TotalValue, StringFormat={}{0:C0}}"
+                                           FontSize="30"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2"
+                                           Margin="0,0,0,0"/>
+                                <ComboBox  
+                                          Grid.Column="3" 
+                                          HorizontalAlignment="Center" 
+                                          Margin="139,42,0,0" 
+                                          Grid.Row="5" 
+                                          VerticalAlignment="Center" 
+                                          Width="120">
+                                    <ComboBox.ItemsSource>
+                                        <CompositeCollection>
+                                            <ListBoxItem>Seleccionar</ListBoxItem>
+                                            <ComboBoxItem Content = "1" ></ComboBoxItem>
+                                            <ComboBoxItem Content = "2" ></ComboBoxItem>
+                                            <ComboBoxItem Content = "3" ></ComboBoxItem>
+                                            <ComboBoxItem Content = "4" ></ComboBoxItem>
+                                            <ComboBoxItem Content = "5" ></ComboBoxItem>
+                                        </CompositeCollection>
+                                    </ComboBox.ItemsSource>
+                                </ComboBox>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Image
+                Grid.Column="0"
+                HorizontalAlignment="Left" 
+                Name="btnPrevV" 
+                VerticalAlignment="Top"                
+                Margin="30,50,0,0"
+                Height="100" Width="100"                
+                Visibility="Hidden"/>
+            <Image  Grid.Column="1"
+                
+                Margin="0,50,30,0"
+                HorizontalAlignment="Right"
+                Name="btnNextV" 
+                VerticalAlignment="Top"                
+                Height="100" Width="100" 
+                Grid.RowSpan="1"
+                Visibility="Visible"/>
+
+            <TextBlock Height="20" Visibility="Hidden" Margin="5,0,528,63" Name="tbCurrentPageV" 
+                   VerticalAlignment="Bottom"  Grid.Column="1"  />
+            <TextBlock Height="22" HorizontalAlignment="Right" Margin="0,0,502,61" Name="textBlock3V" 
+                   VerticalAlignment="Bottom" Visibility="Hidden" Width="20" FontWeight="Bold" Text="/" Grid.Column="1"/>
+            <TextBlock Height="20" HorizontalAlignment="Right" Visibility="Hidden" Margin="0,0,480,63" Name="tbTotalPageV" 
+                   VerticalAlignment="Bottom" Width="28" Grid.Column="1" />
+        </Grid>
+
+        <Grid Grid.Row="2" x:Name="GrdAcuerdos" Grid.Column="0" 
+              Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="TbState"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   Text="ESTABLECIMIENTO"
+                   FontSize="30"
+                   FontWeight="Bold"   
+                   Foreground="#FF003F6B"/>
+            <TextBlock x:Name="TbReference"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   Text="DETALLES"
+                   FontSize="30"
+                   Grid.Column="1"
+                   FontWeight="Bold"   
+                   Foreground="#FF003F6B"/>
+            <TextBlock x:Name="TbAmount"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Text="VALOR"
+                FontSize="30"
+                Grid.Column="2"
+                FontWeight="Bold"   
+                Foreground="#FF003F6B"/>
+            <TextBlock x:Name="TbSelect"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Text="CANTIDAD"
+                FontSize="30"
+                Grid.Column="3"
+                FontWeight="Bold"   
+                Foreground="#FF003F6B"/>
+            <ListView x:Name="LvCoutas" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Top"
+                  ItemsSource="{Binding}"
+                  Margin="0,0,0,0"
+                      Grid.Row="1"
+                      Grid.ColumnSpan="7"
+                  Background="Transparent"
+                  BorderBrush="Transparent"
+                  AutomationProperties.AutomationId="ItemGridView"
+                  AutomationProperties.Name="Grouped Items">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <!--<EventSetter Event="PreviewStylusDown"
+                         Handler="ListViewItemCutotas_PreviewStylusDown" />-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentPresenter>
+                                    </ContentPresenter>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1"
+                                 HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" 
+                                VerticalAlignment="Stretch" 
+                                HorizontalAlignment="Stretch">
+                            <Grid HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,0,0"
+                                  Width="1000"
+                                  Height="80"
+                                  Tag="{Binding Tag}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Background>
+                                    <ImageBrush 
+                                        Stretch="Uniform" />
+                                </Grid.Background>
+                                <TextBlock Text="{Binding NumeroCuota}"
+                                           FontSize="30"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"                                           
+                                           VerticalAlignment="Center"
+                                           />
+                                <TextBlock Text="{Binding FechaVencimiento}"
+                                           FontSize="30"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="1"
+                                           Margin="0,0,0,0"/>
+                                <TextBlock Text="{Binding TotalValue, StringFormat={}{0:C0}}"
+                                           FontSize="30"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2"
+                                           Margin="0,0,0,0"/>
+                                <ComboBox  
+                                          Grid.Column="3" 
+                                          HorizontalAlignment="Center" 
+                                          Margin="139,42,0,0" 
+                                          Grid.Row="5" 
+                                          VerticalAlignment="Center" 
+                                          Width="120">
+                                    <ComboBox.ItemsSource>
+                                        <CompositeCollection>
+                                            <ListBoxItem>Seleccionar</ListBoxItem>
+                                            <ComboBoxItem Content = "1" ></ComboBoxItem>
+                                            <ComboBoxItem Content = "2" ></ComboBoxItem>
+                                            <ComboBoxItem Content = "3" ></ComboBoxItem>
+                                            <ComboBoxItem Content = "4" ></ComboBoxItem>
+                                            <ComboBoxItem Content = "5" ></ComboBoxItem>
+                                        </CompositeCollection>
+                                    </ComboBox.ItemsSource>
+                                </ComboBox>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!--<Image
+                Grid.Column="0"
+                HorizontalAlignment="Left" 
+                Name="btnPrev" 
+                VerticalAlignment="Top"                
+                Margin="30,50,0,0"
+                Height="100" Width="100"                
+                Visibility="Hidden"/>
+            <Image  Grid.Column="1"
+                
+                Margin="0,50,30,0"
+                HorizontalAlignment="Right"
+                Name="btnNext" 
+                VerticalAlignment="Top"                
+                Height="100" Width="100" 
+                Grid.RowSpan="1"
+                Visibility="Visible"/>-->
+
+            <TextBlock Height="20" Visibility="Hidden" Margin="5,0,528,63" Name="tbCurrentPage" 
+                   VerticalAlignment="Bottom"  Grid.Column="1"  />
+            <TextBlock Height="22" HorizontalAlignment="Right" Margin="0,0,502,61" Name="textBlock3" 
+                   VerticalAlignment="Bottom" Visibility="Hidden" Width="20" FontWeight="Bold" Text="/" Grid.Column="1"/>
+            <TextBlock Height="20" HorizontalAlignment="Right" Visibility="Hidden" Margin="0,0,480,63" Name="tbTotalPage" 
+                   VerticalAlignment="Bottom" Width="28" Grid.Column="1" />
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image x:Name="BtnPay"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                Margin="0,25,0,0"    
+                Grid.Column="1"
+                Width="440" 
+                Source="../Images/button-pay.png" 
+                PreviewMouseDown="BtnPay_PreviewMouseDown"/>
+            <!--<TextBlock Text="El valor a pagar esta sujeto a cambios por el cálculo de intereses" 
+                HorizontalAlignment="Center" 
+                Name="TxbNotify"
+                VerticalAlignment="Top"
+                TextWrapping="Wrap"
+                TextAlignment="Center"
+                Margin="0,130,0,0" 
+                Grid.Column="1"
+                FontSize="28"
+                Foreground="#FF003F6B" 
+                FontWeight="Bold"/>-->
+            <Image x:Name="BtnLoading"                
+                Margin="0,0,0,0" 
+                Grid.Column="1"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                gif:ImageBehavior.AnimatedSource="/Images/loading.gif"
+                Width="260"/>
+            <!--<TextBlock Name="TxbLoading" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,0,0,120" 
+                       VerticalAlignment="Center" 
+                       Text="Cargando..." 
+                       Grid.Row="3" 
+                       Grid.Column="1" 
+                       FontSize="40" 
+                       Foreground="Red"
+                   />-->
+            <!--<TextBlock Text="Valor Total" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                Margin="0,0,0,0" 
+                FontSize="50"
+                Foreground="#FF003F6B" 
+                FontWeight="Bold"/>
+            <TextBlock x:Name="lblAmount"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,80,0,0"
+                Text="$ 0"
+                FontSize="50"
+                FontWeight="Bold"/>-->
+        </Grid>
+    </Grid>
+</Window>
