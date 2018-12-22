@@ -111,6 +111,7 @@
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Response.cs" />
     <Compile Include="Service\WCFServices.cs" />
+    <Compile Include="ViewModels\ConsultViewModel.cs" />
     <Compile Include="Views\ConsultWindow.xaml.cs">
       <DependentUpon>ConsultWindow.xaml</DependentUpon>
     </Compile>

@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
+using WPCamaraComercio.ViewModels;
 
 namespace WPCamaraComercio.Views
 {
@@ -23,8 +24,6 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class ConsultWindow : Window
     {
-        private List<Coincidence> coincidences;
-
         private int currentPageIndex = 0;
 
         private int itemPerPage = 10;
@@ -39,7 +38,7 @@ namespace WPCamaraComercio.Views
 
         private Utilities utilities;
 
-        private WCFServices service;
+        private ConsultViewModel consultViewModel;
 
         public ConsultWindow()
         {
@@ -52,21 +51,10 @@ namespace WPCamaraComercio.Views
             Utilities.Timer(tbTimer);
         }
 
-        private void ConsultCoincidences(string value, int type)
-        {
-            Response response = service.ConsultInformation(value, type);
-
-            if (response.)
-            {
-
-            }
-        }
-
         private void InitListCoincidences(List<Coincidence> coincidences)
         {
             this.view = new CollectionViewSource();
             this.lstPager = new ObservableCollection<Coincidence>();
-            this.coincidences = coincidences;
             OpcionList = null;
             InitView();
         }
@@ -119,16 +107,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                if (coincidences.Count() > 0)
-                {
-                    foreach (var coincidence in this.coincidences)
-                    {
-                        //coincidence.fechamatricula = file.fechamatricula.Insert(4, "/").Insert(7, "/");
-                        //coincidence.fecharenovacion = file.fecharenovacion.Insert(4, "/").Insert(7, "/");
-                        lstPager.Add(coincidence);
-                    }
-                }
-                CreatePages(coincidences.Count());
+                CreatePages(consultViewModel.CountConcidences());
             }
             catch (Exception ex)
             {
@@ -171,24 +150,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                if (coincidence == null)
-                {
-                    Modal alerta = new Modal("Debe de seleccionar una tienda.", 1);
-                    alerta.ShowDialog();
-                }
-                else
-                {
-                    utilities.saveLogTransaction(file.matricula, "Se inicia busqueda de " + file.nombre, "");
-                    Utilities.identificacion = file.matricula;
 
-                    Dispatcher.BeginInvoke((Action)delegate
-                    {
-                        ListCertificate certificate = new ListCertificate(file);
-                        certificate.Show();
-                        this.Close();
-                    });
-                    GC.Collect();
-                }
             }
             catch (Exception ex)
             {
@@ -268,9 +230,9 @@ namespace WPCamaraComercio.Views
             ShowCurrentPageIndex();
         }
 
+        private void BtnConsultar_StylusDown(object sender, StylusDownEventArgs e)
+        {
 
-    }
-}
-
+        }
     }
 }

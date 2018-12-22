@@ -9,38 +9,40 @@ namespace WPCamaraComercio.Service
 {
     public class WCFServices
     {
-        WCFCamaraComercioClient WCFCamara = new WCFCamaraComercioClient();
-        public Task<Response> ConsultInformation(string searchText, tipo_busqueda searchType)
-        {
-            Task<Response> task = null;
-            task = Task.Run(() =>
-            {
-                Response response = new Response();
+        private WCFCamaraComercioClient WCFCamara;
 
-                try
+        private Response response;
+
+        public WCFServices()
+        {
+            WCFCamara = new WCFCamaraComercioClient();
+
+            response = new Response();
+        }
+
+        public async Task<Response> ConsultInformation(string searchText, tipo_busqueda searchType)
+        {
+            try
+            {
+                var r = WCFCamara.GetGeneralInformation(searchText, searchType);
+                if (r != null)
                 {
-                    var r = WCFCamara.GetGeneralInformation(searchText, searchType);
-                    if (r != null)
-                    {
-                        response.IsSuccess = true;
-                        response.Result = r;
-                    }
-                    else
-                    {
-                        response.IsSuccess = false;
-                    }
+                    response.IsSuccess = true;
+                    response.Result = r;
                 }
-                catch (Exception ex)
+                else
                 {
                     response.IsSuccess = false;
-                    response.Result = null;
-                    response.Message = ex.Message;
                 }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Result = null;
+                response.Message = ex.Message;
+            }
 
-                return response;
-            });
-
-            return task;
+            return response;
         }
 
         public Task<Response> ConsultDetailMerchant(PeticionDetalle detailPetition)
