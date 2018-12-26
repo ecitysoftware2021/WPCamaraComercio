@@ -61,6 +61,7 @@ namespace WPCamaraComercio.Views
             //    ddlCantidad.Items.Insert(i, i);
             //}
         }
+
         private void ConsultInformation()
         {
             PeticionDetalle petition = new PeticionDetalle();
@@ -246,5 +247,17 @@ namespace WPCamaraComercio.Views
         }
 
         #endregion
+
+        private void BtnComerciant_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            tipo = 1;
+            AssingProperties();
+        }
+
+        private void BtnEstablish_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            tipo = 2;
+            AssingProperties();
+        }
     }
 }
