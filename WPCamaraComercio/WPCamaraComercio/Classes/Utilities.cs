@@ -64,6 +64,8 @@ namespace WPCamaraComercio.Classes
         }
 
         public static RespuestaDetalle DetailResponse { get; set; }
+
+
         #endregion
 
         #region GeneralEvents

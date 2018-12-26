@@ -20,10 +20,21 @@ namespace WPCamaraComercio.Service
             response = new Response();
         }
 
-        public async Task<Response> ConsultInformation(string searchText, tipo_busqueda searchType)
+        public async Task<Response> ConsultInformation(string searchText, int type)
         {
             try
             {
+                tipo_busqueda searchType;
+
+                if (type == 1)
+                {
+                    searchType = tipo_busqueda.Nit;
+                }
+                else
+                {
+                    searchType = tipo_busqueda.Nombre;
+                }
+
                 var r = WCFCamara.GetGeneralInformation(searchText, searchType);
                 if (r != null)
                 {

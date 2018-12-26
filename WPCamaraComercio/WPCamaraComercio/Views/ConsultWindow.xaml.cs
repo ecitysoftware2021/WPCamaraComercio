@@ -42,13 +42,33 @@ namespace WPCamaraComercio.Views
 
         public ConsultWindow()
         {
+            
+            InitializeComponent();
             utilities = new Utilities();
-            InitializeComponent();            
+            Init();
+        }
+
+        private void Init()
+        {
+            consultViewModel = new ConsultViewModel
+            {
+                headers = Visibility.Hidden,
+                preload = Visibility.Hidden,
+                coincidences = null,
+                sourceCheckName = Utilities.GetConfiguration("ImageCheckOut"),
+                sourceCheckNit = Utilities.GetConfiguration("ImageCheckIn"),
+                message = "Ingrese NIT/Cédula sin dígito de verificación",
+                typeSearch = 2
+
+        };
+
+            this.DataContext = consultViewModel;
+            InitView();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Utilities.Timer(tbTimer);
+           // Utilities.Timer(tbTimer);
         }
 
         private void InitListCoincidences(List<Coincidence> coincidences)
@@ -80,25 +100,6 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void BtnAtras_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            try
-            {
-                Dispatcher.BeginInvoke((Action)delegate
-                {
-                    Utilities.ResetTimer();
-                    MainWindow main = new MainWindow();
-                    main.Show();
-                    this.Close();
-                });
-                GC.Collect();
-
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
 
         #endregion
@@ -107,7 +108,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                CreatePages(consultViewModel.CountConcidences());
+                CreatePages(consultViewModel.countConcidences);
             }
             catch (Exception ex)
             {
@@ -162,7 +163,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                int index = lstPager.IndexOf((File)e.Item);
+                int index = lstPager.IndexOf((Coincidence) e.Item);
 
                 if (index >= itemPerPage * currentPageIndex && index < itemPerPage * (currentPageIndex + 1))
                 {
@@ -183,8 +184,8 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                File file = (File)lv_Files.SelectedItem;
-                RedirectView(file);
+                Coincidence coincidence = (Coincidence)lv_Files.SelectedItem;
+                RedirectView(coincidence);
             }
             catch (Exception ex)
             {
@@ -232,7 +233,69 @@ namespace WPCamaraComercio.Views
 
         private void BtnConsultar_StylusDown(object sender, StylusDownEventArgs e)
         {
+            ConsulParameter();
+        }
 
+        private void ConsulParameter()
+        {
+            try
+            {
+                string valueSearch = "";
+
+                if (consultViewModel.typeSearch == 1)
+                {
+                    valueSearch = TxtName.Text.ToString();
+                }
+                else
+                {
+                    valueSearch = TxtIdentificacion.Text.ToString();
+                }
+
+                if (!string.IsNullOrWhiteSpace(valueSearch))
+                {
+                    consultViewModel.ConsultConcidences(valueSearch, consultViewModel.typeSearch);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        private void chkIdentification_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            if (consultViewModel.typeSearch != 2)
+            {
+                this.consultViewModel.typeSearch = 2;
+
+                this.TxtIdentificacion.Visibility = Visibility.Visible;
+
+                this.TxtName.Visibility = Visibility.Hidden;
+
+                this.consultViewModel.sourceCheckNit = Utilities.GetConfiguration("ImageCheckIn");
+
+                this.consultViewModel.sourceCheckName = Utilities.GetConfiguration("ImageCheckOut");
+
+                this.consultViewModel.message = "Ingrese NIT/Cédula sin dígito de verificación";
+
+            }
+        }
+
+        private void chkName_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            if (consultViewModel.typeSearch != 1)
+            {
+                this.consultViewModel.typeSearch = 1;
+
+                this.TxtIdentificacion.Visibility = Visibility.Hidden;
+
+                this.TxtName.Visibility = Visibility.Visible;
+
+                this.consultViewModel.sourceCheckName = Utilities.GetConfiguration("ImageCheckIn");
+
+                this.consultViewModel.sourceCheckNit = Utilities.GetConfiguration("ImageCheckOut");
+
+                this.consultViewModel.message = "Ingrese un nombre valido";
+            }
         }
     }
 }

@@ -213,7 +213,7 @@ namespace WPCamaraComercio.Views
 
         private async void ConsultInformation()
         {
-            var task = services.ConsultInformation(searchString, searchType);
+            var task = services.ConsultInformation(searchString, 1);
             Utilities.Loading(frmLoading, true, this);
             if (await Task.WhenAny(task, Task.Delay(10000)) == task)
             {

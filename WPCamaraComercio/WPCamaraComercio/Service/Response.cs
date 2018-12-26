@@ -13,5 +13,10 @@ namespace WPCamaraComercio.Service
         public string Message { get; set; }
 
         public object Result { get; set; }
+
+        public static implicit operator List<object>(Response v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
