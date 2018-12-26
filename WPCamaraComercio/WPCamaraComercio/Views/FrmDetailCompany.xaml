@@ -304,7 +304,7 @@
                    VerticalAlignment="Bottom" Width="28" Grid.Column="1" />
         </Grid>
 
-        <Grid Grid.Row="2" x:Name="GrdEstablish" Grid.Column="0" 
+        <Grid Grid.Row="2" x:Name="GrdEstablish"  Grid.Column="0" 
               Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
@@ -360,6 +360,8 @@
                 Grid.Column="3"
                 FontWeight="Bold"   
                 Foreground="#FF003F6B"/>
+            
+            
             <ListView x:Name="LvEstablish" 
                   HorizontalAlignment="Center" 
                   VerticalAlignment="Top"
@@ -396,7 +398,7 @@
                         <StackPanel Orientation="Vertical" 
                                 VerticalAlignment="Stretch" 
                                 HorizontalAlignment="Stretch">
-                            <Grid HorizontalAlignment="Center"
+                            <Grid x:Name="gridMayor" HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   Margin="0,0,0,0"
                                   Width="1000"
@@ -412,34 +414,31 @@
                                     <ImageBrush 
                                         Stretch="Uniform" />
                                 </Grid.Background>
+
                                 <TextBlock Text="{Binding Establish}"
-                                           FontSize="30"
+                                           FontSize="20"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"                                           
                                            VerticalAlignment="Center"
                                            />
-                                <Image  Source="{Binding ImageSource}"
-                                        Width="50"
-                                        Height="50"
-                                        StylusDown="{Binding h}"
-                                        Tag=""
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+
                                 <TextBlock Text="{Binding Amount, StringFormat={}{0:C0}}"
                                            FontSize="30"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           Grid.Column="2"
+                                           Grid.Column="1"
                                            Margin="0,0,0,0"/>
                                 <ComboBox  
-                                          Grid.Column="3" 
+                                          Grid.Column="2" 
                                           HorizontalAlignment="Center" 
                                           Margin="139,42,0,0" 
                                           Grid.Row="5" 
                                           VerticalAlignment="Center" 
                                           Width="120">
+
+                                    
+
                                     <ComboBox.ItemsSource>
                                         <CompositeCollection>
                                             <ListBoxItem>Seleccionar</ListBoxItem>
@@ -451,6 +450,16 @@
                                         </CompositeCollection>
                                     </ComboBox.ItemsSource>
                                 </ComboBox>
+
+                                <TextBlock Text="Ver detalle"
+                                           FontSize="20"
+                                           Tag="{Binding details}"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"                                           
+                                           VerticalAlignment="Center"
+                                               Grid.Column="3"
+                                           StylusDown="TextBlock_StylusDown" 
+                                            />
                             </Grid>
                         </StackPanel>
                     </DataTemplate>

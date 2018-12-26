@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace WPCamaraComercio.Models
 {
@@ -10,8 +11,8 @@ namespace WPCamaraComercio.Models
     {
         public string Establish { get; set; }
 
-        public string ImageSource { get; set; }
-
         public string Amount { get; set; }
+
+        public Details details { get; set; }
     }
 }

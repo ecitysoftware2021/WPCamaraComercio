@@ -44,7 +44,7 @@ namespace WPCamaraComercio.Views
             lstDetailMerchant = new ObservableCollection<Models.DetailMerchant>();
             lstDetailEstablish = new ObservableCollection<DetailEstablish>();
             view = new CollectionViewSource();
-            var task = services.ConsultInformation("811040812", tipo_busqueda.Nit);
+            var task = services.ConsultInformation("890900608", tipo_busqueda.Nit);
             tipo = 1;
             var response = task.Result;
 
@@ -133,6 +133,8 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+                int column = 1;
+                int row = 1;
                 foreach (var item in Utilities.DetailResponse.response.resultados)
                 {
                     if (item.establecimientos != null)
@@ -145,7 +147,13 @@ namespace WPCamaraComercio.Views
                             objDetail.mat = item2.MatriculaEst;
                             objDetail.estado = item2.EstadoEstablecimiento;
 
-                            var h = new EventHandler((s, e) => Details(s, e, objDetail));
+                            //RowDefinition rowDefinition = new RowDefinition();
+                            //rowDefinition.Height = new GridLength(100);
+                            ////GrdEstablish.RowDefinitions.Add(rowDefinition);
+                                                        //Grid.SetColumn(label, column);
+                            //Grid.SetRow(label, row);
+                            //LvEstablish.Items.Add(label);
+                            //row += 1;
 
                             foreach (var item3 in item2.CertificadosEstablecimiento)
                             {
@@ -155,6 +163,7 @@ namespace WPCamaraComercio.Views
                                 {
                                     Establish = item2.NombreEstablecimiento,
                                     Amount = item3.ValorCertificado,
+                                    details = objDetail
                                 });
                             }
                         }
@@ -179,8 +188,9 @@ namespace WPCamaraComercio.Views
 
         }
 
-        private void Details(object sender, EventArgs e, Details details)
+        private void Details(Details details)
         {
+            MessageBox.Show(details.nombreest);
             //frmDetalles objForm = new frmDetalles(details);
             //objForm.ShowDialog();
         }
@@ -250,14 +260,25 @@ namespace WPCamaraComercio.Views
 
         private void BtnComerciant_StylusDown(object sender, StylusDownEventArgs e)
         {
+            lstDetailEstablish.Clear();
+            lstDetailMerchant.Clear();
             tipo = 1;
             AssingProperties();
         }
 
         private void BtnEstablish_StylusDown(object sender, StylusDownEventArgs e)
         {
+            lstDetailEstablish.Clear();
+            lstDetailMerchant.Clear();
             tipo = 2;
             AssingProperties();
+        }
+
+        private void TextBlock_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            TextBlock text = (TextBlock)sender;
+            Details dt = (Details)text.Tag;
+            Details(dt);
         }
     }
 }
