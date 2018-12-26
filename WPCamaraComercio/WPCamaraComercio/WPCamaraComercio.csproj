@@ -108,6 +108,9 @@
     <Compile Include="Keyboard\TouchScreenKeyboard.cs" />
     <Compile Include="Keyboard\TouchScreenKeyNumeric.cs" />
     <Compile Include="Models\Coincidence.cs" />
+    <Compile Include="Models\DetailEstablish.cs" />
+    <Compile Include="Models\DetailMerchant.cs" />
+    <Compile Include="Models\Details.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Response.cs" />
     <Compile Include="Service\WCFServices.cs" />

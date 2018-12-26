@@ -9,8 +9,6 @@
         Title="FrmDetailCompany" 
         WindowStyle="None"
         WindowState="Maximized"
-        Loaded="Window_Loaded"
-        PreviewStylusDown="Window_PreviewStylusDown"
         Height="2064.095" 
         Width="1250.599">
     <Window.Background>
@@ -37,8 +35,7 @@
                    Width="200"
                    Height="80" 
                    Margin="0,25,25,0"
-                   Stretch="Uniform"
-                   PreviewStylusDown="BtnExit_PreviewStylusDown"/>
+                   Stretch="Uniform"/>
             <TextBlock x:Name="tbTimer"
                        FontSize="35"
                        Foreground="#fff"
@@ -53,7 +50,6 @@
                    Height="80"  
                    Margin="25,25,0,0" 
                    Stretch="Uniform"
-                   PreviewStylusDown="BtnBack_PreviewStylusDown"
                    Visibility="Visible"/>
         </Grid>
 
@@ -73,7 +69,7 @@
                     FontWeight="Bold"
                     Foreground="#000"
                     Name="Lbl"
-                    Text="Certificados"/>
+                    Text="{Binding prueba}"/>
             <TextBlock VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     Margin="20,250,0,0"
@@ -82,7 +78,7 @@
                     FontWeight="Bold"
                     Foreground="#000"
                     Name="LblData1"
-                    Text="data1"/>
+                    Text="data 1"/>
             <TextBlock VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     Margin="20,400,0,0"
@@ -96,7 +92,6 @@
                    Name="BtnComerciant"
                    Margin="0,0,0,0"
                    Width="400"
-                   StylusDown=""
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    />
@@ -104,7 +99,6 @@
                    Name="BtnEstablish"
                    Margin="0,0,0,0"
                    Width="450"
-                   StylusDown=""
                    Grid.Column="1"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
@@ -128,7 +122,7 @@
                     Text="Seleccionar Todo"/>-->
         </Grid>
 
-        <Grid Grid.Row="2" x:Name="GrdVigencias" Grid.Column="0" 
+        <Grid Grid.Row="2" x:Name="GrdMerchant" Grid.Column="0" 
               Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
@@ -184,7 +178,7 @@
                 Grid.Column="3"
                 FontWeight="Bold"   
                 Foreground="#FF003F6B"/>
-            <ListView x:Name="LvVigencias" 
+            <ListView x:Name="LvMerchant" 
                   HorizontalAlignment="Center" 
                   VerticalAlignment="Top"
                   ItemsSource="{Binding}"
@@ -236,7 +230,7 @@
                                     <ImageBrush 
                                         Stretch="UniformToFill" />
                                 </Grid.Background>
-                                <TextBlock Text="{Binding Vigencia}"
+                                <TextBlock Text="{Binding CertificateName}"
                                            FontSize="30"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"                                           
@@ -251,7 +245,7 @@
                                            VerticalAlignment="Center"
                                            Grid.Column="1"
                                            Margin="0,0,0,0"/>-->
-                                <TextBlock Text="{Binding TotalValue, StringFormat={}{0:C0}}"
+                                <TextBlock Text="{Binding Amount, StringFormat={}{0:C0}}"
                                            FontSize="30"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"
@@ -308,7 +302,7 @@
                    VerticalAlignment="Bottom" Width="28" Grid.Column="1" />
         </Grid>
 
-        <Grid Grid.Row="2" x:Name="GrdAcuerdos" Grid.Column="0" 
+        <Grid Grid.Row="2" x:Name="GrdEstablish" Grid.Column="0" 
               Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
@@ -330,6 +324,7 @@
                    FontSize="30"
                    FontWeight="Bold"   
                    Foreground="#FF003F6B"/>
+            
             <TextBlock x:Name="TbReference"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
@@ -363,7 +358,7 @@
                 Grid.Column="3"
                 FontWeight="Bold"   
                 Foreground="#FF003F6B"/>
-            <ListView x:Name="LvCoutas" 
+            <ListView x:Name="LvEstablish" 
                   HorizontalAlignment="Center" 
                   VerticalAlignment="Top"
                   ItemsSource="{Binding}"
@@ -415,20 +410,21 @@
                                     <ImageBrush 
                                         Stretch="Uniform" />
                                 </Grid.Background>
-                                <TextBlock Text="{Binding NumeroCuota}"
+                                <TextBlock Text="{Binding Establish}"
                                            FontSize="30"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"                                           
                                            VerticalAlignment="Center"
                                            />
-                                <TextBlock Text="{Binding FechaVencimiento}"
-                                           FontSize="30"
-                                           TextWrapping="Wrap"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Grid.Column="1"
-                                           Margin="0,0,0,0"/>
-                                <TextBlock Text="{Binding TotalValue, StringFormat={}{0:C0}}"
+                                <Image  Source="{Binding ImageSource}"
+                                        Width="50"
+                                        Height="50"
+                                        StylusDown="{Binding h}"
+                                        Tag=""
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Amount, StringFormat={}{0:C0}}"
                                            FontSize="30"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"
@@ -495,10 +491,9 @@
                 VerticalAlignment="Top" 
                 Margin="0,25,0,0"    
                 Grid.Column="1"
-                Width="440" 
-                Source="../Images/button-pay.png" 
-                PreviewMouseDown="BtnPay_PreviewMouseDown"/>
-            <!--<TextBlock Text="El valor a pagar esta sujeto a cambios por el cálculo de intereses" 
+                Width="350" 
+                Source="../Images/Buttons/continuar2.png" />
+            <!--<TextBlock Text="El valor a pagar esta su{ñlkuyr|0jeto a cambios por el cálculo de intereses" 
                 HorizontalAlignment="Center" 
                 Name="TxbNotify"
                 VerticalAlignment="Top"
@@ -514,8 +509,10 @@
                 Grid.Column="1"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
-                gif:ImageBehavior.AnimatedSource="/Images/loading.gif"
+                
                 Width="260"/>
+            <!--gif:ImageBehavior.AnimatedSource="/Images/loading.gif"-->
+            
             <!--<TextBlock Name="TxbLoading" 
                        HorizontalAlignment="Center" 
                        Margin="0,0,0,120" 
@@ -526,7 +523,7 @@
                        FontSize="40" 
                        Foreground="Red"
                    />-->
-            <!--<TextBlock Text="Valor Total" 
+            <TextBlock Text="Valor Total" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
                 Margin="0,0,0,0" 
@@ -539,7 +536,7 @@
                 Margin="0,80,0,0"
                 Text="$ 0"
                 FontSize="50"
-                FontWeight="Bold"/>-->
+                FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>

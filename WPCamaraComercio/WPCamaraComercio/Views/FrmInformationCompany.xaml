@@ -8,8 +8,6 @@
         Title="FrmInformacionEmpresa" 
         WindowStyle="None"
         WindowState="Maximized"
-        Loaded="Window_Loaded"
-        PreviewStylusDown="Window_PreviewStylusDown"
         Height="2064.095" 
         Width="1250.599">
     <Window.Background>
@@ -37,7 +35,6 @@
                    Height="80" 
                    Margin="0,50,25,0"
                    Stretch="Uniform"
-                   StylusDown="BtnExit_StylusDown"
                    />
             <TextBlock x:Name="tbTimer"
                        FontSize="35"
@@ -53,7 +50,6 @@
                    Height="80"  
                    Margin="25,50,0,0" 
                    Stretch="Uniform"
-                   StylusDown="BtnBack_StylusDown"
                    />
         </Grid>
 
@@ -180,7 +176,6 @@
                 Grid.Row="1"
                 Margin="0,0,0,0"
                 Height="100" Width="150"
-                StylusDown="BtnContinue_StylusDown"
                 />
 
             <!--<ListView x:Name="lvCredits" 
@@ -284,6 +279,7 @@
                    VerticalAlignment="Bottom" Visibility="Hidden" Width="20" FontWeight="Bold" Text="/" Grid.Column="1"/>
             <TextBlock Height="20" HorizontalAlignment="Right" Visibility="Hidden" Margin="0,0,480,63" Name="tbTotalPage" 
                    VerticalAlignment="Bottom" Width="28" Grid.Column="1" />
+            <ListBox x:Name="listBox" Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="177,53,0,0" Grid.Row="4" VerticalAlignment="Top" Width="100"/>
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
@@ -291,9 +287,7 @@
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Top" 
                 Margin="0,30,70,50"                  
-                Width="440" 
-                Source="../Images/SPM-b-pagar.png" 
-                PreviewMouseDown="BtnPay_PreviewMouseDown"/>
+                Width="440" />
             
             <!--<Image x:Name="BtnLoading"                
                Margin="0,0,0,0" 

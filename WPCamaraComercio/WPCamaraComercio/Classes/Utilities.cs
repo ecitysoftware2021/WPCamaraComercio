@@ -65,14 +65,14 @@ namespace WPCamaraComercio.Classes
 
         public static RespuestaDetalle DetailResponse { get; set; }
 
-        public static Dictionary<int, int> CertificateQuantity = new Dictionary<int, int>()
-        {
-            {1,1},
-            {2,2},
-            {3,3},
-            {4,4},
-            {5,5}
-        };
+        //public static Dictionary<int, int> CertificateQuantity = new Dictionary<int, int>()
+        //{
+        //    {1,1},
+        //    {2,2},
+        //    {3,3},
+        //    {4,4},
+        //    {5,5}
+        //};
         #endregion
 
         #region GeneralEvents
