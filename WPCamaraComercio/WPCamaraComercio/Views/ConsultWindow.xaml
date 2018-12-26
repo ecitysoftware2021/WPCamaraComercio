@@ -91,7 +91,7 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
                     TextAlignment="Center"
-                    Text="Ingrese NIT/Cédula sin dígito de verificación" 
+                    Text="{Binding message}" 
                     Foreground="Black" 
                     FontSize="45" 
                     FontWeight="Bold" 
@@ -109,8 +109,8 @@
                      Height="100" 
                      TextWrapping="Wrap"
                      TabIndex="0"
-                     FontSize="45" 
-                     Foreground="#FF282887"
+                     FontSize="42" 
+                     Foreground="#FF840000"
                      CaretBrush="#FFB2B0B8" 
                      FontWeight="Bold"
                      k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"/>
@@ -124,12 +124,12 @@
                      Height="100" 
                      TextWrapping="Wrap"
                      TabIndex="0"
-                     FontSize="45" 
+                     FontSize="42" 
                      Foreground="#FF282887"
                      CaretBrush="#FFB2B0B8" 
                      FontWeight="Bold" 
                      Visibility="Hidden"
-                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"/>
+                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true" Background="#FF840000"/>
 
             <Image x:Name="BtnConsultar"
                    Source="../Images/Buttons/b-Consultar.png"
@@ -142,7 +142,7 @@
 
         </Grid>
 
-        <Image gif:ImageBehavior.AnimatedSource="../Images/Gif/preload.gif"
+        <Image gif:ImageBehavior.AnimatedSource="../Images/Gif/preloader.gif"
                    HorizontalAlignment="Stretch"
                    Height="360" 
                    Margin="0,150,0,0"

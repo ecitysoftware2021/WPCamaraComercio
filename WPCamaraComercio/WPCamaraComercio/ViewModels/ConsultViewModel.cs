@@ -15,6 +15,8 @@ namespace WPCamaraComercio.ViewModels
     {
         private WCFServices service;
 
+        public Action<bool> callbackSearch;
+
         private List<Coincidence> _coincidences;
 
         public List<Coincidence> coincidences
@@ -133,8 +135,24 @@ namespace WPCamaraComercio.ViewModels
             }
         }
 
+        private Visibility _error;
+
+        public Visibility error
+        {
+            get
+            {
+                return _error;
+            }
+            set
+            {
+                _error = value;
+                OnPropertyRaised("error");
+            }
+        }
+
         public void ConsultConcidences(string value, int type)
         {
+            bool stateConsult = false;
             try
             {
                 this.headers = Visibility.Hidden;
@@ -163,17 +181,17 @@ namespace WPCamaraComercio.ViewModels
                                     State = item.estado
                                 });
                             }
+                            stateConsult = true;
                         }
                     }
-
-                    this.headers = Visibility.Visible;
-                    this.preload = Visibility.Hidden;
                 });
             }
             catch (Exception ex)
             {
 
             }
+            this.preload = Visibility.Hidden;
+            callbackSearch?.Invoke(stateConsult);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

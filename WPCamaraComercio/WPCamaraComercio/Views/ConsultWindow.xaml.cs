@@ -45,10 +45,10 @@ namespace WPCamaraComercio.Views
             
             InitializeComponent();
             utilities = new Utilities();
-            Init();
+            Init(true);
         }
 
-        private void Init()
+        private void Init(bool initData)
         {
             consultViewModel = new ConsultViewModel
             {
@@ -61,9 +61,23 @@ namespace WPCamaraComercio.Views
                 typeSearch = 2
 
         };
+            if (initData)
+            {
+                this.DataContext = consultViewModel;
 
-            this.DataContext = consultViewModel;
-            InitView();
+                this.consultViewModel.callbackSearch = stateConsult =>
+                {
+                    if (!stateConsult)
+                    {
+                        Utilities.OpenModal("No se encontraron resultados para la busqueda", this);
+                    }
+                    else
+                    {
+                        this.consultViewModel.headers = Visibility.Visible;
+                        InitView();
+                    }
+                };
+            } 
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -267,6 +281,10 @@ namespace WPCamaraComercio.Views
             {
                 this.consultViewModel.typeSearch = 2;
 
+                this.TxtIdentificacion.Text = "";
+
+                this.TxtName.Text = "";
+
                 this.TxtIdentificacion.Visibility = Visibility.Visible;
 
                 this.TxtName.Visibility = Visibility.Hidden;
@@ -290,12 +308,21 @@ namespace WPCamaraComercio.Views
 
                 this.TxtName.Visibility = Visibility.Visible;
 
+                this.TxtIdentificacion.Text = "";
+
+                this.TxtName.Text = "";
+
                 this.consultViewModel.sourceCheckName = Utilities.GetConfiguration("ImageCheckIn");
 
                 this.consultViewModel.sourceCheckNit = Utilities.GetConfiguration("ImageCheckOut");
 
                 this.consultViewModel.message = "Ingrese un nombre valido";
             }
+        }
+
+        private void Image_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            Init(false);
         }
     }
 }
