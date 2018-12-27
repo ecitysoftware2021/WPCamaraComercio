@@ -429,35 +429,28 @@
                                            VerticalAlignment="Center"
                                            Grid.Column="1"
                                            Margin="0,0,0,0"/>
-                                <ComboBox  
+                                <ComboBox ItemsSource="{Binding ListData}"
+                                          DisplayMemberPath="Value"
+                                          SelectedValuePath="Id"
                                           Grid.Column="2" 
                                           HorizontalAlignment="Center" 
                                           Margin="139,42,0,0" 
                                           Grid.Row="5" 
                                           VerticalAlignment="Center" 
-                                          Width="120">
-
-                                    
-
-                                    <ComboBox.ItemsSource>
-                                        <CompositeCollection>
-                                            <ListBoxItem>Seleccionar</ListBoxItem>
-                                            <ComboBoxItem Content = "1" ></ComboBoxItem>
-                                            <ComboBoxItem Content = "2" ></ComboBoxItem>
-                                            <ComboBoxItem Content = "3" ></ComboBoxItem>
-                                            <ComboBoxItem Content = "4" ></ComboBoxItem>
-                                            <ComboBoxItem Content = "5" ></ComboBoxItem>
-                                        </CompositeCollection>
-                                    </ComboBox.ItemsSource>
+                                          Width="120"
+                                          IsEditable="True"
+                                          IsReadOnly="True"
+                                          Text="-- Seleccionar --"
+                                          >
                                 </ComboBox>
 
                                 <TextBlock Text="Ver detalle"
                                            FontSize="20"
-                                           Tag="{Binding details}"
+                                           Tag="{Binding Details}"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"                                           
                                            VerticalAlignment="Center"
-                                               Grid.Column="3"
+                                           Grid.Column="3"
                                            StylusDown="TextBlock_StylusDown" 
                                             />
                             </Grid>

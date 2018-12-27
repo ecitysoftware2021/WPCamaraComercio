@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
+using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.WCFCamaraComercio;
 
@@ -37,17 +38,26 @@ namespace WPCamaraComercio.Views
         int tipo;
         private string matricula;
         private string tpcm;
-        WCFServices services = new WCFServices();
+        WCFServices services;
+        List<ComboData> ListData;
+
         public FrmDetailCompany()
         {
             InitializeComponent();
+            services = new WCFServices();
             lstDetailMerchant = new ObservableCollection<Models.DetailMerchant>();
             lstDetailEstablish = new ObservableCollection<DetailEstablish>();
             view = new CollectionViewSource();
+            ListData = new List<ComboData>();
+            ListData.Add(new ComboData { Id = 1, Value = "Uno" });
+            ListData.Add(new ComboData { Id = 2, Value = "Dos" });
+            ListData.Add(new ComboData { Id = 3, Value = "Tres" });
+            ListData.Add(new ComboData { Id = 4, Value = "Cuatro" });
+            ListData.Add(new ComboData { Id = 5, Value = "Cinco" });
+
             var task = services.ConsultInformation("890900608", tipo_busqueda.Nit);
             tipo = 1;
             var response = task.Result;
-
             Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
             matricula = Utilities.RespuestaConsulta.response.resultados[0].matricula;
             tpcm = Utilities.RespuestaConsulta.response.resultados[0].tpcm;
@@ -119,6 +129,7 @@ namespace WPCamaraComercio.Views
 
                 GrdEstablish.Visibility = Visibility.Hidden;
                 GrdMerchant.Visibility = Visibility.Visible;
+
                 int i = lstDetailMerchant.Count();
                 CreatePages(i, lstDetailMerchant);
                 LvMerchant.DataContext = view;
@@ -133,8 +144,6 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                int column = 1;
-                int row = 1;
                 foreach (var item in Utilities.DetailResponse.response.resultados)
                 {
                     if (item.establecimientos != null)
@@ -147,23 +156,13 @@ namespace WPCamaraComercio.Views
                             objDetail.mat = item2.MatriculaEst;
                             objDetail.estado = item2.EstadoEstablecimiento;
 
-                            //RowDefinition rowDefinition = new RowDefinition();
-                            //rowDefinition.Height = new GridLength(100);
-                            ////GrdEstablish.RowDefinitions.Add(rowDefinition);
-                                                        //Grid.SetColumn(label, column);
-                            //Grid.SetRow(label, row);
-                            //LvEstablish.Items.Add(label);
-                            //row += 1;
-
                             foreach (var item3 in item2.CertificadosEstablecimiento)
                             {
-
-
                                 lstDetailEstablish.Add(new DetailEstablish
                                 {
                                     Establish = item2.NombreEstablecimiento,
                                     Amount = item3.ValorCertificado,
-                                    details = objDetail
+                                    Details = objDetail
                                 });
                             }
                         }

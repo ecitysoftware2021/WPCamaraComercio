@@ -13,6 +13,6 @@ namespace WPCamaraComercio.Models
 
         public string Amount { get; set; }
 
-        public Details details { get; set; }
+        public Details Details { get; set; }
     }
 }
