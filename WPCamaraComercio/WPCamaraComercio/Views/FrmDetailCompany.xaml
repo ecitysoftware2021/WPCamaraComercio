@@ -429,9 +429,9 @@
                                            VerticalAlignment="Center"
                                            Grid.Column="1"
                                            Margin="0,0,0,0"/>
-                                <ComboBox ItemsSource="{Binding ListData}"
-                                          DisplayMemberPath="Value"
-                                          SelectedValuePath="Id"
+                                <ComboBox ItemsSource="{Binding Path = ListData}"
+                                          DisplayMemberPath="{Binding Path = ListData[0].Value}"
+                                          SelectedValuePath="{Binding Path = ListData[0].Id}"
                                           Grid.Column="2" 
                                           HorizontalAlignment="Center" 
                                           Margin="139,42,0,0" 
