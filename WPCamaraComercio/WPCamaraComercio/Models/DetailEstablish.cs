@@ -14,5 +14,7 @@ namespace WPCamaraComercio.Models
         public string Amount { get; set; }
 
         public Details Details { get; set; }
+
+        public string Certificate { get; set; }
     }
 }

@@ -414,35 +414,38 @@
                                     <ImageBrush 
                                         Stretch="Uniform" />
                                 </Grid.Background>
-
-                                <TextBlock Text="{Binding Establish}"
-                                           FontSize="20"
-                                           TextWrapping="Wrap"
-                                           HorizontalAlignment="Center"                                           
-                                           VerticalAlignment="Center"
-                                           />
-
-                                <TextBlock Text="{Binding Amount, StringFormat={}{0:C0}}"
-                                           FontSize="30"
-                                           TextWrapping="Wrap"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Grid.Column="1"
-                                           Margin="0,0,0,0"/>
-                                <ComboBox ItemsSource="{Binding Path = ListData}"
-                                          DisplayMemberPath="{Binding Path = ListData[0].Value}"
-                                          SelectedValuePath="{Binding Path = ListData[0].Id}"
-                                          Grid.Column="2" 
-                                          HorizontalAlignment="Center" 
-                                          Margin="139,42,0,0" 
-                                          Grid.Row="5" 
-                                          VerticalAlignment="Center" 
-                                          Width="120"
-                                          IsEditable="True"
+                                <Expander Grid.Column="0" Grid.Row="0" Header="{Binding Establish}"
+                                        HorizontalAlignment="Left"
+                                        Margin="10,10,0,0"
+                                        Grid.ColumnSpan="3"
+                                        VerticalAlignment="Top"
+                                        IsExpanded="False"
+                                        Height="299"
+                                        Width="497"
+                                        Expanded="Expander_Expanded"
+                                        Collapsed="Expander_Collapsed">
+                                    <Grid Margin="0,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text ="{Binding Certificate}" />
+                                        <TextBlock Grid.Column="1" Margin="0,0,0,10" Text="{Binding Amount}"/>
+                                        <ComboBox Grid.Column="2"  IsEditable="True"
                                           IsReadOnly="True"
-                                          Text="-- Seleccionar --"
-                                          >
-                                </ComboBox>
+                                          Text="-- Seleccionar --">
+                                            <ComboBoxItem Content="1"></ComboBoxItem>
+                                            <ComboBoxItem Content="2"></ComboBoxItem>
+                                            <ComboBoxItem Content="3"></ComboBoxItem>
+                                            <ComboBoxItem Content="4"></ComboBoxItem>
+                                            <ComboBoxItem Content="5"></ComboBoxItem>
+                                        </ComboBox>
+                                    </Grid>
+                                </Expander>
 
                                 <TextBlock Text="Ver detalle"
                                            FontSize="20"

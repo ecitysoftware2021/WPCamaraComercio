@@ -162,7 +162,8 @@ namespace WPCamaraComercio.Views
                                 {
                                     Establish = item2.NombreEstablecimiento,
                                     Amount = item3.ValorCertificado,
-                                    Details = objDetail
+                                    Details = objDetail,
+                                    Certificate = item3.NombreCertificado
                                 });
                             }
                         }
@@ -278,6 +279,20 @@ namespace WPCamaraComercio.Views
             TextBlock text = (TextBlock)sender;
             Details dt = (Details)text.Tag;
             Details(dt);
+        }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            // ... Set Window Title to Expander Header value.
+            var expander = sender as Expander;
+            this.Title = expander.Header.ToString();
+        }
+
+        private void Expander_Collapsed(object sender, RoutedEventArgs e)
+        {
+            // ... Change Window Title.
+            var expander = sender as Expander;
+            this.Title = expander.Header.ToString();
         }
     }
 }
