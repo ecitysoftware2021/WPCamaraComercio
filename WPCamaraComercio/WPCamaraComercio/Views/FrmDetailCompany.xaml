@@ -417,25 +417,43 @@
                                         IsExpanded="False"
                                         Height="500"
                                         Width="497"
-                                        FontSize="40"
+                                        FontSize="30"
                                         FontWeight="Bold"
                                         Expanded="Expander_Expanded"
                                         Collapsed="Expander_Collapsed">
                                     <Grid Margin="0,0,0,0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text ="{Binding Certificate}" />
-                                        <TextBlock Grid.Column="1" Margin="20,0,0,0" Text="{Binding Amount,StringFormat={}{0:C0}}"/>
-                                        <ComboBox Grid.Column="2"  IsEditable="True"
-                                          IsReadOnly="True"
-                                          Margin="20,0,0,0"
-                                          Text="-- Seleccionar --">
+                                        <TextBlock Text ="{Binding Certificate}" 
+                                                   TextAlignment="Center"
+                                                   TextWrapping="Wrap"
+                                                   FontSize="20"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1"
+                                                   Margin="0,0,0,0"
+                                                   Text="{Binding Amount,StringFormat={}{0:C0}}"
+                                                   TextAlignment="Center"
+                                                   TextWrapping="Wrap"
+                                                   FontSize="20"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   />
+                                        <ComboBox Grid.Column="2" 
+                                                  IsEditable="True"
+                                                  IsReadOnly="True"
+                                                  Margin="0,0,0,0"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Width="100"
+                                                  Foreground="Pink"
+                                                  Text="-- Seleccionar --">
                                             <ComboBoxItem Content="1"></ComboBoxItem>
                                             <ComboBoxItem Content="2"></ComboBoxItem>
                                             <ComboBoxItem Content="3"></ComboBoxItem>
