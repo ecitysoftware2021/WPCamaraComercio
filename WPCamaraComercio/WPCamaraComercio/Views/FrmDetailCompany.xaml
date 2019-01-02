@@ -253,24 +253,19 @@
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            Grid.Column="2"
-                                           Margin="0,0,0,0"/>
-                                <ComboBox  
-                                          Grid.Column="3" 
-                                          HorizontalAlignment="Center" 
-                                          Margin="139,42,0,0" 
-                                          Grid.Row="5" 
-                                          VerticalAlignment="Center" 
-                                          Width="120">
-                                    <ComboBox.ItemsSource>
-                                        <CompositeCollection>
-                                            <ListBoxItem>Seleccionar</ListBoxItem>
-                                            <ComboBoxItem Content = "1" ></ComboBoxItem>
-                                            <ComboBoxItem Content = "2" ></ComboBoxItem>
-                                            <ComboBoxItem Content = "3" ></ComboBoxItem>
-                                            <ComboBoxItem Content = "4" ></ComboBoxItem>
-                                            <ComboBoxItem Content = "5" ></ComboBoxItem>
-                                        </CompositeCollection>
-                                    </ComboBox.ItemsSource>
+                                           Margin="20,0,0,0"/>
+
+                                <ComboBox Grid.Column="3"  IsEditable="True"
+                                          IsReadOnly="True"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          Margin="20,0,0,0"
+                                          Text="-- Seleccionar --">
+                                    <ComboBoxItem Content="1"></ComboBoxItem>
+                                    <ComboBoxItem Content="2"></ComboBoxItem>
+                                    <ComboBoxItem Content="3"></ComboBoxItem>
+                                    <ComboBoxItem Content="4"></ComboBoxItem>
+                                    <ComboBoxItem Content="5"></ComboBoxItem>
                                 </ComboBox>
                             </Grid>
                         </StackPanel>
@@ -422,6 +417,8 @@
                                         IsExpanded="False"
                                         Height="299"
                                         Width="497"
+                                        FontSize="40"
+                                        FontWeight="Bold"
                                         Expanded="Expander_Expanded"
                                         Collapsed="Expander_Collapsed">
                                     <Grid Margin="0,0,0,0">
@@ -434,9 +431,10 @@
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <TextBlock Text ="{Binding Certificate}" />
-                                        <TextBlock Grid.Column="1" Margin="0,0,0,10" Text="{Binding Amount}"/>
+                                        <TextBlock Grid.Column="1" Margin="20,0,0,0" Text="{Binding Amount,StringFormat={}{0:C0}}"/>
                                         <ComboBox Grid.Column="2"  IsEditable="True"
                                           IsReadOnly="True"
+                                          Margin="20,0,0,0"
                                           Text="-- Seleccionar --">
                                             <ComboBoxItem Content="1"></ComboBoxItem>
                                             <ComboBoxItem Content="2"></ComboBoxItem>
