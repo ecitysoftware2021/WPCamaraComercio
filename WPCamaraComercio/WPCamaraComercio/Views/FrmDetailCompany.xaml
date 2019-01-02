@@ -255,12 +255,14 @@
                                            Grid.Column="2"
                                            Margin="20,0,0,0"/>
 
-                                <ComboBox Grid.Column="3"  IsEditable="True"
-                                          IsReadOnly="True"
+                                <ComboBox Grid.Column="3"
                                           VerticalAlignment="Center"
                                           HorizontalAlignment="Center"
                                           Margin="20,0,0,0"
-                                          Text="-- Seleccionar --">
+                                          HorizontalContentAlignment="Center"
+                                          FontSize="25"
+                                          >
+                                    <ComboBoxItem Content="0" ContentStringFormat="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
                                     <ComboBoxItem Content="1"></ComboBoxItem>
                                     <ComboBoxItem Content="2"></ComboBoxItem>
                                     <ComboBoxItem Content="3"></ComboBoxItem>
@@ -445,14 +447,13 @@
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Top"
                                                    />
-                                        <ComboBox Grid.Column="2" 
-                                                  IsEditable="True"
-                                                  IsReadOnly="True"
+                                        <ComboBox Grid.Column="2"                                                                                                     
                                                   Margin="0,0,0,0"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Top"
-                                                  FontSize="20"
-                                                  Text="-- Seleccionar --">
+                                                  HorizontalContentAlignment="Center"                                                  
+                                                  FontSize="20">
+                                            <ComboBoxItem Content="0" ContentStringFormat="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
                                             <ComboBoxItem Content="1"></ComboBoxItem>
                                             <ComboBoxItem Content="2"></ComboBoxItem>
                                             <ComboBoxItem Content="3"></ComboBoxItem>
