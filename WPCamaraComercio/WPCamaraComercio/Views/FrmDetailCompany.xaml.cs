@@ -121,7 +121,7 @@ namespace WPCamaraComercio.Views
                             lstDetailMerchant.Add(new DetailMerchant
                             {
                                 CertificateName = item2.NombreCertificado,
-                                Amount = item2.ValorCertificado
+                                Amount = Convert.ToDecimal(item2.ValorCertificado)
                             });
                         }
                     }

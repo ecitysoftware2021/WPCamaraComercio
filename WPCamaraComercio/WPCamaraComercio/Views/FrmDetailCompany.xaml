@@ -261,8 +261,9 @@
                                           Margin="20,0,0,0"
                                           HorizontalContentAlignment="Center"
                                           FontSize="25"
+                                          Width="180"
                                           >
-                                    <ComboBoxItem Content="0" ContentStringFormat="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
+                                    <ComboBoxItem Content="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
                                     <ComboBoxItem Content="1"></ComboBoxItem>
                                     <ComboBoxItem Content="2"></ComboBoxItem>
                                     <ComboBoxItem Content="3"></ComboBoxItem>
@@ -330,7 +331,7 @@
                    Margin="0,0,0,0"
                    TextAlignment="Center"
                    TextWrapping="Wrap"
-                   Text="DETALLES"
+                   Text="VALOR"
                    FontSize="30"
                    Grid.Column="1"
                    FontWeight="Bold"   
@@ -341,7 +342,7 @@
                 Margin="0,0,0,0"
                 TextAlignment="Center"
                 TextWrapping="Wrap"
-                Text="VALOR"
+                Text="CANTIDAD"
                 FontSize="30"
                 Grid.Column="2"
                 FontWeight="Bold"   
@@ -352,7 +353,7 @@
                 Margin="0,0,0,0"
                 TextAlignment="Center"
                 TextWrapping="Wrap"
-                Text="CANTIDAD"
+                Text="DETALLES"
                 FontSize="30"
                 Grid.Column="3"
                 FontWeight="Bold"   
@@ -414,11 +415,11 @@
                                 <Expander Grid.Column="0" Grid.Row="0" Header="{Binding Establish}"
                                         HorizontalAlignment="Left"
                                         Margin="0,0,0,0"
-                                        Grid.ColumnSpan="4"
+                                        Grid.ColumnSpan="3"
                                         VerticalAlignment="Top"
                                         IsExpanded="False"
                                         Height="800"
-                                        Width="900"
+                                        Width="800"
                                         FontSize="30"
                                         FontWeight="Bold"
                                         Expanded="Expander_Expanded"
@@ -451,9 +452,10 @@
                                                   Margin="0,0,0,0"
                                                   HorizontalAlignment="Center"
                                                   VerticalAlignment="Top"
-                                                  HorizontalContentAlignment="Center"                                                  
+                                                  HorizontalContentAlignment="Center"
+                                                  Width="140"
                                                   FontSize="20">
-                                            <ComboBoxItem Content="0" ContentStringFormat="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
+                                            <ComboBoxItem Content="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
                                             <ComboBoxItem Content="1"></ComboBoxItem>
                                             <ComboBoxItem Content="2"></ComboBoxItem>
                                             <ComboBoxItem Content="3"></ComboBoxItem>
