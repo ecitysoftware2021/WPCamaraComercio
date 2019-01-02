@@ -415,7 +415,7 @@
                                         Grid.ColumnSpan="3"
                                         VerticalAlignment="Top"
                                         IsExpanded="False"
-                                        Height="299"
+                                        Height="500"
                                         Width="497"
                                         FontSize="40"
                                         FontWeight="Bold"
