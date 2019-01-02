@@ -455,7 +455,9 @@
                                                   HorizontalContentAlignment="Center"
                                                   Width="140"
                                                   SelectionChanged="ComboBox_SelectionChanged"
+                                                  SelectedValuePath="Content"
                                                   Tag="{Binding Details}"
+                                                  
                                                   FontSize="20">
                                             <ComboBoxItem Content="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
                                             <ComboBoxItem Content="1"></ComboBoxItem>
@@ -463,6 +465,7 @@
                                             <ComboBoxItem Content="3"></ComboBoxItem>
                                             <ComboBoxItem Content="4"></ComboBoxItem>
                                             <ComboBoxItem Content="5"></ComboBoxItem>
+                                            <ComboBoxItem Content="0"></ComboBoxItem>
                                         </ComboBox>
                                     </Grid>
                                 </Expander>
