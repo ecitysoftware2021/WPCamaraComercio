@@ -40,6 +40,7 @@ namespace WPCamaraComercio.Views
         private string tpcm;
         WCFServices services;
         List<ComboData> ListData;
+        List<SelectedDetail> selectedDetail;
 
         public FrmDetailCompany()
         {
@@ -49,6 +50,9 @@ namespace WPCamaraComercio.Views
             lstDetailEstablish = new ObservableCollection<DetailEstablish>();
             view = new CollectionViewSource();
             ListData = new List<ComboData>();
+            selectedDetail = new List<SelectedDetail>();
+
+
             ListData.Add(new ComboData { Id = 1, Value = "Uno" });
             ListData.Add(new ComboData { Id = 2, Value = "Dos" });
             ListData.Add(new ComboData { Id = 3, Value = "Tres" });
@@ -158,6 +162,7 @@ namespace WPCamaraComercio.Views
 
                             foreach (var item3 in item2.CertificadosEstablecimiento)
                             {
+                                objDetail.amount = decimal.Parse(item3.ValorCertificado);
                                 lstDetailEstablish.Add(new DetailEstablish
                                 {
                                     Establish = item2.NombreEstablecimiento,
@@ -293,6 +298,48 @@ namespace WPCamaraComercio.Views
             // ... Change Window Title.
             var expander = sender as Expander;
             this.Title = expander.Header.ToString();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox combo = (ComboBox)sender;
+            Details details = (Details)combo.Tag;
+            int quantity = 0;
+            if (!int.TryParse(combo.SelectedValue.ToString(), out quantity))
+            {
+                quantity = 0;
+            }
+
+            var stablish = selectedDetail.Where(d => d.Details.nombreest == details.nombreest).FirstOrDefault();
+            if (stablish == null)
+            {
+                if (quantity != 0)
+                {
+                    selectedDetail.Add(new SelectedDetail
+                    {
+                        Details = details,
+                        Quantity = quantity
+                    });
+
+                    total += quantity * details.amount;
+                }
+            }
+            else
+            {
+                if (quantity != 0)
+                {
+                    total -= stablish.Quantity * stablish.Details.amount;
+                    stablish.Quantity = quantity;
+                    total += quantity * details.amount;
+                }
+                else
+                {
+                    selectedDetail.Remove(stablish);
+                    total -= stablish.Quantity * stablish.Details.amount;
+                }
+            }
+
+            lblAmount.Text = string.Format("{0:C0}", total);
         }
     }
 }

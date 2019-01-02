@@ -261,7 +261,7 @@
                                           Margin="20,0,0,0"
                                           HorizontalContentAlignment="Center"
                                           FontSize="25"
-                                          Width="180"
+                                          Width="180"                                          
                                           >
                                     <ComboBoxItem Content="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
                                     <ComboBoxItem Content="1"></ComboBoxItem>
@@ -454,6 +454,8 @@
                                                   VerticalAlignment="Top"
                                                   HorizontalContentAlignment="Center"
                                                   Width="140"
+                                                  SelectionChanged="ComboBox_SelectionChanged"
+                                                  Tag="{Binding Details}"
                                                   FontSize="20">
                                             <ComboBoxItem Content="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
                                             <ComboBoxItem Content="1"></ComboBoxItem>
