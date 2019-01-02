@@ -111,7 +111,6 @@
                      TabIndex="0"
                      FontSize="42" 
                      Foreground="#FF840000"
-                     CaretBrush="#FFB2B0B8" 
                      FontWeight="Bold"
                      k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"/>
 
@@ -126,10 +125,9 @@
                      TabIndex="0"
                      FontSize="42" 
                      Foreground="#FF282887"
-                     CaretBrush="#FFB2B0B8" 
                      FontWeight="Bold" 
                      Visibility="Hidden"
-                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true" Background="#FF840000"/>
+                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true" />
 
             <Image x:Name="BtnConsultar"
                    Source="../Images/Buttons/b-Consultar.png"
