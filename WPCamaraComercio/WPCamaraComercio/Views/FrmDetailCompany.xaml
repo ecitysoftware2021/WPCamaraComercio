@@ -397,7 +397,7 @@
                                   VerticalAlignment="Center"
                                   Margin="0,0,0,0"
                                   Width="1000"
-                                  Height="80"
+                                  Height="120"
                                   Tag="{Binding Tag}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -411,12 +411,12 @@
                                 </Grid.Background>
                                 <Expander Grid.Column="0" Grid.Row="0" Header="{Binding Establish}"
                                         HorizontalAlignment="Left"
-                                        Margin="10,10,0,0"
-                                        Grid.ColumnSpan="3"
+                                        Margin="0,0,0,0"
+                                        Grid.ColumnSpan="4"
                                         VerticalAlignment="Top"
                                         IsExpanded="False"
-                                        Height="500"
-                                        Width="497"
+                                        Height="800"
+                                        Width="900"
                                         FontSize="30"
                                         FontWeight="Bold"
                                         Expanded="Expander_Expanded"
@@ -443,16 +443,15 @@
                                                    TextWrapping="Wrap"
                                                    FontSize="20"
                                                    HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
+                                                   VerticalAlignment="Top"
                                                    />
                                         <ComboBox Grid.Column="2" 
                                                   IsEditable="True"
                                                   IsReadOnly="True"
                                                   Margin="0,0,0,0"
                                                   HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  Width="100"
-                                                  Foreground="Pink"
+                                                  VerticalAlignment="Top"
+                                                  FontSize="20"
                                                   Text="-- Seleccionar --">
                                             <ComboBoxItem Content="1"></ComboBoxItem>
                                             <ComboBoxItem Content="2"></ComboBoxItem>
@@ -468,7 +467,7 @@
                                            Tag="{Binding Details}"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"                                           
-                                           VerticalAlignment="Center"
+                                           VerticalAlignment="Top"
                                            Grid.Column="3"
                                            StylusDown="TextBlock_StylusDown" 
                                             />
