@@ -30,10 +30,6 @@ namespace WPCamaraComercio.Views
 
         private int totalPage = 0;
 
-        private CollectionViewSource view;
-
-        private ObservableCollection<Coincidence> lstPager;
-
         private object OpcionList;
 
         private Utilities utilities;
@@ -54,7 +50,8 @@ namespace WPCamaraComercio.Views
             {
                 headers = Visibility.Hidden,
                 preload = Visibility.Hidden,
-                coincidences = null,
+                coincidences = new List<Coincidence>(),
+                viewList = new CollectionViewSource(), 
                 sourceCheckName = Utilities.GetConfiguration("ImageCheckOut"),
                 sourceCheckNit = Utilities.GetConfiguration("ImageCheckIn"),
                 message = "Ingrese NIT/Cédula sin dígito de verificación",
@@ -74,7 +71,7 @@ namespace WPCamaraComercio.Views
                     else
                     {
                         this.consultViewModel.headers = Visibility.Visible;
-                        InitView();
+                        InitViewList();
                     }
                 };
             } 
@@ -83,14 +80,6 @@ namespace WPCamaraComercio.Views
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
            // Utilities.Timer(tbTimer);
-        }
-
-        private void InitListCoincidences(List<Coincidence> coincidences)
-        {
-            this.view = new CollectionViewSource();
-            this.lstPager = new ObservableCollection<Coincidence>();
-            OpcionList = null;
-            InitView();
         }
 
         #region "HeadersButtons"
@@ -118,7 +107,7 @@ namespace WPCamaraComercio.Views
 
         #endregion
 
-        private void InitView()
+        private void InitViewList()
         {
             try
             {
@@ -150,9 +139,8 @@ namespace WPCamaraComercio.Views
                     btnPrev.Visibility = Visibility.Hidden;
                 }
 
-                view.Source = lstPager;
-                view.Filter += new FilterEventHandler(View_Filter);
-                lv_Files.DataContext = view;
+                consultViewModel.viewList.Filter += new FilterEventHandler(View_Filter);
+                lv_Files.DataContext = consultViewModel.viewList;
                 //ShowCurrentPageIndex();
             }
             catch (Exception ex)
@@ -177,7 +165,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                int index = lstPager.IndexOf((Coincidence) e.Item);
+                int index = consultViewModel.coincidences.IndexOf((Coincidence) e.Item);
 
                 if (index >= itemPerPage * currentPageIndex && index < itemPerPage * (currentPageIndex + 1))
                 {
@@ -212,7 +200,7 @@ namespace WPCamaraComercio.Views
             if (currentPageIndex < totalPage - 1)
             {
                 currentPageIndex++;
-                view.View.Refresh();
+                consultViewModel.viewList.View.Refresh();
             }
             if (currentPageIndex == totalPage - 1)
             {
@@ -233,7 +221,7 @@ namespace WPCamaraComercio.Views
             if (currentPageIndex > 0)
             {
                 currentPageIndex--;
-                view.View.Refresh();
+                consultViewModel.viewList.View.Refresh();
             }
 
             if (currentPageIndex == 0)

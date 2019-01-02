@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.WCFCamaraComercio;
@@ -29,6 +30,21 @@ namespace WPCamaraComercio.ViewModels
             {
                 _coincidences = value;
                 OnPropertyRaised("coincidences");
+            }
+        }
+
+        private CollectionViewSource _viewList;
+
+        public CollectionViewSource viewList
+        {
+            get
+            {
+                return _viewList;
+            }
+            set
+            {
+                _viewList = value;
+                OnPropertyRaised("viewList");
             }
         }
 
@@ -181,6 +197,7 @@ namespace WPCamaraComercio.ViewModels
                                     State = item.estado
                                 });
                             }
+                            this.viewList.Source = this.coincidences;
                             stateConsult = true;
                         }
                     }
