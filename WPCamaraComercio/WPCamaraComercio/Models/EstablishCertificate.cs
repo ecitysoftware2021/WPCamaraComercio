@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPCamaraComercio.Models
 {
-    class EstablishCertificate
+    public class EstablishCertificate
     {
         public decimal CertificateCost { get; set; }
 

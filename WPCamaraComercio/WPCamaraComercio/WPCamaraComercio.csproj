@@ -111,6 +111,7 @@
     <Compile Include="Models\DetailEstablish.cs" />
     <Compile Include="Models\DetailMerchant.cs" />
     <Compile Include="Models\Details.cs" />
+    <Compile Include="Models\EstablishCertificate.cs" />
     <Compile Include="Models\MerchantCertificate.cs" />
     <Compile Include="Objects\ComboData.cs" />
     <Compile Include="Objects\SelectedDetail.cs" />

@@ -8,7 +8,7 @@ namespace WPCamaraComercio.Models
 {
     public class MerchantCertificate
     {
-        public string CertificateCost { get; set; }
+        public decimal CertificateCost { get; set; }
 
         public string CertificateId { get; set; }
 
