@@ -124,20 +124,27 @@
                      Width="500"
                      Height="100" 
                      TextWrapping="Wrap"
-                     TabIndex="0"
+                     TabIndex="1"
                      FontSize="42" 
                      Foreground="#FF282887"
                      FontWeight="Bold" 
                      k:TouchScreenKeyboard.TouchScreenKeyboard = "true" />
 
-            <Image x:Name="BtnConsultar"
-                   Source="../Images/Buttons/b-Consultar.png"
+            <Button x:Name="BtnConsultar"
                    HorizontalAlignment="Right" 
                    VerticalAlignment="Bottom" 
                    Width="350"
                    Height="100" 
                    Margin="0,0,100,55" 
-                   StylusDown="BtnConsultar_StylusDown" />
+                   TabIndex="2"
+                   StylusDown="BtnConsultar_StylusDown">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Images/Buttons/b-Consultar.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
 
         </Grid>
 

@@ -38,7 +38,6 @@ namespace WPCamaraComercio.Views
 
         public ConsultWindow()
         {
-            
             InitializeComponent();
             utilities = new Utilities();
             Init(true);
@@ -56,7 +55,8 @@ namespace WPCamaraComercio.Views
                 sourceCheckNit = Utilities.GetConfiguration("ImageCheckIn"),
                 message = "Ingrese NIT/Cédula sin dígito de verificación",
                 typeSearch = 1
-        };
+            };
+
             if (initData)
             {
                 this.DataContext = consultViewModel;
@@ -69,7 +69,6 @@ namespace WPCamaraComercio.Views
                     }
                     else
                     {
-                        
                         this.consultViewModel.headers = Visibility.Visible;
                         InitViewList();
                     }
@@ -150,7 +149,6 @@ namespace WPCamaraComercio.Views
                     lv_Files.DataContext = consultViewModel.viewList;
                 });
                 GC.Collect();
-                //ShowCurrentPageIndex();
             }
             catch (Exception ex)
             {
