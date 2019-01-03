@@ -26,7 +26,7 @@ namespace WPCamaraComercio.Service
             {
                 tipo_busqueda searchType;
 
-                if (type == 1)
+                if (type == 2)
                 {
                     searchType = tipo_busqueda.Nit;
                 }

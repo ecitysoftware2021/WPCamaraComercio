@@ -425,17 +425,11 @@ namespace WPCamaraComercio.Keyboard
                     _InstanceObject.Close();
                     _InstanceObject = null;
                 }
-
                 _CurrentControl.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-
-
             }
             else if (e.Command == CmdShift) //Fourth Row
             {
-
                 ShiftFlag = true; ;
-
-
             }
             else if (e.Command == CmdZ)
             {

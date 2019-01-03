@@ -197,18 +197,19 @@ namespace WPCamaraComercio.ViewModels
                                     State = item.estado
                                 });
                             }
-                            this.viewList.Source = this.coincidences;
+                            
                             stateConsult = true;
                         }
                     }
+                    this.preload = Visibility.Hidden;
+                    callbackSearch?.Invoke(stateConsult);
                 });
             }
             catch (Exception ex)
             {
-
+                this.preload = Visibility.Hidden;
+                callbackSearch?.Invoke(stateConsult);
             }
-            this.preload = Visibility.Hidden;
-            callbackSearch?.Invoke(stateConsult);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

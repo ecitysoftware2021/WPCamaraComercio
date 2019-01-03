@@ -55,8 +55,7 @@ namespace WPCamaraComercio.Views
                 sourceCheckName = Utilities.GetConfiguration("ImageCheckOut"),
                 sourceCheckNit = Utilities.GetConfiguration("ImageCheckIn"),
                 message = "Ingrese NIT/Cédula sin dígito de verificación",
-                typeSearch = 2
-
+                typeSearch = 1
         };
             if (initData)
             {
@@ -70,6 +69,7 @@ namespace WPCamaraComercio.Views
                     }
                     else
                     {
+                        
                         this.consultViewModel.headers = Visibility.Visible;
                         InitViewList();
                     }
@@ -135,12 +135,21 @@ namespace WPCamaraComercio.Views
                 //Cuando sólo haya una página se ocultaran los botónes de Next y Prev
                 if (totalPage == 1)
                 {
-                    btnNext.Visibility = Visibility.Hidden;
-                    btnPrev.Visibility = Visibility.Hidden;
+                    Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        btnNext.Visibility = Visibility.Hidden;
+                        btnPrev.Visibility = Visibility.Hidden;
+                    });
+                    GC.Collect();
                 }
 
-                consultViewModel.viewList.Filter += new FilterEventHandler(View_Filter);
-                lv_Files.DataContext = consultViewModel.viewList;
+                Dispatcher.BeginInvoke((Action)delegate
+                {
+                    consultViewModel.viewList.Source = consultViewModel.coincidences;
+                    consultViewModel.viewList.Filter += new FilterEventHandler(View_Filter);
+                    lv_Files.DataContext = consultViewModel.viewList;
+                });
+                GC.Collect();
                 //ShowCurrentPageIndex();
             }
             catch (Exception ex)
@@ -242,7 +251,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                string valueSearch = "";
+                string valueSearch = string.Empty;
 
                 if (consultViewModel.typeSearch == 1)
                 {
@@ -269,9 +278,9 @@ namespace WPCamaraComercio.Views
             {
                 this.consultViewModel.typeSearch = 2;
 
-                this.TxtIdentificacion.Text = "";
+                this.TxtIdentificacion.Text = string.Empty;
 
-                this.TxtName.Text = "";
+                this.TxtName.Text = string.Empty;
 
                 this.TxtIdentificacion.Visibility = Visibility.Visible;
 
