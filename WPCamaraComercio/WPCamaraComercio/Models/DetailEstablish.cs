@@ -16,5 +16,7 @@ namespace WPCamaraComercio.Models
         public Details Details { get; set; }
 
         public string Certificate { get; set; }
+
+        public EstablishCertificate EstablishCertificate { get; set; }
     }
 }

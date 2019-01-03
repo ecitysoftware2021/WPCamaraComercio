@@ -12,6 +12,5 @@ namespace WPCamaraComercio.Models
         public string nombreest { get; set; }
         public string mat { get; set; }
         public string estado { get; set; }
-        public decimal amount { get; set; }
     }
 }

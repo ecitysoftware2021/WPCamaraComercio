@@ -9,7 +9,7 @@ namespace WPCamaraComercio.Objects
 {
     public class SelectedDetail
     {
-        public Details Details { get; set; }
+        public EstablishCertificate EstablishCertificate { get; set; }
 
         public int Quantity { get; set; }
     }

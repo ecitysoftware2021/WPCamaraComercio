@@ -126,10 +126,17 @@ namespace WPCamaraComercio.Views
                     {
                         foreach (var item2 in item.certificados)
                         {
+                            EstablishCertificate objEstablishCertificate = new EstablishCertificate();
+                            objEstablishCertificate.CertificateCost = decimal.Parse(item2.ValorCertificado);
+                            objEstablishCertificate.CertificateId = item2.IdCertificado;
+                            objEstablishCertificate.EstablishEnrollment = item2.MatriculaEstablecimiento;
+                            objEstablishCertificate.GenerationCode = item2.CodigoGeneracion;
+
                             lstDetailMerchant.Add(new DetailMerchant
                             {
                                 CertificateName = item2.NombreCertificado,
-                                Amount = Convert.ToDecimal(item2.ValorCertificado)
+                                Amount = Convert.ToDecimal(item2.ValorCertificado),
+                                EstablishCertificate = objEstablishCertificate,
                             });
                         }
                     }
@@ -166,13 +173,19 @@ namespace WPCamaraComercio.Views
 
                             foreach (var item3 in item2.CertificadosEstablecimiento)
                             {
-                                objDetail.amount = decimal.Parse(item3.ValorCertificado);
+                                EstablishCertificate objEstablishCertificate = new EstablishCertificate();
+                                objEstablishCertificate.CertificateCost = decimal.Parse(item3.ValorCertificado);
+                                objEstablishCertificate.CertificateId = item3.IdCertificado;
+                                objEstablishCertificate.EstablishEnrollment = item3.MatriculaEstablecimiento;
+                                objEstablishCertificate.GenerationCode = item3.CodigoGeneracion;
+
                                 lstDetailEstablish.Add(new DetailEstablish
                                 {
                                     Establish = item2.NombreEstablecimiento,
                                     Amount = item3.ValorCertificado,
                                     Details = objDetail,
-                                    Certificate = item3.NombreCertificado
+                                    Certificate = item3.NombreCertificado,
+                                    EstablishCertificate = objEstablishCertificate
                                 });
                             }
                         }
@@ -309,39 +322,39 @@ namespace WPCamaraComercio.Views
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox combo = (ComboBox)sender;
-            Details details = (Details)combo.Tag;
+            EstablishCertificate establishCertificate = (EstablishCertificate)combo.Tag;
             int quantity = 0;
             if (!int.TryParse(combo.SelectedValue.ToString(), out quantity))
             {
                 quantity = 0;
             }
 
-            var stablish = selectedDetail.Where(d => d.Details.nombreest == details.nombreest).FirstOrDefault();
+            var stablish = selectedDetail.Where(d => d.EstablishCertificate.EstablishEnrollment == establishCertificate.EstablishEnrollment).FirstOrDefault();
             if (stablish == null)
             {
                 if (quantity != 0)
                 {
                     selectedDetail.Add(new SelectedDetail
                     {
-                        Details = details,
+                        EstablishCertificate = establishCertificate,
                         Quantity = quantity
                     });
 
-                    total += quantity * details.amount;
+                    total += quantity * establishCertificate.CertificateCost;
                 }
             }
             else
             {
                 if (quantity != 0)
                 {
-                    total -= stablish.Quantity * stablish.Details.amount;
+                    total -= stablish.Quantity * stablish.EstablishCertificate.CertificateCost;
                     stablish.Quantity = quantity;
-                    total += quantity * details.amount;
+                    total += quantity * establishCertificate.CertificateCost;
                 }
                 else
                 {
                     selectedDetail.Remove(stablish);
-                    total -= stablish.Quantity * stablish.Details.amount;
+                    total -= stablish.Quantity * stablish.EstablishCertificate.CertificateCost;
                 }
             }
 

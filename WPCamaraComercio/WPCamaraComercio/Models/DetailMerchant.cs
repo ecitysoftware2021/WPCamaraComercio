@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace WPCamaraComercio.Models
 {
-    class DetailMerchant
+    public class DetailMerchant
     {
         public string CertificateName { get; set; }
 
         public decimal Amount { get; set; }
 
         public string Quantity { get; set; }
+
+        public MerchantCertificate MerchantCertificate { get; set; }
     }
 }

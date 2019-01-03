@@ -226,6 +226,7 @@
                                           Margin="20,0,0,0"
                                           HorizontalContentAlignment="Center"
                                           FontSize="25"
+                                          Tag="{Binding EstablishCertificate}"
                                           SelectionChanged="ComboBox_SelectionChanged_1"
                                           Width="180"                                          
                                           >
@@ -422,7 +423,7 @@
                                                   Width="140"
                                                   SelectionChanged="ComboBox_SelectionChanged"
                                                   SelectedValuePath="Content"
-                                                  Tag="{Binding Details}"                                                  
+                                                  Tag="{Binding EstablishCertificate}"                                                  
                                                   FontSize="20">
                                             <ComboBoxItem Content="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
                                             <ComboBoxItem Content="1"></ComboBoxItem>
