@@ -85,9 +85,11 @@
                     FontSize="30"                    
                     Grid.ColumnSpan="2"
                     FontWeight="Bold"
-                    Foreground="#000"
+                    Foreground="Red"
                     Name="TxbData2"
-                    Text="data2"/>
+                    Text="Ver datalles"
+                    StylusDown="TxbData2_StylusDown"
+                    />
             <Image Source="/Images/Buttons/comerciante.png" 
                    Name="BtnComerciant"
                    Margin="0,0,0,0"

@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using WPCamaraComercio.Models;
 using WPCamaraComercio.Views;
 using WPCamaraComercio.WCFCamaraComercio;
 
@@ -64,6 +65,8 @@ namespace WPCamaraComercio.Classes
         }
 
         public static RespuestaDetalle DetailResponse { get; set; }
+
+        public static List<MerchantDetail> ListMerchantDetail { get; set; }
 
         //public static Dictionary<int, int> CertificateQuantity = new Dictionary<int, int>()
         //{

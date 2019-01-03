@@ -123,6 +123,21 @@ namespace WPCamaraComercio.Views
                 foreach (var item in Utilities.DetailResponse.response.resultados)
                 {
                     TxbData1.Text = item.come_Nom;
+
+                    MerchantDetail objMerchantDetail = new MerchantDetail();
+                    objMerchantDetail.rSocial = item.come_Nom;
+                    objMerchantDetail.sigla = item.come_sigla;
+                    objMerchantDetail.ident = item.identificacion;
+                    objMerchantDetail.tSociedad = item.Tpcm_Desc;
+                    objMerchantDetail.dComercial = item.dir_come;
+                    objMerchantDetail.mun = item.Mpio_Come_Nom;
+                    objMerchantDetail.estado = item.Activo;
+                    objMerchantDetail.nEstablecimientos = item.numeroestablecimientosactivos;
+                    objMerchantDetail.fInicio = item.Fec_Inicio;
+                    objMerchantDetail.uRenovacion = item.UltRenv;
+
+                    Utilities.ListMerchantDetail.Add(objMerchantDetail);
+
                     if (item.certificados != null)
                     {
                         foreach (var item2 in item.certificados)
@@ -163,6 +178,21 @@ namespace WPCamaraComercio.Views
                 foreach (var item in Utilities.DetailResponse.response.resultados)
                 {
                     TxbData1.Text = item.come_Nom;
+
+                    MerchantDetail objMerchantDetail = new MerchantDetail();
+                    objMerchantDetail.rSocial = item.come_Nom;
+                    objMerchantDetail.sigla = item.come_sigla;
+                    objMerchantDetail.ident = item.identificacion;
+                    objMerchantDetail.tSociedad = item.Tpcm_Desc;
+                    objMerchantDetail.dComercial = item.dir_come;
+                    objMerchantDetail.mun = item.Mpio_Come_Nom;
+                    objMerchantDetail.estado = item.Activo;
+                    objMerchantDetail.nEstablecimientos = item.numeroestablecimientosactivos;
+                    objMerchantDetail.fInicio = item.Fec_Inicio;
+                    objMerchantDetail.uRenovacion = item.UltRenv;
+
+                    Utilities.ListMerchantDetail.Add(objMerchantDetail);
+
                     if (item.establecimientos != null)
                     {
                         foreach (var item2 in item.establecimientos)
@@ -370,6 +400,11 @@ namespace WPCamaraComercio.Views
         private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void TxbData2_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            MessageBox.Show(Utilities.ListMerchantDetail[0].nEstablecimientos);
         }
     }
 }

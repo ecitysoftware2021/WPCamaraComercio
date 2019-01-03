@@ -112,7 +112,7 @@
     <Compile Include="Models\DetailMerchant.cs" />
     <Compile Include="Models\Details.cs" />
     <Compile Include="Models\EstablishCertificate.cs" />
-    <Compile Include="Models\MerchantCertificate.cs" />
+    <Compile Include="Models\MerchantDetail.cs" />
     <Compile Include="Objects\ComboData.cs" />
     <Compile Include="Objects\SelectedDetail.cs" />
     <Compile Include="Service\NavigationService.cs" />
