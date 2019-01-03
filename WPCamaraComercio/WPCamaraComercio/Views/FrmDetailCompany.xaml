@@ -105,23 +105,6 @@
                    HorizontalAlignment="Center"
                    StylusDown="BtnEstablish_StylusDown"
                    />
-            <!--<Image Source="/Images/unchecked.png" 
-                   Grid.Column="1"
-                   Width="50"
-                   Name="BtnSelectedAll"
-                   Margin="200,0,0,0"
-                   StylusDown="BtnSelectedAll_StylusDown"
-                   VerticalAlignment="Bottom"
-                   HorizontalAlignment="Left"
-                   />
-            <TextBlock VerticalAlignment="Bottom"
-                    HorizontalAlignment="Right"
-                    Margin="0,0,30,0"
-                    FontSize="30"                    
-                    Grid.Column="1"
-                    FontWeight="Bold"
-                    Foreground="Red"                    
-                    Text="Seleccionar Todo"/>-->
         </Grid>
 
         <Grid Grid.Row="2" x:Name="GrdMerchant" Grid.Column="0" 
@@ -147,17 +130,6 @@
                    FontSize="30"
                    FontWeight="Bold"   
                    Foreground="#FF003F6B"/>
-            <!--<TextBlock x:Name="TbStateV"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Margin="0,0,0,0"
-                   TextAlignment="Center"
-                   TextWrapping="Wrap"
-                   Text="ESTADO"
-                   FontSize="30"
-                   Grid.Column="1"
-                   FontWeight="Bold"   
-                   Foreground="#FF003F6B"/>-->
             <TextBlock x:Name="TbAmountVigencia"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -240,13 +212,6 @@
                                            Margin="0,0,90,0"
                                            Grid.ColumnSpan="2"
                                            />
-                                <!--<TextBlock Text="{Binding Estado}"
-                                           FontSize="30"
-                                           TextWrapping="Wrap"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Grid.Column="1"
-                                           Margin="0,0,0,0"/>-->
                                 <TextBlock Text="{Binding Amount, StringFormat={}{0:C0}}"
                                            FontSize="30"
                                            TextWrapping="Wrap"
@@ -261,6 +226,7 @@
                                           Margin="20,0,0,0"
                                           HorizontalContentAlignment="Center"
                                           FontSize="25"
+                                          SelectionChanged="ComboBox_SelectionChanged_1"
                                           Width="180"                                          
                                           >
                                     <ComboBoxItem Content="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
@@ -456,8 +422,7 @@
                                                   Width="140"
                                                   SelectionChanged="ComboBox_SelectionChanged"
                                                   SelectedValuePath="Content"
-                                                  Tag="{Binding Details}"
-                                                  
+                                                  Tag="{Binding Details}"                                                  
                                                   FontSize="20">
                                             <ComboBoxItem Content="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
                                             <ComboBoxItem Content="1"></ComboBoxItem>
@@ -523,23 +488,11 @@
                 Grid.Column="1"
                 Width="350" 
                 Source="../Images/Buttons/continuar2.png" />
-            <!--<TextBlock Text="El valor a pagar esta su{ñlkuyr|0jeto a cambios por el cálculo de intereses" 
-                HorizontalAlignment="Center" 
-                Name="TxbNotify"
-                VerticalAlignment="Top"
-                TextWrapping="Wrap"
-                TextAlignment="Center"
-                Margin="0,130,0,0" 
-                Grid.Column="1"
-                FontSize="28"
-                Foreground="#FF003F6B" 
-                FontWeight="Bold"/>-->
             <Image x:Name="BtnLoading"                
                 Margin="0,0,0,0" 
                 Grid.Column="1"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
-                
                 Width="260"/>
             <!--gif:ImageBehavior.AnimatedSource="/Images/loading.gif"-->
             

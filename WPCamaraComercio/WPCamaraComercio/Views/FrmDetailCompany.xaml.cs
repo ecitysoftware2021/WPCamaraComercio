@@ -41,6 +41,7 @@ namespace WPCamaraComercio.Views
         WCFServices services;
         List<ComboData> ListData;
         List<SelectedDetail> selectedDetail;
+        FrmLoading frmLoading;
 
         public FrmDetailCompany()
         {
@@ -51,6 +52,7 @@ namespace WPCamaraComercio.Views
             view = new CollectionViewSource();
             ListData = new List<ComboData>();
             selectedDetail = new List<SelectedDetail>();
+            frmLoading = new FrmLoading();
 
 
             ListData.Add(new ComboData { Id = 1, Value = "Uno" });
@@ -100,10 +102,12 @@ namespace WPCamaraComercio.Views
                 if (tipo == 1)
                 {
                     GenerateMerchant();
+                    Utilities.Loading(frmLoading, false, this);
                 }
                 else
                 {
                     GenerateEstablish();
+                    Utilities.Loading(frmLoading, false, this);
                 }
             }
             catch (Exception ex)
@@ -267,6 +271,7 @@ namespace WPCamaraComercio.Views
         {
             lstDetailEstablish.Clear();
             lstDetailMerchant.Clear();
+            Utilities.Loading(frmLoading, true, this);
             tipo = 1;
             AssingProperties();
         }
@@ -275,6 +280,7 @@ namespace WPCamaraComercio.Views
         {
             lstDetailEstablish.Clear();
             lstDetailMerchant.Clear();
+            Utilities.Loading(frmLoading, true, this);
             tipo = 2;
             AssingProperties();
         }
@@ -340,6 +346,11 @@ namespace WPCamaraComercio.Views
             }
 
             lblAmount.Text = string.Format("{0:C0}", total);
+        }
+
+        private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
