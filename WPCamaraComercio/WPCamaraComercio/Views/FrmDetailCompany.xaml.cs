@@ -122,6 +122,7 @@ namespace WPCamaraComercio.Views
             {
                 foreach (var item in Utilities.DetailResponse.response.resultados)
                 {
+                    TxbData1.Text = item.come_Nom;
                     if (item.certificados != null)
                     {
                         foreach (var item2 in item.certificados)
@@ -161,6 +162,7 @@ namespace WPCamaraComercio.Views
             {
                 foreach (var item in Utilities.DetailResponse.response.resultados)
                 {
+                    TxbData1.Text = item.come_Nom;
                     if (item.establecimientos != null)
                     {
                         foreach (var item2 in item.establecimientos)
@@ -286,6 +288,8 @@ namespace WPCamaraComercio.Views
             lstDetailMerchant.Clear();
             Utilities.Loading(frmLoading, true, this);
             tipo = 1;
+            BtnComerciant.Opacity = 1;
+            BtnEstablish.Opacity = 0.4;
             AssingProperties();
         }
 
@@ -295,6 +299,8 @@ namespace WPCamaraComercio.Views
             lstDetailMerchant.Clear();
             Utilities.Loading(frmLoading, true, this);
             tipo = 2;
+            BtnComerciant.Opacity = 0.4;
+            BtnEstablish.Opacity = 1;
             AssingProperties();
         }
 
