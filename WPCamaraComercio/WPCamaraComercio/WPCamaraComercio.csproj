@@ -317,7 +317,6 @@
     <Resource Include="Images\Buttons\b-Aceptar.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Buttons\atras.png" />
     <Resource Include="Images\Buttons\btnCancelar.png" />
     <Resource Include="Images\Buttons\btn_atras.png" />
     <Resource Include="Images\Buttons\btn_salir.png" />
@@ -330,12 +329,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Buttons\cerrar.png" />
-    <Resource Include="Images\Buttons\comerciante-hover.png" />
     <Resource Include="Images\Buttons\comerciante.png" />
     <Resource Include="Images\Buttons\consultar.png" />
     <Resource Include="Images\Buttons\continuar2.png" />
     <Resource Include="Images\Buttons\espereReciboGif.gif" />
-    <Resource Include="Images\Buttons\establecimiento-hover.png" />
     <Resource Include="Images\Buttons\establecimiento.png" />
   </ItemGroup>
   <ItemGroup>
@@ -346,7 +343,6 @@
     <Resource Include="Images\Others\imgLoading.gif" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Buttons\imprimir.png" />
     <Resource Include="Images\Buttons\IngreseBillete.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -370,7 +366,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Buttons\recibirCambioGIF.gif" />
-    <Resource Include="Images\Buttons\reintentar.png" />
     <Resource Include="Images\Buttons\salir.png" />
     <Resource Include="Images\Buttons\siguiente.png" />
   </ItemGroup>
@@ -416,7 +411,6 @@
     <Resource Include="Images\Others\TramitesCamaraComercio.png" />
     <Resource Include="Images\Buttons\imprimir%282%29.png" />
     <Resource Include="Images\Buttons\reintentar%282%29.png" />
-    <Resource Include="Images\Buttons\ITAGUI1.png" />
     <Resource Include="Images\Buttons\ITAGUI2.png" />
     <Resource Include="Images\Backgrounds\fondo1.jpg" />
     <Resource Include="Images\Backgrounds\fondo2.jpg" />
@@ -442,6 +436,9 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\WCFCamaraComercio\" />
     <WCFMetadataStorage Include="Connected Services\WCFPayPad\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\b-Pagar-Efectivo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
