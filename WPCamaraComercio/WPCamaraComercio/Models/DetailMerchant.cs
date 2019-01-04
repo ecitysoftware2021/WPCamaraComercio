@@ -12,8 +12,6 @@ namespace WPCamaraComercio.Models
 
         public decimal Amount { get; set; }
 
-        public string Quantity { get; set; }
-
         public EstablishCertificate EstablishCertificate { get; set; }
     }
 }

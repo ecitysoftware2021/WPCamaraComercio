@@ -231,7 +231,7 @@
                                           FontSize="25"
                                           Background="White"
                                           Tag="{Binding EstablishCertificate}"
-                                          SelectionChanged="ComboBox_SelectionChanged_1"
+                                          SelectionChanged="ComboBox_SelectionChanged"
                                           Width="180"                                          
                                           >
                                     <ComboBoxItem Content="--Seleccione--" Selector.IsSelected="True"></ComboBoxItem>
@@ -461,31 +461,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
-            <!--<Image
-                Grid.Column="0"
-                HorizontalAlignment="Left" 
-                Name="btnPrev" 
-                VerticalAlignment="Top"                
-                Margin="30,50,0,0"
-                Height="100" Width="100"                
-                Visibility="Hidden"/>
-            <Image  Grid.Column="1"
-                
-                Margin="0,50,30,0"
-                HorizontalAlignment="Right"
-                Name="btnNext" 
-                VerticalAlignment="Top"                
-                Height="100" Width="100" 
-                Grid.RowSpan="1"
-                Visibility="Visible"/>-->
-
-            <TextBlock Height="20" Visibility="Hidden" Margin="5,0,528,63" Name="tbCurrentPage" 
-                   VerticalAlignment="Bottom"  Grid.Column="1"  />
-            <TextBlock Height="22" HorizontalAlignment="Right" Margin="0,0,502,61" Name="textBlock3" 
-                   VerticalAlignment="Bottom" Visibility="Hidden" Width="20" FontWeight="Bold" Text="/" Grid.Column="1"/>
-            <TextBlock Height="20" HorizontalAlignment="Right" Visibility="Hidden" Margin="0,0,480,63" Name="tbTotalPage" 
-                   VerticalAlignment="Bottom" Width="28" Grid.Column="1" />
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
@@ -493,13 +468,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image x:Name="BtnPay"
+            <Image x:Name="BtnAcept"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
                 Margin="0,25,0,0"    
                 Grid.Column="1"
                 Width="350" 
-                Source="../Images/Buttons/b-Aceptar.png" />
+                Source="../Images/Buttons/b-Aceptar.png" 
+                StylusDown="BtnAcept_StylusDown"/>
             <Image x:Name="BtnLoading"                
                 Margin="0,0,0,0" 
                 Grid.Column="1"

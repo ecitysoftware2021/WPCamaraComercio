@@ -52,7 +52,7 @@ namespace WPCamaraComercio.Views
             view = new CollectionViewSource();
             selectedDetail = new List<SelectedDetail>();
             frmLoading = new FrmLoading();
-          GrdEstablish.Visibility = Visibility.Hidden;
+            GrdEstablish.Visibility = Visibility.Hidden;
             var task = services.ConsultInformation("811040812", tipo_busqueda.Nit);
             tipo = 1;
             var response = task.Result;
@@ -95,20 +95,12 @@ namespace WPCamaraComercio.Views
                 {
                     Utilities.ListMerchantDetail.Add(FillMerchantDetail(Utilities.DetailResponse.response.resultados[0]));
 
-                    //if (tipo == 1)
-                    //{
-                        GenerateMerchant();
-                        //Utilities.Loading(frmLoading, false, this);
-                    //}
-                    //else
-                    //{
-                        GenerateEstablish();
-                        //Utilities.Loading(frmLoading, false, this);
-                    //}
+                    GenerateMerchant();
+                    GenerateEstablish();
                 }
                 else
                 {
-                        //modal error
+                    //modal error
                 }
             }
             catch (Exception ex)
@@ -141,11 +133,6 @@ namespace WPCamaraComercio.Views
                     }
                 }
 
-                //GrdEstablish.Visibility = Visibility.Hidden;
-                //GrdMerchant.Visibility = Visibility.Visible;
-
-                int i = lstDetailMerchant.Count();
-                // CreatePages(i, lstDetailMerchant);
                 LvMerchant.DataContext = lstDetailMerchant;
             }
             catch (Exception ex)
@@ -189,11 +176,6 @@ namespace WPCamaraComercio.Views
                     }
                 }
 
-                //GrdEstablish.Visibility = Visibility.Visible;
-                //GrdMerchant.Visibility = Visibility.Hidden;
-
-                int i = lstDetailEstablish.Count();
-               // CreatePages(i, lstDetailEstablish);
                 LvEstablish.DataContext = lstDetailEstablish;
             }
             catch (Exception ex)
@@ -231,95 +213,20 @@ namespace WPCamaraComercio.Views
             //objForm.ShowDialog();
         }
 
-        #region Pagination
-
-        private void CreatePages<T>(int i, T lstPager)
-        {
-            int itemcount = i;
-
-            //Calcular el total de páginas que tendrá la vista
-            totalPage = itemcount / itemPerPage;
-            if (itemcount % itemPerPage != 0)
-            {
-                totalPage += 1;
-            }
-
-            //Cuando sólo haya una página se ocultaran los botónes de Next y Prev
-            if (totalPage == 1)
-            {
-                //btnNext.Visibility = Visibility.Hidden;
-                //btnPrev.Visibility = Visibility.Hidden;
-            }
-
-            view.Source = lstPager;
-            tbTotalPage.Text = totalPage.ToString();
-        }
-
-        private void ShowCurrentPageIndex()
-        {
-            tbCurrentPage.Text = (currentPageIndex + 1).ToString();
-        }
-
-        private void btnPrev_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentPageIndex > 0)
-            {
-                currentPageIndex--;
-                view.View.Refresh();
-            }
-
-            if (currentPageIndex == 0)
-            {
-                //btnPrev.Visibility = Visibility.Hidden;
-            }
-
-            //btnNext.Visibility = Visibility.Visible;
-
-        }
-
-        private void btnNext_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentPageIndex < totalPage - 1)
-            {
-                currentPageIndex++;
-                view.View.Refresh();
-            }
-            if (currentPageIndex == totalPage - 1)
-            {
-                //btnNext.Visibility = Visibility.Hidden;
-            }
-
-            //btnPrev.Visibility = Visibility.Visible;
-        }
-
-        #endregion
-
         private void BtnComerciant_StylusDown(object sender, StylusDownEventArgs e)
         {
-            //lstDetailEstablish.Clear();
-            //lstDetailMerchant.Clear();
-            //Utilities.Loading(frmLoading, true, this);
-            //tipo = 1;
-
             GrdEstablish.Visibility = Visibility.Hidden;
             GrdMerchant.Visibility = Visibility.Visible;
             BtnComerciant.Opacity = 1;
             BtnEstablish.Opacity = 0.4;
-            //AssingProperties();
         }
 
         private void BtnEstablish_StylusDown(object sender, StylusDownEventArgs e)
         {
-            //lstDetailEstablish.Clear();
-            //lstDetailMerchant.Clear();
-            //Utilities.Loading(frmLoading, true, this);
-            //tipo = 2;
             GrdEstablish.Visibility = Visibility.Visible;
             GrdMerchant.Visibility = Visibility.Hidden;
             BtnComerciant.Opacity = 0.4;
             BtnEstablish.Opacity = 1;
-            
-            //AssingProperties();
         }
 
         private void TextBlock_StylusDown(object sender, StylusDownEventArgs e)
@@ -392,7 +299,13 @@ namespace WPCamaraComercio.Views
 
         private void TxbData2_StylusDown(object sender, StylusDownEventArgs e)
         {
-            MessageBox.Show(Utilities.ListMerchantDetail[0].nEstablecimientos);
+            FrmModalDetailMerchant frmModalDetail = new FrmModalDetailMerchant(Utilities.ListMerchantDetail[0]);
+            frmModalDetail.ShowDialog();
+        }
+
+        private void BtnAcept_StylusDown(object sender, StylusDownEventArgs e)
+        {
+
         }
     }
 }
