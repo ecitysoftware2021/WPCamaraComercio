@@ -27,7 +27,7 @@
                 <RowDefinition Height="120" />
             </Grid.RowDefinitions>
             <Border
-                BorderBrush="#2A2A2A" 
+                BorderBrush="Red" 
                 BorderThickness="3,3,3,2"
                 CornerRadius="30,30,0,0"
                 Grid.Row="0"
@@ -45,7 +45,7 @@
             </Border>
             <Border Background="#fff" 
                     Grid.Row="1"
-                    BorderBrush="#2A2A2A" 
+                    BorderBrush="Red" 
                     BorderThickness="4,2,4,0" Margin="0,4,-4,76" Grid.ColumnSpan="2" Grid.RowSpan="2">
                 <Grid >
                     <Label Content="Nombre establecimiento:"
@@ -123,7 +123,7 @@
             </Border>
             <Border Background="#fff" 
                     Grid.Row="2"
-                    BorderBrush="#2A2A2A" 
+                    BorderBrush="Red" 
                     BorderThickness="4,2,2,2"
                     CornerRadius="0,0,30,30" Margin="0,4,-4,-4" Grid.ColumnSpan="2"
                     >
