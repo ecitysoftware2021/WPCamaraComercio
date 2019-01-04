@@ -72,7 +72,7 @@
                     Text="Certificados"/>
             <TextBlock VerticalAlignment="Center"
                     HorizontalAlignment="Left"
-                    Margin="20,250,0,0"
+                    Margin="120,300,0,0"
                     FontSize="30"                    
                     Grid.ColumnSpan="2"
                     FontWeight="Bold"
@@ -80,14 +80,14 @@
                     Name="TxbData1"
                     Text="data 1"/>
             <TextBlock VerticalAlignment="Center"
-                    HorizontalAlignment="Left"
-                    Margin="20,400,0,0"
+                    HorizontalAlignment="Right"
+                    Margin="0,300,120,0"
                     FontSize="30"                    
                     Grid.ColumnSpan="2"
                     FontWeight="Bold"
                     Foreground="Red"
                     Name="TxbData2"
-                    Text="Ver datalles"
+                    Text="Ver detalles"
                     StylusDown="TxbData2_StylusDown"
                     />
             <Image Source="/Images/Buttons/comerciante.png" 
@@ -229,6 +229,7 @@
                                           Margin="20,0,0,0"
                                           HorizontalContentAlignment="Center"
                                           FontSize="25"
+                                          Background="White"
                                           Tag="{Binding EstablishCertificate}"
                                           SelectionChanged="ComboBox_SelectionChanged_1"
                                           Width="180"                                          
@@ -294,7 +295,7 @@
                    FontSize="30"
                    FontWeight="Bold"   
                    Foreground="#FF003F6B"/>
-            
+
             <TextBlock x:Name="TbReference"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
@@ -328,8 +329,8 @@
                 Grid.Column="3"
                 FontWeight="Bold"   
                 Foreground="#FF003F6B"/>
-            
-            
+
+
             <ListView x:Name="LvEstablish" 
                   HorizontalAlignment="Center" 
                   VerticalAlignment="Top"
@@ -382,7 +383,7 @@
                                     <ImageBrush 
                                         Stretch="Uniform" />
                                 </Grid.Background>
-                                <Expander Grid.Column="0" Grid.Row="0" Header="{Binding Establish}"
+                                <Expander Grid.Column="0" Grid.Row="0"
                                         HorizontalAlignment="Left"
                                         Margin="0,0,0,0"
                                         Grid.ColumnSpan="3"
@@ -390,10 +391,15 @@
                                         IsExpanded="False"
                                         Height="800"
                                         Width="800"
+                                        Background="Transparent"
                                         FontSize="30"
                                         FontWeight="Bold"
                                         Expanded="Expander_Expanded"
                                         Collapsed="Expander_Collapsed">
+                                    <Expander.Header >
+                                        <TextBlock Foreground="Red" Text="{Binding Establish}" 
+                                                   FontSize="20" FontWeight="Bold" />
+                                    </Expander.Header>
                                     <Grid Margin="0,0,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
@@ -424,6 +430,7 @@
                                                   VerticalAlignment="Top"
                                                   HorizontalContentAlignment="Center"
                                                   Width="140"
+                                                  Background="White"
                                                   SelectionChanged="ComboBox_SelectionChanged"
                                                   SelectedValuePath="Content"
                                                   Tag="{Binding EstablishCertificate}"                                                  
@@ -446,6 +453,7 @@
                                            HorizontalAlignment="Center"                                           
                                            VerticalAlignment="Top"
                                            Grid.Column="3"
+                                           Foreground="Red"
                                            StylusDown="TextBlock_StylusDown" 
                                             />
                             </Grid>
@@ -499,7 +507,7 @@
                 VerticalAlignment="Top" 
                 Width="260"/>
             <!--gif:ImageBehavior.AnimatedSource="/Images/loading.gif"-->
-            
+
             <!--<TextBlock Name="TxbLoading" 
                        HorizontalAlignment="Center" 
                        Margin="0,0,0,120" 

@@ -50,18 +50,10 @@ namespace WPCamaraComercio.Views
             lstDetailMerchant = new ObservableCollection<Models.DetailMerchant>();
             lstDetailEstablish = new ObservableCollection<DetailEstablish>();
             view = new CollectionViewSource();
-            ListData = new List<ComboData>();
             selectedDetail = new List<SelectedDetail>();
             frmLoading = new FrmLoading();
-
-
-            ListData.Add(new ComboData { Id = 1, Value = "Uno" });
-            ListData.Add(new ComboData { Id = 2, Value = "Dos" });
-            ListData.Add(new ComboData { Id = 3, Value = "Tres" });
-            ListData.Add(new ComboData { Id = 4, Value = "Cuatro" });
-            ListData.Add(new ComboData { Id = 5, Value = "Cinco" });
-
-            var task = services.ConsultInformation("890900608", tipo_busqueda.Nit);
+          GrdEstablish.Visibility = Visibility.Hidden;
+            var task = services.ConsultInformation("811040812", tipo_busqueda.Nit);
             tipo = 1;
             var response = task.Result;
             Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
@@ -99,15 +91,24 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                if (tipo == 1)
+                if (Utilities.DetailResponse.response.resultados != null)
                 {
-                    GenerateMerchant();
-                    Utilities.Loading(frmLoading, false, this);
+                    Utilities.ListMerchantDetail.Add(FillMerchantDetail(Utilities.DetailResponse.response.resultados[0]));
+
+                    //if (tipo == 1)
+                    //{
+                        GenerateMerchant();
+                        //Utilities.Loading(frmLoading, false, this);
+                    //}
+                    //else
+                    //{
+                        GenerateEstablish();
+                        //Utilities.Loading(frmLoading, false, this);
+                    //}
                 }
                 else
                 {
-                    GenerateEstablish();
-                    Utilities.Loading(frmLoading, false, this);
+                        //modal error
                 }
             }
             catch (Exception ex)
@@ -120,50 +121,32 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                foreach (var item in Utilities.DetailResponse.response.resultados)
+                var datos = Utilities.DetailResponse.response.resultados[0];
+                if (datos.certificados != null)
                 {
-                    TxbData1.Text = item.come_Nom;
-
-                    MerchantDetail objMerchantDetail = new MerchantDetail();
-                    objMerchantDetail.rSocial = item.come_Nom;
-                    objMerchantDetail.sigla = item.come_sigla;
-                    objMerchantDetail.ident = item.identificacion;
-                    objMerchantDetail.tSociedad = item.Tpcm_Desc;
-                    objMerchantDetail.dComercial = item.dir_come;
-                    objMerchantDetail.mun = item.Mpio_Come_Nom;
-                    objMerchantDetail.estado = item.Activo;
-                    objMerchantDetail.nEstablecimientos = item.numeroestablecimientosactivos;
-                    objMerchantDetail.fInicio = item.Fec_Inicio;
-                    objMerchantDetail.uRenovacion = item.UltRenv;
-
-                    Utilities.ListMerchantDetail.Add(objMerchantDetail);
-
-                    if (item.certificados != null)
+                    foreach (var item in datos.certificados)
                     {
-                        foreach (var item2 in item.certificados)
-                        {
-                            EstablishCertificate objEstablishCertificate = new EstablishCertificate();
-                            objEstablishCertificate.CertificateCost = decimal.Parse(item2.ValorCertificado);
-                            objEstablishCertificate.CertificateId = item2.IdCertificado;
-                            objEstablishCertificate.EstablishEnrollment = item2.MatriculaEstablecimiento;
-                            objEstablishCertificate.GenerationCode = item2.CodigoGeneracion;
+                        EstablishCertificate objEstablishCertificate = new EstablishCertificate();
+                        objEstablishCertificate.CertificateCost = decimal.Parse(item.ValorCertificado);
+                        objEstablishCertificate.CertificateId = item.IdCertificado;
+                        objEstablishCertificate.EstablishEnrollment = item.MatriculaEstablecimiento;
+                        objEstablishCertificate.GenerationCode = item.CodigoGeneracion;
 
-                            lstDetailMerchant.Add(new DetailMerchant
-                            {
-                                CertificateName = item2.NombreCertificado,
-                                Amount = Convert.ToDecimal(item2.ValorCertificado),
-                                EstablishCertificate = objEstablishCertificate,
-                            });
-                        }
+                        lstDetailMerchant.Add(new DetailMerchant
+                        {
+                            CertificateName = item.NombreCertificado,
+                            Amount = Convert.ToDecimal(item.ValorCertificado),
+                            EstablishCertificate = objEstablishCertificate,
+                        });
                     }
                 }
 
-                GrdEstablish.Visibility = Visibility.Hidden;
-                GrdMerchant.Visibility = Visibility.Visible;
+                //GrdEstablish.Visibility = Visibility.Hidden;
+                //GrdMerchant.Visibility = Visibility.Visible;
 
                 int i = lstDetailMerchant.Count();
-                CreatePages(i, lstDetailMerchant);
-                LvMerchant.DataContext = view;
+                // CreatePages(i, lstDetailMerchant);
+                LvMerchant.DataContext = lstDetailMerchant;
             }
             catch (Exception ex)
             {
@@ -175,66 +158,65 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                foreach (var item in Utilities.DetailResponse.response.resultados)
+                var datos = Utilities.DetailResponse.response.resultados[0];
+                if (datos.establecimientos != null)
                 {
-                    TxbData1.Text = item.come_Nom;
-
-                    MerchantDetail objMerchantDetail = new MerchantDetail();
-                    objMerchantDetail.rSocial = item.come_Nom;
-                    objMerchantDetail.sigla = item.come_sigla;
-                    objMerchantDetail.ident = item.identificacion;
-                    objMerchantDetail.tSociedad = item.Tpcm_Desc;
-                    objMerchantDetail.dComercial = item.dir_come;
-                    objMerchantDetail.mun = item.Mpio_Come_Nom;
-                    objMerchantDetail.estado = item.Activo;
-                    objMerchantDetail.nEstablecimientos = item.numeroestablecimientosactivos;
-                    objMerchantDetail.fInicio = item.Fec_Inicio;
-                    objMerchantDetail.uRenovacion = item.UltRenv;
-
-                    Utilities.ListMerchantDetail.Add(objMerchantDetail);
-
-                    if (item.establecimientos != null)
+                    foreach (var item in datos.establecimientos)
                     {
-                        foreach (var item2 in item.establecimientos)
+                        Details objDetail = new Details();
+                        objDetail.dire = item.DireccionEstablecimiento;
+                        objDetail.nombreest = item.NombreEstablecimiento;
+                        objDetail.mat = item.MatriculaEst;
+                        objDetail.estado = item.EstadoEstablecimiento;
+
+                        foreach (var item2 in item.CertificadosEstablecimiento)
                         {
-                            Details objDetail = new Details();
-                            objDetail.dire = item2.DireccionEstablecimiento;
-                            objDetail.nombreest = item2.NombreEstablecimiento;
-                            objDetail.mat = item2.MatriculaEst;
-                            objDetail.estado = item2.EstadoEstablecimiento;
+                            EstablishCertificate objEstablishCertificate = new EstablishCertificate();
+                            objEstablishCertificate.CertificateCost = decimal.Parse(item2.ValorCertificado);
+                            objEstablishCertificate.CertificateId = item2.IdCertificado;
+                            objEstablishCertificate.EstablishEnrollment = item2.MatriculaEstablecimiento;
+                            objEstablishCertificate.GenerationCode = item2.CodigoGeneracion;
 
-                            foreach (var item3 in item2.CertificadosEstablecimiento)
+                            lstDetailEstablish.Add(new DetailEstablish
                             {
-                                EstablishCertificate objEstablishCertificate = new EstablishCertificate();
-                                objEstablishCertificate.CertificateCost = decimal.Parse(item3.ValorCertificado);
-                                objEstablishCertificate.CertificateId = item3.IdCertificado;
-                                objEstablishCertificate.EstablishEnrollment = item3.MatriculaEstablecimiento;
-                                objEstablishCertificate.GenerationCode = item3.CodigoGeneracion;
-
-                                lstDetailEstablish.Add(new DetailEstablish
-                                {
-                                    Establish = item2.NombreEstablecimiento,
-                                    Amount = item3.ValorCertificado,
-                                    Details = objDetail,
-                                    Certificate = item3.NombreCertificado,
-                                    EstablishCertificate = objEstablishCertificate
-                                });
-                            }
+                                Establish = item.NombreEstablecimiento,
+                                Amount = item2.ValorCertificado,
+                                Details = objDetail,
+                                Certificate = item2.NombreCertificado,
+                                EstablishCertificate = objEstablishCertificate
+                            });
                         }
                     }
                 }
 
-                GrdEstablish.Visibility = Visibility.Visible;
-                GrdMerchant.Visibility = Visibility.Hidden;
+                //GrdEstablish.Visibility = Visibility.Visible;
+                //GrdMerchant.Visibility = Visibility.Hidden;
 
                 int i = lstDetailEstablish.Count();
-                CreatePages(i, lstDetailEstablish);
-                LvEstablish.DataContext = view;
+               // CreatePages(i, lstDetailEstablish);
+                LvEstablish.DataContext = lstDetailEstablish;
             }
             catch (Exception ex)
             {
                 //navigationService.NavigationTo(ex.Message);
             }
+        }
+
+        private MerchantDetail FillMerchantDetail(ResultadoDetalle data)
+        {
+            TxbData1.Text = data.come_Nom;
+            MerchantDetail objMerchantDetail = new MerchantDetail();
+            objMerchantDetail.rSocial = data.come_Nom;
+            objMerchantDetail.sigla = data.come_sigla;
+            objMerchantDetail.ident = data.identificacion;
+            objMerchantDetail.tSociedad = data.Tpcm_Desc;
+            objMerchantDetail.dComercial = data.dir_come;
+            objMerchantDetail.mun = data.Mpio_Come_Nom;
+            objMerchantDetail.estado = data.Activo;
+            objMerchantDetail.nEstablecimientos = data.numeroestablecimientosactivos;
+            objMerchantDetail.fInicio = data.Fec_Inicio;
+            objMerchantDetail.uRenovacion = data.UltRenv;
+            return objMerchantDetail;
         }
 
         private void DetailMerchant()
@@ -314,24 +296,30 @@ namespace WPCamaraComercio.Views
 
         private void BtnComerciant_StylusDown(object sender, StylusDownEventArgs e)
         {
-            lstDetailEstablish.Clear();
-            lstDetailMerchant.Clear();
-            Utilities.Loading(frmLoading, true, this);
-            tipo = 1;
+            //lstDetailEstablish.Clear();
+            //lstDetailMerchant.Clear();
+            //Utilities.Loading(frmLoading, true, this);
+            //tipo = 1;
+
+            GrdEstablish.Visibility = Visibility.Hidden;
+            GrdMerchant.Visibility = Visibility.Visible;
             BtnComerciant.Opacity = 1;
             BtnEstablish.Opacity = 0.4;
-            AssingProperties();
+            //AssingProperties();
         }
 
         private void BtnEstablish_StylusDown(object sender, StylusDownEventArgs e)
         {
-            lstDetailEstablish.Clear();
-            lstDetailMerchant.Clear();
-            Utilities.Loading(frmLoading, true, this);
-            tipo = 2;
+            //lstDetailEstablish.Clear();
+            //lstDetailMerchant.Clear();
+            //Utilities.Loading(frmLoading, true, this);
+            //tipo = 2;
+            GrdEstablish.Visibility = Visibility.Visible;
+            GrdMerchant.Visibility = Visibility.Hidden;
             BtnComerciant.Opacity = 0.4;
             BtnEstablish.Opacity = 1;
-            AssingProperties();
+            
+            //AssingProperties();
         }
 
         private void TextBlock_StylusDown(object sender, StylusDownEventArgs e)

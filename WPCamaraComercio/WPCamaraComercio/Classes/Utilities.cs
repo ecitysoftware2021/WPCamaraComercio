@@ -66,7 +66,7 @@ namespace WPCamaraComercio.Classes
 
         public static RespuestaDetalle DetailResponse { get; set; }
 
-        public static List<MerchantDetail> ListMerchantDetail { get; set; }
+        public static List<MerchantDetail> ListMerchantDetail = new List<MerchantDetail>();
 
         //public static Dictionary<int, int> CertificateQuantity = new Dictionary<int, int>()
         //{
