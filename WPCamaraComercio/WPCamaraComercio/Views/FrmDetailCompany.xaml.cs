@@ -208,9 +208,8 @@ namespace WPCamaraComercio.Views
 
         private void Details(Details details)
         {
-            MessageBox.Show(details.nombreest);
-            //frmDetalles objForm = new frmDetalles(details);
-            //objForm.ShowDialog();
+            FrmModalDetailEstablish FrmModalDetailEstablish = new FrmModalDetailEstablish(details);
+            FrmModalDetailEstablish.ShowDialog();
         }
 
         private void BtnComerciant_StylusDown(object sender, StylusDownEventArgs e)
