@@ -5,8 +5,276 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
         mc:Ignorable="d"
-        Title="FrmDatosPago" Height="450" Width="800">
+        Title="FrmPaymentData" 
+        WindowStyle="None"
+        WindowState="Maximized"
+        Height="2064.095" 
+        Width="1250.599">
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/Backgrounds/fondo2.jpg"/>
+    </Window.Background>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="150" />
+            <RowDefinition Height="1200" />
+            <RowDefinition Height="400"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
+            <Image x:Name="BtnExit"
+                   Source="/Images/Buttons/btn_salir.png"
+                   Grid.Column="0"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Top" 
+                   Width="200"
+                   Height="80" 
+                   Margin="0,50,25,0"
+                   Stretch="Uniform"
+                   />
+            <TextBlock x:Name="tbTimer"
+                       FontSize="35"
+                       Foreground="#123C92"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="0,100,80,0"/>
+            <Image x:Name="BtnBack"
+                   Source="../Images/Buttons/btn_atras.png"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Width="200"
+                   Height="80"  
+                   Margin="25,50,0,0" 
+                   Stretch="Uniform"
+                   />
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,0"
+                    FontSize="60"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Foreground="#000"
+                    Text="Registro de datos"/>
+        </Grid>
+
+        <Grid Grid.Row="2" x:Name="grdCredits" Grid.Column="0" 
+              Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="100,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   FontSize="40"
+                   FontWeight="Bold"   
+                   Foreground="Black">
+                <Run Foreground="Red">*</Run>
+                <Run Foreground="Black">Tipo de Comprador</Run>
+             </TextBlock>
+            <ComboBox Name="CmbTypeBuyer"
+                    Grid.Column="2"                                                                                                     
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Background="White"
+                    SelectionChanged="ComboBox_SelectionChanged"
+                    SelectedValuePath="Content"
+                    Tag="{Binding EstablishCertificate}"                                                  
+                    FontSize="40">
+                <ComboBoxItem Content="Persona" Selector.IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="Empresa"></ComboBoxItem>
+            </ComboBox>
+            <TextBlock 
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="100,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   FontSize="40"
+                   Grid.Row="1"
+                   FontWeight="Bold"   
+                   Foreground="#FF003F6B">
+                <Run Foreground="Red">*</Run>
+                <Run Foreground="Black">Tipo de Identificación</Run>
+            </TextBlock>
+            <ComboBox 
+                    Name="CmbIdDType"
+                    Grid.Column="2" 
+                    Grid.Row="1"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Background="White"
+                    SelectionChanged="ComboBox_SelectionChanged"
+                    SelectedValuePath="Content"
+                    Tag="{Binding EstablishCertificate}"                                                  
+                    FontSize="40">
+                <ComboBoxItem Content="Cédula de ciudadanía" Selector.IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="Cédula de extranjería"></ComboBoxItem>
+                <ComboBoxItem Content="Pasaporte"></ComboBoxItem>
+                <ComboBoxItem Content="Tarjeta de identidad"></ComboBoxItem>
+            </ComboBox>
+            <TextBlock 
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="100,0,0,0"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                FontSize="40"
+                FontWeight="Bold"   
+                Foreground="#FF003F6B"
+                Grid.Row="2">
+                <Run Foreground="Red">*</Run>
+                <Run Foreground="Black">Identificación</Run>
+            </TextBlock>
+            <TextBox 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,0"
+                   Grid.Row="2"
+                   Grid.Column="1"
+                   TextAlignment="Center"
+                   FontSize="40"
+                   FontWeight="Bold"   
+                   Foreground="Black"/>
+            <TextBlock 
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="100,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   FontSize="40"
+                   Grid.Row="3"
+                   FontWeight="Bold"   
+                   >
+                <Run Foreground="Red">*</Run>
+                <Run Foreground="Black">Razón Social</Run>
+            </TextBlock>
+            <TextBox 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                FontSize="40"
+                Grid.Column="2"
+                Grid.Row="3"
+                FontWeight="Bold"   
+                Foreground="Black"/>
+            <TextBlock 
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="135,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   FontSize="40"
+                   Grid.Row="4"
+                   Text="Dirección"
+                   FontWeight="Bold"   
+                   Foreground="Black">
+            </TextBlock>
+            <TextBox 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                FontSize="40"
+                Grid.Column="2"
+                Grid.Row="4"
+                FontWeight="Bold"   
+                Foreground="Black"/>
+            <TextBlock 
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="100,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   FontSize="40"
+                   Grid.Row="5"
+                   Text="Dirección"
+                   FontWeight="Bold"   
+                   Foreground="Black">
+                <Run Foreground="Red">*</Run>
+                <Run Foreground="Black">Teléfono</Run>
+            </TextBlock>
+            <TextBox 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                FontSize="40"
+                Grid.Column="2"
+                Grid.Row="5"
+                FontWeight="Bold"   
+                Foreground="Black"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <Image x:Name="BtnPay"
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top" 
+                Margin="0,30,70,50"                  
+                Width="440" />
+
+            <!--<Image x:Name="BtnLoading"                
+               Margin="0,0,0,0" 
+               Grid.Row="6"
+               Grid.RowSpan="2"
+               Grid.Column="1"
+               Grid.ColumnSpan="3"               
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+               gif:ImageBehavior.AnimatedSource="/Images/preloader.gif"
+               Width="350"/>-->
+
+            <Image x:Name="BtnLoading"                
+               Margin="0,0,200,0" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top" 
+               Width="250"/>
+
+            <!--<TextBlock Text="Valor a Pagar" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Margin="200,0,0,150" 
+                FontSize="50"
+                Foreground="#FF003F6B" 
+                FontWeight="Bold"/>
+            <TextBlock x:Name="lblAmount"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="270,80,0,150"
+                Text="$ 0.00"
+                FontSize="50"
+                FontWeight="Bold"/>-->
+        </Grid>
     </Grid>
 </Window>

@@ -22,6 +22,8 @@ namespace WPCamaraComercio.Views
         public FrmPaymentData()
         {
             InitializeComponent();
+            CmbTypeBuyer.SelectedIndex = 0;
+            CmbIdDType.SelectedIndex = 0;
         }
     }
 }

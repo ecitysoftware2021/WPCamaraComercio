@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Objects;
@@ -27,7 +21,6 @@ namespace WPCamaraComercio.Views
     {
         CollectionViewSource view;
         ObservableCollection<DetailMerchant> lstDetailMerchant;
-        public string prueba = "hola";
         ObservableCollection<DetailEstablish> lstDetailEstablish;
         int currentPageIndex = 0;
         int itemPerPage = 10;
@@ -39,7 +32,6 @@ namespace WPCamaraComercio.Views
         private string matricula;
         private string tpcm;
         WCFServices services;
-        List<ComboData> ListData;
         List<SelectedDetail> selectedDetail;
         FrmLoading frmLoading;
 
@@ -62,12 +54,6 @@ namespace WPCamaraComercio.Views
             ConsultInformation();
 
             AssingProperties();
-            //ComboBox ddlCantidad = new ComboBox();
-            //ddlCantidad.Items.Insert(0, "Seleccionar");
-            //for (int i = 1; i <= 5; i++)
-            //{
-            //    ddlCantidad.Items.Insert(i, i);
-            //}
         }
 
         private void ConsultInformation()
@@ -77,12 +63,10 @@ namespace WPCamaraComercio.Views
             petition.Tpcm = tpcm;
 
             var task = services.ConsultDetailMerchant(petition);
-            //Utilities.Loading(frmLoading, true, this);
 
             var response = task.Result;
             if (response.IsSuccess)
             {
-                //Utilities.Loading(frmLoading, false, this);
                 Utilities.DetailResponse = (RespuestaDetalle)response.Result;
             }
         }
@@ -304,7 +288,26 @@ namespace WPCamaraComercio.Views
 
         private void BtnAcept_StylusDown(object sender, StylusDownEventArgs e)
         {
-
+            try
+            {
+                string valorPagar = lblAmount.Text.Replace("$", "").Replace(".00", "").Replace(",00", "").Trim();
+                if (valorPagar == "0")
+                {
+                    //objUtil.OpenModal("Debe seleccionar un certificado");
+                }
+                else
+                {
+                    //CLSUtil.ListCertificados = ListCertificados;
+                    //CLSUtil.ValorPagar = decimal.Parse(lblValorPagar.Text.Remove(0, 1));
+                    FrmPaymentData frmPaymentData = new FrmPaymentData();
+                    frmPaymentData.Show();
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                //objUtil.Exception(ex.Message);
+            }
         }
     }
 }
