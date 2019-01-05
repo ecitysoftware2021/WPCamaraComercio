@@ -71,7 +71,7 @@
                     Text="CAPTURA DE DATOS"/>
         </Grid>
 
-        <Grid Grid.Row="2" x:Name="grdCredits" Grid.Column="0" 
+        <Grid Grid.Row="2" x:Name="grdPaymentData" Grid.Column="0" 
               Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
@@ -99,19 +99,20 @@
                 <Run Foreground="Red" Text="*"/>
                 <Run Foreground="Black" Text="Tipo de Comprador"/>
             </TextBlock>
-            <ComboBox Name="CmbTypeBuyer"
-                    Grid.Column="2"                                                                                                     
+            <ComboBox 
+                    Name="CmbIdDType"
+                    Grid.Column="2" 
+                    Grid.Row="1"
                     Margin="0,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     HorizontalContentAlignment="Center"
                     Background="White"
-                    SelectionChanged="CmbTypeBuyer_SelectionChanged"
-                    SelectedValuePath="Content"
                     FontSize="40"
-                    ItemsSource="{Binding test}">
-                <!--<ComboBoxItem Content="Persona" Selector.IsSelected="True"></ComboBoxItem>
-                <ComboBoxItem Content="Empresa"></ComboBoxItem>-->
+                    ItemsSource="{Binding}"
+                    SelectedValuePath="Key"
+                    DisplayMemberPath="Value"
+                    >
             </ComboBox>
             <TextBlock 
                    HorizontalAlignment="Left"
@@ -126,23 +127,6 @@
                 <Run Foreground="Red" Text="*"/>
                 <Run Foreground="Black" Text="Tipo de Identificación"/>
             </TextBlock>
-            <ComboBox 
-                    Name="CmbIdDType"
-                    Grid.Column="2" 
-                    Grid.Row="1"
-                    Margin="0,0,0,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    HorizontalContentAlignment="Center"
-                    Background="White"
-                    SelectionChanged="CmbIdDType_SelectionChanged"
-                    SelectedValuePath="Content"
-                    FontSize="40">
-                <ComboBoxItem Content="Cédula de ciudadanía" Selector.IsSelected="True"></ComboBoxItem>
-                <ComboBoxItem Content="Cédula de extranjería"></ComboBoxItem>
-                <ComboBoxItem Content="Pasaporte"></ComboBoxItem>
-                <ComboBoxItem Content="Tarjeta de identidad"></ComboBoxItem>
-            </ComboBox>
             <TextBlock 
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -164,8 +148,9 @@
                    Grid.Column="1"
                    TextAlignment="Center"
                    FontSize="40"
-                   FontWeight="Bold"   
-                   Foreground="Black"/>
+                   Foreground="Black"
+                   Width="500"
+                   TextWrapping="Wrap"/>
             <TextBlock Name="TxbData1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
@@ -177,7 +162,7 @@
                    FontWeight="Bold"   
                    >
                 <Run Foreground="Red" Text="*"/>
-                <Run Foreground="Black" Text="{Binding data1}"/>
+                <Run Foreground="Black" Text="{Binding Data1}"/>
             </TextBlock>
             <TextBox 
                 HorizontalAlignment="Center"
@@ -187,8 +172,9 @@
                 FontSize="40"
                 Grid.Column="2"
                 Grid.Row="3"
-                FontWeight="Bold"   
-                Foreground="Black"/>
+                Foreground="Black"
+                Width="500"
+                TextWrapping="Wrap"/>
             <TextBlock Name="TxbData2"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
@@ -197,7 +183,7 @@
                    TextWrapping="Wrap"
                    FontSize="40"
                    Grid.Row="4"
-                   Text="{Binding data2}"
+                   Text="{Binding Data2}"
                    FontWeight="Bold"   
                    Foreground="Black">
             </TextBlock>
@@ -209,8 +195,9 @@
                 FontSize="40"
                 Grid.Column="2"
                 Grid.Row="4"
-                FontWeight="Bold"   
-                Foreground="Black"/>
+                Foreground="Black"
+                Width="500"
+                TextWrapping="Wrap"/>
             <TextBlock Name="TxbData3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
@@ -222,7 +209,7 @@
                    FontWeight="Bold"   
                    Foreground="Black">
                 <Run Foreground="Red" Text="*"/>
-                <Run Foreground="Black" Text="{Binding data3}"/>
+                <Run Foreground="Black" Text="{Binding Data3}"/>
             </TextBlock>
             <TextBox 
                 HorizontalAlignment="Center"
@@ -232,8 +219,9 @@
                 FontSize="40"
                 Grid.Column="2"
                 Grid.Row="5"
-                FontWeight="Bold"   
-                Foreground="Black"/>
+                Foreground="Black"
+                Width="500"
+                TextWrapping="Wrap"/>
             <TextBlock Name="TxbData4"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
@@ -245,7 +233,7 @@
                    FontWeight="Bold"   
                    Foreground="Black">
                 <Run Foreground="Red" Text="*"/>
-                <Run Foreground="Black" Text="{Binding data4}"/>
+                <Run Foreground="Black" Text="{Binding Data4}"/>
             </TextBlock>
             <TextBox Name="TbxInfo4"
                 HorizontalAlignment="Center"
@@ -255,8 +243,9 @@
                 FontSize="40"
                 Grid.Column="2"
                 Grid.Row="6"
-                FontWeight="Bold"   
-                Foreground="Black"/>
+                Foreground="Black"
+                Width="500"
+                TextWrapping="Wrap"/>
             <Image x:Name="BtnPay"
                 Grid.Row="7"
                 Grid.ColumnSpan="2"
@@ -267,6 +256,19 @@
                 StylusDown="BtnPay_StylusDown"
                 Source="../Images/Buttons/b-Pagar-Efectivo.png"
                 />
+            <ComboBox Name="CmbTypeBuyer"
+                    Grid.Column="2"                                                                                                     
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Background="White"
+                    SelectionChanged="CmbTypeBuyer_SelectionChanged"
+                    SelectedValuePath="Content"
+                    FontSize="40">
+                <ComboBoxItem Content="Persona" Selector.IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="Empresa"></ComboBoxItem>
+            </ComboBox>
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
