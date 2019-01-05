@@ -106,12 +106,12 @@
                     VerticalAlignment="Center"
                     HorizontalContentAlignment="Center"
                     Background="White"
-                    SelectionChanged="ComboBox_SelectionChanged"
+                    SelectionChanged="CmbTypeBuyer_SelectionChanged"
                     SelectedValuePath="Content"
-                    Tag="{Binding EstablishCertificate}"                                                  
-                    FontSize="40">
-                <ComboBoxItem Content="Persona" Selector.IsSelected="True"></ComboBoxItem>
-                <ComboBoxItem Content="Empresa"></ComboBoxItem>
+                    FontSize="40"
+                    ItemsSource="{Binding test}">
+                <!--<ComboBoxItem Content="Persona" Selector.IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="Empresa"></ComboBoxItem>-->
             </ComboBox>
             <TextBlock 
                    HorizontalAlignment="Left"
@@ -137,7 +137,6 @@
                     Background="White"
                     SelectionChanged="CmbIdDType_SelectionChanged"
                     SelectedValuePath="Content"
-                    Tag="{Binding EstablishCertificate}"                                                  
                     FontSize="40">
                 <ComboBoxItem Content="Cédula de ciudadanía" Selector.IsSelected="True"></ComboBoxItem>
                 <ComboBoxItem Content="Cédula de extranjería"></ComboBoxItem>
@@ -178,7 +177,7 @@
                    FontWeight="Bold"   
                    >
                 <Run Foreground="Red" Text="*"/>
-                <Run Foreground="Black" Text="Primer Nombre"/>
+                <Run Foreground="Black" Text="{Binding data1}"/>
             </TextBlock>
             <TextBox 
                 HorizontalAlignment="Center"
@@ -198,7 +197,7 @@
                    TextWrapping="Wrap"
                    FontSize="40"
                    Grid.Row="4"
-                   Text="Segundo Nombre"
+                   Text="{Binding data2}"
                    FontWeight="Bold"   
                    Foreground="Black">
             </TextBlock>
@@ -223,7 +222,7 @@
                    FontWeight="Bold"   
                    Foreground="Black">
                 <Run Foreground="Red" Text="*"/>
-                <Run Foreground="Black" Text="Primer Apellido"/>
+                <Run Foreground="Black" Text="{Binding data3}"/>
             </TextBlock>
             <TextBox 
                 HorizontalAlignment="Center"
@@ -246,9 +245,9 @@
                    FontWeight="Bold"   
                    Foreground="Black">
                 <Run Foreground="Red" Text="*"/>
-                <Run Foreground="Black" Text="Teléfono"/>
+                <Run Foreground="Black" Text="{Binding data4}"/>
             </TextBlock>
-            <TextBox 
+            <TextBox Name="TbxInfo4"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"

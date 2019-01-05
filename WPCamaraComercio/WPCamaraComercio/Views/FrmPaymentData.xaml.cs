@@ -19,6 +19,11 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class FrmPaymentData : Window
     {
+        string data1 = string.Empty;
+        string data2 = string.Empty;
+        string data3 = string.Empty;
+        string data4 = string.Empty;
+
         public FrmPaymentData()
         {
             InitializeComponent();
@@ -45,40 +50,42 @@ namespace WPCamaraComercio.Views
                 test.Add("P", "Pasaporte");
                 test.Add("I", "Tarjeta de identidad");
             }
-            CmbIdDType.DisplayMember = "Value";
-            CmbIdDType.ValueMember = "Key";
+            CmbIdDType.DisplayMemberPath = "Value";
+            CmbIdDType.SelectedValuePath = "Key";
         }
 
-        private void CmbIdDType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CmbTypeBuyer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 if (CmbTypeBuyer.SelectedIndex == 0)
                 {
-                    lblLastName.Visible = true;
-                    lblPrimerApellido.Text = "Primer Apellido";
-                    lblPrimerNombre.Text = "Primer Nombre";
-                    lblSegundoNombre.Text = "Segundo Nombre";
-                    txtPrimerApellido.Visible = true;
-                    lblPrimerApellido.Visible = true;
-                    FillTipoDocumento(0);
-                    ddlTipoDocumento.SelectedIndex = 0;
+                    data1 = "Primer Nombre";
+                    data2 = "Segundo Nombre";
+                    data3 = "Primer Apellido";
+                    data4 = "Teléfono";
+
+                    FillTypeDocument(0);
+                    CmbIdDType.SelectedIndex = 0;
                 }
                 else
                 {
-                    lblLastName.Visible = false;
-                    lblPrimerApellido.Visible = false;
-                    lblPrimerNombre.Text = "Razon Social";
-                    lblSegundoNombre.Text = "Dirección";
-                    txtPrimerApellido.Visible = false;
-                    FillTipoDocumento(1);
-                    ddlTipoDocumento.SelectedIndex = 0;
+                    data1 = "Razón Social";
+                    data2 = "Dirección";
+                    data3 = "Teléfono";
+                    data4 = "";
+                    TxbData4.Visibility = Visibility.Hidden;
+                    TbxInfo4.Visibility = Visibility.Hidden;
+
+                    FillTypeDocument(1);
+                    CmbIdDType.SelectedIndex = 0;
                 }
             }
             catch (Exception ex)
             {
-                objUtil.Exception(ex.Message);
+                //objUtil.Exception(ex.Message);
             }
         }
+
     }
 }
