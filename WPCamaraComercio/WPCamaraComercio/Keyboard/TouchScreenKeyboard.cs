@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace WPCamaraComercio.Keyboard
 {
-    class TouchScreenKeyboard : Window
+    public class TouchScreenKeyboard : Window
     {
         static Window window;
 
@@ -21,15 +21,14 @@ namespace WPCamaraComercio.Keyboard
             set { _position = value; }
         }
 
-
         private static double _WidthTouchKeyboard = 630;
 
         public static double WidthTouchKeyboard
         {
             get { return _WidthTouchKeyboard; }
             set { _WidthTouchKeyboard = value; }
-
         }
+
         private static bool _ShiftFlag;
 
         protected static bool ShiftFlag
@@ -70,8 +69,6 @@ namespace WPCamaraComercio.Keyboard
                     return ((PasswordBox)_CurrentControl).Password;
                 }
                 else return "";
-
-
             }
             set
             {
@@ -87,10 +84,7 @@ namespace WPCamaraComercio.Keyboard
                 {
                     ((PasswordBox)_CurrentControl).Password = value;
                 }
-
-
             }
-
         }
 
         public static RoutedUICommand Cmd1 = new RoutedUICommand();
@@ -137,12 +131,8 @@ namespace WPCamaraComercio.Keyboard
         public static RoutedUICommand CmdNI = new RoutedUICommand();
         public static RoutedUICommand CmdM = new RoutedUICommand();
 
-
-
         public static RoutedUICommand CmdSpaceBar = new RoutedUICommand();
         public static RoutedUICommand CmdClear = new RoutedUICommand();
-
-
 
         public TouchScreenKeyboard()
         {
@@ -216,8 +206,6 @@ namespace WPCamaraComercio.Keyboard
             CommandBinding CbNI = new CommandBinding(CmdNI, RunCommand);
             CommandBinding CbM = new CommandBinding(CmdM, RunCommand);
 
-
-
             CommandBinding CbSpaceBar = new CommandBinding(CmdSpaceBar, RunCommand);
             CommandBinding CbClear = new CommandBinding(CmdClear, RunCommand);
 
@@ -262,75 +250,43 @@ namespace WPCamaraComercio.Keyboard
 
             if (e.Command == Cmd1)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "1";
-                }
-
-
             }
             else if (e.Command == Cmd2)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "2";
-                }
             }
             else if (e.Command == Cmd3)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "3";
-                }
             }
             else if (e.Command == Cmd4)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "4";
-                }
             }
             else if (e.Command == Cmd5)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "5";
-                }
             }
             else if (e.Command == Cmd6)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "6";
-                }
             }
             else if (e.Command == Cmd7)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "7";
-                }
             }
             else if (e.Command == Cmd8)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "8";
-                }
             }
             else if (e.Command == Cmd9)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "9";
-                }
             }
             else if (e.Command == Cmd0)
             {
-                if (!ShiftFlag)
-                {
                     TouchScreenKeyboard.TouchScreenText += "0";
-                }
             }
             else if (e.Command == CmdBackspace)
             {
@@ -338,7 +294,6 @@ namespace WPCamaraComercio.Keyboard
                 {
                     TouchScreenKeyboard.TouchScreenText = TouchScreenKeyboard.TouchScreenText.Substring(0, TouchScreenKeyboard.TouchScreenText.Length - 1);
                 }
-
             }
             else if (e.Command == CmdQ)
             {
@@ -346,7 +301,7 @@ namespace WPCamaraComercio.Keyboard
             }
             else if (e.Command == Cmdw)
             {
-                AddKeyBoardINput('w');
+                AddKeyBoardINput('W');
             }
             else if (e.Command == CmdE)
             {
@@ -416,13 +371,13 @@ namespace WPCamaraComercio.Keyboard
             else if (e.Command == CmdL)
             {
                 AddKeyBoardINput('L');
-
             }
             else if (e.Command == CmdEnter)
             {
                 if (_InstanceObject != null)
                 {
                     _InstanceObject.Close();
+                    window.IsEnabled = true;
                     _InstanceObject = null;
                 }
                 _CurrentControl.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
@@ -434,51 +389,41 @@ namespace WPCamaraComercio.Keyboard
             else if (e.Command == CmdZ)
             {
                 AddKeyBoardINput('Z');
-
             }
             else if (e.Command == CmdX)
             {
                 AddKeyBoardINput('X');
-
             }
             else if (e.Command == CmdC)
             {
                 AddKeyBoardINput('C');
-
             }
             else if (e.Command == CmdV)
             {
                 AddKeyBoardINput('V');
-
             }
             else if (e.Command == CmdB)
             {
                 AddKeyBoardINput('B');
-
             }
             else if (e.Command == CmdN)
             {
                 AddKeyBoardINput('N');
-
             }
             else if (e.Command == CmdNI)
             {
                 AddKeyBoardINput('Ñ');
-
             }
             else if (e.Command == CmdM)
             {
                 AddKeyBoardINput('M');
-
             }
             else if (e.Command == CmdSpaceBar)//Last row
             {
-
                 TouchScreenKeyboard.TouchScreenText += " ";
             }
             else if (e.Command == CmdClear)//Last row
             {
-
                 TouchScreenKeyboard.TouchScreenText = "";
             }
         }
@@ -492,7 +437,6 @@ namespace WPCamaraComercio.Keyboard
                 {
                     TouchScreenKeyboard.TouchScreenText += char.ToLower(input).ToString();
                     ShiftFlag = false;
-
                 }
                 else
                 {
@@ -513,12 +457,10 @@ namespace WPCamaraComercio.Keyboard
             }
         }
 
-
         private static void syncchild()
         {
             if (_CurrentControl != null && _InstanceObject != null)
             {
-
                 System.Windows.Point virtualpoint = new Point(0, _CurrentControl.ActualHeight + 3);
                 Point Actualpoint = _CurrentControl.PointToScreen(virtualpoint);
 
@@ -550,14 +492,14 @@ namespace WPCamaraComercio.Keyboard
             obj.SetValue(TouchScreenKeyboardProperty, value);
         }
 
+
         public static readonly DependencyProperty TouchScreenKeyboardProperty =
-                  DependencyProperty.RegisterAttached("TouchScreenKeyboard", typeof(bool),
-                  typeof(TouchScreenKeyboard), new UIPropertyMetadata(default(bool),
-                  TouchScreenKeyboardPropertyChanged));
+           DependencyProperty.RegisterAttached("TouchScreenKeyboard", typeof(bool),
+               typeof(TouchScreenKeyboard), new UIPropertyMetadata(default(bool),
+                   TouchScreenKeyboardPropertyChanged));
 
         //public static readonly DependencyProperty TouchScreenKeyboardProperty =
         //    DependencyProperty.RegisterAttached("TouchScreenKeyboard", typeof(bool), typeof(TouchScreenKeyboard), new UIPropertyMetadata(default(bool), TouchScreenKeyboardPropertyChanged));
-
 
 
         static void TouchScreenKeyboardPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -568,10 +510,7 @@ namespace WPCamaraComercio.Keyboard
                 host.GotFocus += new RoutedEventHandler(OnGotFocus);
                 host.LostFocus += new RoutedEventHandler(OnLostFocus);
             }
-
         }
-
-
 
         static void OnGotFocus(object sender, RoutedEventArgs e)
         {
@@ -584,7 +523,6 @@ namespace WPCamaraComercio.Keyboard
             host.Background = Brushes.Transparent;
             host.BorderBrush = Brushes.Transparent;
             host.BorderThickness = new Thickness(4);
-
 
             _CurrentControl = host;
 
@@ -612,9 +550,6 @@ namespace WPCamaraComercio.Keyboard
                 window.IsEnabled = false;
                 host.LayoutUpdated += new EventHandler(tb_LayoutUpdated);
             }
-
-
-
         }
 
         static void TouchScreenKeyboard_Deactivated(object sender, EventArgs e)
@@ -633,8 +568,6 @@ namespace WPCamaraComercio.Keyboard
             }
         }
 
-
-
         static void TouchScreenKeyboard_LocationChanged(object sender, EventArgs e)
         {
             syncchild();
@@ -645,11 +578,8 @@ namespace WPCamaraComercio.Keyboard
             syncchild();
         }
 
-
-
         static void OnLostFocus(object sender, RoutedEventArgs e)
         {
-
             Control host = sender as Control;
             host.Background = _PreviousTextBoxBackgroundBrush;
             host.BorderBrush = _PreviousTextBoxBorderBrush;

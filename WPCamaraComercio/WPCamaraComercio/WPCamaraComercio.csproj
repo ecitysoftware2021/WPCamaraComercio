@@ -145,6 +145,9 @@
     <Compile Include="Views\FrmPayment.xaml.cs">
       <DependentUpon>FrmPayment.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoadingModal.xaml.cs">
+      <DependentUpon>LoadingModal.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -205,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmPayment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoadingModal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

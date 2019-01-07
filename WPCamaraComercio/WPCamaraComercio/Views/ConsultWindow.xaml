@@ -22,7 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="750" />
-            <RowDefinition Height="800" />
+            <RowDefinition Height="750" />
             <RowDefinition Height="150" />
         </Grid.RowDefinitions>
 
@@ -100,8 +100,7 @@
                     Width="850"
                         />
 
-            <TextBox x:Name="TxtIdentificacion"
-                     Text="811040812"
+            <TextBox x:Name="TxtName" 
                      VerticalAlignment="Bottom" 
                      HorizontalAlignment="Left" 
                      TextAlignment="Center"
@@ -114,9 +113,10 @@
                      Foreground="#FF840000"
                      FontWeight="Bold"
                      Visibility="Hidden"
-                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"/>
+                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true" />
 
-            <TextBox x:Name="TxtName" 
+            <TextBox x:Name="TxtIdentificacion"
+                     Text="811040812"
                      VerticalAlignment="Bottom" 
                      HorizontalAlignment="Left" 
                      TextAlignment="Center"
@@ -126,9 +126,9 @@
                      TextWrapping="Wrap"
                      TabIndex="1"
                      FontSize="42" 
-                     Foreground="#FF282887"
-                     FontWeight="Bold" 
-                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true" />
+                     Foreground="#FF840000"
+                     FontWeight="Bold"
+                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"/>
 
             <Button x:Name="BtnConsultar"
                    HorizontalAlignment="Right" 
@@ -163,10 +163,10 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
-                <RowDefinition Height="750" />
+                <RowDefinition Height="700" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Margin="0,38,0,712" Grid.RowSpan="2" >
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="320"/>
                     <ColumnDefinition Width="250"/>
@@ -227,7 +227,8 @@
                 BorderBrush="Transparent"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top"
-                ItemsSource="{Binding}" >
+                ItemsSource="{Binding}" 
+                StylusDown="Lv_Files_StylusDown">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid 
@@ -239,7 +240,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid
-                            Height="40" >
+                            Height="40">
                             
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="320"/>
@@ -301,11 +302,13 @@
                 HorizontalAlignment="Center" 
                 Name="btnPrev" 
                 VerticalAlignment="Center"
-                Margin="30,0,10,0"
+                Margin="0,0,30,0"
                 Height="120"
                 Width="120"
-                Visibility="Visible"
-                Source="/Images/Buttons/left.png" />
+                Visibility="Hidden"
+                StylusDown="BtnPrev_StylusDown" 
+                Source = "/Images/Buttons/left.png" >
+            </Image>
 
             <Image
                 Margin="0,0,30,0"
@@ -314,37 +317,36 @@
                 VerticalAlignment="Center"
                 Height="120" 
                 Width="120" 
-                Visibility="Visible"
-                Source="/Images/Buttons/right.png" />
-
+                StylusDown="BtnNext_StylusDown"
+                Source = "/Images/Buttons/right.png" >
+            </Image>
+            
             <TextBlock 
                 Height="20" 
-                Visibility="Visible" 
-                Margin="540,0,0,33"
+                Margin="400,0,0,0"
                 Name="tbCurrentPage" 
-                VerticalAlignment="Center"  />
+                VerticalAlignment="Center"
+                FontSize="18"
+                HorizontalAlignment="Center"/>
 
             <TextBlock 
                 Height="22" 
-                HorizontalAlignment="Right" 
-                Margin="0,0,502,31" 
+                HorizontalAlignment="Center" 
+                Margin="450,0,0,0" 
                 Name="textBlock3" 
-                FontSize="10"
+                FontSize="20"
                 VerticalAlignment="Center" 
-                Visibility="Visible" 
-                Width="20" 
                 FontWeight="Bold" 
                 Text="/"  />
 
             <TextBlock 
                 Height="20" 
-                HorizontalAlignment="Right" 
+                HorizontalAlignment="Center" 
                 Visibility="Visible" 
-                Margin="0,0,480,33" 
+                Margin="500,0,0,0" 
                 Name="tbTotalPage" 
                 VerticalAlignment="Center" 
-                Width="28"  />
-
+                FontSize="18"  />
         </Grid>
         
     </Grid>

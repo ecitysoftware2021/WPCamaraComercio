@@ -21,15 +21,14 @@ namespace WPCamaraComercio.Keyboard
             set { _position = value; }
         }
 
-
         private static double _WidthTouchKeyboard = 320;
 
         public static double WidthTouchKeyboard
         {
             get { return _WidthTouchKeyboard; }
             set { _WidthTouchKeyboard = value; }
-
         }
+
         private static bool _ShiftFlag;
 
         protected static bool ShiftFlag
@@ -52,8 +51,6 @@ namespace WPCamaraComercio.Keyboard
         private static Brush _PreviousTextBoxBorderBrush = null;
         private static Thickness _PreviousTextBoxBorderThickness;
 
-        private static bool isShow = false;
-
         private static Control _CurrentControl;
         public static string TouchScreenText
         {
@@ -72,8 +69,6 @@ namespace WPCamaraComercio.Keyboard
                     return ((PasswordBox)_CurrentControl).Password;
                 }
                 else return "";
-
-
             }
             set
             {
@@ -89,10 +84,7 @@ namespace WPCamaraComercio.Keyboard
                 {
                     ((PasswordBox)_CurrentControl).Password = value;
                 }
-
-
             }
-
         }
 
         public static RoutedUICommand Cmd1 = new RoutedUICommand();
@@ -112,7 +104,6 @@ namespace WPCamaraComercio.Keyboard
 
         public TouchScreenKeyNumeric()
         {
-            isShow = true;
             Topmost = true;
             this.Width = WidthTouchKeyboard;
             this.Height = 420;
@@ -144,7 +135,6 @@ namespace WPCamaraComercio.Keyboard
             CommandBinding Cb0 = new CommandBinding(Cmd0, RunCommand);
             CommandBinding CbEnter = new CommandBinding(CmdEnter, RunCommand);
             CommandBinding CbClear = new CommandBinding(CmdClear, RunCommand);
-
 
             CommandManager.RegisterClassCommandBinding(typeof(TouchScreenKeyNumeric), CbBackspace);
 
@@ -213,7 +203,6 @@ namespace WPCamaraComercio.Keyboard
                 {
                     TouchScreenKeyNumeric.TouchScreenText = TouchScreenKeyNumeric.TouchScreenText.Substring(0, TouchScreenKeyNumeric.TouchScreenText.Length - 1);
                 }
-
             }
             else if (e.Command == CmdClear)//Last row
             {
@@ -221,7 +210,6 @@ namespace WPCamaraComercio.Keyboard
             }
             else if (e.Command == CmdEnter)
             {
-
                 if (_InstanceObject != null)
                 {
                     _InstanceObject.Close();
@@ -241,7 +229,6 @@ namespace WPCamaraComercio.Keyboard
                 {
                     TouchScreenKeyNumeric.TouchScreenText += char.ToLower(input).ToString();
                     ShiftFlag = false;
-
                 }
                 else
                 {
@@ -261,7 +248,6 @@ namespace WPCamaraComercio.Keyboard
                 }
             }
         }
-
 
         private static void syncchild()
         {
@@ -310,8 +296,6 @@ namespace WPCamaraComercio.Keyboard
                typeof(TouchScreenKeyNumeric), new UIPropertyMetadata(default(bool),
                    TouchScreenKeyNumericPropertyChanged));
 
-
-
         static void TouchScreenKeyNumericPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement host = sender as FrameworkElement;
@@ -320,7 +304,6 @@ namespace WPCamaraComercio.Keyboard
                 host.GotFocus += new RoutedEventHandler(OnGotFocus);
                 host.LostFocus += new RoutedEventHandler(OnLostFocus);
             }
-
         }
 
         static void OnGotFocus(object sender, RoutedEventArgs e)
@@ -334,7 +317,6 @@ namespace WPCamaraComercio.Keyboard
             host.Background = Brushes.Transparent;
             host.BorderBrush = Brushes.Transparent;
             host.BorderThickness = new Thickness(4);
-
 
             _CurrentControl = host;
 
@@ -381,8 +363,6 @@ namespace WPCamaraComercio.Keyboard
             }
         }
 
-
-
         static void TouchScreenKeyNumeric_LocationChanged(object sender, EventArgs e)
         {
             syncchild();
@@ -395,7 +375,6 @@ namespace WPCamaraComercio.Keyboard
 
         static void OnLostFocus(object sender, RoutedEventArgs e)
         {
-
             Control host = sender as Control;
             host.Background = _PreviousTextBoxBackgroundBrush;
             host.BorderBrush = _PreviousTextBoxBorderBrush;
@@ -406,7 +385,6 @@ namespace WPCamaraComercio.Keyboard
                 _InstanceObject.Close();
                 _InstanceObject = null;
             }
-
         }
 
         #endregion

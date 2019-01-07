@@ -26,11 +26,10 @@ namespace WPCamaraComercio.Views
     {
         private int currentPageIndex = 0;
 
-        private int itemPerPage = 10;
+        private int itemPerPage = 12;
 
         private int totalPage = 0;
 
-        private object OpcionList;
 
         private Utilities utilities;
 
@@ -54,7 +53,7 @@ namespace WPCamaraComercio.Views
                 sourceCheckName = Utilities.GetConfiguration("ImageCheckOut"),
                 sourceCheckNit = Utilities.GetConfiguration("ImageCheckIn"),
                 message = "Ingrese NIT/Cédula sin dígito de verificación",
-                typeSearch = 1
+                typeSearch = 2
             };
 
             if (initData)
@@ -123,7 +122,7 @@ namespace WPCamaraComercio.Views
             try
             {
                 int itemcount = i;
-
+                                        
                 //Calcular el total de páginas que tendrá la vista
                 totalPage = itemcount / itemPerPage;
                 if (itemcount % itemPerPage != 0)
@@ -132,15 +131,22 @@ namespace WPCamaraComercio.Views
                 }
 
                 //Cuando sólo haya una página se ocultaran los botónes de Next y Prev
-                if (totalPage == 1)
+
+                Dispatcher.BeginInvoke((Action)delegate
                 {
-                    Dispatcher.BeginInvoke((Action)delegate
+                    if (totalPage == 1)
                     {
                         btnNext.Visibility = Visibility.Hidden;
                         btnPrev.Visibility = Visibility.Hidden;
-                    });
-                    GC.Collect();
-                }
+                    }
+                    else if (totalPage > 1)
+                    {
+                        btnNext.Visibility = Visibility.Visible;
+                    }
+                    tbTotalPage.Text = totalPage.ToString();
+                    ShowCurrentPageIndex();
+                });
+                GC.Collect();
 
                 Dispatcher.BeginInvoke((Action)delegate
                 {
@@ -188,56 +194,11 @@ namespace WPCamaraComercio.Views
                 utilities.saveLogError("ViewFilter", "RecordsWindows", ex.ToString());
             }
         }
-
-        private void lv_Files_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                Coincidence coincidence = (Coincidence)lv_Files.SelectedItem;
-                RedirectView(coincidence);
-            }
-            catch (Exception ex)
-            {
-                utilities.saveLogError("lv_Files_SelectionChanged", "RecordsWindows", ex.ToString());
-            }
-        }
-
-        private void btnNext_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            if (currentPageIndex < totalPage - 1)
-            {
-                currentPageIndex++;
-                consultViewModel.viewList.View.Refresh();
-            }
-            if (currentPageIndex == totalPage - 1)
-            {
-                btnNext.Visibility = Visibility.Hidden;
-            }
-
-            btnPrev.Visibility = Visibility.Visible;
-            ShowCurrentPageIndex();
-        }
-
+        
         private void ShowCurrentPageIndex()
         {
             tbCurrentPage.Text = (currentPageIndex + 1).ToString();
-        }
 
-        private void btnPrev_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            if (currentPageIndex > 0)
-            {
-                currentPageIndex--;
-                consultViewModel.viewList.View.Refresh();
-            }
-
-            if (currentPageIndex == 0)
-            {
-                btnPrev.Visibility = Visibility.Hidden;
-            }
-
-            btnNext.Visibility = Visibility.Visible;
-            ShowCurrentPageIndex();
         }
 
         private void BtnConsultar_StylusDown(object sender, StylusDownEventArgs e)
@@ -249,6 +210,9 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+                this.currentPageIndex = 0;
+                this.totalPage = 0;
+
                 string valueSearch = string.Empty;
 
                 if (consultViewModel.typeSearch == 1)
@@ -318,6 +282,52 @@ namespace WPCamaraComercio.Views
         private void Image_StylusDown(object sender, StylusDownEventArgs e)
         {
             Init(false);
+        }
+
+        private void BtnNext_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            if (currentPageIndex < totalPage - 1)
+            {
+                currentPageIndex++;
+                consultViewModel.viewList.View.Refresh();
+            }
+            if (currentPageIndex == totalPage - 1)
+            {
+                btnNext.Visibility = Visibility.Hidden;
+            }
+
+            btnPrev.Visibility = Visibility.Visible;
+            ShowCurrentPageIndex();
+        }
+
+        private void BtnPrev_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            if (currentPageIndex > 0)
+            {
+                currentPageIndex--;
+                consultViewModel.viewList.View.Refresh();
+            }
+
+            if (currentPageIndex == 0)
+            {
+                btnPrev.Visibility = Visibility.Hidden;
+            }
+
+            btnNext.Visibility = Visibility.Visible;
+            ShowCurrentPageIndex();
+        }
+
+        private void Lv_Files_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            try
+            {
+                Coincidence coincidence = (Coincidence)lv_Files.SelectedItem;
+                RedirectView(coincidence);
+            }
+            catch (Exception ex)
+            {
+                utilities.saveLogError("lv_Files_SelectionChanged", "RecordsWindows", ex.ToString());
+            }
         }
     }
 }

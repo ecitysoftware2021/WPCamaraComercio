@@ -194,7 +194,9 @@ namespace WPCamaraComercio.ViewModels
                                     Nit = item.nit,
                                     Municipality = item.municipio.Split(')')[1],
                                     EstabliCoincide = item.EstablecimientosConCoincidencia,
-                                    State = item.estado
+                                    State = item.estado,
+                                    Enrollment = item.matricula,
+                                    Tcp = item.tpcm
                                 });
                             }
                             
