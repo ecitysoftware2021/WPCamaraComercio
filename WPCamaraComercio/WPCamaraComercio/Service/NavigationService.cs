@@ -37,7 +37,7 @@ namespace WPCamaraComercio.Service
                         frmMenu.Show();
                         break;
                     case "FrmConsult":
-                        FrmConsult frmConsult = new FrmConsult();
+                        ConsultWindow frmConsult = new ConsultWindow();
                         frmConsult.Show();
                         break;
                     case "FrmInitial":

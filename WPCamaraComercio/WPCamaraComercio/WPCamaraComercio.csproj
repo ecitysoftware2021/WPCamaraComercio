@@ -118,11 +118,12 @@
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Response.cs" />
     <Compile Include="Service\WCFServices.cs" />
+    <Compile Include="ViewModels\ConsultViewModel.cs" />
+    <Compile Include="Views\ConsultWindow.xaml.cs">
+      <DependentUpon>ConsultWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmCoincidence.xaml.cs">
       <DependentUpon>FrmCoincidence.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FrmConsult.xaml.cs">
-      <DependentUpon>FrmConsult.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmDetailCompany.xaml.cs">
       <DependentUpon>FrmDetailCompany.xaml</DependentUpon>
@@ -176,11 +177,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FrmCoincidence.xaml">
+    <Page Include="Views\ConsultWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FrmConsult.xaml">
+    <Page Include="Views\FrmCoincidence.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -439,6 +440,19 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Buttons\b-Pagar-Efectivo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\bg-blanck.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\b-Consultar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Gif\preloader.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\left.png" />
+    <Resource Include="Images\Buttons\right.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

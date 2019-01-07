@@ -45,30 +45,30 @@ namespace WPCamaraComercio.Views
             selectedDetail = new List<SelectedDetail>();
             frmLoading = new FrmLoading();
             GrdEstablish.Visibility = Visibility.Hidden;
-            var task = services.ConsultInformation("811040812", tipo_busqueda.Nit);
-            tipo = 1;
-            var response = task.Result;
-            Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
-            matricula = Utilities.RespuestaConsulta.response.resultados[0].matricula;
-            tpcm = Utilities.RespuestaConsulta.response.resultados[0].tpcm;
-            ConsultInformation();
+            //var task = services.ConsultInformation("811040812", tipo_busqueda.Nit);
+            //tipo = 1;
+            //var response = task.Result;
+            //Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
+            //matricula = Utilities.RespuestaConsulta.response.resultados[0].matricula;
+            //tpcm = Utilities.RespuestaConsulta.response.resultados[0].tpcm;
+            //ConsultInformation();
 
             AssingProperties();
         }
 
         private void ConsultInformation()
         {
-            PeticionDetalle petition = new PeticionDetalle();
-            petition.Matricula = matricula;
-            petition.Tpcm = tpcm;
+            //PeticionDetalle petition = new PeticionDetalle();
+            //petition.Matricula = matricula;
+            //petition.Tpcm = tpcm;
 
-            var task = services.ConsultDetailMerchant(petition);
+            //var task = services.ConsultDetailMerchant(petition);
 
-            var response = task.Result;
-            if (response.IsSuccess)
-            {
-                Utilities.DetailResponse = (RespuestaDetalle)response.Result;
-            }
+            //var response = task.Result;
+            //if (response.IsSuccess)
+            //{
+            //    Utilities.DetailResponse = (RespuestaDetalle)response.Result;
+            //}
         }
 
         private void AssingProperties()

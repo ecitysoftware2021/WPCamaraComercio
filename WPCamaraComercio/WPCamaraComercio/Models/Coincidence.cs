@@ -17,5 +17,9 @@ namespace WPCamaraComercio.Models
         public string EstabliCoincide { get; set; }
 
         public string State { get; set; }
+
+        public string Enrollment { get; set; }
+
+        public string Tpcm { get; set; }
     }
 }

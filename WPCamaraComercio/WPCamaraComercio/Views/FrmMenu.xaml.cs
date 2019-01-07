@@ -72,7 +72,7 @@ namespace WPCamaraComercio.Views
                Utilities.ResetTimer();
                 Dispatcher.BeginInvoke((Action)delegate
                 {
-                    FrmConsult menu = new FrmConsult();
+                    ConsultWindow menu = new ConsultWindow();
                     menu.Show();
                     this.Close();
                 });

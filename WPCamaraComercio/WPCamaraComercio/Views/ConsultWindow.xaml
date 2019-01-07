@@ -1,0 +1,353 @@
+﻿<Window x:Class="WPCamaraComercio.Views.ConsultWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:k="clr-namespace:WPCamaraComercio.Keyboard"
+        xmlns:local="clr-namespace:WPCamaraComercio.Views"
+        mc:Ignorable="d"
+        Title="ConsultWindow"
+    WindowStyle="None"
+        WindowState="Maximized"
+        Height="2064.095" 
+        Width="1250.599"
+        WindowStartupLocation="CenterScreen"
+        >
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/Backgrounds/bg-blanck.jpg" Stretch="Fill"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="750" />
+            <RowDefinition Height="750" />
+            <RowDefinition Height="150" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Image x:Name="BtnExit"
+                   Source="/Images/Buttons/btn_salir.png"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Bottom" 
+                   Width="230"
+                   Height="70" 
+                   Margin="0,0,20,0"
+                   Stretch="Uniform"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" 
+                    TextAlignment="Center"
+                    Text="Buscar por:" 
+                    Foreground="Black" 
+                    FontSize="55" 
+                    FontWeight="Bold" 
+                    Margin="0,150,0,150"/>
+
+            <Image  x:Name="chkIdentification"
+                    Source="{Binding sourceCheckNit}"
+                    Tag="S"
+                    Width="60"
+                    Height="60"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="150,0,0,0"
+                    StylusDown="chkIdentification_StylusDown" />
+
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="Identificación" 
+                    Foreground="Black" 
+                    FontSize="50" 
+                    Margin="230,0,0,0"/>
+
+            <Image  x:Name="chkName"
+                    Source="{Binding sourceCheckName}"
+                    Width="60"
+                    Height="60"
+                    Tag="N"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0,0,300,0" StylusDown="chkName_StylusDown"/>
+
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="Nombre" 
+                    Foreground="Black" 
+                    FontSize="50" 
+                    Margin="0,0,100,0"/>
+
+            <TextBlock
+                    x:Name="LblTitle"
+                    TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="{Binding message}" 
+                    Foreground="Black" 
+                    FontSize="45" 
+                    FontWeight="Bold" 
+                    Margin="0,280,0,0"
+                    Height="122"
+                    Width="850"
+                        />
+
+            <TextBox x:Name="TxtName" 
+                     VerticalAlignment="Bottom" 
+                     HorizontalAlignment="Left" 
+                     TextAlignment="Center"
+                     Margin="100,0,0,50" 
+                     Width="500"
+                     Height="100" 
+                     TextWrapping="Wrap"
+                     TabIndex="0"
+                     FontSize="42" 
+                     Foreground="#FF840000"
+                     FontWeight="Bold"
+                     Visibility="Hidden"
+                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true" />
+
+            <TextBox x:Name="TxtIdentificacion"
+                     Text="811040812"
+                     VerticalAlignment="Bottom" 
+                     HorizontalAlignment="Left" 
+                     TextAlignment="Center"
+                     Margin="100,0,0,50" 
+                     Width="500"
+                     Height="100" 
+                     TextWrapping="Wrap"
+                     TabIndex="1"
+                     FontSize="42" 
+                     Foreground="#FF840000"
+                     FontWeight="Bold"
+                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"/>
+
+            <Button x:Name="BtnConsultar"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Bottom" 
+                   Width="350"
+                   Height="100" 
+                   Margin="0,0,100,55" 
+                   TabIndex="2"
+                   StylusDown="BtnConsultar_StylusDown">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/b-Consultar.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
+
+        </Grid>
+
+        <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/preloader.gif"
+                   HorizontalAlignment="Stretch"
+                   Height="360" 
+                   Margin="0,150,0,0"
+                   Grid.Row="2"
+                   VerticalAlignment="Top"
+                   Width="360" 
+                   Visibility="{Binding preload}"/>
+
+        <Grid 
+           Grid.Row="2"
+           Visibility="{Binding headers}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="700" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320"/>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock 
+                    Text="Razon social"
+                    Grid.Column="0"
+                    FontSize="35"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWithOverflow"
+                    Foreground="#FF840000"
+                    Height="50"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" FontWeight="Bold" />
+
+                <TextBlock 
+                    Text="Nit"
+                    Grid.Column="1"    
+                    FontSize="35"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWithOverflow"
+                    Foreground="#FF840000"
+                    Height="50"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" FontWeight="Bold" />
+                <TextBlock 
+                    Text="Municipio"
+                    Grid.Column="2"    
+                    FontSize="35"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWithOverflow"
+                    Foreground="#FF840000"
+                    Height="50"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center" 
+                    FontWeight="Bold" />
+
+                <TextBlock 
+                    Text="Estado"
+                    Grid.Column="3"
+                    FontSize="35"
+                    TextAlignment="Center"
+                    TextWrapping="WrapWithOverflow"
+                    Foreground="#FF840000"
+                    Height="50"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                    FontWeight="Bold" />
+            </Grid>
+
+            <ListView 
+                x:Name="lv_Files" 
+                Grid.Row="1"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
+                ItemsSource="{Binding}" 
+                StylusDown="Lv_Files_StylusDown">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid 
+                            Columns="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Height="40">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="320"/>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="230"/>
+                                <ColumnDefinition Width="260"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock 
+                                Text="{Binding BusinessName}"
+                                FontSize="25"
+                                Grid.Column="0"
+                                TextAlignment="Center"
+                                TextWrapping="WrapWithOverflow"
+                                Foreground="#606060"
+                                Height="40"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center" />
+
+                            <TextBlock 
+                                Text="{Binding Nit}"
+                                FontSize="25"
+                                Grid.Column="1"
+                                TextAlignment="Center"
+                                TextWrapping="WrapWithOverflow"
+                                Foreground="#606060"
+                                Height="40"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center" />
+
+                            <TextBlock 
+                                Text="{Binding Municipality}"
+                                FontSize="25"
+                                TextAlignment="Center"
+                                Grid.Column="2"
+                                TextWrapping="WrapWithOverflow"
+                                Foreground="#606060"
+                                Height="40"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center" />
+
+                            <TextBlock 
+                                Text="{Binding State}"
+                                FontSize="25"
+                                TextAlignment="Center"
+                                Grid.Column="3"
+                                TextWrapping="WrapWithOverflow"
+                                Foreground="#606060"
+                                Height="40"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Row="3" Visibility="{Binding headers}">
+            <Image
+                HorizontalAlignment="Center" 
+                Name="btnPrev" 
+                VerticalAlignment="Center"
+                Margin="0,0,30,0"
+                Height="120"
+                Width="120"
+                Visibility="Hidden"
+                StylusDown="BtnPrev_StylusDown" 
+                Source="/Images/Buttons/left.png" >
+            </Image>
+
+            <Image
+                Margin="0,0,30,0"
+                HorizontalAlignment="Right"
+                Name="btnNext" 
+                VerticalAlignment="Center"
+                Height="120" 
+                Width="120" 
+                StylusDown="BtnNext_StylusDown"
+                Source="/Images/Buttons/right.png" >
+            </Image>
+
+            <TextBlock 
+                Height="20" 
+                Margin="400,0,0,0"
+                Name="tbCurrentPage" 
+                VerticalAlignment="Center"
+                FontSize="18"
+                HorizontalAlignment="Center"/>
+
+            <TextBlock 
+                Height="22" 
+                HorizontalAlignment="Center" 
+                Margin="450,0,0,0" 
+                Name="textBlock3" 
+                FontSize="20"
+                VerticalAlignment="Center" 
+                FontWeight="Bold" 
+                Text="/"  />
+
+            <TextBlock 
+                Height="20" 
+                HorizontalAlignment="Center" 
+                Visibility="Visible" 
+                Margin="500,0,0,0" 
+                Name="tbTotalPage" 
+                VerticalAlignment="Center" 
+                FontSize="18"  />
+        </Grid>
+
+    </Grid>
+</Window>
