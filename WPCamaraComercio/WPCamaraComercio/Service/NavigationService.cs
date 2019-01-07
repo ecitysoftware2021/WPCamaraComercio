@@ -36,30 +36,30 @@ namespace WPCamaraComercio.Service
                         FrmMenu frmMenu = new FrmMenu();
                         frmMenu.Show();
                         break;
-                    case "FrmConsult":
+                    case "ConsultWindow":
                         ConsultWindow frmConsult = new ConsultWindow();
                         frmConsult.Show();
                         break;
-                    case "FrmInitial":
-                        //FrmInitial frmInitial = new FrmInitial();
-                        //frmInitial.Show();
-                        //break;
-                    case "FrmDetails":
-                        //FrmDetails frmDetails = new FrmDetails();
-                        //frmDetails.Show();
-                        //break;
+                    case "FrmPaymentData":
+                        FrmPaymentData frmPaymentData = new FrmPaymentData();
+                        frmPaymentData.Show();
+                        break;
+                    case "FrmDetailCompany":
+                        FrmDetailCompany frmDetailCompany = new FrmDetailCompany();
+                        frmDetailCompany.Show();
+                        break;
                     case "FrmInformationCompany":
                         FrmInformationCompany frmInformationCompany = new FrmInformationCompany();
                         frmInformationCompany.Show();
                         break;
-                    case "FrmPay":
-                        //FrmPay frmPay = new FrmPay();
-                        //frmPay.Show();
-                        //break;
+                    case "FrmPayment":
+                        FrmPayment frmPayment = new FrmPayment();
+                        frmPayment.Show();
+                        break;
                     case "FrmCancelPay":
-                    //FrmCancelPay frmcancelpayment = new FrmCancelPay();
-                    //frmcancelpayment.Show();
-                    //break;
+                        //FrmCancelPay frmcancelpayment = new FrmCancelPay();
+                        //frmcancelpayment.Show();
+                        //break;
                     case "FrmFinishTransaction":
                         //FrmFinishTransaction frmFinishTransaction = new FrmFinishTransaction();
                         //frmFinishTransaction.Show();

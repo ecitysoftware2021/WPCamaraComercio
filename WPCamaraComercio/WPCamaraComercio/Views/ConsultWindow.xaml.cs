@@ -157,6 +157,9 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+                Utilities.Enrollment = coincidence.Enrollment;
+                Utilities.Tpcm = coincidence.Tpcm;
+
                 PeticionDetalle petition = new PeticionDetalle();
                 petition.Matricula = coincidence.Enrollment;
                 petition.Tpcm = coincidence.Tpcm;

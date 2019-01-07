@@ -19,21 +19,23 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class FrmDetailCompany : Window
     {
+        #region Reference
         CollectionViewSource view;
         ObservableCollection<DetailMerchant> lstDetailMerchant;
         ObservableCollection<DetailEstablish> lstDetailEstablish;
-        int currentPageIndex = 0;
-        int itemPerPage = 10;
-        int totalPage = 0;
         decimal total = 0;
         bool isSelectAll = false;
         string message = string.Empty;
         int tipo;
-        private string matricula;
-        private string tpcm;
+        //private string matricula;
+        //private string tpcm;
+        NavigationService navigationService;
         WCFServices services;
         List<SelectedDetail> selectedDetail;
+        List<Certificado> ListCertificates;
         FrmLoading frmLoading;
+        decimal valueToPay = 0; 
+        #endregion
 
         public FrmDetailCompany()
         {
@@ -42,7 +44,9 @@ namespace WPCamaraComercio.Views
             lstDetailMerchant = new ObservableCollection<Models.DetailMerchant>();
             lstDetailEstablish = new ObservableCollection<DetailEstablish>();
             view = new CollectionViewSource();
+            navigationService = new NavigationService(this);
             selectedDetail = new List<SelectedDetail>();
+            ListCertificates = new List<Certificado>();
             frmLoading = new FrmLoading();
             GrdEstablish.Visibility = Visibility.Hidden;
             //var task = services.ConsultInformation("811040812", tipo_busqueda.Nit);
@@ -54,21 +58,6 @@ namespace WPCamaraComercio.Views
             //ConsultInformation();
 
             AssingProperties();
-        }
-
-        private void ConsultInformation()
-        {
-            //PeticionDetalle petition = new PeticionDetalle();
-            //petition.Matricula = matricula;
-            //petition.Tpcm = tpcm;
-
-            //var task = services.ConsultDetailMerchant(petition);
-
-            //var response = task.Result;
-            //if (response.IsSuccess)
-            //{
-            //    Utilities.DetailResponse = (RespuestaDetalle)response.Result;
-            //}
         }
 
         private void AssingProperties()
@@ -185,11 +174,6 @@ namespace WPCamaraComercio.Views
             return objMerchantDetail;
         }
 
-        private void DetailMerchant()
-        {
-
-        }
-
         private void Details(Details details)
         {
             FrmModalDetailEstablish FrmModalDetailEstablish = new FrmModalDetailEstablish(details);
@@ -273,11 +257,7 @@ namespace WPCamaraComercio.Views
             }
 
             lblAmount.Text = string.Format("{0:C0}", total);
-        }
-
-        private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
+            valueToPay = total;
         }
 
         private void TxbData2_StylusDown(object sender, StylusDownEventArgs e)
@@ -290,24 +270,60 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                string valorPagar = lblAmount.Text.Replace("$", "").Replace(".00", "").Replace(",00", "").Trim();
-                if (valorPagar == "0")
+                string lblPay = lblAmount.Text.Replace("$", "").Replace(".00", "").Replace(",00", "").Trim();
+                if (lblPay == "0" || valueToPay == 0)
                 {
                     //objUtil.OpenModal("Debe seleccionar un certificado");
                 }
                 else
                 {
-                    //CLSUtil.ListCertificados = ListCertificados;
-                    //CLSUtil.ValorPagar = decimal.Parse(lblValorPagar.Text.Remove(0, 1));
-                    FrmPaymentData frmPaymentData = new FrmPaymentData();
-                    frmPaymentData.Show();
-                    this.Close();
+                    foreach (var item in selectedDetail)
+                    {
+                        Certificado certificate = new Certificado();
+                        certificate.NumeroCertificados = item.Quantity.ToString();
+                        certificate.IdCertificado = item.EstablishCertificate.CertificateId;
+                        certificate.matricula = Utilities.Enrollment;
+                        certificate.MatriculaEst = item.EstablishCertificate.EstablishEnrollment;
+                        certificate.tpcm = Utilities.Tpcm;
+                        certificate.CodigoGeneracion = item.EstablishCertificate.GenerationCode;
+                        ListCertificates.Add(certificate);
+                    }
+                    Utilities.ListCertificates = ListCertificates;
+                    Utilities.ValueToPay = valueToPay;
+
+                    Utilities.ResetTimer();
+                    navigationService.NavigationTo("FrmPaymentData");
                 }
             }
             catch (Exception ex)
             {
                 //objUtil.Exception(ex.Message);
             }
+        }
+
+        private void BtnExit_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            try
+            {
+                Utilities.GoToInicial();
+            }
+            catch (Exception ex)
+            {
+                //utilities.saveLogError("BtnHome_MouseDown", "FrmMenu", ex.ToString());
+            }
+        }
+
+        private void BtnBack_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            Utilities.ResetTimer();
+            navigationService.NavigationTo("ConsultWindow");
+        }
+
+        private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Utilities.Timer(tbTimer);
         }
     }
 }

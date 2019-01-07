@@ -113,10 +113,12 @@
     <Compile Include="Models\Details.cs" />
     <Compile Include="Models\EstablishCertificate.cs" />
     <Compile Include="Models\MerchantDetail.cs" />
+    <Compile Include="Objects\PayerData.cs" />
     <Compile Include="Objects\PaymentData.cs" />
     <Compile Include="Objects\SelectedDetail.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Response.cs" />
+    <Compile Include="Service\WCFPayPadService.cs" />
     <Compile Include="Service\WCFServices.cs" />
     <Compile Include="ViewModels\ConsultViewModel.cs" />
     <Compile Include="Views\ConsultWindow.xaml.cs">

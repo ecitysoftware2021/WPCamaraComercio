@@ -9,6 +9,7 @@
         Title="FrmDetailCompany" 
         WindowStyle="None"
         WindowState="Maximized"
+        Loaded="Window_Loaded"
         Height="2064.095" 
         Width="1250.599">
     <Window.Background>
@@ -34,6 +35,7 @@
                    VerticalAlignment="Center" 
                    Width="200"
                    Height="80" 
+                   StylusDown="BtnExit_StylusDown"
                    Margin="0,25,25,0"
                    Stretch="Uniform"/>
             <TextBlock x:Name="tbTimer"
@@ -50,6 +52,7 @@
                    Height="80"  
                    Margin="25,25,0,0" 
                    Stretch="Uniform"
+                   StylusDown="BtnBack_StylusDown"
                    Visibility="Visible"/>
         </Grid>
 
@@ -230,6 +233,7 @@
                                           HorizontalContentAlignment="Center"
                                           FontSize="25"
                                           Background="White"
+                                          SelectedValuePath="Content"
                                           Tag="{Binding EstablishCertificate}"
                                           SelectionChanged="ComboBox_SelectionChanged"
                                           Width="180"                                          

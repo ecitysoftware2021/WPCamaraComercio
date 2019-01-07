@@ -36,37 +36,19 @@ namespace WPCamaraComercio.Classes
 
         public static IEnumerable<Resultado> ConsultResult { get; set; }
 
-        static string _Matricula;
+        public static string Enrollment { get; set; }
 
-        public string Matricula
-        {
-            get
-            {
-                return _Matricula;
-            }
-            set
-            {
-                _Matricula = value;
-            }
-        }
-
-        static string _Tpcm;
-
-        public string Tpcm
-        {
-            get
-            {
-                return _Tpcm;
-            }
-            set
-            {
-                _Tpcm = value;
-            }
-        }
+        public static string Tpcm { get; set; }
 
         public static RespuestaDetalle DetailResponse { get; set; }
 
         public static List<MerchantDetail> ListMerchantDetail = new List<MerchantDetail>();
+
+        public static List<Certificado> ListCertificates = new List<Certificado>();
+
+        public static decimal ValueToPay { get; set; }
+
+        public static int IDTransactionDB { get; set; }
 
         //public static Dictionary<int, int> CertificateQuantity = new Dictionary<int, int>()
         //{

@@ -8,6 +8,7 @@
         Title="FrmPaymentData" 
         WindowStyle="None"
         WindowState="Maximized"
+        Loaded="Window_Loaded"
         Height="2064.095" 
         Width="1250.599">
     <Window.Background>
@@ -35,6 +36,7 @@
                    Height="80" 
                    Margin="0,50,25,0"
                    Stretch="Uniform"
+                   StylusDown="BtnExit_StylusDown"
                    />
             <TextBlock x:Name="tbTimer"
                        FontSize="35"
@@ -50,6 +52,7 @@
                    Height="80"  
                    Margin="25,50,0,0" 
                    Stretch="Uniform"
+                   StylusDown="BtnBack_StylusDown"
                    />
         </Grid>
 
@@ -140,7 +143,7 @@
                 <Run Foreground="Red" Text="*"/>
                 <Run Foreground="Black" Text="Identificación"/>
             </TextBlock>
-            <TextBox 
+            <TextBox Name="TbxIdentification"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Margin="0,0,0,0"
@@ -164,7 +167,7 @@
                 <Run Foreground="Red" Text="*"/>
                 <Run Foreground="Black" Text="{Binding Data1}"/>
             </TextBlock>
-            <TextBox 
+            <TextBox  Name="TbxData1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"
@@ -187,7 +190,7 @@
                    FontWeight="Bold"   
                    Foreground="Black">
             </TextBlock>
-            <TextBox 
+            <TextBox Name="TbxData2"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"
@@ -211,7 +214,7 @@
                 <Run Foreground="Red" Text="*"/>
                 <Run Foreground="Black" Text="{Binding Data3}"/>
             </TextBlock>
-            <TextBox 
+            <TextBox Name="TbxData3"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"
@@ -235,7 +238,7 @@
                 <Run Foreground="Red" Text="*"/>
                 <Run Foreground="Black" Text="{Binding Data4}"/>
             </TextBlock>
-            <TextBox Name="TbxInfo4"
+            <TextBox Name="TbxData4"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"
