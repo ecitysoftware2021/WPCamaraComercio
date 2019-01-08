@@ -95,6 +95,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ControlPeripherals.cs" />
+    <Compile Include="Classes\Logs.cs" />
     <Compile Include="Connected Services\WCFCamaraComercio\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -121,6 +123,7 @@
     <Compile Include="Service\WCFPayPadService.cs" />
     <Compile Include="Service\WCFServices.cs" />
     <Compile Include="ViewModels\ConsultViewModel.cs" />
+    <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="Views\ConsultWindow.xaml.cs">
       <DependentUpon>ConsultWindow.xaml</DependentUpon>
     </Compile>
