@@ -69,11 +69,7 @@ namespace WPCamaraComercio.Views
 
         private async void ConsultInformation()
         {
-            PeticionDetalle petition = new PeticionDetalle();
-            petition.Matricula = matricula;
-            petition.Tpcm = tpcm;
-
-            var task = services.ConsultDetailMerchant(petition);
+            var task = services.ConsultDetailMerchant(matricula, tpcm);
             //Utilities.Loading(frmLoading, true, this);
             if (await Task.WhenAny(task, Task.Delay(10000)) == task)
             {

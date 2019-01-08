@@ -21,5 +21,6 @@ namespace WPCamaraComercio.Models
         public string Enrollment { get; set; }
 
         public string Tpcm { get; set; }
+
     }
 }

@@ -112,8 +112,8 @@ namespace WPCamaraComercio.Views
                 //}
                 foreach (var item in Utilities.ConsultResult)
                 {
-                    utilities.Matricula = item.matricula;
-                    utilities.Tpcm = item.tpcm;
+                    //utilities.Matricula = item.matricula;
+                    //utilities.Tpcm = item.tpcm;
                 }
             }
             Utilities.ResetTimer();
