@@ -9,7 +9,7 @@ namespace WPCamaraComercio.Service
 {
     public class WCFPayPadService
     {
-        ServicePayPadClient WCFPayPad = new ServicePayPadClient();
+        public ServicePayPadClient WCFPayPad = new ServicePayPadClient();
 
         public int InsertarTransaccion(CLSTransaction objTransaction)
         {

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
-        Title="FrmPagoEfectivo"  WindowStyle="None"
+        Title="FrmPayment"  WindowStyle="None"
         WindowState="Maximized"
         Height="2064.095" 
         Width="1250.599"

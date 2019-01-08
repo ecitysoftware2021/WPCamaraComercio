@@ -40,10 +40,10 @@
                    />
             <TextBlock x:Name="tbTimer"
                        FontSize="35"
-                       Foreground="#123C92"
-                       HorizontalAlignment="Right"
+                       Foreground="Black"
+                       HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Margin="0,100,80,0"/>
+                       Margin="0,0,0,0"/>
             <Image x:Name="BtnBack"
                    Source="../Images/Buttons/btn_atras.png"
                    HorizontalAlignment="Left"
