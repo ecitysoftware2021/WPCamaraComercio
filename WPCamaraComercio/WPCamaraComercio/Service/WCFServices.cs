@@ -56,37 +56,35 @@ namespace WPCamaraComercio.Service
             return response;
         }
 
-        public Task<Response> ConsultDetailMerchant(PeticionDetalle detailPetition)
+        public async Task<Response> ConsultDetailMerchant(string enrollment, string tpcm)
         {
-            Task<Response> task = null;
-            task = Task.Run(() =>
+            response = new Response();
+            try
             {
-                Response response = new Response();
-
-                try
+                var r = WCFCamara.GetDetalleComerciante(new PeticionDetalle
                 {
-                    var r = WCFCamara.GetDetalleComerciante(detailPetition);
-                    if (r != null)
-                    {
-                        response.IsSuccess = true;
-                        response.Result = r;
-                    }
-                    else
-                    {
-                        response.IsSuccess = false;
-                    }
+                    Matricula = enrollment,
+                    Tpcm = tpcm
+                });
+
+                if (r != null)
+                {
+                    response.IsSuccess = true;
+                    response.Result = r;
                 }
-                catch (Exception ex)
+                else
                 {
                     response.IsSuccess = false;
-                    response.Result = null;
-                    response.Message = ex.Message;
                 }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Result = null;
+                response.Message = ex.Message;
+            }
 
-                return response;
-            });
-
-            return task;
+            return response;
         }
 
     }

@@ -171,9 +171,9 @@ namespace WPCamaraComercio.ViewModels
             bool stateConsult = false;
             try
             {
-                this.headers = Visibility.Hidden;
+                
                 this.preload = Visibility.Visible;
-                this.coincidences.Clear();
+                
 
                 Task.Run(async () =>
                 {

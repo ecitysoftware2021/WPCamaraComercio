@@ -1,0 +1,84 @@
+﻿<Window x:Class="WPCamaraComercio.Views.LoadingModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPCamaraComercio.Views"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        gif:ImageBehavior.AnimateInDesignMode="True"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        mc:Ignorable="d"
+        Title="LoadingModal"  
+        Height="300" 
+        Width="450"
+        WindowStartupLocation="CenterScreen"                
+        Topmost="True"
+        Background="Transparent"        
+        AllowsTransparency="True"
+        ShowInTaskbar="False">
+    <Border 
+        Background="#fff"
+            BorderBrush="#2A2A2A" 
+            BorderThickness="3,3,3,3"
+            CornerRadius="20,20,20,20">
+        <Grid>
+            
+            <TextBlock x:Name="LblMessage"
+                HorizontalAlignment="Center"
+                Text="Se está procesando su solicitud, por favor espere"
+                VerticalAlignment="Top"
+                TextAlignment="Center"
+                TextWrapping="Wrap"
+                Foreground="#FF7E0000"
+                Margin="20,50,20,0"
+                FontSize="25" 
+                FontFamily="Arial" 
+                FontWeight="Bold" />
+            
+            <Image gif:ImageBehavior.AnimatedSource="/WPCamaraComercio;component/Images/Gif/lg.ajax-spinner-preloader.gif" 
+                   gif:ImageBehavior.AnimateInDesignMode="True"
+                   gif:ImageBehavior.AutoStart="True" 
+                    x:Name="GifLoadder" 
+                    Stretch="Fill"
+                    Margin="0,60,0,0" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" 
+                    Width="100" 
+                    Height="100"/>
+
+            <Button x:Name="BtnContinue"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Bottom" 
+                   Width="150"
+                   Height="45" 
+                   Margin="0,0,20,20"
+                   Visibility="Hidden"
+                   StylusDown="BtnContinue_StylusDown">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/continuar2.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
+
+            <Button x:Name="BtnCancel"
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Bottom" 
+                   Width="150"
+                   Height="45" 
+                   Margin="20,0,0,20"
+                   Visibility="Hidden"
+                   StylusDown="BtnCancel_StylusDown">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/btnCancelar.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
+        </Grid>
+    </Border>
+</Window>
+

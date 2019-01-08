@@ -71,30 +71,7 @@ namespace WPCamaraComercio.Views
             // Utilities.Timer(tbTimer);
         }
 
-        #region "HeadersButtons"
-        private void BtnExit_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            try
-            {
-                Dispatcher.BeginInvoke((Action)delegate
-                {
-                    Utilities.GoToInicial();
-                    Utilities.ResetTimer();
-                    MainWindow inicio = new MainWindow();
-                    inicio.Show();
-                    this.Close();
-                });
-                GC.Collect();
-
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
-
-        #endregion
 
         private void InitViewList()
         {
@@ -153,24 +130,21 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void ConsultDetail(Coincidence coincidence)
+        private void LoadInfoDetails(Coincidence coincidence)
         {
             try
             {
-                Utilities.Enrollment = coincidence.Enrollment;
-                Utilities.Tpcm = coincidence.Tpcm;
-
-                PeticionDetalle petition = new PeticionDetalle();
-                petition.Matricula = coincidence.Enrollment;
-                petition.Tpcm = coincidence.Tpcm;
-
-                var task = services.ConsultDetailMerchant(petition);
-
-                var response = task.Result;
-                if (response.IsSuccess)
+                if (coincidence != null)
                 {
-                    Utilities.DetailResponse = (RespuestaDetalle)response.Result;
-                    Redirect();
+                    LoadingModal modal = new LoadingModal(coincidence);
+                    modal.ShowDialog();
+
+                    lv_Files.SelectedItem = null;
+                    if (modal.DialogResult.Value)
+                    {
+                        Redirect();
+                    }
+                   
                 }
             }
             catch (Exception ex)
@@ -181,9 +155,16 @@ namespace WPCamaraComercio.Views
 
         private void Redirect()
         {
-            FrmDetailCompany frmDetailCompany = new FrmDetailCompany();
-            frmDetailCompany.Show();
-            this.Close();
+            try
+            {
+                FrmDetailCompany frmDetail = new FrmDetailCompany();
+                frmDetail.Show();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void View_Filter(object sender, FilterEventArgs e)
@@ -210,7 +191,6 @@ namespace WPCamaraComercio.Views
         private void ShowCurrentPageIndex()
         {
             tbCurrentPage.Text = (currentPageIndex + 1).ToString();
-
         }
 
         private void BtnConsultar_StylusDown(object sender, StylusDownEventArgs e)
@@ -222,9 +202,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                this.currentPageIndex = 0;
-                this.totalPage = 0;
-
+                RestoreView();
                 string valueSearch = string.Empty;
 
                 if (consultViewModel.typeSearch == 1)
@@ -246,10 +224,20 @@ namespace WPCamaraComercio.Views
             }
         }
 
+        private void RestoreView()
+        {
+            this.currentPageIndex = 0;
+            this.totalPage = 0;
+            this.consultViewModel.coincidences.Clear();
+            this.consultViewModel.headers = Visibility.Hidden;
+        }
+
         private void chkIdentification_StylusDown(object sender, StylusDownEventArgs e)
         {
             if (consultViewModel.typeSearch != 2)
             {
+                RestoreView();
+
                 this.consultViewModel.typeSearch = 2;
 
                 this.TxtIdentificacion.Text = string.Empty;
@@ -273,6 +261,8 @@ namespace WPCamaraComercio.Views
         {
             if (consultViewModel.typeSearch != 1)
             {
+                RestoreView();
+
                 this.consultViewModel.typeSearch = 1;
 
                 this.TxtIdentificacion.Visibility = Visibility.Hidden;
@@ -329,17 +319,25 @@ namespace WPCamaraComercio.Views
             ShowCurrentPageIndex();
         }
 
-        private void Lv_Files_StylusDown(object sender, StylusDownEventArgs e)
+        private void lv_Files_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             try
             {
-                Coincidence coincidence = (Coincidence)lv_Files.SelectedItem;
-                ConsultDetail(coincidence);
+                LoadInfoDetails((Coincidence)lv_Files.SelectedItem);
             }
             catch (Exception ex)
             {
                 utilities.saveLogError("lv_Files_SelectionChanged", "RecordsWindows", ex.ToString());
             }
+        }
+
+        private void BtnExit_StylusDown(object sender, StylusDownEventArgs e)
+        {
+           // Utilities.GoToInicial();
+           // Utilities.ResetTimer();
+            MainWindow inicio = new MainWindow();
+            inicio.Show();
+            this.Close();
         }
     }
 }
