@@ -21,11 +21,11 @@ namespace WPCamaraComercio.Classes
     {
         #region References
         public static string Duration = GetConfiguration("Duration");
-        
+
         public static TimeSpan time;
 
         public static DispatcherTimer timer;
-        
+
         public static int CorrespondentId = int.Parse(GetConfiguration("IDCorresponsal"));
 
         public static RespuestaConsulta RespuestaConsulta { get; set; }
@@ -219,32 +219,45 @@ namespace WPCamaraComercio.Classes
         /// <param name="Metodo"></param>
         /// <param name="Clase"></param>
         /// <param name="Mensaje"></param>
-        public void saveLogError(string Metodo, string Clase, string Mensaje)
+        /// 
+        public void FillLogError(string error, string operacion)
         {
-            //try
-            //{
-                //using (BDCamaraComercioEntities conexion = new BDCamaraComercioEntities())
-                //{
-                //    Tbl_LogError error = new Tbl_LogError();
-                //    error.Message = Mensaje;
-                //    error.NameClass = Clase;
-                //    error.NameMethod = Metodo;
-                //    error.IDCorresponsal = Convert.ToInt32(GetConfiguration("IDCorresponsal"));
-                //    error.Fecha = DateTime.Now;
-                //    error.State = false;
+            List<LogError> logError = new List<LogError>();
+            logError.Add(new LogError
+            {
+                Fecha = DateTime.Now,
+                IDTrsansaccion = IDTransaccionDB,
+                Operacion = operacion,
+                Error = error
+            });
 
-                //    conexion.Tbl_LogError.Add(error);
-                //    conexion.SaveChanges();
-                //}
+            CreateLogError(logError);
+            logError.Clear();
+        }
 
-            //    FrmModal fail = new FrmModal(Mensaje);
-            //    fail.ShowDialog();
-            //}
-            //catch (Exception ex)
-            //{
-            //    FrmModal fail = new FrmModal(Mensaje);
-            //    fail.ShowDialog();
-            //}
+        public void CreateLogError(List<LogError> dato)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(dato);
+                var pathFile = "C:\\LogErrores";
+                if (!Directory.Exists(pathFile))
+                {
+                    Directory.CreateDirectory(pathFile);
+                }
+                var file = "Log" + DateTime.Now.ToString("yyyyMMdd") + ".json";
+                var nameFile = Path.Combine(pathFile, file);
+                if (!File.Exists(nameFile))
+                {
+                    var archivo = File.CreateText(nameFile);
+                    archivo.Close();
+                }
+                using (StreamWriter sw = File.AppendText(nameFile))
+                {
+                    sw.WriteLine(json);
+                }
+            }
+            catch { }
         }
         #endregion
     }

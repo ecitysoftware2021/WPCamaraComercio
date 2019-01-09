@@ -31,11 +31,9 @@ namespace WPCamaraComercio.Classes
 
         Dictionary<string, string> objResponse = new Dictionary<string, string>();
 
-        //TblTransaccion objTransaccion = new TblTransaccion();
-
-        //TblCertificadosXTransaccion objCertificados = new TblCertificadosXTransaccion();
-
         private string FileName { get; set; }
+
+        private bool printState { get; set; }
 
         private static string IDCompra { get; set; }
 
@@ -58,7 +56,7 @@ namespace WPCamaraComercio.Classes
             try
             {
                 string idCompra = string.Empty;
-                Utilities.ReferenciaPago = CLSUtil.IDTransaccionDB.ToString();
+                Utilities.ReferenciaPago = Utilities.IDTransaccionDB.ToString();
                 datos.AutorizaEnvioEmail = CLSUtil.AutorizaEnvioEmail;
                 datos.AutorizaEnvioSMS = CLSUtil.AutorizaEnvioSMS;
                 datos.CodigoDepartamentoComprador = CLSUtil.CodigoDepartamentoComprador;
@@ -82,14 +80,14 @@ namespace WPCamaraComercio.Classes
                 datos.Certificados = CLSUtil.ListCertificados.ToArray();
                 objResponse = WCFCamara.SendPayInformation(objDatos);
                 objResponse.TryGetValue("IDCompra", out idCompra);
-                utilities.LlenarLogError(idCompra, "Resultado al Confirmar la Compra");
+                utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
                 IDCompra = idCompra;
                 utilities.IDCompra = idCompra;
                 return IDCompra;
             }
             catch (Exception ex)
             {
-                Utilities.EstadoImpresion = false;
+                printState = false;
                 LlenarLogError(ex.Message, "Metodo ConfirmarCompra");
             }
             return string.Empty;
@@ -104,7 +102,7 @@ namespace WPCamaraComercio.Classes
                 Operacion = operacion,
                 Error = error
             });
-            utilities.CrearLogErrores(logError);
+            utilities.CreateLogError(logError);
             logError.Clear();
         }
 
@@ -113,7 +111,7 @@ namespace WPCamaraComercio.Classes
             try
             {
                 PrinterName = Utilities.GetConfiguration("PrinterName");
-                foreach (var item in Utilities.ListCertificados)
+                foreach (var item in Utilities.ListCertificates)
                 {
                     CLSDatosCertificado datosCertificado = new CLSDatosCertificado();
                     datosCertificado.IdCertificado = item.IdCertificado;
@@ -137,26 +135,26 @@ namespace WPCamaraComercio.Classes
                             IdCertificado = item.IdCertificado,
                             Copia = (i + 1)
                         };
-                        utilities.LlenarLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
+                        utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
                         path = GuardarArchivo(urlArchivo, nombreArchivo);
                         LRutasCertificados.Add(path);
                     }
                 }
-                if (Utilities.EstadoImpresion)
+                if (printState)
                 {
                     foreach (var item in LRutasCertificados)
                     {
                         Imprimir(item);
                     }
                 }
-                return Utilities.EstadoImpresion;
+                return printState;
             }
             catch (Exception ex)
             {
                 Mensaje(ex.Message);
-                Utilities.EstadoImpresion = false;
+                printState = false;
             }
-            return Utilities.EstadoImpresion;
+            return printState;
         }
 
         public string GuardarArchivo(string PatchFile, FileName nombreArchivo)
@@ -176,7 +174,7 @@ namespace WPCamaraComercio.Classes
                     Delimitador,
                     nombreArchivo.Copia);
                 DirectoryFile = Utilities.GetConfiguration("DirectoryFile");
-                utilities.LlenarLogError(PatchFile, "Contenido de PatchFile");
+                utilities.FillLogError(PatchFile, "Contenido de PatchFile");
                 WebClient myWebClient = new WebClient();
                 bytePDF = myWebClient.DownloadData(PatchFile);
                 path = Path.Combine(DirectoryFile, FileName + ".pdf");
@@ -194,13 +192,13 @@ namespace WPCamaraComercio.Classes
                     if (bytePDF.Length < 1000)
                     {
                         Mensaje("Tamaño del PDF es:" + bytePDF.Length.ToString());
-                        Utilities.EstadoImpresion = false;
+                        printState = false;
                     }
                 }
                 else
                 {
                     Mensaje("PDF Null");
-                    Utilities.EstadoImpresion = false;
+                    printState = false;
                 }
             }
             catch (Exception ex)
@@ -240,7 +238,7 @@ namespace WPCamaraComercio.Classes
 
         void Mensaje(string mensaje)
         {
-            utilities.LlenarLogError(mensaje, "Descarga Certificado");
+            utilities.FillLogError(mensaje, "Descarga Certificado");
 
         }
 
@@ -257,41 +255,7 @@ namespace WPCamaraComercio.Classes
             print.Tramite = "Certificados Electrónicos";
             print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"LogoComprobante\LCamaraComercio.png");
             print.ImprimirComprobante();
-            InsertTransaccionLocalDB();
         }
-
-        //private void InsertTransaccionLocalDB()
-        //{
-        //    try
-        //    {
-        //        using (var conexion = new DB_CamaraCMEntities())
-        //        {
-        //            objTransaccion.FechaTransaccion = DateTime.Now;
-        //            objTransaccion.IDCompra = IDCompra;
-        //            objTransaccion.Valor = objDatos.ValorCompra;
-        //            conexion.TblTransaccions.Add(objTransaccion);
-        //            conexion.SaveChanges();
-        //            CLSUtil.idTransaccion = objTransaccion.IDTransaccion;
-        //        }
-        //        using (var conexion = new DB_CamaraCMEntities())
-        //        {
-        //            foreach (var item in objDatos.Certificados)
-        //            {
-        //                objCertificados.CantidadCertificados = int.Parse(item.NumeroCertificados);
-        //                objCertificados.CertificadosImpresos = 0;
-        //                objCertificados.IDCertificado = int.Parse(item.IdCertificado);
-        //                objCertificados.MatriculaEst = item.MatriculaEst;
-        //                objCertificados.Matricula = item.matricula;
-        //                objCertificados.IDTransaccion = CLSUtil.idTransaccion;
-        //                objCertificados.Tpcm = item.tpcm;
-        //                conexion.TblCertificadosXTransaccions.Add(objCertificados);
-        //                conexion.SaveChanges();
-        //            }
-        //        }
-        //    }
-        //    catch { }
-        //}
-
     }
 
     public class FileName
