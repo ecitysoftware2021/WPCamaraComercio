@@ -68,7 +68,7 @@ namespace WPCamaraComercio.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Utilities.Timer(tbTimer);
+             Utilities.Timer(tbTimer);
         }
 
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
@@ -81,7 +81,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("InitView", "RecordsWindows", ex.ToString());
+                //utilities.saveLogError("InitView", "RecordsWindows", ex.ToString());
             }
         }
 
@@ -126,7 +126,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("CreatePages", "RecordsWindows", ex.ToString());
+                //utilities.saveLogError("CreatePages", "RecordsWindows", ex.ToString());
             }
         }
 
@@ -149,7 +149,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("RedirecView", "RecordsWindows", ex.ToString());
+                //utilities.saveLogError("RedirecView", "RecordsWindows", ex.ToString());
             }
         }
 
@@ -184,7 +184,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("ViewFilter", "RecordsWindows", ex.ToString());
+                //utilities.saveLogError("ViewFilter", "RecordsWindows", ex.ToString());
             }
         }
 
@@ -327,7 +327,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("lv_Files_SelectionChanged", "RecordsWindows", ex.ToString());
+                //utilities.saveLogError("lv_Files_SelectionChanged", "RecordsWindows", ex.ToString());
             }
         }
 

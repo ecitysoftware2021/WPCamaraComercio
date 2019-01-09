@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,7 +60,7 @@ namespace WPCamaraComercio.Views
                 IDCorresponsal = Utilities.CorrespondentId,
                 IdTransaction = Utilities.IDTransactionDB,
                 //UserId = InfoUserPass.Identification,
-                ValuePay = Utilities.PayVal,
+                ValuePay = Utilities.ValueToPay,
             };
             //PaymentViewModel.PayValue = Utilities.PayVal;
             count = 0;
@@ -77,16 +78,16 @@ namespace WPCamaraComercio.Views
             try
             {
                 Control.StopAceptance();
-                recorder.FinalizarGrabacion();
+                //recorder.FinalizarGrabacion();
                 Task.Run(() =>
                 {
                     UpdateTransaction(4);
                 });
                 if (PaymentViewModel.ValorIngresado > 0)
                 {
-                    Utilities.DispenserVal = PaymentViewModel.ValorIngresado;
+                    //Utilities.DispenserVal = PaymentViewModel.ValorIngresado;
                     Utilities.Loading(frmLoading, true, this);
-                    ReturnMoney(Utilities.DispenserVal);
+                    //ReturnMoney(Utilities.DispenserVal);
                 }
                 else
                 {
@@ -200,10 +201,10 @@ namespace WPCamaraComercio.Views
         /// </summary>
         private void OrganizeValues()
         {
-            lblValorPagar.Content = string.Format("{0:C0}", Utilities.PayVal);
+           // lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
             PaymentViewModel = new PaymentViewModel
             {
-                ValorFaltante = Utilities.PayVal,
+                ValorFaltante = Utilities.ValueToPay,
                 ValorSobrante = 0,
                 ValorIngresado = 0
             };
@@ -219,7 +220,7 @@ namespace WPCamaraComercio.Views
         private void ErroUpdateTrans(string message)
         {
             UpdateTransaction(4);
-            var json = Utilities.CreateJSON(InfoUserPass.Identification);
+            var json = Utilities.CreateJSON();
             logError.Description = string.Concat(json, Environment.NewLine, "Ocurrió un error en la transación IdTransaccion:",
                 Utilities.IDTransactionDB,
                 "\n error: ", message,
@@ -242,27 +243,28 @@ namespace WPCamaraComercio.Views
                 //await SavePay(update);
                 string message = string.Concat("Reserva realizada con éxito", Environment.NewLine, "gracias por utilizar nuestro servicio,", Environment.NewLine, "espere mientras se imprimen los boleto.");
                 Utilities.OpenModal(message, this, true);
-                await Task.Run(() =>
-                {
-                    Utilities.PrintC(new PrintGenericViewModel
-                    {
-                        Cod_Transaction = Utilities.IDTransactionDB.ToString(),
-                        DateTramite = DateTime.Now.ToString(),
-                        Identification = "123414124",
-                        ReturnedVal = Utilities.ValueDelivery.ToString(),
-                        State = "Aprobada",
-                        Value = Utilities.PayVal.ToString(),
-                        Tramite = Utilities.GetTramite(Utilities.Operation)
-                    });//print tickets    
-                    //PrintTickets(answer.facturas);
-                });
+                //await Task.Run(() =>
+                //{
+                //    Utilities.PrintC(new PrintGenericViewModel
+                //    {
+                //        Cod_Transaction = Utilities.IDTransactionDB.ToString(),
+                //        DateTramite = DateTime.Now.ToString(),
+                //        Identification = "123414124",
+                //        ReturnedVal = Utilities.ValueDelivery.ToString(),
+                //        State = "Aprobada",
+                //        Value = Utilities.PayVal.ToString(),
+                //        Tramite = Utilities.GetTramite(Utilities.Operation)
+                //    });//print tickets    
+                //    //PrintTickets(answer.facturas);
+                //});
+
                 Thread.Sleep(3000);
                 Utilities.ResetTimer();
                 await Dispatcher.BeginInvoke((Action)delegate
                 {
-                    FrmSummary summary = new FrmSummary();
-                    summary.Show();
-                    Close();
+                    //FrmSummary summary = new FrmSummary();
+                    //summary.Show();
+                    //Close();
                 });
             }
             catch (Exception ex)
@@ -288,7 +290,7 @@ namespace WPCamaraComercio.Views
                     }
                     else
                     {
-                        string json = Utilities.CreateJSON(InfoUserPass.Identification);
+                        string json = Utilities.CreateJSON();
                         logError.Description = json + "\nNo fue posible actualizar esta transacción a aprobada";
                         logError.State = "Iniciada";
                         Utilities.SaveLogTransactions(logError, "LogTransacciones\\Iniciadas");
@@ -296,7 +298,7 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
-                    string json = Utilities.CreateJSON(InfoUserPass.Identification);
+                    string json = Utilities.CreateJSON();
                     logError.Description = json + "\nTransacción Exitosa";
                     logError.State = "Aprobada";
                     Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");

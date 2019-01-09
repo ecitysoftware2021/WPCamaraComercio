@@ -61,7 +61,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("RedirecView", "RecordsWindows", ex.ToString());
+                //utilities.saveLogError("RedirecView", "RecordsWindows", ex.ToString());
             }
         }
 

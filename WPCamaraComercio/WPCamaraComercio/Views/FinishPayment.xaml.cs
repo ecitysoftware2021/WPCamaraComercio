@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
+using WPCamaraComercio.Service;
 using WPCamaraComercio.WCFPayPad;
 
 namespace WPCamaraComercio.Views
@@ -25,11 +26,18 @@ namespace WPCamaraComercio.Views
         Utilities utilities = new Utilities();
         CamaraComercio camaraComercio = new CamaraComercio();
         ServicePayPadClient WCFPayPadInsert = new ServicePayPadClient();
+        NavigationService navigationService;
         #endregion
 
         public FinishPayment()
         {
             InitializeComponent();
+            navigationService = new NavigationService(this);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
 
         public Task PDFBYTE()
@@ -45,23 +53,18 @@ namespace WPCamaraComercio.Views
                 {
                     if (antecedent.Result)
                     {
-                        WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransaccionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                        WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
                         camaraComercio.ImprimirComprobante("Aprobada");
                         utilities.RestartApplication();
                     }
                     else
                     {
-                        WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransaccionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                        utilities.OpenModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                        WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                        navigationService.NavigatorModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
                             "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
                         "Comuniquese con servicio al cliente o diríjase a las taquillas."));
-                        //this.BeginInvoke((Action)delegate
-                        //{
-                        //    frmRechazarPago objForm = new frmRechazarPago(CLSUtil.ValorPagar);
-                        //    objForm.Show();
-                        //    this.Dispose();
-                        //});
-                        //GC.Collect();
+
+                        navigationService.NavigationTo("FrmCancelledPayment");
                     }
                 }
                 else if (t.Status == TaskStatus.Faulted)

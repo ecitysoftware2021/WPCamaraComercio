@@ -69,7 +69,7 @@ namespace WPCamaraComercio
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("Grid_MouseDown_1", "MainWindow", ex.ToString());
+                //utilities.saveLogError("Grid_MouseDown_1", "MainWindow", ex.ToString());
             }
 
         }
@@ -87,7 +87,7 @@ namespace WPCamaraComercio
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("init", "MainWindow", ex.ToString());
+                //utilities.saveLogError("init", "MainWindow", ex.ToString());
             }
         }
 
@@ -105,7 +105,7 @@ namespace WPCamaraComercio
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("LoadImageFolder", "MainWindow", ex.ToString());
+                //utilities.saveLogError("LoadImageFolder", "MainWindow", ex.ToString());
                 return null;
             }
         }

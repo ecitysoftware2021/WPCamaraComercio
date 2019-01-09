@@ -126,6 +126,7 @@
     <Compile Include="Models\EstablishCertificate.cs" />
     <Compile Include="Models\MerchantDetail.cs" />
     <Compile Include="Objects\DetailCartificate.cs" />
+    <Compile Include="Objects\InfoUser.cs" />
     <Compile Include="Objects\PayerData.cs" />
     <Compile Include="Objects\PaymentData.cs" />
     <Compile Include="Objects\Record.cs" />

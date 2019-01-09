@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
         mc:Ignorable="d"
         Title="ConsultWindow"
-    WindowStyle="None"
+        WindowStyle="None"
         WindowState="Maximized"
         Height="2064.095" 
         Width="1250.599"
@@ -37,6 +37,12 @@
                    Stretch="Uniform"
                    StylusDown="BtnExit_StylusDown"
                    />
+            <TextBlock x:Name="tbTimer"
+                       FontSize="35"
+                       Foreground="Black"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="0,0,0,0"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -115,10 +121,10 @@
                      Foreground="#FF840000"
                      FontWeight="Bold"
                      Visibility="Hidden"
-                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true" />
+                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true"
+                     />
 
             <TextBox x:Name="TxtIdentificacion"
-                     Text="811040812"
                      VerticalAlignment="Bottom" 
                      HorizontalAlignment="Left" 
                      TextAlignment="Center"
@@ -130,7 +136,8 @@
                      FontSize="42" 
                      Foreground="#FF840000"
                      FontWeight="Bold"
-                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"/>
+                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"
+                     />
 
             <Button x:Name="BtnConsultar"
                    HorizontalAlignment="Right" 

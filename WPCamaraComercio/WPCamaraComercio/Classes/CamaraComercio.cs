@@ -54,7 +54,7 @@ namespace WPCamaraComercio.Classes
 
         List<LogError> logError = new List<LogError>();
 
-        public string ConfirmarCompra()
+        public async Task<string> ConfirmarCompra()
         {
             try
             {
@@ -81,19 +81,20 @@ namespace WPCamaraComercio.Classes
                 datos.TipoIdentificacionComprador = Utilities.PayerData.TypeIdBuyer;
                 datos.ValorCompra = decimal.Parse(Utilities.ValueToPay.ToString());
                 datos.Certificados = Utilities.ListCertificates.ToArray();
-                Task.Run(async () =>
-                {
-                    var response = await service.SendPayInformation(datos);
 
-                    if (response.IsSuccess)
-                    {
-                        responseDic = (Dictionary<string, string>)response.Result;
-                    }
-                });
-                responseDic.TryGetValue("IDCompra", out idCompra);
-                utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
-                IDCompra = idCompra;
-                return IDCompra;
+                var response = await service.SendPayInformation(datos);
+                if (response.IsSuccess)
+                {
+                    responseDic = (Dictionary<string, string>)response.Result;
+                    responseDic.TryGetValue("IDCompra", out idCompra);
+                    utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
+                    IDCompra = idCompra;
+                    return IDCompra;
+                }
+                else
+                {
+                    return string.Empty;
+                }
             }
             catch (Exception ex)
             {
@@ -256,11 +257,11 @@ namespace WPCamaraComercio.Classes
         {
             print.Cedula = Utilities.PayerData.BuyerIdentification;
             print.FechaPago = DateTime.Now;
-            print.Nombre = string.Concat(Utilities.PayerData.FirstNameBuyer, " ", Utilities.PayerData.LastNameBuyer);
+            print.Nombre = Utilities.PayerData.FullNameBuyer;
             print.Referencia = Utilities.IDTransactionDB.ToString();
             print.Valor = Utilities.ValueToPay;
             print.Estado = Estado;
-            print.ValorDevuelto = Utilities.ValorDevolver;
+            //print.ValorDevuelto = Utilities.ValorDevolver;
             print.IDCompra = IDCompra;
             print.Tramite = "Certificados Electrónicos";
             print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"LogoComprobante\LCamaraComercio.png");

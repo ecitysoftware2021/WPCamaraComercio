@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -101,6 +102,7 @@ namespace WPCamaraComercio.Classes
                 w.IsEnabled = true;
             }
         }
+
         /// <summary>
         /// Método que me busca en el appConfing 
         /// </summary>
@@ -261,6 +263,75 @@ namespace WPCamaraComercio.Classes
                 }
             }
             catch { }
+        }
+
+        public static void SaveLogDispenser(LogDispenser log)
+        {
+            LogService logService = new LogService
+            {
+                NamePath = "C:\\LogDispenser",
+                FileName = string.Concat("Log", DateTime.Now.ToString("yyyyMMdd"), ".json")
+            };
+
+            logService.CreateLogs(log);
+        }
+
+        public static void SaveLogTransactions(LogErrorGeneral log, string path)
+        {
+            LogService logService = new LogService
+            {
+                NamePath = path,
+                FileName = string.Concat("Log", DateTime.Now.ToString("yyyyMMdd"), ".json")
+            };
+
+            logService.CreateLogsTransactions(log);
+        }
+
+        /// <summary>
+        /// Encargado de serealizar el objeto en JSON para el log de transacciones
+        /// </summary>
+        /// <param name="identification">identificaion de la persona que realiza el trámite</param>
+        public static string CreateJSON()
+        {
+            string json = string.Empty;
+            var serializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new StaticPropertyContractResolver()
+            };
+
+            json = JsonConvert.SerializeObject(new InfoUser(), serializerSettings);
+
+            return json;
+        }
+
+
+        /// <summary>
+        /// Clase encargada de serializar un objeto estático(clase con atributos estáticos)
+        /// en un JSON
+        /// </summary>
+        public class StaticPropertyContractResolver : DefaultContractResolver
+        {
+            protected override List<MemberInfo> GetSerializableMembers(Type objectType)
+            {
+                var baseMembers = base.GetSerializableMembers(objectType);
+                PropertyInfo[] staticMembers = objectType.GetProperties(BindingFlags.Static | BindingFlags.Public);
+                baseMembers.AddRange(staticMembers);
+
+                return baseMembers;
+            }
+        }
+
+
+        public void RestartApplication()
+        {
+            Process pc = new Process();
+            Process pn = new Process();
+            ProcessStartInfo si = new ProcessStartInfo();
+            si.FileName = Path.Combine(Directory.GetCurrentDirectory(), "WPCamaraComercio.exe");
+            pn.StartInfo = si;
+            pn.Start();
+            pc = Process.GetCurrentProcess();
+            pc.Kill();
         }
         #endregion
     }

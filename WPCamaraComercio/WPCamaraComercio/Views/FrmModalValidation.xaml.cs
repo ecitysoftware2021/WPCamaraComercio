@@ -44,7 +44,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("imgAceptar_PreviewStylusDown", "ModalValidation", ex.ToString());
+                //utilities.saveLogError("imgAceptar_PreviewStylusDown", "ModalValidation", ex.ToString());
             }
         }
 
@@ -61,7 +61,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("imgAceptar_PreviewStylusDown", "ModalValidation", ex.ToString());
+                //utilities.saveLogError("imgAceptar_PreviewStylusDown", "ModalValidation", ex.ToString());
             }
         }
     }

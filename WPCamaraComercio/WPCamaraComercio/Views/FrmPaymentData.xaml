@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:k="clr-namespace:WPCamaraComercio.Keyboard"
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
         mc:Ignorable="d"
         Title="FrmPaymentData" 
@@ -21,7 +22,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
-            <RowDefinition Height="150" />
+            <RowDefinition Height="200" />
             <RowDefinition Height="1200" />
             <RowDefinition Height="400"/>
         </Grid.RowDefinitions>
@@ -71,7 +72,15 @@
                     Grid.ColumnSpan="2"
                     FontWeight="Bold"
                     Foreground="#000"
-                    Text="CAPTURA DE DATOS"/>
+                    Text="DATOS PAGADOR"/>
+            <TextBlock VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,20"
+                    FontSize="30"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Foreground="Red"
+                    Text="Todos los campos marcados con * son de caracter obligatorio"/>
         </Grid>
 
         <Grid Grid.Row="2" x:Name="grdPaymentData" Grid.Column="0" 
@@ -153,7 +162,9 @@
                    FontSize="40"
                    Foreground="Black"
                    Width="500"
-                   TextWrapping="Wrap"/>
+                   TextWrapping="Wrap"
+                   k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="true"
+                   />
             <TextBlock Name="TxbData1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
@@ -177,7 +188,9 @@
                 Grid.Row="3"
                 Foreground="Black"
                 Width="500"
-                TextWrapping="Wrap"/>
+                TextWrapping="Wrap"
+                k:TouchScreenKeyboard.TouchScreenKeyboard="true"      
+                />
             <TextBlock Name="TxbData2"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
@@ -200,7 +213,9 @@
                 Grid.Row="4"
                 Foreground="Black"
                 Width="500"
-                TextWrapping="Wrap"/>
+                TextWrapping="Wrap"
+                k:TouchScreenKeyboard.TouchScreenKeyboard="true"
+                     />
             <TextBlock Name="TxbData3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
@@ -224,7 +239,9 @@
                 Grid.Row="5"
                 Foreground="Black"
                 Width="500"
-                TextWrapping="Wrap"/>
+                TextWrapping="Wrap"
+                k:TouchScreenKeyboard.TouchScreenKeyboard="true"
+                />
             <TextBlock Name="TxbData4"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
@@ -248,7 +265,9 @@
                 Grid.Row="6"
                 Foreground="Black"
                 Width="500"
-                TextWrapping="Wrap"/>
+                TextWrapping="Wrap"
+                k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="true"
+                />
             <Image x:Name="BtnPay"
                 Grid.Row="7"
                 Grid.ColumnSpan="2"
