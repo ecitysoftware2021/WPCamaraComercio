@@ -29,7 +29,7 @@ namespace WPCamaraComercio.Classes
 
         Datos datos = new Datos();
 
-        Dictionary<string, string> objResponse = new Dictionary<string, string>();
+        Dictionary<string, string> response = new Dictionary<string, string>();
 
         private string FileName { get; set; }
 
@@ -56,33 +56,33 @@ namespace WPCamaraComercio.Classes
             try
             {
                 string idCompra = string.Empty;
-                Utilities.ReferenciaPago = Utilities.IDTransaccionDB.ToString();
-                datos.AutorizaEnvioEmail = CLSUtil.AutorizaEnvioEmail;
-                datos.AutorizaEnvioSMS = CLSUtil.AutorizaEnvioSMS;
-                datos.CodigoDepartamentoComprador = CLSUtil.CodigoDepartamentoComprador;
-                datos.CodigoMunicipioComprador = CLSUtil.CodigoMunicipioComprador;
-                datos.CodigoPaisComprador = CLSUtil.CodigoPaisComprador;
-                datos.DireccionComprador = CLSUtil.DireccionComprador;
-                datos.EmailComprador = CLSUtil.CorreoElectronico;
-                datos.IdentificacionComprador = CLSUtil.IdentificacionComprador;
-                datos.MunicipioComprador = CLSUtil.MunicipioComprador;
-                datos.NombreComprador = CLSUtil.NombreComprador;
-                datos.PlataformaCliente = CLSUtil.PlataformaCliente;
-                datos.PrimerApellidoComprador = CLSUtil.PrimerApellidoComprador;
-                datos.PrimerNombreComprador = CLSUtil.PrimerNombreComprador;
-                datos.ReferenciaPago = CLSUtil.ReferenciaPago;
-                datos.SegundoApellidoComprador = CLSUtil.SegundoApellidoComprador;
-                datos.SegundoNombreComprador = CLSUtil.SegundoNombreComprador;
-                datos.TelefonoComprador = CLSUtil.Telefono;
-                datos.TipoComprador = CLSUtil.TipoComprador;
-                datos.TipoIdentificacionComprador = CLSUtil.TipoIdentificacionComprador;
-                datos.ValorCompra = decimal.Parse(CLSUtil.ValorPagar.ToString());
-                datos.Certificados = CLSUtil.ListCertificados.ToArray();
-                objResponse = WCFCamara.SendPayInformation(objDatos);
-                objResponse.TryGetValue("IDCompra", out idCompra);
+                //Utilities.ReferenciaPago = Utilities.IDTransactionDB.ToString();
+                datos.AutorizaEnvioEmail = "NO";
+                datos.AutorizaEnvioSMS = "NO";
+                datos.CodigoDepartamentoComprador = Utilities.PayerData.CodeDepartmentBuyer;
+                datos.CodigoMunicipioComprador = Utilities.PayerData.CodeTownBuyer;
+                datos.CodigoPaisComprador = Utilities.PayerData.CodeCountryBuyer;
+                datos.DireccionComprador = Utilities.PayerData.BuyerAddress;
+                datos.EmailComprador = Utilities.PayerData.Email;
+                datos.IdentificacionComprador = Utilities.PayerData.BuyerIdentification;
+                datos.MunicipioComprador = string.Empty;
+                datos.NombreComprador = Utilities.PayerData.FullNameBuyer;
+                datos.PlataformaCliente = Utilities.PayerData.ClientPlataform;
+                datos.PrimerApellidoComprador = Utilities.PayerData.SecondNameBuyer;
+                datos.PrimerNombreComprador = Utilities.PayerData.FirstNameBuyer;
+                datos.ReferenciaPago = Utilities.IDTransactionDB.ToString();
+                datos.SegundoApellidoComprador = string.Empty;
+                datos.SegundoNombreComprador = Utilities.PayerData.SecondNameBuyer;
+                datos.TelefonoComprador = Utilities.PayerData.Phone;
+                datos.TipoComprador = Utilities.PayerData.TypeBuyer;
+                datos.TipoIdentificacionComprador = Utilities.PayerData.TypeIdBuyer;
+                datos.ValorCompra = decimal.Parse(Utilities.ValueToPay.ToString());
+                datos.Certificados = Utilities.ListCertificates.ToArray();
+                response = WCFCamara.SendPayInformation(datos);
+                response.TryGetValue("IDCompra", out idCompra);
                 utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
                 IDCompra = idCompra;
-                utilities.IDCompra = idCompra;
+                //utilities.IDCompra = idCompra;
                 return IDCompra;
             }
             catch (Exception ex)
@@ -98,7 +98,7 @@ namespace WPCamaraComercio.Classes
             logError.Add(new LogError
             {
                 Fecha = DateTime.Now,
-                IDTrsansaccion = Utilities.IDTransaccionDB,
+                IDTrsansaccion = Utilities.IDTransactionDB,
                 Operacion = operacion,
                 Error = error
             });
@@ -115,10 +115,10 @@ namespace WPCamaraComercio.Classes
                 {
                     CLSDatosCertificado datosCertificado = new CLSDatosCertificado();
                     datosCertificado.IdCertificado = item.IdCertificado;
-                    datosCertificado.idcompra = utilities.IDCompra;
+                    datosCertificado.idcompra = IDCompra;
                     datosCertificado.matricula = item.matricula;
                     datosCertificado.matriculaest = item.MatriculaEst;
-                    datosCertificado.referenciaPago = Utilities.IDTransaccionDB.ToString();
+                    datosCertificado.referenciaPago = Utilities.IDTransactionDB.ToString();
                     datosCertificado.tpcm = item.tpcm;
 
                     bytePDF = null;
@@ -136,7 +136,7 @@ namespace WPCamaraComercio.Classes
                             Copia = (i + 1)
                         };
                         utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
-                        path = GuardarArchivo(urlArchivo, nombreArchivo);
+                        path = SaveFile(urlArchivo, nombreArchivo);
                         LRutasCertificados.Add(path);
                     }
                 }
@@ -144,7 +144,7 @@ namespace WPCamaraComercio.Classes
                 {
                     foreach (var item in LRutasCertificados)
                     {
-                        Imprimir(item);
+                        Print(item);
                     }
                 }
                 return printState;
@@ -157,7 +157,7 @@ namespace WPCamaraComercio.Classes
             return printState;
         }
 
-        public string GuardarArchivo(string PatchFile, FileName nombreArchivo)
+        public string SaveFile(string PatchFile, FileName nombreArchivo)
         {
             try
             {
@@ -208,7 +208,7 @@ namespace WPCamaraComercio.Classes
             return path;
         }
 
-        private void Imprimir(string rutaArchivo)
+        private void Print(string rutaArchivo)
         {
             try
             {
@@ -244,11 +244,11 @@ namespace WPCamaraComercio.Classes
 
         public void ImprimirComprobante(string Estado)
         {
-            print.Cedula = Utilities.IdentificacionComprador;
+            print.Cedula = Utilities.PayerData.BuyerIdentification;
             print.FechaPago = DateTime.Now;
-            print.Nombre = string.Concat(Utilities.PrimerNombreComprador, " ", Utilities.PrimerApellidoComprador);
-            print.Referencia = Utilities.IDTransaccionDB.ToString();
-            print.Valor = Utilities.ValorPagar;
+            print.Nombre = string.Concat(Utilities.PayerData.FirstNameBuyer, " ", Utilities.PayerData.LastNameBuyer);
+            print.Referencia = Utilities.IDTransactionDB.ToString();
+            print.Valor = Utilities.ValueToPay;
             print.Estado = Estado;
             print.ValorDevuelto = Utilities.ValorDevolver;
             print.IDCompra = IDCompra;
@@ -266,5 +266,4 @@ namespace WPCamaraComercio.Classes
         public string tpcm { get; set; }
         public int Copia { get; set; }
     }
-}
 }

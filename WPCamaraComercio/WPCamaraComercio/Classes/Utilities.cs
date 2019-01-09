@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WPCamaraComercio.Models;
+using WPCamaraComercio.Objects;
 using WPCamaraComercio.Views;
 using WPCamaraComercio.WCFCamaraComercio;
 
@@ -34,7 +35,7 @@ namespace WPCamaraComercio.Classes
 
         public static string search { get; set; }
 
-        public static IEnumerable<Resultado> ConsultResult { get; set; }
+        public static Resultado ConsultResult { get; set; }
 
         public static string Enrollment { get; set; }
 
@@ -49,6 +50,8 @@ namespace WPCamaraComercio.Classes
         public static decimal ValueToPay { get; set; }
 
         public static int IDTransactionDB { get; set; }
+
+        public static PayerData PayerData { get; set; }
 
         public static string TOKEN { get; set; }
 
@@ -195,7 +198,7 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                Print objPrint = new Print();
+                Print print = new Print();
 
                 //dataPrinter.Tipo = Utilities.Tipo;
                 //dataPrinter.FechaPago = DateTime.Now;
@@ -205,11 +208,11 @@ namespace WPCamaraComercio.Classes
                 //dataPrinter.ValorIngresado = String.Format("{0:C2}", payModel.ValorIngresado);
                 //dataPrinter.ValorDevuelto = String.Format("{0:C2}", payModel.ValorRestante);
 
-                objPrint.ImprimirComprobante();
+                print.ImprimirComprobante();
             }
             catch (Exception ex)
             {
-                saveLogError("btnConsultar_StylusDown", "FrmSearch", ex.ToString());
+                //saveLogError("btnConsultar_StylusDown", "FrmSearch", ex.ToString());
             }
         }
 
@@ -226,7 +229,7 @@ namespace WPCamaraComercio.Classes
             logError.Add(new LogError
             {
                 Fecha = DateTime.Now,
-                IDTrsansaccion = IDTransaccionDB,
+                IDTrsansaccion = IDTransactionDB,
                 Operacion = operacion,
                 Error = error
             });

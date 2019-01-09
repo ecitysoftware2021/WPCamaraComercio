@@ -16,6 +16,11 @@ namespace WPCamaraComercio.Objects
         public string TypeBuyer { get; set; } 
         public string TypeIdBuyer { get; set; } 
         public string Phone { get; set; } 
-        public string Email { get; set; } 
+        public string Email { get; set; }
+        public int CodeCountryBuyer { get; set; }
+        public int CodeDepartmentBuyer { get; set; }
+        public int CodeTownBuyer { get; set; }
+        public string FullNameBuyer { get; set; }
+        public string ClientPlataform { get; set; }
     }
 }

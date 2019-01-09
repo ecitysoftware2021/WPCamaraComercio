@@ -66,6 +66,7 @@ namespace WPCamaraComercio.Views
             {
                 if (Utilities.DetailResponse.response.resultados != null)
                 {
+                    Utilities.ConsultResult = Utilities.RespuestaConsulta.response.resultados[0];
                     Utilities.ListMerchantDetail.Add(FillMerchantDetail(Utilities.DetailResponse.response.resultados[0]));
 
                     GenerateMerchant();

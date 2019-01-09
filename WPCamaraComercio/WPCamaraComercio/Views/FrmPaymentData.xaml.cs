@@ -128,6 +128,10 @@ namespace WPCamaraComercio.Views
 
         private void AssingProperties()
         {
+            var data = Utilities.ConsultResult;
+            string[] municipio = data.municipio.Split(')');
+            string[] datosPais = municipio[0].ToString().Split('-');
+
             PayerData payerData = new PayerData();
             payerData.BuyerAddress = CmbTypeBuyer.SelectedIndex == 1 ? TbxData2.Text : "";
             payerData.BuyerIdentification = TbxIdentification.Text;
@@ -137,7 +141,14 @@ namespace WPCamaraComercio.Views
             payerData.TypeBuyer = CmbTypeBuyer.Text;
             payerData.TypeIdBuyer = ((KeyValuePair<string, string>)CmbIdDType.SelectedItem).Key;
             payerData.Phone = CmbTypeBuyer.SelectedIndex == 1 ? TbxData3.Text : TbxData4.Text;
-            //payerData.Email = txtCorreo.Text;
+            payerData.Email = string.Empty;
+            payerData.CodeCountryBuyer = int.Parse(datosPais[0].Replace("( ", ""));
+            payerData.CodeDepartmentBuyer = int.Parse(datosPais[1]);
+            payerData.CodeTownBuyer = int.Parse(datosPais[2]);
+            payerData.FullNameBuyer = payerData.FirstNameBuyer + " " + payerData.SecondNameBuyer + " " + payerData.LastNameBuyer;
+            payerData.ClientPlataform = "DISPENSADOR";
+
+            Utilities.PayerData = payerData;
         }
 
         private void CreateTransaction()

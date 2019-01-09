@@ -145,9 +145,6 @@
     <Compile Include="Views\FinishPayment.xaml.cs">
       <DependentUpon>FinishPayment.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmCoincidence.xaml.cs">
-      <DependentUpon>FrmCoincidence.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FrmDetailCompany.xaml.cs">
       <DependentUpon>FrmDetailCompany.xaml</DependentUpon>
     </Compile>
@@ -162,12 +159,6 @@
     </Compile>
     <Compile Include="Views\FrmPaymentData.xaml.cs">
       <DependentUpon>FrmPaymentData.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FrmInformationCompany.xaml.cs">
-      <DependentUpon>FrmInformationCompany.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FrmMenu.xaml.cs">
-      <DependentUpon>FrmMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmModal.xaml.cs">
       <DependentUpon>FrmModal.xaml</DependentUpon>
@@ -211,10 +202,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FrmCoincidence.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\FrmDetailCompany.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,14 +219,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmPaymentData.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FrmInformationCompany.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FrmMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
