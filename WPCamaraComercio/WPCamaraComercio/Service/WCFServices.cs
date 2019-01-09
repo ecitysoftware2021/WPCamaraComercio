@@ -87,5 +87,30 @@ namespace WPCamaraComercio.Service
             return response;
         }
 
+        public async Task<Response> SendPayInformation(Datos data)
+        {
+            try
+            {
+                var r = WCFCamara.SendPayInformation(data);
+                if (r != null)
+                {
+                    response.IsSuccess = true;
+                    response.Result = r;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Result = null;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
     }
 }

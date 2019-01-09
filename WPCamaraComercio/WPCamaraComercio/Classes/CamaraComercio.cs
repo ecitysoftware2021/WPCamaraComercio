@@ -9,6 +9,7 @@ using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using WPCamaraComercio.Objects;
+using WPCamaraComercio.Service;
 using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.Classes
@@ -27,9 +28,11 @@ namespace WPCamaraComercio.Classes
 
         WCFCamaraComercioClient WCFCamara = new WCFCamaraComercioClient();
 
+        WCFServices service = new WCFServices();
+
         Datos datos = new Datos();
 
-        Dictionary<string, string> response = new Dictionary<string, string>();
+        Dictionary<string, string> responseDic = new Dictionary<string, string>();
 
         private string FileName { get; set; }
 
@@ -78,11 +81,18 @@ namespace WPCamaraComercio.Classes
                 datos.TipoIdentificacionComprador = Utilities.PayerData.TypeIdBuyer;
                 datos.ValorCompra = decimal.Parse(Utilities.ValueToPay.ToString());
                 datos.Certificados = Utilities.ListCertificates.ToArray();
-                response = WCFCamara.SendPayInformation(datos);
-                response.TryGetValue("IDCompra", out idCompra);
+                Task.Run(async () =>
+                {
+                    var response = await service.SendPayInformation(datos);
+
+                    if (response.IsSuccess)
+                    {
+                        responseDic = (Dictionary<string, string>)response.Result;
+                    }
+                });
+                responseDic.TryGetValue("IDCompra", out idCompra);
                 utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
                 IDCompra = idCompra;
-                //utilities.IDCompra = idCompra;
                 return IDCompra;
             }
             catch (Exception ex)
