@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
+using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.ViewModels;
 
@@ -37,7 +38,7 @@ namespace WPCamaraComercio.Views
 
         private LogErrorGeneral logError;
 
-        private CLSGrabador recorder;//Instancia
+        private Record recorder;//Instancia
 
         private int count;//Contador utilizado para los reintentos en UpdateTrans
 
@@ -49,7 +50,7 @@ namespace WPCamaraComercio.Views
             InitializeComponent();
             services = new WCFServices();
             frmLoading = new FrmLoading();
-            recorder = new CLSGrabador();
+            recorder = new Record();
             utilities = new Utilities();
             ServicePayPad = new WCFPayPadService();
             logError = new LogErrorGeneral

@@ -31,4 +31,12 @@ namespace WPCamaraComercio.Classes
         public string Description { get; set; }
         public int IDCorresponsal { get; set; }
     }
+
+    public class LogError
+    {
+        public DateTime Fecha { get; set; }
+        public int IDTrsansaccion { get; set; }
+        public string Operacion { get; set; }
+        public string Error { get; set; }
+    }
 }

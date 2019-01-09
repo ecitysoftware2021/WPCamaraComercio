@@ -50,6 +50,10 @@ namespace WPCamaraComercio.Classes
 
         public static int IDTransactionDB { get; set; }
 
+        public static string TOKEN { get; set; }
+
+        public static int Session { get; set; }
+
         //public static Dictionary<int, int> CertificateQuantity = new Dictionary<int, int>()
         //{
         //    {1,1},
@@ -191,7 +195,7 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                CLSPrint objPrint = new CLSPrint();
+                Print objPrint = new Print();
 
                 //dataPrinter.Tipo = Utilities.Tipo;
                 //dataPrinter.FechaPago = DateTime.Now;
