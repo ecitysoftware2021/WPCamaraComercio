@@ -244,21 +244,21 @@ namespace WPCamaraComercio.Classes
 
         }
 
-        //public void ImprimirComprobante(string Estado)
-        //{
-        //    print.Cedula = Utilities.IdentificacionComprador;
-        //    print.FechaPago = DateTime.Now;
-        //    print.Nombre = string.Concat(Utilities.PrimerNombreComprador, " ", Utilities.PrimerApellidoComprador);
-        //    print.Referencia = Utilities.IDTransaccionDB.ToString();
-        //    print.Valor = Utilities.ValorPagar;
-        //    print.Estado = Estado;
-        //    print.ValorDevuelto = Utilities.ValorDevolver;
-        //    print.IDCompra = IDCompra;
-        //    print.Tramite = "Certificados Electrónicos";
-        //    print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"LogoComprobante\LCamaraComercio.png");
-        //    print.ImprimirComprobante();
-        //    InsertTransaccionLocalDB();
-        //}
+        public void ImprimirComprobante(string Estado)
+        {
+            print.Cedula = Utilities.IdentificacionComprador;
+            print.FechaPago = DateTime.Now;
+            print.Nombre = string.Concat(Utilities.PrimerNombreComprador, " ", Utilities.PrimerApellidoComprador);
+            print.Referencia = Utilities.IDTransaccionDB.ToString();
+            print.Valor = Utilities.ValorPagar;
+            print.Estado = Estado;
+            print.ValorDevuelto = Utilities.ValorDevolver;
+            print.IDCompra = IDCompra;
+            print.Tramite = "Certificados Electrónicos";
+            print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"LogoComprobante\LCamaraComercio.png");
+            print.ImprimirComprobante();
+            InsertTransaccionLocalDB();
+        }
 
         //private void InsertTransaccionLocalDB()
         //{
