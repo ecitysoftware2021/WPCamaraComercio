@@ -28,33 +28,43 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
-            <Image x:Name="BtnExit"
-                   Source="/Images/Buttons/btn_salir.png"
+            <Button x:Name="BtnExit"
                    Grid.Column="0"
                    HorizontalAlignment="Right" 
                    VerticalAlignment="Top" 
                    Width="200"
-                   Height="80" 
+                   Height="60" 
                    Margin="0,50,25,0"
-                   Stretch="Uniform"
                    StylusDown="BtnExit_StylusDown"
-                   />
+                   >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/btn_salir.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
             <TextBlock x:Name="tbTimer"
                        FontSize="35"
                        Foreground="Black"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Margin="0,0,0,0"/>
-            <Image x:Name="BtnBack"
-                   Source="../Images/Buttons/btn_atras.png"
+            <Button x:Name="BtnBack"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
                    Width="200"
-                   Height="80"  
+                   Height="60"  
                    Margin="25,50,0,0" 
-                   Stretch="Uniform"
                    StylusDown="BtnBack_StylusDown"
-                   />
+                   >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/btn_atras.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
@@ -79,7 +89,7 @@
                     FontSize="30"
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
-                    Foreground="Red"
+                    Foreground="#FF840000"
                     Text="Todos los campos marcados con * son de caracter obligatorio"/>
         </Grid>
 
@@ -273,16 +283,23 @@
                 TextWrapping="Wrap"
                 k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="true"
                 />
-            <Image x:Name="BtnPay"
+            <Button x:Name="BtnPay"
                 Grid.Row="7"
                 Grid.ColumnSpan="2"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 Margin="0,0,0,0" 
                 Width="700"
+                Height="150"
                 StylusDown="BtnPay_StylusDown"
-                Source="../Images/Buttons/b-Pagar-Efectivo.png"
-                />
+                >
+                <Button.Background>
+                    <ImageBrush ImageSource="../Images/Buttons/b-Pagar-Efectivo.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
             <ComboBox Name="CmbTypeBuyer"
                     Grid.Column="2"                                                                                                     
                     Margin="0,0,0,0"

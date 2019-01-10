@@ -28,7 +28,7 @@
                    VerticalAlignment="Top"
                    FontWeight="Bold" 
                    FontSize="90" 
-                   Foreground="#606060"
+                   Foreground="#FF840000"
                    Margin="0,80,0,0"/>
         </Grid>
 
@@ -38,14 +38,14 @@
                    VerticalAlignment="Center"
                    FontWeight="Bold" 
                    FontSize="90" 
-                   Foreground="#606060"/>
+                   Foreground="#FF840000"/>
             <Label x:Name="lblValue"
                    Content="$ 0" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontWeight="Bold" 
                    FontSize="80"
-                   Foreground="#606099"
+                   Foreground="Black"
                    Margin="0,400,0,0"/>
         </Grid>
 
@@ -55,14 +55,14 @@
                    VerticalAlignment="Top"
                    FontWeight="Bold" 
                    FontSize="70" 
-                   Foreground="#606060"/>
+                   Foreground="#FF840000"/>
             <Label Content="estamos contando su dinero" 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    FontWeight="Bold" 
                    FontSize="70" 
                    Margin="0,70,0,0"
-                   Foreground="#606060"/>
+                   Foreground="#FF840000"/>
         </Grid>
     </Grid>
 </Window>

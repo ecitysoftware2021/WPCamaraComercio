@@ -28,32 +28,43 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0">
-            <Image x:Name="BtnExit"
-                   Source="/Images/Buttons/btn_salir.png"
+            <Button x:Name="BtnExit"
                    Grid.Column="0"
                    HorizontalAlignment="Right" 
                    VerticalAlignment="Center" 
                    Width="200"
-                   Height="80" 
+                   Height="60" 
                    StylusDown="BtnExit_StylusDown"
                    Margin="0,25,25,0"
-                   Stretch="Uniform"/>
+                    >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/btn_salir.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
             <TextBlock x:Name="tbTimer"
                        FontSize="35"
                        Foreground="Black"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Margin="0,0,0,0"/>
-            <Image x:Name="BtnBack"
-                   Source="../Images/Buttons/btn_atras.png"
+            <Button x:Name="BtnBack"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center" 
                    Width="200"
-                   Height="80"  
+                   Height="60"  
                    Margin="25,25,0,0" 
-                   Stretch="Uniform"
                    StylusDown="BtnBack_StylusDown"
-                   Visibility="Visible"/>
+                   Visibility="Visible">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/btn_atras.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
@@ -88,7 +99,7 @@
                     FontSize="30"                    
                     Grid.ColumnSpan="2"
                     FontWeight="Bold"
-                    Foreground="Red"
+                    Foreground="#FF840000"
                     Name="TxbData2"
                     Text="Ver detalles"
                     StylusDown="TxbData2_StylusDown"
@@ -401,7 +412,7 @@
                                         Expanded="Expander_Expanded"
                                         Collapsed="Expander_Collapsed">
                                     <Expander.Header >
-                                        <TextBlock Foreground="Red" Text="{Binding Establish}" 
+                                        <TextBlock Foreground="#FF840000" Text="{Binding Establish}" 
                                                    FontSize="20" FontWeight="Bold" />
                                     </Expander.Header>
                                     <Grid Margin="0,0,0,0">

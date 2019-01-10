@@ -33,7 +33,7 @@
                        Grid.Row="1"
                        VerticalAlignment="Top"
                        FontWeight="Bold"
-                       Foreground="Red"
+                       Foreground="#FF840000"
                        />
             <TextBlock Text="{Binding ValorPago, StringFormat={}{0:C0}}"
                        Name="lblValorPagar" 
