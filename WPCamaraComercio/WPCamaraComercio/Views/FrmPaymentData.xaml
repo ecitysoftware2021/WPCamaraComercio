@@ -162,6 +162,7 @@
                    FontSize="40"
                    Foreground="Black"
                    Width="500"
+                   Tag="6"
                    TextWrapping="Wrap"
                    k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="true"
                    />
@@ -186,6 +187,7 @@
                 FontSize="40"
                 Grid.Column="2"
                 Grid.Row="3"
+                Tag="2"
                 Foreground="Black"
                 Width="500"
                 TextWrapping="Wrap"
@@ -239,6 +241,7 @@
                 Grid.Row="5"
                 Foreground="Black"
                 Width="500"
+                Tag="3"
                 TextWrapping="Wrap"
                 k:TouchScreenKeyboard.TouchScreenKeyboard="true"
                 />
@@ -265,6 +268,7 @@
                 Grid.Row="6"
                 Foreground="Black"
                 Width="500"
+                Tag="7"
                 TextWrapping="Wrap"
                 k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="true"
                 />

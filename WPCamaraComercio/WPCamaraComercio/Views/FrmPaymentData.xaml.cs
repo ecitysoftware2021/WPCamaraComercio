@@ -175,25 +175,25 @@ namespace WPCamaraComercio.Views
                 {
                     TextBox textBox = (TextBox)control;
                     string value = textBox.Text;
-                    if (string.IsNullOrEmpty(value) || value.Contains("Ingrese") || value.Length <= 3)
+                    if (value.Length < int.Parse(textBox.Tag.ToString()))
                     {
-                        ControlMessageError(textBox.Tag.ToString(), true);
+                        ControlMessageError(textBox.Name, true);
                         flag = false;
                     }
                     else
                         flag = true;
                 }
-                else if (control is ComboBox)
-                {
-                    ComboBox comboBox = (ComboBox)control;
-                    if (comboBox.SelectedIndex == 0)
-                    {
-                        ControlMessageError(comboBox.Tag.ToString(), true);
-                        flag = false;
-                    }
-                    else
-                        flag = true;
-                }
+                //else if (control is ComboBox)
+                //{
+                //    ComboBox comboBox = (ComboBox)control;
+                //    if (comboBox.SelectedIndex == 0)
+                //    {
+                //        //ControlMessageError(comboBox.Tag.ToString(), true);
+                //        flag = false;
+                //    }
+                //    else
+                //        flag = true;
+                //}
             }
             return flag;
         }
@@ -207,40 +207,37 @@ namespace WPCamaraComercio.Views
         {
             switch (tag)
             {
-                case "NumberId":
-                    if (state)
-                    {
-                        //lblErrorMessageNumber.Visibility = Visibility.Visible;
-                        return;
-                    }
-                    //lblErrorMessageNumber.Visibility = Visibility.Hidden;
+                case "TbxIdentification":
+                    navigationService.NavigatorModal("Por favor, ingrese una identificación válida");
                     break;
-                case "DepositValue":
-                    if (state)
+                case "TbxData1":
+                    if (CmbTypeBuyer.SelectedIndex == 0)
                     {
-                        //lblErrorMessageValue.Visibility = Visibility.Visible;
-                        return;
+                        navigationService.NavigatorModal("Por favor, ingrese un nombre válido");
                     }
-                    //lblErrorMessageValue.Visibility = Visibility.Hidden;
-                    break;
-                case "Type":
-                    if (state)
+                    else
                     {
-                        //lblErrorMessageId.Visibility = Visibility.Visible;
-                        return;
+                        navigationService.NavigatorModal("Por favor, ingrese una razón social válida");
                     }
-                    //lblErrorMessageId.Visibility = Visibility.Hidden;
                     break;
-                case "NumberAccount":
-                    if (state)
+                case "TbxData3":
+                    if (CmbTypeBuyer.SelectedIndex == 0)
                     {
-                        //lblErrorNumberAccount.Visibility = Visibility.Visible;
-                        return;
+                        navigationService.NavigatorModal("Por favor, ingrese un apellido válido");
                     }
-                    //lblErrorMessageId.Visibility = Visibility.Hidden;
+                    else
+                    {
+                        navigationService.NavigatorModal("Por favor, ingrese un teléfono válido");
+                    }
                     break;
+                case "TbxData4":
+                    if (TbxData4.Visibility == Visibility.Visible)
+                    {
+                        navigationService.NavigatorModal("Por favor, ingrese un teléfono válido");
+                    }
+                    break;
+                }
             }
-        }
 
         private void BtnBack_StylusDown(object sender, StylusDownEventArgs e)
         {
