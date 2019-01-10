@@ -53,6 +53,8 @@ namespace WPCamaraComercio.Classes
 
         public Action<string> callbackMessage;//Calback de mensaje
 
+        public Action<bool> callbackToken;//Calback de mensaje
+
         #endregion
 
         #region EvaluationValues
@@ -100,7 +102,7 @@ namespace WPCamaraComercio.Classes
                     TransactionId = Utilities.IDTransactionDB.ToString(),
                 };
                 InitPortBills();
-                InitPortPurses();
+                //InitPortPurses();
             }
             catch (Exception ex)
             {
@@ -135,6 +137,7 @@ namespace WPCamaraComercio.Classes
                     _serialPortBills.PortName = Utilities.GetConfiguration("PortBills");
                     _serialPortBills.ReadTimeout = 500;
                     _serialPortBills.WriteTimeout = 500;
+                    _serialPortBills.BaudRate = 57600;
                     _serialPortBills.Open();
                 }
 
@@ -153,7 +156,7 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                if (!_serialPortBills.IsOpen)
+                if (!_serialPortCoins.IsOpen)
                 {
                     _serialPortCoins.PortName = Utilities.GetConfiguration("PortCoins");
                     _serialPortCoins.ReadTimeout = 500;
@@ -225,10 +228,11 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                string response = _serialPortBills.ReadLine();
+                string response;
+                response = _serialPortBills.ReadLine();
                 if (!string.IsNullOrEmpty(response))
                 {
-                    log.ResponseMessage += string.Format("Respuesta Billetero: {0}\n", response);
+                    log.ResponseMessage += string.Format("{0}\n", response);
                     ProcessResponseBills(response);
                 }
             }
@@ -250,7 +254,7 @@ namespace WPCamaraComercio.Classes
                 string response = _serialPortCoins.ReadLine();
                 if (!string.IsNullOrEmpty(response))
                 {
-                    log.ResponseMessage += string.Format("Respuesta Billetero: {0}\n", response);
+                    log.ResponseMessage += string.Format("Respuesta Monedero: {0}\n", response);
                     ProcessResponseCoins(response);
                 }
             }
@@ -324,7 +328,7 @@ namespace WPCamaraComercio.Classes
         /// Respuesta para el caso de Recepción de un mensaje enviado
         /// </summary>
         /// <param name="response">respuesta</param>
-        private static void ProcessRC(string[] response)
+        private void ProcessRC(string[] response)
         {
             if (response[1] == "OK")
             {
@@ -334,9 +338,10 @@ namespace WPCamaraComercio.Classes
 
                         break;
                     case "DP":
-                        if (response[3] == "HD" && string.IsNullOrEmpty(response[4]))
+                        if (response[3] == "HD" && !string.IsNullOrEmpty(response[4]))
                         {
-                            TOKEN = response[4];
+                            TOKEN = response[4].Replace("\r", string.Empty);
+                            callbackToken?.Invoke(true);
                         }
                         break;
                     default:
@@ -356,6 +361,10 @@ namespace WPCamaraComercio.Classes
                 LogMessage += string.Concat("Error: ", response[2], Environment.NewLine, "Valor entregado: ", deliveryValue, Environment.NewLine);
                 callbackError?.Invoke(string.Concat("Error, se alcanzó a entregar:", deliveryValue));
             }
+            else if (response[1] == "FATAL")
+            {
+                Utilities.GoToInicial();
+            }
         }
 
         /// <summary>
@@ -371,8 +380,8 @@ namespace WPCamaraComercio.Classes
             }
             else
             {
-                enterValue += decimal.Parse(response[2]);
-                callbackValueIn?.Invoke(Convert.ToDecimal(response[2]));
+                enterValue += decimal.Parse(response[2]) * _mil;
+                callbackValueIn?.Invoke(Convert.ToDecimal(response[2]) * _mil);
                 ValidateEnterValue();
             }
         }
@@ -412,7 +421,7 @@ namespace WPCamaraComercio.Classes
             try
             {
                 dispenserValue = valueDispenser;
-                SendMessageCoins(_DispenserCoinOn);
+                //SendMessageCoins(_DispenserCoinOn);
                 ConfigurateDispenser();
             }
             catch (Exception ex)
@@ -470,7 +479,8 @@ namespace WPCamaraComercio.Classes
             {
                 if (!string.IsNullOrEmpty(TOKEN))
                 {
-                    SendMessageBills(string.Format("{0}:{0}:{1}", _DispenserBillOn, TOKEN, valuePay));
+                    string message = string.Format("{0}:{1}:{2}", _DispenserBillOn, TOKEN, valuePay);
+                    SendMessageBills(message);
                 }
             }
             catch (Exception ex)
@@ -495,7 +505,7 @@ namespace WPCamaraComercio.Classes
 
                 SendMessageBills(_AceptanceBillOn);
 
-                SendMessageCoins(_AceptanceCoinOn);
+                //SendMessageCoins(_AceptanceCoinOn);
             }
             catch (Exception ex)
             {
@@ -508,10 +518,12 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         private void ValidateEnterValue()
         {
+            decimal enterVal = enterValue;
             if (enterValue >= payValue)
             {
                 StopAceptance();
-                callbackTotalIn?.Invoke(enterValue);
+                enterValue = 0;
+                callbackTotalIn?.Invoke(enterVal);
             }
         }
 
@@ -521,7 +533,7 @@ namespace WPCamaraComercio.Classes
         public void StopAceptance()
         {
             SendMessageBills(_AceptanceBillOFF);
-            SendMessageCoins(_AceptanceCoinOff);
+            //SendMessageCoins(_AceptanceCoinOff);
         }
 
         #endregion

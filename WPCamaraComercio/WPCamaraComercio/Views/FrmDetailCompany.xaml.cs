@@ -24,17 +24,14 @@ namespace WPCamaraComercio.Views
         ObservableCollection<DetailMerchant> lstDetailMerchant;
         ObservableCollection<DetailEstablish> lstDetailEstablish;
         decimal total = 0;
-        bool isSelectAll = false;
         string message = string.Empty;
-        int tipo;
-        //private string matricula;
-        //private string tpcm;
         NavigationService navigationService;
         WCFServices services;
         List<SelectedDetail> selectedDetail;
         List<Certificado> ListCertificates;
         FrmLoading frmLoading;
-        decimal valueToPay = 0; 
+        decimal valueToPay = 0;
+        Utilities utilities; 
         #endregion
 
         public FrmDetailCompany()
@@ -48,6 +45,7 @@ namespace WPCamaraComercio.Views
             selectedDetail = new List<SelectedDetail>();
             ListCertificates = new List<Certificado>();
             frmLoading = new FrmLoading();
+            utilities = new Utilities();
             GrdEstablish.Visibility = Visibility.Hidden;
             //var task = services.ConsultInformation("811040812", tipo_busqueda.Nit);
             //tipo = 1;
@@ -74,7 +72,7 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
-                    //modal error
+                    navigationService.NavigatorModal("No hay datos para mostrar en estos momentos.");
                 }
             }
             catch (Exception ex)
@@ -160,19 +158,27 @@ namespace WPCamaraComercio.Views
 
         private MerchantDetail FillMerchantDetail(ResultadoDetalle data)
         {
-            TxbData1.Text = data.come_Nom;
-            MerchantDetail objMerchantDetail = new MerchantDetail();
-            objMerchantDetail.rSocial = data.come_Nom;
-            objMerchantDetail.sigla = data.come_sigla;
-            objMerchantDetail.ident = data.identificacion;
-            objMerchantDetail.tSociedad = data.Tpcm_Desc;
-            objMerchantDetail.dComercial = data.dir_come;
-            objMerchantDetail.mun = data.Mpio_Come_Nom;
-            objMerchantDetail.estado = data.Activo;
-            objMerchantDetail.nEstablecimientos = data.numeroestablecimientosactivos;
-            objMerchantDetail.fInicio = data.Fec_Inicio;
-            objMerchantDetail.uRenovacion = data.UltRenv;
-            return objMerchantDetail;
+            try
+            {
+                TxbData1.Text = data.come_Nom;
+                MerchantDetail objMerchantDetail = new MerchantDetail();
+                objMerchantDetail.rSocial = data.come_Nom;
+                objMerchantDetail.sigla = data.come_sigla;
+                objMerchantDetail.ident = data.identificacion;
+                objMerchantDetail.tSociedad = data.Tpcm_Desc;
+                objMerchantDetail.dComercial = data.dir_come;
+                objMerchantDetail.mun = data.Mpio_Come_Nom;
+                objMerchantDetail.estado = data.Activo;
+                objMerchantDetail.nEstablecimientos = data.numeroestablecimientosactivos;
+                objMerchantDetail.fInicio = data.Fec_Inicio;
+                objMerchantDetail.uRenovacion = data.UltRenv;
+                return objMerchantDetail;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         private void Details(Details details)
@@ -220,45 +226,52 @@ namespace WPCamaraComercio.Views
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox combo = (ComboBox)sender;
-            EstablishCertificate establishCertificate = (EstablishCertificate)combo.Tag;
-            int quantity = 0;
-            if (!int.TryParse(combo.SelectedValue.ToString(), out quantity))
+            try
             {
-                quantity = 0;
-            }
-
-            var stablish = selectedDetail.Where(d => d.EstablishCertificate.EstablishEnrollment == establishCertificate.EstablishEnrollment).FirstOrDefault();
-            if (stablish == null)
-            {
-                if (quantity != 0)
+                ComboBox combo = (ComboBox)sender;
+                EstablishCertificate establishCertificate = (EstablishCertificate)combo.Tag;
+                int quantity = 0;
+                if (!int.TryParse(combo.SelectedValue.ToString(), out quantity))
                 {
-                    selectedDetail.Add(new SelectedDetail
-                    {
-                        EstablishCertificate = establishCertificate,
-                        Quantity = quantity
-                    });
-
-                    total += quantity * establishCertificate.CertificateCost;
+                    quantity = 0;
                 }
-            }
-            else
-            {
-                if (quantity != 0)
+
+                var stablish = selectedDetail.Where(d => d.EstablishCertificate.EstablishEnrollment == establishCertificate.EstablishEnrollment).FirstOrDefault();
+                if (stablish == null)
                 {
-                    total -= stablish.Quantity * stablish.EstablishCertificate.CertificateCost;
-                    stablish.Quantity = quantity;
-                    total += quantity * establishCertificate.CertificateCost;
+                    if (quantity != 0)
+                    {
+                        selectedDetail.Add(new SelectedDetail
+                        {
+                            EstablishCertificate = establishCertificate,
+                            Quantity = quantity
+                        });
+
+                        total += quantity * establishCertificate.CertificateCost;
+                    }
                 }
                 else
                 {
-                    selectedDetail.Remove(stablish);
-                    total -= stablish.Quantity * stablish.EstablishCertificate.CertificateCost;
+                    if (quantity != 0)
+                    {
+                        total -= stablish.Quantity * stablish.EstablishCertificate.CertificateCost;
+                        stablish.Quantity = quantity;
+                        total += quantity * establishCertificate.CertificateCost;
+                    }
+                    else
+                    {
+                        selectedDetail.Remove(stablish);
+                        total -= stablish.Quantity * stablish.EstablishCertificate.CertificateCost;
+                    }
                 }
-            }
 
-            lblAmount.Text = string.Format("{0:C0}", total);
-            valueToPay = total;
+                lblAmount.Text = string.Format("{0:C0}", total);
+                valueToPay = total;
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void TxbData2_StylusDown(object sender, StylusDownEventArgs e)
@@ -310,7 +323,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                //utilities.saveLogError("BtnHome_MouseDown", "FrmMenu", ex.ToString());
+                utilities.saveLogError("BtnHome_MouseDown", "FrmMenu", ex.ToString());
             }
         }
 

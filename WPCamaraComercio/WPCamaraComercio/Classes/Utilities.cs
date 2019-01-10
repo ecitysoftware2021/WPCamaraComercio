@@ -58,14 +58,10 @@ namespace WPCamaraComercio.Classes
 
         public static int Session { get; set; }
 
-        //public static Dictionary<int, int> CertificateQuantity = new Dictionary<int, int>()
-        //{
-        //    {1,1},
-        //    {2,2},
-        //    {3,3},
-        //    {4,4},
-        //    {5,5}
-        //};
+        public static ControlPeripherals control = new ControlPeripherals();
+
+        public static decimal EnterTotal;
+
         #endregion
 
         #region GeneralEvents
@@ -320,7 +316,6 @@ namespace WPCamaraComercio.Classes
                 return baseMembers;
             }
         }
-
 
         public void RestartApplication()
         {

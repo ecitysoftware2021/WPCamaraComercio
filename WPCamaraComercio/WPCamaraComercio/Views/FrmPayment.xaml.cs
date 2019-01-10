@@ -25,13 +25,12 @@ namespace WPCamaraComercio.Views
     public partial class FrmPayment : Window
     {
         #region References
-        private PaymentViewModel PaymentViewModel;//Modelo para el pago(Valores e imagenes)
 
-        private ControlPeripherals Control;//Instancia para interactuar con el billetero
+        private PaymentViewModel PaymentViewModel;//Modelo para el pago(Valores e imagenes)
 
         private WCFServices services;//Instancia para invocar los servicios web
 
-        WCFPayPadService ServicePayPad;
+        private WCFPayPadService payPadService;
 
         private FrmLoading frmLoading;
 
@@ -44,16 +43,45 @@ namespace WPCamaraComercio.Views
         private int count;//Contador utilizado para los reintentos en UpdateTrans
 
         private int tries;//Contador utilizado para los reintentos en SavePay
+        private bool stateUpdate;
+
         #endregion
+
+        #region LoadMethods
+
+        //public FrmPay(SaveViewModel update)
+        //{
+        //    InitializeComponent();
+        //    services = new WCFServices();
+        //    frmLoading = new FrmLoading();
+        //    recorder = new CLSGrabador();
+        //    utilities = new Utilities();
+        //    logError = new LogErrorGeneral
+        //    {
+        //        Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
+        //        IDCorresponsal = Utilities.CorrespondentId,
+        //        IdTransaction = Utilities.IDTransactionDB,
+        //        UserId = InfoUserPass.Identification,
+        //        ValuePay = Utilities.PayVal,
+        //    };
+        //    OrganizeValues();
+        //    this.update = update;
+        //    count = 0;
+        //    tries = 0;
+        //    stateUpdate = true;
+        //    InfoUserPass.PayWay = "E";
+        ////}
 
         public FrmPayment()
         {
             InitializeComponent();
+            //Utilities.ValueToPay = value;
+            OrganizeValues();
             services = new WCFServices();
+            payPadService = new WCFPayPadService();
             frmLoading = new FrmLoading();
             recorder = new Record();
             utilities = new Utilities();
-            ServicePayPad = new WCFPayPadService();
             logError = new LogErrorGeneral
             {
                 Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
@@ -62,9 +90,10 @@ namespace WPCamaraComercio.Views
                 //UserId = InfoUserPass.Identification,
                 ValuePay = Utilities.ValueToPay,
             };
-            //PaymentViewModel.PayValue = Utilities.PayVal;
             count = 0;
             tries = 0;
+            stateUpdate = true;
+            //InfoUserPass.PayWay = "E";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -73,11 +102,15 @@ namespace WPCamaraComercio.Views
             ActivateWallet();
         }
 
+        #endregion
+
+        #region Events
+
         private void btnCancelar_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
             try
             {
-                Control.StopAceptance();
+                Utilities.control.StopAceptance();
                 //recorder.FinalizarGrabacion();
                 Task.Run(() =>
                 {
@@ -100,6 +133,8 @@ namespace WPCamaraComercio.Views
             }
         }
 
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -109,8 +144,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                Control = new ControlPeripherals();
-                Control.callbackValueIn = enterValue =>
+                Utilities.control.callbackValueIn = enterValue =>
                 {
                     if (enterValue > 0)
                     {
@@ -118,21 +152,27 @@ namespace WPCamaraComercio.Views
                     }
                 };
 
-                Control.callbackTotalIn = enterTotal =>
+                Utilities.control.callbackTotalIn = enterTotal =>
                 {
+                    Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, true, this); });
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
+                    Utilities.EnterTotal = enterTotal;
                     if (enterTotal > 0 && PaymentViewModel.ValorSobrante > 0)
                     {
                         ReturnMoney(PaymentViewModel.ValorSobrante);
                     }
+                    else
+                    {
+                        FinishPayment().Wait();
+                    }
                 };
 
-                Control.callbackError = error =>
+                Utilities.control.callbackError = error =>
                 {
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                 };
 
-                Control.StartAceptance(PaymentViewModel.PayValue);
+                Utilities.control.StartAceptance(PaymentViewModel.PayValue);
             }
             catch (Exception ex)
             {
@@ -157,7 +197,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                Control.callbackValueOut = valueOut =>
+                Utilities.control.callbackValueOut = valueOut =>
                 {
                     if (valueOut > 0)
                     {
@@ -165,18 +205,18 @@ namespace WPCamaraComercio.Views
                     }
                 };
 
-                Control.callbackTotalOut = totalOut =>
+                Utilities.control.callbackTotalOut = totalOut =>
+                {
+                    Utilities.SaveLogDispenser(ControlPeripherals.log);
+                    FinishPayment().Wait();
+                };
+
+                Utilities.control.callbackError = error =>
                 {
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                 };
 
-                Control.callbackError = error =>
-                {
-                    Utilities.SaveLogDispenser(ControlPeripherals.log);
-                };
-
-                Control.StartDispenser(returnValue);
-
+                Utilities.control.StartDispenser(returnValue);
             }
             catch (Exception ex)
             {
@@ -204,6 +244,7 @@ namespace WPCamaraComercio.Views
            // lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
             PaymentViewModel = new PaymentViewModel
             {
+                PayValue = Utilities.ValueToPay,
                 ValorFaltante = Utilities.ValueToPay,
                 ValorSobrante = 0,
                 ValorIngresado = 0
@@ -240,7 +281,8 @@ namespace WPCamaraComercio.Views
                 ApproveTrans();
                 //recorder.FinalizarGrabacion();
                 //InfoUserPass.CollectionVal = Convert.ToInt16(Utilities.PayVal);
-                //await SavePay(update);
+                //await SavePay();
+                Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
                 string message = string.Concat("Reserva realizada con éxito", Environment.NewLine, "gracias por utilizar nuestro servicio,", Environment.NewLine, "espere mientras se imprimen los boleto.");
                 Utilities.OpenModal(message, this, true);
                 //await Task.Run(() =>
@@ -257,19 +299,19 @@ namespace WPCamaraComercio.Views
                 //    });//print tickets    
                 //    //PrintTickets(answer.facturas);
                 //});
-
                 Thread.Sleep(3000);
                 Utilities.ResetTimer();
                 await Dispatcher.BeginInvoke((Action)delegate
                 {
-                    //FrmSummary summary = new FrmSummary();
-                    //summary.Show();
-                    //Close();
+                    FinishPayment finishPayment = new FinishPayment();
+                    finishPayment.Show();
+                    Close();
                 });
             }
             catch (Exception ex)
             {
                 ErroUpdateTrans(ex.Message);
+                await FinishPayment();
             }
         }
 
@@ -280,32 +322,36 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                var state = UpdateTransaction(2);
-                if (!state)
+                if (stateUpdate)
                 {
-                    if (count < 2)
+                    var state = UpdateTransaction(2);
+                    if (!state)
                     {
-                        count++;
-                        ApproveTrans();
+                        if (count < 2)
+                        {
+                            count++;
+                            ApproveTrans();
+                        }
+                        else
+                        {
+                            string json = Utilities.CreateJSON();
+                            logError.Description = json + "\nNo fue posible actualizar esta transacción a aprobada";
+                            logError.State = "Iniciada";
+                            Utilities.SaveLogTransactions(logError, "LogTransacciones\\Iniciadas");
+                        }
                     }
                     else
                     {
                         string json = Utilities.CreateJSON();
-                        logError.Description = json + "\nNo fue posible actualizar esta transacción a aprobada";
-                        logError.State = "Iniciada";
-                        Utilities.SaveLogTransactions(logError, "LogTransacciones\\Iniciadas");
+                        logError.Description = json + "\nTransacción Exitosa";
+                        logError.State = "Aprobada";
+                        Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");
                     }
-                }
-                else
-                {
-                    string json = Utilities.CreateJSON();
-                    logError.Description = json + "\nTransacción Exitosa";
-                    logError.State = "Aprobada";
-                    Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");
                 }
             }
             catch (Exception ex)
             {
+                stateUpdate = false;
                 throw ex;
             }
         }
@@ -319,21 +365,24 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                bool response;
-                switch (state)
+                bool response = false;
+                if (stateUpdate)
                 {
-                    case 1://Iniciada
-                        response = ServicePayPad.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Iniciada);
-                        break;
-                    case 2://Aprobada
-                        response = ServicePayPad.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
-                        break;
-                    case 4://Cancelada
-                        response = ServicePayPad.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                        break;
-                    default://Cancelada
-                        response = ServicePayPad.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                        break;
+                    switch (state)
+                    {
+                        case 1://Iniciada
+                            response = payPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Iniciada);
+                            break;
+                        case 2://Aprobada
+                            response = payPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                            break;
+                        case 4://Cancelada
+                            response = payPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                            break;
+                        default://Cancelada
+                            response = payPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                            break;
+                    }
                 }
 
                 return response;
@@ -343,6 +392,102 @@ namespace WPCamaraComercio.Views
                 throw ex;
             }
         }
+
+        ///// <summary>
+        ///// Guarda el pago
+        ///// </summary>
+        //private async Task<bool> SavePay()
+        //{
+        //    string json;
+        //    var task = services.SavePay(update);
+        //    if (await Task.WhenAny(task, Task.Delay(10000)) == task)
+        //    {
+        //        var response = task.Result;
+        //        var answer = (respuestaConfirmacionPago)response.Result;
+        //        if (answer != null)
+        //        {
+        //            if (!string.IsNullOrEmpty(answer.error))
+        //            {
+        //                Utilities.OpenModal(string.Concat("Lo sentimos, ",
+        //                    Environment.NewLine,
+        //                    "Ha ocurrido un error.",
+        //                    Environment.NewLine,
+        //                    "Error: ", answer.error), this);
+        //                json = Utilities.CreateJSON();
+        //                logError.Description = json + "\nOcurrio un error: " + answer.error;
+        //                logError.State = "Aprobada";
+        //                Utilities.SaveLogTransactions(logError, "LogTransacciones\\AprobadasError");
+        //                return false;
+        //            }
+
+        //            if (response.IsSuccess)
+        //            {
+        //                this.answer = answer;
+        //                json = Utilities.CreateJSON();
+        //                logError.Description = json + "\nTransacción Exitosa";
+        //                logError.State = "Aprobada";
+        //                Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");
+        //                return true;
+        //            }
+        //        }
+
+        //        json = Utilities.CreateJSON();
+        //        logError.Description = json + "\nOcurrio un error al guardar el pago en Confa";
+        //        logError.State = "Aprobada";
+        //        Utilities.SaveLogTransactions(logError, "LogTransacciones\\AprobadasError");
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        if (tries < 1)
+        //        {
+        //            tries++;
+        //            await SavePay();
+        //        }
+
+        //        json = Utilities.CreateJSON();
+        //        logError.Description = json + "\nOcurrió un error al guardar el pago en Confa";
+        //        logError.State = "Aprobada";
+        //        Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");
+        //        return false;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Método encargado de mandar a imprimir cada factura
+        ///// </summary>
+        ///// <param name="Invoices">Lista de facturas a imprimir</param>
+        //private void PrintTickets(personaFactura[] Invoices)
+        //{
+        //    foreach (var invoice in Invoices)
+        //    {
+        //        PrintInvoiceViewModel print = new PrintInvoiceViewModel
+        //        {
+        //            Category = invoice.categoria,
+        //            ConceptoValue = invoice.valorConcepto,
+        //            CountableDocument = invoice.numeroDocumentoContable,
+        //            DateEnter = invoice.fechaIngreso,
+        //            Document = invoice.documento,
+        //            DocumentType = invoice.tipoDocumento,
+        //            Name = invoice.nombrePersona,
+        //            NameConcept = invoice.nombreConcepto,
+        //            NameIndustry = invoice.nombreEmpresa,
+        //            NameSede = invoice.nombreSede,
+        //            NIT = invoice.nit,
+        //            Paydesk = invoice.caja,
+        //            Politic = invoice.politica,
+        //            Rank = invoice.rango,
+        //            Resolution = invoice.resolucion,
+        //            Text1 = invoice.texto1,
+        //            Text2 = invoice.texto2,
+        //            Text3 = invoice.texto3,
+        //            TicketType = invoice.tipoEntrada,
+        //            Value = invoice.valorTotal
+        //        };
+
+        //        Utilities.PrintTickets(print);
+        //    }
+        //}
 
         #endregion
     }
