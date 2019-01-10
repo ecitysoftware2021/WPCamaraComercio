@@ -213,6 +213,7 @@
                 FontSize="40"
                 Grid.Column="2"
                 Grid.Row="4"
+                Tag="0"
                 Foreground="Black"
                 Width="500"
                 TextWrapping="Wrap"

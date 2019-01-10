@@ -472,14 +472,22 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image x:Name="BtnAcept"
+            <Button x:Name="BtnAcept"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
-                Margin="0,25,0,0"    
+                Margin="0,25,0,0"
+                TabIndex="2"
                 Grid.Column="1"
-                Width="350" 
-                Source="../Images/Buttons/b-Aceptar.png" 
-                StylusDown="BtnAcept_StylusDown"/>
+                Width="350"
+                Height="120"
+                StylusDown="BtnAcept_StylusDown">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Images/Buttons/b-Aceptar.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
             <Image x:Name="BtnLoading"                
                 Margin="0,0,0,0" 
                 Grid.Column="1"

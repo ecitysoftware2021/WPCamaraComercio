@@ -21,8 +21,8 @@ namespace WPCamaraComercio.Service
         {
             Page.Dispatcher.BeginInvoke(new Action(() =>
             {
-                //FrmModal frmModal = new FrmModal(message);
-                //frmModal.ShowDialog();
+                FrmModal frmModal = new FrmModal(message,Page);
+                frmModal.ShowDialog();
             }));
         }
 

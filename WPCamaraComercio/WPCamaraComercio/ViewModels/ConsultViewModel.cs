@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.WCFCamaraComercio;
@@ -182,11 +183,11 @@ namespace WPCamaraComercio.ViewModels
 
                     if (response.Result != null)
                     {
-                        RespuestaConsulta result = (RespuestaConsulta)response.Result;
+                        Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
 
-                        if (result.response.resultados.Count() > 0)
+                        if (Utilities.RespuestaConsulta.response.resultados.Count() > 0)
                         {
-                            foreach (var item in result.response.resultados)
+                            foreach (var item in Utilities.RespuestaConsulta.response.resultados)
                             {
                                 _coincidences.Add(new Coincidence
                                 {

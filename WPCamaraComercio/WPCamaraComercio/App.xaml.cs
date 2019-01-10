@@ -20,9 +20,9 @@ namespace WPCamaraComercio
 
         public App()
         {
-            services = new WCFServices();
-            api = new Api();
-            GetToken();
+            //services = new WCFServices();
+            //api = new Api();
+            //GetToken();
         }
 
         private async void GetToken()

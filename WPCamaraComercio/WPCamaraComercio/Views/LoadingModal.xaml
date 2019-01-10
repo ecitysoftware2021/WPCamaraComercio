@@ -50,10 +50,10 @@
             <Button x:Name="BtnContinue"
                    HorizontalAlignment="Right" 
                    VerticalAlignment="Bottom" 
-                   Width="150"
+                   Width="180"
                    Height="45" 
                    Margin="0,0,20,20"
-                   Visibility="Hidden"
+                   Visibility="Visible"
                    StylusDown="BtnContinue_StylusDown">
                 <Button.Background>
                     <ImageBrush ImageSource="/Images/Buttons/continuar2.png" Stretch="Fill" />
@@ -66,10 +66,10 @@
             <Button x:Name="BtnCancel"
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Bottom" 
-                   Width="150"
+                   Width="180"
                    Height="45" 
                    Margin="20,0,0,20"
-                   Visibility="Hidden"
+                   Visibility="Visible"
                    StylusDown="BtnCancel_StylusDown">
                 <Button.Background>
                     <ImageBrush ImageSource="/Images/Buttons/btnCancelar.png" Stretch="Fill" />

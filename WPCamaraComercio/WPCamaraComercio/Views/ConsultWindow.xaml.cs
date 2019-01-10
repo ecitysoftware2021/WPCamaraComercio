@@ -334,7 +334,7 @@ namespace WPCamaraComercio.Views
         private void BtnExit_StylusDown(object sender, StylusDownEventArgs e)
         {
            // Utilities.GoToInicial();
-           // Utilities.ResetTimer();
+            Utilities.ResetTimer();
             MainWindow inicio = new MainWindow();
             inicio.Show();
             this.Close();

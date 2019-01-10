@@ -30,13 +30,13 @@ namespace WPCamaraComercio.Classes
 
         public static int CorrespondentId = int.Parse(GetConfiguration("IDCorresponsal"));
 
-        public static RespuestaConsulta RespuestaConsulta { get; set; }
+        public static RespuestaConsulta RespuestaConsulta = new RespuestaConsulta();
 
         public static Resultado[] Result { get; set; }
 
         public static string search { get; set; }
 
-        public static Resultado ConsultResult { get; set; }
+        public static Resultado ConsultResult = new Resultado();
 
         public static string Enrollment { get; set; }
 
