@@ -6,161 +6,137 @@
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
-        Title="FrmPayment"  WindowStyle="None"
+        Title="FrmPayment"  
+        WindowStyle="None"        
+        Loaded="Window_Loaded"
         WindowState="Maximized"
         Height="2064.095" 
         Width="1250.599"
-        WindowStartupLocation="CenterScreen"
-        >
+        WindowStartupLocation="CenterScreen">
     <Window.Background>
-        <ImageBrush ImageSource="../Images/Backgrounds/fondo1.jpg"/>
+        <ImageBrush ImageSource="/Images/Backgrounds/fondo1.jpg"/>
     </Window.Background>
     <Grid Name="PaymentGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="200" />
+            <RowDefinition Height="500" />
             <RowDefinition Height="700" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="400" />
+            <RowDefinition Height="400"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="grvPay">
-            <TextBlock Text="VALOR A PAGAR" 
-                       Margin="0,0,0,0" 
-                       FontFamily="arial"
-                       FontSize="75"      
-                       Name="LblTitleAmoutPaid"
-                       HorizontalAlignment="Center" 
-                       Grid.ColumnSpan="4"
-                       Grid.Row="1"
-                       VerticalAlignment="Top"
-                       FontWeight="Bold"
-                       Foreground="#FF840000"
-                       />
-            <TextBlock Text="{Binding ValorPago, StringFormat={}{0:C0}}"
-                       Name="lblValorPagar" 
-                       Margin="0,160,0,0" 
-                       FontFamily="Arial" 
-                       FontSize="55"      
-                       Grid.Row="1"
-                       Grid.ColumnSpan="4"
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Top" 
-                       TextWrapping="Wrap"/>
-
-            <TextBlock Text="Valor Ingresado" 
-                       Margin="210,370,0,0" 
-                       Name="LblTitleValueEntered"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       FontFamily="Arial" 
-                       FontWeight="Bold"
-                       FontSize="50"
-                       />
-            <TextBlock Text="{Binding ValorIngresado, StringFormat={}{0:C0}}"
-                       Name="lblValorIngresado" 
-                       Margin="0,370,210,0" 
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Grid.Row="1"
-                       Grid.Column="2"
-                       Grid.ColumnSpan="2"
-                       FontFamily="Arial" 
-                       FontSize="40"
-                       />
-            <TextBlock Text="Valor Faltante" 
-                       Margin="210,470,0,0" 
-                       Name="LblTitleMissingValue"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Grid.Row="1"                       
-                       Grid.ColumnSpan="2"
-                       FontSize="50"
-                       FontFamily="Arial" 
-                       FontWeight="Bold"
-                />
-            <TextBlock Text="{Binding ValorFaltante, StringFormat={}{0:C0}}"
-                       Name="lblValorFaltante"
-                       Margin="0,470,210,0" 
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Grid.Row="1"
-                       Grid.Column="2"
-                       Grid.ColumnSpan="2"
-                       FontFamily="Arial"
-                       FontSize="40"/>
-            <TextBlock Text="Valor Sobrante" 
-                       Margin="210,570,0,0" 
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Grid.Row="1"                       
-                       Grid.ColumnSpan="2"
-                       FontSize="50"
-                       FontFamily="Arial" 
-                       FontWeight="Bold"
-                 />
-            <TextBlock Text="{Binding ValorRestante, StringFormat={}{0:C0}}"
-                       Margin="0,570,210,0" 
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Grid.Row="1"
-                       Grid.Column="2"
-                       Grid.ColumnSpan="2"
-                       FontFamily="Arial"
-                       FontSize="40"/>
-
-        </Grid>
-
-        <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
-            <Button x:Name="btnCancell"
-                   Grid.Column="0"
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Bottom" 
-                  Width="450"
-                   Height="130" 
-                   Margin="25,20,0,0"
+        <Label Content="VALOR A PAGAR" 
+                   Foreground="#606060"
+                   Margin="0,0,0,0" 
+                   FontFamily="Arial" 
+                   FontSize="50"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top" 
+                   Grid.Row="2" />
+        <Label Content="$ 0.00"
+                   Foreground="#606060"
+                   Name="lblValorPagar" 
+                   Margin="0,100,0,0" 
+                   FontFamily="Arial" 
+                   FontSize="50"       
+                   Visibility="Visible"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top" 
+                   HorizontalContentAlignment="Center" 
+                   Grid.Row="2"/>
+        <Label Content="Valor Ingresado" 
+                   Foreground="#606060"
+                   Margin="200,0,0,200" 
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   FontFamily="Arial" 
+                   FontSize="60"
+                   Grid.Row="2"/>
+        <TextBlock Text="{Binding ValorIngresado, StringFormat={}{0:C0}}" 
+                   Name="lblValorIngresado" 
+                   Foreground="#606060"
+                   Margin="700,0,0,190" 
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   FontFamily="Arial" 
+                   FontSize="50" 
+                   Height="56" 
+                   Grid.Row="2"/>
+        <Label Content="Valor Faltante" 
+                Foreground="#606060"
+                Margin="200,0,0,0" 
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontFamily="Arial"
+                FontSize="60"
+                Grid.Row="2"/>
+        <TextBlock Text="{Binding ValorFaltante, StringFormat={}{0:C0}}"
+                   Name="lblFaltante"
+                   Foreground="#606060"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="700,10,0,0" 
+                   FontFamily="Arial"
+                   FontSize="50" 
+                   Grid.Row="2"/>
+        <Label Content="Valor Restante" 
+                   Foreground="#606060"
+                   Margin="200,200,0,0" 
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   FontFamily="Arial" 
+                   FontSize="60" 
+                   Grid.Row="2"/>
+        <TextBlock Text="{Binding ValorSobrante, StringFormat={}{0:C0}}" 
+                   Name="lblSobrante" 
+                   Foreground="#606060"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="700,190,0,0"
+                   FontFamily="Arial" 
+                   FontSize="50" 
+                   Grid.Row="2"/>
+        <Image Name="btnCancelar"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Margin="100,0,0,0" 
+                   Width="400"  
+                   Source="/Images/Buttons/btncancelar.png"
+                   Grid.Row="3"
                    Visibility="{Binding ImgCancel}"
-                   >
-                <Button.Background>
-                    <ImageBrush ImageSource="/Images/Buttons/btncancelar.png" Stretch="Fill" />
-                </Button.Background>
-                <Button.BorderThickness>
-                    <Thickness></Thickness>
-                </Button.BorderThickness>
-            </Button>
-            <Image 
-                    gif:ImageBehavior.AnimatedSource="/Images/Buttons/recibirCambioGIF.gif"
-                   Grid.Column="0"
+                   PreviewStylusDown="btnCancelar_PreviewStylusDown"/>
+        <Image Visibility="{Binding ImgLeyendoBillete}" 
+               Source="/Images/Buttons/b-leyendo-billete.png"
+               Name="imgLeyendoBillete"                
+               Margin="0,0,100,0" 
+               Width="400" 
+               HorizontalAlignment="Right" 
+               Grid.Row="3"                
+               VerticalAlignment="Top"/>
+        <Image x:Name="btnCancelar_Copy"               
+                Visibility="{Binding ImgIngreseBillete}"                
+                Source="/Images/Buttons/b-ingrese-billete.png"
+                Margin="0,0,100,0" 
+               Width="400" 
+               HorizontalAlignment="Right" 
+               Grid.Row="3"                
+               VerticalAlignment="Top"/>
+        <Image x:Name="btnChange"               
+                Visibility="{Binding ImgEspereCambio}"                
+                Source="/Images/Buttons/b-espere-su-cambio.png"
+                Margin="0,0,100,0" 
+               Width="400" 
+               HorizontalAlignment="Right" 
+               Grid.Row="3"                
+               VerticalAlignment="Top"/>
+        <Image Visibility="{Binding ImgRecibo}"
+               Source="/Images/Buttons/b-espere-su-recibo.png"
+                   Name="imgEspereRecibo" 
+                   Height="71" 
+                   Margin="0,100,50,0" 
+                   Width="241"
+                   VerticalAlignment="Top"
                    HorizontalAlignment="Right" 
-                   VerticalAlignment="Bottom" 
-                   Width="450"
-                   Height="130"  
-                   Margin="0,20,25,0"
-                   Stretch="Uniform"
-                   Visibility="{Binding ImgEspereCambio}"
-                />
-            <Image 
-                   gif:ImageBehavior.AnimatedSource="/Images/Buttons/LeyendoBilleteGIF.gif"
-                   Grid.Column="0"
-                   HorizontalAlignment="Right" 
-                   VerticalAlignment="Bottom" 
-                   Width="450"
-                   Height="130"  
-                   Margin="0,20,25,0"
-                   Stretch="Uniform"
-                   x:Name="btnLeyendoBillete"
-                   Visibility="{Binding ImgLeyendoBillete}"
-                   />
-            <Image 
-                   gif:ImageBehavior.AnimatedSource="/Images/Buttons/ingresebillete.gif"
-                   Grid.Column="0"
-                   HorizontalAlignment="Right" 
-                   VerticalAlignment="Bottom" 
-                   Width="500"
-                   Height="140"  
-                   Margin="0,0,25,20"
-                   Stretch="Uniform"
-                   x:Name="btnExitoso"
-                   Visibility="{Binding ImgIngreseBillete}"
-                   />
-        </Grid>
+                   Grid.Row="2"/>
     </Grid>
 </Window>

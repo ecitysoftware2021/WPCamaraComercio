@@ -468,6 +468,12 @@
     <Resource Include="Images\Buttons\left.png" />
     <Resource Include="Images\Buttons\right.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\b-Espere-su-Cambio.png" />
+    <Resource Include="Images\Buttons\b-Espere-su-Recibo.png" />
+    <Resource Include="Images\Buttons\b-Ingrese-Billete.png" />
+    <Resource Include="Images\Buttons\b-Leyendo-Billete.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

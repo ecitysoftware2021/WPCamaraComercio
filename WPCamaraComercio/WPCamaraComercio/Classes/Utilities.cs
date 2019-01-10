@@ -62,6 +62,8 @@ namespace WPCamaraComercio.Classes
 
         public static decimal EnterTotal;
 
+        public static decimal DispenserVal { get; set; }
+
         #endregion
 
         #region GeneralEvents

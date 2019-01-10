@@ -118,9 +118,9 @@ namespace WPCamaraComercio.Views
                 });
                 if (PaymentViewModel.ValorIngresado > 0)
                 {
-                    //Utilities.DispenserVal = PaymentViewModel.ValorIngresado;
+                    Utilities.DispenserVal = PaymentViewModel.ValorIngresado;
                     Utilities.Loading(frmLoading, true, this);
-                    //ReturnMoney(Utilities.DispenserVal);
+                    ReturnMoney(Utilities.DispenserVal);
                 }
                 else
                 {
@@ -241,7 +241,7 @@ namespace WPCamaraComercio.Views
         /// </summary>
         private void OrganizeValues()
         {
-           // lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
+            lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
             PaymentViewModel = new PaymentViewModel
             {
                 PayValue = Utilities.ValueToPay,
