@@ -101,7 +101,7 @@ namespace WPCamaraComercio.Classes
                     DateDispenser = DateTime.Now,
                     TransactionId = Utilities.IDTransactionDB.ToString(),
                 };
-                InitPortBills();
+                //InitPortBills();
                 //InitPortPurses();
             }
             catch (Exception ex)
