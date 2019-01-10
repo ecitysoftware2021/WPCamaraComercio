@@ -75,7 +75,6 @@ namespace WPCamaraComercio.Service
                     default:
                         break;
                 }
-
                 Page.Close();
             }));
         }

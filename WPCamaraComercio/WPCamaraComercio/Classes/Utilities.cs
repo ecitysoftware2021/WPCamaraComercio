@@ -328,6 +328,27 @@ namespace WPCamaraComercio.Classes
             pc = Process.GetCurrentProcess();
             pc.Kill();
         }
+
+        public void SaveLogErrorMethods(string Method, string Class, string Message)
+        {
+            try
+            {
+                LogErrorMethods error = new LogErrorMethods
+                {
+                    Message = Message,
+                    NameClass = Class,
+                    NameMethod = Method,
+                    IDCorresponsal = Convert.ToInt32(GetConfiguration("8")),
+                    Fecha = DateTime.Now
+                };
+
+                error.CreateLogsMethods(error);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #endregion
     }
 }

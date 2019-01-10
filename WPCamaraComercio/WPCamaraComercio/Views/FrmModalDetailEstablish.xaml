@@ -127,14 +127,21 @@
                     BorderThickness="4,2,2,2"
                     CornerRadius="0,0,30,30" Margin="0,4,-4,-4" Grid.ColumnSpan="2"
                     >
-                <Image HorizontalAlignment="Center"
+                <Button HorizontalAlignment="Center"
                        Name="BtnOk"
-                       Source="../Images/Buttons/b-Aceptar.png" 
                        VerticalAlignment="Center"
                        Width="230"
+                       Height="70"
                        Margin="0,0,0,0"
                        StylusDown="BtnOk_StylusDown"
-                       Stretch="Uniform"/>
+                        >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/b-Aceptar.png" Stretch="Fill" />
+                    </Button.Background>
+                    <Button.BorderThickness>
+                        <Thickness></Thickness>
+                    </Button.BorderThickness>
+                </Button>
             </Border>
         </Grid>
     </Border>

@@ -22,35 +22,32 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class FrmPaymentData : Window
     {
+        #region References
         WCFPayPad.CLSTransaction transaction;
         WCFPayPadService WCFPayPad;
         NavigationService navigationService;
+        Utilities utilities;
+        #endregion
 
+        #region LoadMethods
         public FrmPaymentData()
         {
             InitializeComponent();
             transaction = new WCFPayPad.CLSTransaction();
             WCFPayPad = new WCFPayPadService();
             navigationService = new NavigationService(this);
+            utilities = new Utilities();
             CmbTypeBuyer.SelectedIndex = 0;
             CmbIdDType.SelectedIndex = 0;
         }
 
-        private void BtnPay_StylusDown(object sender, StylusDownEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (ValidateFields())
-                {
-                    Redirect();
-                }
-            }
-            catch (Exception ex)
-            {
-                //objUtil.Exception(ex.Message);
-            }
+            Utilities.Timer(tbTimer);
         }
+        #endregion
 
+        #region Methods
         private void Redirect()
         {
             AssingProperties();
@@ -81,7 +78,160 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
+                utilities.SaveLogErrorMethods("FillTypeDocument", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
 
+        private void AssingProperties()
+        {
+            try
+            {
+                var data = Utilities.ConsultResult;
+                string[] municipio = data.municipio.Split(')');
+                string[] datosPais = municipio[0].ToString().Split('-');
+
+                PayerData payerData = new PayerData();
+                payerData.BuyerAddress = CmbTypeBuyer.SelectedIndex == 1 ? TbxData2.Text : "";
+                payerData.BuyerIdentification = TbxIdentification.Text;
+                payerData.LastNameBuyer = TbxData3.Text;
+                payerData.FirstNameBuyer = TbxData1.Text;
+                payerData.SecondNameBuyer = CmbTypeBuyer.SelectedIndex != 1 ? TbxData2.Text : "";
+                payerData.TypeBuyer = CmbTypeBuyer.Text;
+                payerData.TypeIdBuyer = ((KeyValuePair<string, string>)CmbIdDType.SelectedItem).Key;
+                payerData.Phone = CmbTypeBuyer.SelectedIndex == 1 ? TbxData3.Text : TbxData4.Text;
+                payerData.Email = string.Empty;
+                payerData.CodeCountryBuyer = int.Parse(datosPais[0].Replace("( ", ""));
+                payerData.CodeDepartmentBuyer = int.Parse(datosPais[1]);
+                payerData.CodeTownBuyer = int.Parse(datosPais[2]);
+                payerData.FullNameBuyer = payerData.FirstNameBuyer + " " + payerData.SecondNameBuyer + " " + payerData.LastNameBuyer;
+                payerData.ClientPlataform = "DISPENSADOR";
+
+                Utilities.PayerData = payerData;
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
+
+        private void CreateTransaction()
+        {
+            try
+            {
+                transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
+                transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite")); ;
+                transaction.Referencia = "0";
+                transaction.Total = Utilities.ValueToPay;
+                Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
+
+        /// <summary>
+        /// Método para validar que todos los campos estén llenos
+        /// </summary>
+        /// <returns>Retorna true si todos esán llenos, false si algúno está vacío</returns>
+        private bool ValidateFields()
+        {
+            try
+            {
+                bool flag = false;
+                //Se recorren todos los controles del grid contenedor en busca de que esten llenos los necesarios
+                foreach (var control in grdPaymentData.Children)
+                {
+                    if (control is TextBox)
+                    {
+                        TextBox textBox = (TextBox)control;
+                        string value = textBox.Text;
+                        if (value.Length < int.Parse(textBox.Tag.ToString()))
+                        {
+                            ControlMessageError(textBox.Name, true);
+                            flag = false;
+                        }
+                        else
+                            flag = true;
+                    }
+                }
+                return flag;
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("ValidateFields", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Método para manipular los mensajes de error
+        /// </summary>
+        /// <param name="tag">la etiqueta del campo al que se le va a manipular el tooltip.</param>
+        /// <param name="state">True para mostrarlo, False para ocultarlo.</param>
+        private void ControlMessageError(string tag, bool state)
+        {
+            try
+            {
+                switch (tag)
+                {
+                    case "TbxIdentification":
+                        navigationService.NavigatorModal("Por favor, ingrese una identificación válida");
+                        break;
+                    case "TbxData1":
+                        if (CmbTypeBuyer.SelectedIndex == 0)
+                        {
+                            navigationService.NavigatorModal("Por favor, ingrese un nombre válido");
+                        }
+                        else
+                        {
+                            navigationService.NavigatorModal("Por favor, ingrese una razón social válida");
+                        }
+                        break;
+                    case "TbxData3":
+                        if (CmbTypeBuyer.SelectedIndex == 0)
+                        {
+                            navigationService.NavigatorModal("Por favor, ingrese un apellido válido");
+                        }
+                        else
+                        {
+                            navigationService.NavigatorModal("Por favor, ingrese un teléfono válido");
+                        }
+                        break;
+                    case "TbxData4":
+                        if (TbxData4.Visibility == Visibility.Visible)
+                        {
+                            navigationService.NavigatorModal("Por favor, ingrese un teléfono válido");
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("ControlMessageError", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
+        #endregion
+
+        #region Events
+        private void BtnPay_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            try
+            {
+                if (ValidateFields())
+                {
+                    Redirect();
+                }
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("BtnPay_StylusDown", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -122,123 +272,15 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                //objUtil.Exception(ex.Message);
+                utilities.SaveLogErrorMethods("CmbTypeBuyer_SelectionChanged", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
-        private void AssingProperties()
-        {
-            var data = Utilities.ConsultResult;
-            string[] municipio = data.municipio.Split(')');
-            string[] datosPais = municipio[0].ToString().Split('-');
+        private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration); 
+        #endregion
 
-            PayerData payerData = new PayerData();
-            payerData.BuyerAddress = CmbTypeBuyer.SelectedIndex == 1 ? TbxData2.Text : "";
-            payerData.BuyerIdentification = TbxIdentification.Text;
-            payerData.LastNameBuyer = TbxData3.Text;
-            payerData.FirstNameBuyer = TbxData1.Text;
-            payerData.SecondNameBuyer = CmbTypeBuyer.SelectedIndex != 1 ? TbxData2.Text : "";
-            payerData.TypeBuyer = CmbTypeBuyer.Text;
-            payerData.TypeIdBuyer = ((KeyValuePair<string, string>)CmbIdDType.SelectedItem).Key;
-            payerData.Phone = CmbTypeBuyer.SelectedIndex == 1 ? TbxData3.Text : TbxData4.Text;
-            payerData.Email = string.Empty;
-            payerData.CodeCountryBuyer = int.Parse(datosPais[0].Replace("( ", ""));
-            payerData.CodeDepartmentBuyer = int.Parse(datosPais[1]);
-            payerData.CodeTownBuyer = int.Parse(datosPais[2]);
-            payerData.FullNameBuyer = payerData.FirstNameBuyer + " " + payerData.SecondNameBuyer + " " + payerData.LastNameBuyer;
-            payerData.ClientPlataform = "DISPENSADOR";
-
-            Utilities.PayerData = payerData;
-        }
-
-        private void CreateTransaction()
-        {
-            transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
-            transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite")); ;
-            transaction.Referencia = "0";
-            transaction.Total = Utilities.ValueToPay;
-            Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
-        }
-
-        /// <summary>
-        /// Método para validar que todos los campos estén llenos
-        /// </summary>
-        /// <returns>Retorna true si todos esán llenos, false si algúno está vacío</returns>
-        private bool ValidateFields()
-        {
-            bool flag = false;
-
-            //Se recorren todos los controles del grid contenedor en busca de que esten llenos los necesarios
-            foreach (var control in grdPaymentData.Children)
-            {
-                if (control is TextBox)
-                {
-                    TextBox textBox = (TextBox)control;
-                    string value = textBox.Text;
-                    if (value.Length < int.Parse(textBox.Tag.ToString()))
-                    {
-                        ControlMessageError(textBox.Name, true);
-                        flag = false;
-                    }
-                    else
-                        flag = true;
-                }
-                //else if (control is ComboBox)
-                //{
-                //    ComboBox comboBox = (ComboBox)control;
-                //    if (comboBox.SelectedIndex == 0)
-                //    {
-                //        //ControlMessageError(comboBox.Tag.ToString(), true);
-                //        flag = false;
-                //    }
-                //    else
-                //        flag = true;
-                //}
-            }
-            return flag;
-        }
-
-        /// <summary>
-        /// Método para manipular los mensajes de error
-        /// </summary>
-        /// <param name="tag">la etiqueta del campo al que se le va a manipular el tooltip.</param>
-        /// <param name="state">True para mostrarlo, False para ocultarlo.</param>
-        private void ControlMessageError(string tag, bool state)
-        {
-            switch (tag)
-            {
-                case "TbxIdentification":
-                    navigationService.NavigatorModal("Por favor, ingrese una identificación válida");
-                    break;
-                case "TbxData1":
-                    if (CmbTypeBuyer.SelectedIndex == 0)
-                    {
-                        navigationService.NavigatorModal("Por favor, ingrese un nombre válido");
-                    }
-                    else
-                    {
-                        navigationService.NavigatorModal("Por favor, ingrese una razón social válida");
-                    }
-                    break;
-                case "TbxData3":
-                    if (CmbTypeBuyer.SelectedIndex == 0)
-                    {
-                        navigationService.NavigatorModal("Por favor, ingrese un apellido válido");
-                    }
-                    else
-                    {
-                        navigationService.NavigatorModal("Por favor, ingrese un teléfono válido");
-                    }
-                    break;
-                case "TbxData4":
-                    if (TbxData4.Visibility == Visibility.Visible)
-                    {
-                        navigationService.NavigatorModal("Por favor, ingrese un teléfono válido");
-                    }
-                    break;
-                }
-            }
-
+        #region HeaderButtons
         private void BtnBack_StylusDown(object sender, StylusDownEventArgs e)
         {
             Utilities.ResetTimer();
@@ -249,19 +291,15 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+                Utilities.ResetTimer();
                 Utilities.GoToInicial();
             }
             catch (Exception ex)
             {
-                //utilities.saveLogError("BtnHome_MouseDown", "FrmMenu", ex.ToString());
+                utilities.SaveLogErrorMethods("BtnExit_StylusDown", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
-        }
-
-        private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Utilities.Timer(tbTimer);
-        }
+        } 
+        #endregion
     }
 }

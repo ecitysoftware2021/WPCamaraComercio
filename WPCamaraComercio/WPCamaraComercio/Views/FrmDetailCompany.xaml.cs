@@ -20,7 +20,6 @@ namespace WPCamaraComercio.Views
     public partial class FrmDetailCompany : Window
     {
         #region Reference
-        CollectionViewSource view;
         ObservableCollection<DetailMerchant> lstDetailMerchant;
         ObservableCollection<DetailEstablish> lstDetailEstablish;
         decimal total = 0;
@@ -29,35 +28,33 @@ namespace WPCamaraComercio.Views
         WCFServices services;
         List<SelectedDetail> selectedDetail;
         List<Certificado> ListCertificates;
-        FrmLoading frmLoading;
         decimal valueToPay = 0;
-        Utilities utilities; 
+        Utilities utilities;
         #endregion
 
+        #region LoadMethods
         public FrmDetailCompany()
         {
             InitializeComponent();
             services = new WCFServices();
             lstDetailMerchant = new ObservableCollection<Models.DetailMerchant>();
             lstDetailEstablish = new ObservableCollection<DetailEstablish>();
-            view = new CollectionViewSource();
             navigationService = new NavigationService(this);
             selectedDetail = new List<SelectedDetail>();
             ListCertificates = new List<Certificado>();
-            frmLoading = new FrmLoading();
             utilities = new Utilities();
             GrdEstablish.Visibility = Visibility.Hidden;
-            //var task = services.ConsultInformation("811040812", tipo_busqueda.Nit);
-            //tipo = 1;
-            //var response = task.Result;
-            //Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
-            //matricula = Utilities.RespuestaConsulta.response.resultados[0].matricula;
-            //tpcm = Utilities.RespuestaConsulta.response.resultados[0].tpcm;
-            //ConsultInformation();
 
             AssingProperties();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Utilities.Timer(tbTimer);
+        }
+        #endregion
+
+        #region Methods
         private void AssingProperties()
         {
             try
@@ -77,7 +74,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                //navigationService.NavigationTo(ex.Message);
+                utilities.SaveLogErrorMethods("AssingProperties", "FrmDetailCompany", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -109,7 +107,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                //navigationService.NavigationTo(ex.Message);
+                utilities.SaveLogErrorMethods("GenerateMerchant", "FrmDetailCompany", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -152,7 +151,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                //navigationService.NavigationTo(ex.Message);
+                utilities.SaveLogErrorMethods("GenerateEstablish", "FrmDetailCompany", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -176,17 +176,21 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
+                utilities.SaveLogErrorMethods("FillMerchantDetail", "FrmDetailCompany", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
                 return null;
             }
-            
+
         }
 
         private void Details(Details details)
         {
             FrmModalDetailEstablish FrmModalDetailEstablish = new FrmModalDetailEstablish(details);
             FrmModalDetailEstablish.ShowDialog();
-        }
+        } 
+        #endregion
 
+        #region Events
         private void BtnComerciant_StylusDown(object sender, StylusDownEventArgs e)
         {
             GrdEstablish.Visibility = Visibility.Hidden;
@@ -270,7 +274,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-
+                utilities.SaveLogErrorMethods("ComboBox_SelectionChanged", "FrmDetailCompany", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -287,7 +292,7 @@ namespace WPCamaraComercio.Views
                 string lblPay = lblAmount.Text.Replace("$", "").Replace(".00", "").Replace(",00", "").Trim();
                 if (lblPay == "0" || valueToPay == 0)
                 {
-                    //objUtil.OpenModal("Debe seleccionar un certificado");
+                    navigationService.NavigatorModal("Debe seleccionar un certificado.");
                 }
                 else
                 {
@@ -311,19 +316,26 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                //objUtil.Exception(ex.Message);
+                utilities.SaveLogErrorMethods("BtnAcept_StylusDown", "FrmDetailCompany", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
+        private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
+        #endregion
+
+        #region HeaderButtons
         private void BtnExit_StylusDown(object sender, StylusDownEventArgs e)
         {
             try
             {
+                Utilities.ResetTimer();
                 Utilities.GoToInicial();
             }
             catch (Exception ex)
             {
-                utilities.saveLogError("BtnHome_MouseDown", "FrmMenu", ex.ToString());
+                utilities.SaveLogErrorMethods("BtnExit_StylusDown", "FrmDetailCompany", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -331,13 +343,7 @@ namespace WPCamaraComercio.Views
         {
             Utilities.ResetTimer();
             navigationService.NavigationTo("ConsultWindow");
-        }
-
-        private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            Utilities.Timer(tbTimer);
-        }
+        } 
+        #endregion
     }
 }

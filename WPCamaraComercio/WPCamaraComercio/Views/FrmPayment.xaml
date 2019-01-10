@@ -110,17 +110,22 @@
         </Grid>
 
         <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
-            <Image x:Name="btnCancell"
-                   Source="/Images/Buttons/btncancelar.png"
+            <Button x:Name="btnCancell"
                    Grid.Column="0"
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Bottom" 
                   Width="450"
                    Height="130" 
                    Margin="25,20,0,0"
-                   Stretch="Uniform"
                    Visibility="{Binding ImgCancel}"
-                   />
+                   >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/btncancelar.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
             <Image 
                     gif:ImageBehavior.AnimatedSource="/Images/Buttons/recibirCambioGIF.gif"
                    Grid.Column="0"

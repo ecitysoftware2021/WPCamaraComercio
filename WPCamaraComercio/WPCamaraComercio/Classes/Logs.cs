@@ -92,4 +92,37 @@ namespace WPCamaraComercio.Classes
         public string Operacion { get; set; }
         public string Error { get; set; }
     }
+
+    public class LogErrorMethods
+    {
+        public int IDError { get; set; }
+        public string NameClass { get; set; }
+        public string NameMethod { get; set; }
+        public string Message { get; set; }
+        public DateTime Fecha { get; set; }
+        public int IDCorresponsal { get; set; }
+
+        public void CreateLogsMethods(LogErrorMethods log)
+        {
+            var json = JsonConvert.SerializeObject(log);
+            string fullPath = string.Format(@"C:\\LogsMetodos");
+            if (!Directory.Exists(fullPath))
+            {
+                Directory.CreateDirectory(fullPath);
+            }
+
+            string path2 = string.Concat(log.Fecha.ToString(), "-", log.NameMethod, ".json");
+            var nameFile = Path.Combine(fullPath, path2);
+            if (!File.Exists(nameFile))
+            {
+                var archivo = File.CreateText(nameFile);
+                archivo.Close();
+            }
+
+            using (StreamWriter sw = File.AppendText(nameFile))
+            {
+                sw.WriteLine(json);
+            }
+        }
+    }
 }

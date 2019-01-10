@@ -36,7 +36,7 @@
                            HorizontalAlignment="Center" 
                            VerticalAlignment="Center" 
                            Text="Información" 
-                           Foreground="Red" 
+                           Foreground="#FFBF0909" 
                            FontSize="45" FontWeight="Bold" />
                 </Grid>
             </Border>
@@ -66,28 +66,40 @@
                     BorderThickness="4,2,2,2"
                     CornerRadius="0,0,30,30" Margin="0,4,-4,-4" Grid.ColumnSpan="2">
 
-                <Image HorizontalAlignment="Left" 
-                       Source="../Images/Buttons/btncancelar.png" 
+                <Button HorizontalAlignment="Left" 
                        VerticalAlignment="Center"
                        Width="230"
-                       Stretch="Uniform"
+                       Height="70"
                        Margin="30,0,0,0"
                        x:Name="imgCancel"
                        Grid.Row="2"
                        PreviewStylusDown="imgCancel_PreviewStylusDown"
-                       />
+                       >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Images/Buttons/btncancelar.png" Stretch="Fill" />
+                    </Button.Background>
+                    <Button.BorderThickness>
+                        <Thickness></Thickness>
+                    </Button.BorderThickness>
+                </Button>
             </Border>
 
-            <Image HorizontalAlignment="Right" 
+            <Button HorizontalAlignment="Right" 
                        x:Name="imgAceptar"
-                       Source="../Images/Buttons/continuar2.png" 
                        VerticalAlignment="Center"
                        Width="230"
-                       Stretch="Uniform"
+                       Height="70"
                        Margin="0,10,30,0"
                        Grid.Row="2"
                        PreviewStylusDown="imgAceptar_PreviewStylusDown"
-                       />
+                       >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/b-Aceptar.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
         </Grid>
     </Border>
 </Window>
