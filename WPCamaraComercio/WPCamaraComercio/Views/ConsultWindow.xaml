@@ -146,7 +146,10 @@
                    Height="100" 
                    Margin="0,0,100,55" 
                    TabIndex="2"
-                   StylusDown="BtnConsultar_StylusDown" Background="{x:Null}" Foreground="#FFB01313" BorderBrush="{x:Null}">
+                   StylusDown="BtnConsultar_StylusDown">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/b-Consultar.png" Stretch="Fill" />
+                </Button.Background>
                 <Button.BorderThickness>
                     <Thickness></Thickness>
                 </Button.BorderThickness>
