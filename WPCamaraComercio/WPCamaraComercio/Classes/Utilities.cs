@@ -61,15 +61,38 @@ namespace WPCamaraComercio.Classes
 
         public static int Session { get; set; }
 
-        public static ControlPeripherals control = new ControlPeripherals();
+        public static ControlPeripherals control;
 
         public static decimal EnterTotal;
 
         public static decimal DispenserVal { get; set; }
 
+        public static DataPayPad dataPaypad = new DataPayPad();
+
         #endregion
 
         #region GeneralEvents
+
+        public Utilities()
+        {
+
+        }
+
+        public Utilities(int i)
+        {
+            try
+            {
+                //Duration = GetConfiguration("Duration");
+                //CountSlider = 0;
+                //flagSlider = false;
+                //dataPaypad = new DataPaypad();
+                control = new ControlPeripherals();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         /// <summary>
         /// Se usa para abrir la modal de información/error

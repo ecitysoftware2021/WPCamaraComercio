@@ -217,6 +217,7 @@ namespace WPCamaraComercio.Views
         /// </summary>
         private void OrganizeValues()
         {
+            Utilities.ValueToPay = 12000;
             lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
             PaymentViewModel = new PaymentViewModel
             {
