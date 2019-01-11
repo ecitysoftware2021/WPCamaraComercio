@@ -109,6 +109,20 @@ namespace WPCamaraComercio.Classes
         }
 
         /// <summary>
+        /// Se usa para abrir la modal de información/error
+        /// </summary>
+        /// <param name="Message">mensaje para ser mostrado</param>
+        public static void OpenModal(string Message, bool state = false)
+        {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                FrmModal modal = new FrmModal(Message, state);
+                modal.ShowDialog();
+            }));
+            return;
+        }
+
+        /// <summary>
         /// Se usa para ocultar o mostrar la modal de carga
         /// </summary>
         /// <param name="window">objeto de la clase FrmLoading  </param>

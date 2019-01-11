@@ -17,6 +17,8 @@ namespace WPCamaraComercio.ViewModels
     {
         private WCFServices service;
 
+        NavigationService navigationService;
+
         public Action<bool> callbackSearch;
 
         private List<Coincidence> _coincidences;
@@ -167,7 +169,7 @@ namespace WPCamaraComercio.ViewModels
             }
         }
 
-        public void ConsultConcidences(string value, int type)
+        public async void ConsultConcidences(string value, int type)
         {
             bool stateConsult = false;
             try
@@ -176,13 +178,19 @@ namespace WPCamaraComercio.ViewModels
                 this.preload = Visibility.Visible;
                 
 
-                Task.Run(async () =>
-                {
+                //Task.Run(async () =>
+                //{
                     service = new WCFServices();
-                    Service.Response response = await service.ConsultInformation(value, type);
-
-                    if (response.Result != null)
+                var task = service.ConsultInformation(value, type);
+                //Utilities.Loading(frmLoading, true, this);
+                if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                {
+                    // Service.Response response = service.ConsultInformation(value, type);
+                    var response = task.Result;
+                    if (response.IsSuccess)
                     {
+                    //    if (response.Result != null)
+                    //{
                         Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
 
                         if (Utilities.RespuestaConsulta.response.resultados.Count() > 0)
@@ -203,10 +211,24 @@ namespace WPCamaraComercio.ViewModels
 
                             stateConsult = true;
                         }
+                        else
+                        {
+                            Utilities.OpenModal(string.Concat("Lo sentimos, ",
+                            Environment.NewLine,
+                            "No se encontraron registros con este número de identificación"));
+                        }
+                    }
+                    else
+                    {
+                       // Utilities.Loading(frmLoading, false, this);
+                        Utilities.OpenModal(string.Concat("Lo sentimos, ",
+                            Environment.NewLine,
+                            "No se encontraron registros con este número de identificación"));
                     }
                     this.preload = Visibility.Hidden;
                     callbackSearch?.Invoke(stateConsult);
-                });
+                }
+                //});
             }
             catch (Exception ex)
             {

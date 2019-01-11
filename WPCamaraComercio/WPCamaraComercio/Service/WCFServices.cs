@@ -20,40 +20,48 @@ namespace WPCamaraComercio.Service
             response = new Response();
         }
 
-        public async Task<Response> ConsultInformation(string searchText, int type)
+        public Task<Response> ConsultInformation(string searchText, int type)
         {
-            try
+            Task<Response> task = null;
+
+            task = Task.Run(() =>
             {
-                tipo_busqueda searchType;
+                Response response = new Response();
+                try
+                {
+                    tipo_busqueda searchType;
 
-                if (type == 2)
-                {
-                    searchType = tipo_busqueda.Nit;
-                }
-                else
-                {
-                    searchType = tipo_busqueda.Nombre;
-                }
+                    if (type == 2)
+                    {
+                        searchType = tipo_busqueda.Nit;
+                    }
+                    else
+                    {
+                        searchType = tipo_busqueda.Nombre;
+                    }
 
-                var r = WCFCamara.GetGeneralInformation(searchText, searchType);
-                if (r != null)
-                {
-                    response.IsSuccess = true;
-                    response.Result = r;
+                    var r = WCFCamara.GetGeneralInformation(searchText, searchType);
+                    if (r != null)
+                    {
+                        response.IsSuccess = true;
+                        response.Result = r;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
                     response.IsSuccess = false;
+                    response.Result = null;
+                    response.Message = ex.Message;
                 }
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Result = null;
-                response.Message = ex.Message;
-            }
 
-            return response;
+                return response;
+            });
+
+            return task;
         }
 
         public async Task<Response> ConsultDetailMerchant(string enrollment, string tpcm)

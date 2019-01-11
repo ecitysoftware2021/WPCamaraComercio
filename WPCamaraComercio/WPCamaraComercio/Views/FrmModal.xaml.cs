@@ -35,6 +35,16 @@ namespace WPCamaraComercio.Views
                 w.Opacity = 0.6;
             });
         }
+
+        public FrmModal(string mensaje, bool state = false)
+        {
+            InitializeComponent();
+            LblMessage.Text = mensaje;
+            Dispatcher.BeginInvoke((Action)delegate
+            {
+                w.Opacity = 0.6;
+            });
+        }
         #endregion
 
         #region Events
