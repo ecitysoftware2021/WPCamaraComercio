@@ -7,33 +7,44 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
         Title="MainWindow"    
-        WindowStyle="None"
+       WindowStyle="None"
+        Loaded="Window_Loaded"
         WindowState="Maximized"
         Height="2064.095" 
-        Width="1250.599"
-        WindowStartupLocation="CenterScreen" Topmost="True"
-       >
-    <Grid MouseDown="Grid_MouseDown_1">
-        <Grid.Background>
-            <ImageBrush ImageSource="{Binding sourse}"/>
-        </Grid.Background>
-        <Grid>
-            <Image gif:ImageBehavior.AnimatedSource="/WPCamaraComercio;component/Images/Gif/tocarPantallaGIF.gif"
-                   Height="400" 
-                   Width="350"
-                   Margin="0,0,20,0"
-                   VerticalAlignment="Bottom"
-                   Visibility="Visible"
-                   HorizontalAlignment="Right"
-                   />
-            <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/tocarPantallaGIF.gif"
-                   Height="400" 
-                   Width="350"
-                   Margin="20,0,0,0"
-                   VerticalAlignment="Bottom"
-                   Visibility="Visible"
-                   HorizontalAlignment="Left"
-                   />
-        </Grid>
+        Width="1250.599">
+    <Window.Resources>
+        <!-- Start Fade -->
+        <Storyboard x:Key="FadeIn" >
+            <DoubleAnimation Duration="0:0:.25" Storyboard.TargetProperty="Opacity" From="0" To="1" />
+        </Storyboard>
+        <Storyboard x:Key="FadeOut">
+            <DoubleAnimation Duration="0:0:.5" Storyboard.TargetProperty="Opacity" To="0" />
+        </Storyboard>
+        <!-- End Fade -->
+    </Window.Resources>
+    <Grid>
+        <Canvas  Height="2064.095" Width="1250.599" MouseDown="Canvas_MouseDown">
+            <Image x:Name="myImage" Stretch="Fill" 
+               RenderTransformOrigin="0,0" 
+               Height="2000.095" 
+               Width="1080">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="0" Y="0" />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="myImage2" Stretch="Fill"
+               RenderTransformOrigin="0,0" 
+               Height="2000.095" 
+               Width="1080">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="0" Y="0" />
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <TextBlock TextWrapping="Wrap" x:Name="ErrorText" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" Visibility="Collapsed" Text="The specified folder does not exist" FontSize="20" />
+        </Canvas>
     </Grid>
 </Window>

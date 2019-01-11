@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using WPCamaraComercio.Classes;
-using WPCamaraComercio.Views;
+using System.Windows.Threading;
+using WPCamaraComercio.Service;
+using System.Configuration;
 
 namespace WPCamaraComercio
 {
@@ -22,94 +20,126 @@ namespace WPCamaraComercio
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region "Referencias"
-        private List<string> images;
-        private Utilities utilities;
-        private ImageSleader imageSleader;
-        #endregion
+        private DispatcherTimer timerImageChange;
+        private Image[] ImageControls;
+        private List<ImageSource> Images = new List<ImageSource>();
+        private static string[] ValidImageExtensions = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
+        private static string[] TransitionEffects = new[] { "Fade" };
+        private string TransitionType;
+        private string strImagePath = string.Empty;
+        private int CurrentSourceIndex;
+        private int CurrentCtrlIndex;
+        private int EffectIndex = 0;
+        private int IntervalTimer = 1;
+        NavigationService navigationService;
 
-        #region "Constructor"
         public MainWindow()
         {
             InitializeComponent();
-            utilities = new Utilities();
+            navigationService = new NavigationService(this);
+            //Initialize Image control, Image directory path and Image timer.
+            IntervalTimer = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalTime"]);
+            strImagePath = ConfigurationManager.AppSettings["ImagePath"];
+            ImageControls = new[] { myImage, myImage2 };
 
-            images = LoadImageFolder();
+            LoadImageFolder(strImagePath);
 
-            imageSleader = new ImageSleader(images);
-
-            this.DataContext = imageSleader.imageModel;
-
-            imageSleader.time = 2;
-
-            imageSleader.isRotate = true;
-
-            init();
-
+            timerImageChange = new DispatcherTimer();
+            timerImageChange.Interval = new TimeSpan(0, 0, IntervalTimer);
+            timerImageChange.Tick += new EventHandler(timerImageChange_Tick);
+            //Task.Run(() =>
+            //{
+            //    GetScreen();
+            //});
         }
-        #endregion
 
-        #region "Eventos"
-        /// <summary>
-        /// Evento que me redirecciona a la ventana del menú
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Grid_MouseDown_1(object sender, MouseButtonEventArgs e)
+        private void LoadImageFolder(string folder)
+        {
+            ErrorText.Visibility = Visibility.Collapsed;
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            if (!System.IO.Path.IsPathRooted(folder))
+                folder = System.IO.Path.Combine(Environment.CurrentDirectory, folder);
+            if (!Directory.Exists(folder))
+            {
+                ErrorText.Text = "The specified folder does not exist: " + Environment.NewLine + folder;
+                ErrorText.Visibility = Visibility.Visible;
+                return;
+            }
+            Random r = new Random();
+            var sources = from file in new DirectoryInfo(folder).GetFiles().AsParallel()
+                          where ValidImageExtensions.Contains(file.Extension, StringComparer.InvariantCultureIgnoreCase)
+                          orderby r.Next()
+                          select CreateImageSource(file.FullName, true);
+            Images.Clear();
+            Images.AddRange(sources);
+            sw.Stop();
+            Console.WriteLine("Total time to load {0} images: {1}ms", Images.Count, sw.ElapsedMilliseconds);
+        }
+
+        private ImageSource CreateImageSource(string file, bool forcePreLoad)
+        {
+            if (forcePreLoad)
+            {
+                var src = new BitmapImage();
+                src.BeginInit();
+                src.UriSource = new Uri(file, UriKind.Absolute);
+                src.CacheOption = BitmapCacheOption.OnLoad;
+                src.EndInit();
+                src.Freeze();
+                return src;
+            }
+            else
+            {
+                var src = new BitmapImage(new Uri(file, UriKind.Absolute));
+                src.Freeze();
+                return src;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            PlaySlideShow();
+            timerImageChange.IsEnabled = true;
+        }
+
+        private void timerImageChange_Tick(object sender, EventArgs e)
+        {
+            PlaySlideShow();
+        }
+
+        private void PlaySlideShow()
         {
             try
             {
-                Dispatcher.BeginInvoke((Action)delegate
-                {
-                    ConsultWindow consult = new ConsultWindow();
-                    consult.Show();
-                    this.Close();
-                });
-                GC.Collect();
-            }
-            catch (Exception ex)
-            {
-                //utilities.saveLogError("Grid_MouseDown_1", "MainWindow", ex.ToString());
-            }
+                if (Images.Count == 0)
+                    return;
+                var oldCtrlIndex = CurrentCtrlIndex;
+                CurrentCtrlIndex = (CurrentCtrlIndex + 1) % 2;
+                CurrentSourceIndex = (CurrentSourceIndex + 1) % Images.Count;
 
+                Image imgFadeOut = ImageControls[oldCtrlIndex];
+                Image imgFadeIn = ImageControls[CurrentCtrlIndex];
+                ImageSource newSource = Images[CurrentSourceIndex];
+                imgFadeIn.Source = newSource;
+
+                TransitionType = TransitionEffects[EffectIndex].ToString();
+
+                Storyboard StboardFadeOut = (Resources[string.Format("{0}Out", TransitionType.ToString())] as Storyboard).Clone();
+                StboardFadeOut.Begin(imgFadeOut);
+                Storyboard StboardFadeIn = Resources[string.Format("{0}In", TransitionType.ToString())] as Storyboard;
+                StboardFadeIn.Begin(imgFadeIn);
+            }
+            catch (Exception ex) { }
         }
-        #endregion
 
-        #region "Métodos"
-        /// <summary>
-        /// Método que me inicia la rotación de las imagenes
-        /// </summary>
-        private void init()
+        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                imageSleader.star();
-            }
-            catch (Exception ex)
-            {
-                //utilities.saveLogError("init", "MainWindow", ex.ToString());
-            }
+            navigationService.NavigationTo("FrmMenu");
         }
 
-        /// <summary>
-        /// Método que me carga una lista de imagenes
-        /// </summary>
-        /// <returns></returns>
-        private List<string> LoadImageFolder()
+        private void GetScreen()
         {
-            try
-            {
-                return new List<string> {
-                "/WPCamaraComercio;component/Images/Backgrounds/fondo1.jpg"
-                };
-            }
-            catch (Exception ex)
-            {
-                //utilities.saveLogError("LoadImageFolder", "MainWindow", ex.ToString());
-                return null;
-            }
+            //ControlPantalla.ConsultarControlPantalla();
         }
-
-        #endregion
     }
 }

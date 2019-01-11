@@ -105,8 +105,7 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region Events
-
-        private void btnCancelar_PreviewStylusDown(object sender, StylusDownEventArgs e)
+        private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
             try
             {
@@ -132,7 +131,6 @@ namespace WPCamaraComercio.Views
                 ErroUpdateTrans(ex.Message);
             }
         }
-
         #endregion
 
         #region Methods
