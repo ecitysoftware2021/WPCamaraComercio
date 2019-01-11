@@ -36,32 +36,16 @@ namespace WPCamaraComercio.Views
             });
         }
 
-        public FrmModal(string mensaje, bool state = false)
-        {
-            InitializeComponent();
-            LblMessage.Text = mensaje;
-            Dispatcher.BeginInvoke((Action)delegate
-            {
-                Opacity = 0.6;
-            });
-        }
         #endregion
 
         #region Events
         private void Image_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
-            if (w !=  null)
+            Dispatcher.BeginInvoke((Action)delegate
             {
-                Dispatcher.BeginInvoke((Action)delegate
-                {
-                    w.Opacity = 1;
-                });
-                DialogResult = true;
-            }
-            else
-            {
-                DialogResult = true;
-            }
+                w.Opacity = 1;
+            });
+            DialogResult = true;
         }
         #endregion
     }

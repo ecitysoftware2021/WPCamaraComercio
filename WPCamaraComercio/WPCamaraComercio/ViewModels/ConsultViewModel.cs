@@ -211,17 +211,17 @@ namespace WPCamaraComercio.ViewModels
                         }
                         else
                         {
-                            Utilities.OpenModal(string.Concat("Lo sentimos, ",
+                            Utilities.ModalError(string.Concat("Lo sentimos, ",
                             Environment.NewLine,
-                            "No se encontraron registros con este número de identificación"));
+                            "En este momento el servicio no se encuentra disponible."));
                         }
                     }
                     else
                     {
                         // Utilities.Loading(frmLoading, false, this);
-                        Utilities.OpenModal(string.Concat("Lo sentimos, ",
+                        Utilities.ModalError(string.Concat("Lo sentimos, ",
                             Environment.NewLine,
-                            "No se encontraron registros con este número de identificación"));
+                            "En este momento el servicio no se encuentra disponible."));
                     }
                     this.preload = Visibility.Hidden;
                     callbackSearch?.Invoke(stateConsult);

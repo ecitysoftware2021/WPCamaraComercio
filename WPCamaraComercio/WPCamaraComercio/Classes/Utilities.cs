@@ -112,11 +112,11 @@ namespace WPCamaraComercio.Classes
         /// Se usa para abrir la modal de información/error
         /// </summary>
         /// <param name="Message">mensaje para ser mostrado</param>
-        public static void OpenModal(string Message, bool state = false)
+        public static void ModalError(string Message)
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
-                FrmModal modal = new FrmModal(Message, state);
+                FrmModalErrors modal = new FrmModalErrors(Message);
                 modal.ShowDialog();
             }));
             return;

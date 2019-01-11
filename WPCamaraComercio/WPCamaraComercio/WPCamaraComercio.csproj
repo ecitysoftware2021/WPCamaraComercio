@@ -160,6 +160,9 @@
     <Compile Include="Views\FrmModalDetailMerchant.xaml.cs">
       <DependentUpon>FrmModalDetailMerchant.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrmModalErrors.xaml.cs">
+      <DependentUpon>FrmModalErrors.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmPaymentData.xaml.cs">
       <DependentUpon>FrmPaymentData.xaml</DependentUpon>
     </Compile>
@@ -218,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmModalDetailMerchant.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmModalErrors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
