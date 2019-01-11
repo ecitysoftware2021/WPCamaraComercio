@@ -17,8 +17,6 @@ namespace WPCamaraComercio.ViewModels
     {
         private WCFServices service;
 
-        NavigationService navigationService;
-
         public Action<bool> callbackSearch;
 
         private List<Coincidence> _coincidences;
@@ -174,13 +172,13 @@ namespace WPCamaraComercio.ViewModels
             bool stateConsult = false;
             try
             {
-                
+
                 this.preload = Visibility.Visible;
-                
+
 
                 //Task.Run(async () =>
                 //{
-                    service = new WCFServices();
+                service = new WCFServices();
                 var task = service.ConsultInformation(value, type);
                 //Utilities.Loading(frmLoading, true, this);
                 if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
@@ -189,8 +187,8 @@ namespace WPCamaraComercio.ViewModels
                     var response = task.Result;
                     if (response.IsSuccess)
                     {
-                    //    if (response.Result != null)
-                    //{
+                        //    if (response.Result != null)
+                        //{
                         Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
 
                         if (Utilities.RespuestaConsulta.response.resultados.Count() > 0)
@@ -220,7 +218,7 @@ namespace WPCamaraComercio.ViewModels
                     }
                     else
                     {
-                       // Utilities.Loading(frmLoading, false, this);
+                        // Utilities.Loading(frmLoading, false, this);
                         Utilities.OpenModal(string.Concat("Lo sentimos, ",
                             Environment.NewLine,
                             "No se encontraron registros con este número de identificación"));

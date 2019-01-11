@@ -42,7 +42,7 @@ namespace WPCamaraComercio.Views
             LblMessage.Text = mensaje;
             Dispatcher.BeginInvoke((Action)delegate
             {
-                w.Opacity = 0.6;
+                Opacity = 0.6;
             });
         }
         #endregion
@@ -50,11 +50,18 @@ namespace WPCamaraComercio.Views
         #region Events
         private void Image_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)delegate
+            if (w !=  null)
             {
-                w.Opacity = 1;
-            });
-            DialogResult = true;
+                Dispatcher.BeginInvoke((Action)delegate
+                {
+                    w.Opacity = 1;
+                });
+                DialogResult = true;
+            }
+            else
+            {
+                DialogResult = true;
+            }
         }
         #endregion
     }
