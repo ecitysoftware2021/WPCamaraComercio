@@ -134,7 +134,7 @@ namespace WPCamaraComercio
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            navigationService.NavigationTo("FrmMenu");
+            navigationService.NavigationTo("ConsultWindow");
         }
 
         private void GetScreen()

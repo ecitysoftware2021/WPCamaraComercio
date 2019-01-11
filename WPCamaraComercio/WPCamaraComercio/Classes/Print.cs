@@ -10,39 +10,22 @@ namespace WPCamaraComercio.Classes
     public class Print
     {
         SolidBrush sb = new SolidBrush(Color.Black);
-
         Font fBody = new Font("Arial", 8, FontStyle.Bold);
-
         Font fBody1 = new Font("Arial", 8, FontStyle.Regular);
-
         Font rs = new Font("Stencil", 25, FontStyle.Bold);
-
         Font fTType = new Font("", 150, FontStyle.Bold);
 
-        public string Nit = GetConfiguration("NitEntidad");
-
         public string Tramite { get; set; }
-
         public DateTime FechaPago { get; set; }
-
         public string Referencia { get; set; }
-
         public string Cedula { get; set; }
-
         public string Nombre { get; set; }
-
         public string Estado { get; set; }
-
         public decimal Valor { get; set; }
-
         public string Logo { get; set; }
-
         public int IDTramite { get; set; }
-
         public decimal ValorDevuelto { get; set; }
-
         public int SPACE { get { return 145; } }
-
         public string IDCompra { get; set; }
 
         public void ImprimirComprobante()
@@ -69,10 +52,11 @@ namespace WPCamaraComercio.Classes
         private void PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
-            string RutaIMG = Path.Combine(Directory.GetCurrentDirectory(), @"LogoComprobante\LCamaraComercio.png");
+            string RutaIMG = GetConfiguration("RutaLogo");
 
+            //g.DrawRectangle(Pens.Black, 1, 1, 278, 417);
             g.DrawImage(Image.FromFile(RutaIMG), 2, 2);
-            g.DrawString("NIT " + Nit, fBody, sb, 70, 125);
+            g.DrawString("NIT 890.905.080-3", fBody, sb, 70, 125);
             g.DrawString("Trámite:", fBody, sb, 10, SPACE);
             g.DrawString(Tramite, fBody1, sb, 120, SPACE);
             g.DrawString("Estado:", fBody, sb, 10, SPACE + 30);
@@ -92,16 +76,16 @@ namespace WPCamaraComercio.Classes
             if (Estado != "Rechazada")
             {
                 g.DrawString("Total:", fBody, sb, 10, SPACE + 190);
-                g.DrawString(Valor.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, SPACE + 190);
+                g.DrawString(Valor.ToString(), fBody1, sb, 120, SPACE + 190);
             }
             else
             {
                 g.DrawString("Devolución:", fBody, sb, 10, SPACE + 190);
-                g.DrawString(ValorDevuelto.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, SPACE + 190);
+                g.DrawString(ValorDevuelto.ToString(), fBody1, sb, 120, SPACE + 190);
             }
 
 
-            g.DrawString("Su transacción se ha realizado exitosamente", fBody1, sb, 50, SPACE + 230);
+            g.DrawString("Su transacciòn se ha realizado exitosamente", fBody1, sb, 50, SPACE + 230);
             g.DrawString("E-city software", fBody1, sb, 112, SPACE + 250);
         }
 

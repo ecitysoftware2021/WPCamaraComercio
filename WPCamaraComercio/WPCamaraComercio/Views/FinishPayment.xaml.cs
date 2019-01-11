@@ -27,17 +27,20 @@ namespace WPCamaraComercio.Views
         CamaraComercio camaraComercio = new CamaraComercio();
         ServicePayPadClient WCFPayPadInsert = new ServicePayPadClient();
         NavigationService navigationService;
+        private int count = 0;
+        private LogErrorGeneral logError;
         #endregion
 
         public FinishPayment()
         {
             InitializeComponent();
+            logError = new LogErrorGeneral();
             navigationService = new NavigationService(this);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            PDFBYTE();
         }
 
         public Task PDFBYTE()
@@ -53,13 +56,13 @@ namespace WPCamaraComercio.Views
                 {
                     if (antecedent.Result)
                     {
-                        WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                        ApproveTrans(CLSEstadoEstadoTransaction.Aprobada);
                         camaraComercio.ImprimirComprobante("Aprobada");
                         utilities.RestartApplication();
                     }
                     else
                     {
-                        WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                        ApproveTrans(CLSEstadoEstadoTransaction.Cancelada);
                         navigationService.NavigatorModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
                             "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
                         "Comuniquese con servicio al cliente o diríjase a las taquillas."));
@@ -74,5 +77,40 @@ namespace WPCamaraComercio.Views
             });
             return t;
         }
+        private void ApproveTrans(CLSEstadoEstadoTransaction estate)
+        {
+            try
+            {
+                var state = utilities.UpdateTransaction(estate);
+                if (!state)
+                {
+                    if (count < 2)
+                    {
+                        count++;
+                        ApproveTrans(estate);
+                    }
+                    else
+                    {
+                        string json = Utilities.CreateJSON();
+                        logError.Description = json + "\nNo fue posible actualizar esta transacción a aprobada";
+                        logError.State = "Iniciada";
+                        Utilities.SaveLogTransactions(logError, "LogTransacciones\\Iniciadas");
+                    }
+                }
+                else
+                {
+                    string json = Utilities.CreateJSON();
+                    logError.Description = json + "\nTransacción Exitosa";
+                    logError.State = "Aprobada";
+                    Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }

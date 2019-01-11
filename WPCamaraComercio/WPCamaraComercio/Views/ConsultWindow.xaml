@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:k="clr-namespace:WPCamaraComercio.Keyboard"
+        xmlns:k="clr-namespace:WPCamaraComercio.Keyboard" 
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
         mc:Ignorable="d"
         Title="ConsultWindow"
@@ -12,6 +12,7 @@
         WindowState="Maximized"
         Height="2064.095" 
         Width="1250.599"
+        Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         >
     <Grid>
@@ -127,8 +128,9 @@
                      Foreground="#FF840000"
                      FontWeight="Bold"
                      Visibility="Hidden"
-                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true"
+                    k:TouchScreenKeyboard.TouchScreenKeyboard = "true"
                      />
+            <!---->
 
             <TextBox x:Name="TxtIdentificacion"
                      VerticalAlignment="Bottom" 
@@ -144,6 +146,8 @@
                      FontWeight="Bold"
                      k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"
                      />
+                     <!---->
+                     
 
             <Button x:Name="BtnConsultar"
                    HorizontalAlignment="Right" 
@@ -163,7 +167,7 @@
 
         </Grid>
 
-        <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/preloader.gif"
+        <Image 
                    HorizontalAlignment="Stretch"
                    Height="360" 
                    Margin="0,150,0,0"
@@ -171,6 +175,7 @@
                    VerticalAlignment="Center"
                    Width="360" 
                    Visibility="{Binding preload}"/>
+        <!--gif:ImageBehavior.AnimatedSource="/Images/Gif/preloader.gif"-->
 
         <Grid 
            Grid.Row="2"

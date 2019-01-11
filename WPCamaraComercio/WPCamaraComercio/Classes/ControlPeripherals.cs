@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WPCamaraComercio.Classes
@@ -55,6 +56,7 @@ namespace WPCamaraComercio.Classes
 
         public Action<bool> callbackToken;//Calback de mensaje
 
+
         #endregion
 
         #region EvaluationValues
@@ -101,8 +103,8 @@ namespace WPCamaraComercio.Classes
                     DateDispenser = DateTime.Now,
                     TransactionId = Utilities.IDTransactionDB.ToString(),
                 };
-                //InitPortBills();
-                //InitPortPurses();
+                InitPortBills();
+                InitPortPurses();
             }
             catch (Exception ex)
             {
@@ -161,10 +163,11 @@ namespace WPCamaraComercio.Classes
                     _serialPortCoins.PortName = Utilities.GetConfiguration("PortCoins");
                     _serialPortCoins.ReadTimeout = 500;
                     _serialPortCoins.WriteTimeout = 500;
+                    _serialPortCoins.BaudRate = 57600;
                     _serialPortCoins.Open();
                 }
 
-                _serialPortBills.DataReceived += new SerialDataReceivedEventHandler(_serialPortCoinsDataReceived);
+                _serialPortCoins.DataReceived += new SerialDataReceivedEventHandler(_serialPortCoinsDataReceived);
             }
             catch (Exception ex)
             {
@@ -186,6 +189,7 @@ namespace WPCamaraComercio.Classes
             {
                 if (_serialPortBills.IsOpen)
                 {
+                    Thread.Sleep(2000);
                     _serialPortBills.Write(message);
                     log.SendMessage += string.Format("Billetero: {0}\n", message);
                 }
@@ -206,6 +210,7 @@ namespace WPCamaraComercio.Classes
             {
                 if (_serialPortCoins.IsOpen)
                 {
+                    Thread.Sleep(2000);
                     _serialPortCoins.Write(message);
                     log.SendMessage += string.Format("Monedero: {0}\n", message);
                 }
@@ -228,11 +233,10 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                string response;
-                response = _serialPortBills.ReadLine();
+                string response = _serialPortBills.ReadLine();
                 if (!string.IsNullOrEmpty(response))
                 {
-                    log.ResponseMessage += string.Format("{0}\n", response);
+                    log.ResponseMessage += string.Format("Respuesta Billetero:{0}\n", response);
                     ProcessResponseBills(response);
                 }
             }
@@ -373,10 +377,15 @@ namespace WPCamaraComercio.Classes
         /// <param name="response">respuesta</param>
         private void ProcessUN(string[] response)
         {
-            if (response[1] == "DP" || response[1] == "MD")
+            if (response[1] == "DP")
             {
-                deliveryValue += decimal.Parse(response[2]);
-                callbackValueOut?.Invoke(Convert.ToDecimal(response[2]));
+                deliveryValue += decimal.Parse(response[2]) * _mil;
+                callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _mil);
+            }
+            else if (response[1] == "MD")
+            {
+                deliveryValue += decimal.Parse(response[2]) * _hundred;
+                callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _hundred);
             }
             else
             {
@@ -394,7 +403,7 @@ namespace WPCamaraComercio.Classes
         {
             if (response[1] == "OK")
             {
-                if (response[2] == "DP" || response[1] == "MD")
+                if (response[2] == "DP" || response[2] == "MD")
                 {
                     ConfigDataDispenser(response[3]);
                 }
@@ -421,7 +430,6 @@ namespace WPCamaraComercio.Classes
             try
             {
                 dispenserValue = valueDispenser;
-                //SendMessageCoins(_DispenserCoinOn);
                 ConfigurateDispenser();
             }
             catch (Exception ex)
@@ -453,13 +461,13 @@ namespace WPCamaraComercio.Classes
                         DispenserMoney(valuePay.ToString());
                         if (amountCoins > 0)
                         {
-                            SendMessageCoins((amountCoins / _hundred).ToString());
+                            SendMessageCoins("OR:ON:MD:" + (amountCoins / _hundred).ToString());
                         }
                     }
                     else
                     {
                         decimal valuePayCoin = dispenserValue / _hundred;
-                        SendMessageCoins(valuePayCoin.ToString());
+                        SendMessageCoins("OR:ON:MD:" + valuePayCoin.ToString());
                     }
                 }
             }
@@ -539,7 +547,7 @@ namespace WPCamaraComercio.Classes
         #endregion
 
         #region Responses
-
+        decimal deliveryVal = 0;
         /// <summary>
         /// Procesa la respuesta del billeteri dispenser
         /// </summary>
@@ -548,13 +556,13 @@ namespace WPCamaraComercio.Classes
         private void ConfigDataDispenser(string data, bool isRj = false)
         {
             string[] values = data.Split(';');
-            decimal deliveryVal = 0;
+
             foreach (var value in values)
             {
                 int denominacion = int.Parse(value.Split('-')[0]);
                 int cantidad = int.Parse(value.Split('-')[1]);
                 deliveryVal += denominacion * cantidad;
-                LogMessage += string.Concat("Respuesta billetero: ", values, Environment.NewLine);
+                LogMessage += string.Concat("Respuesta: ", values.ToString(), Environment.NewLine);
                 if (isRj)
                 {
                     LogMessage += string.Concat("Cantidad en el reject: ", deliveryValue, Environment.NewLine);

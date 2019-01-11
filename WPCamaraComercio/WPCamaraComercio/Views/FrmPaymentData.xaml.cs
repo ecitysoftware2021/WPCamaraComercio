@@ -148,11 +148,19 @@ namespace WPCamaraComercio.Views
                     if (control is TextBox)
                     {
                         TextBox textBox = (TextBox)control;
+                        
                         string value = textBox.Text;
                         if (value.Length < int.Parse(textBox.Tag.ToString()))
                         {
-                            ControlMessageError(textBox.Name, true);
-                            flag = false;
+                            if (textBox.Name == "TbxData4" && textBox.Visibility == Visibility.Hidden)
+                            {
+                                flag = true;
+                            }
+                            else
+                            {
+                                ControlMessageError(textBox.Name, true);
+                                flag = false;
+                            }
                         }
                         else
                             flag = true;

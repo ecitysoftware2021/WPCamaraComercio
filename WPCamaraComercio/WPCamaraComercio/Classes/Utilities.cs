@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -16,12 +15,16 @@ using WPCamaraComercio.Models;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Views;
 using WPCamaraComercio.WCFCamaraComercio;
+using WPCamaraComercio.WCFPayPad;
 
 namespace WPCamaraComercio.Classes
 {
     public class Utilities
     {
         #region References
+
+        ServicePayPadClient PayPadClient = new ServicePayPadClient();
+
         public static string Duration = GetConfiguration("Duration");
 
         public static TimeSpan time;
@@ -345,6 +348,40 @@ namespace WPCamaraComercio.Classes
                 };
 
                 error.CreateLogsMethods(error);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Método encargado de actualizar la transacción a cualquiera de los estados posibles
+        /// </summary>
+        /// <param name="state">Id del estado al cual queremos actualizar la transacción</param>
+        /// <returns></returns>
+        public bool UpdateTransaction(CLSEstadoEstadoTransaction state)
+        {
+            try
+            {
+                bool response = false;
+
+                switch (state)
+                {
+                    case CLSEstadoEstadoTransaction.Iniciada://Iniciada
+                        response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Iniciada);
+                        break;
+                    case CLSEstadoEstadoTransaction.Aprobada://Aprobada
+                        response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                        break;
+                    case CLSEstadoEstadoTransaction.Cancelada://Cancelada
+                        response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                        break;
+                    default://Cancelada
+                        response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                        break;
+                }
+                return response;
             }
             catch (Exception ex)
             {

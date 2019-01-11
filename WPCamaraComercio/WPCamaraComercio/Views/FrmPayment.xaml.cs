@@ -30,11 +30,11 @@ namespace WPCamaraComercio.Views
 
         private WCFServices services;//Instancia para invocar los servicios web
 
-        private WCFPayPadService payPadService;
-
         private FrmLoading frmLoading;
 
         private Utilities utilities;
+
+        WCFPayPadService payPadService;
 
         private LogErrorGeneral logError;
 
@@ -43,57 +43,33 @@ namespace WPCamaraComercio.Views
         private int count;//Contador utilizado para los reintentos en UpdateTrans
 
         private int tries;//Contador utilizado para los reintentos en SavePay
-        private bool stateUpdate;
+        CamaraComercio camaraComercio;
+        NavigationService navigationService;
 
         #endregion
 
         #region LoadMethods
 
-        //public FrmPay(SaveViewModel update)
-        //{
-        //    InitializeComponent();
-        //    services = new WCFServices();
-        //    frmLoading = new FrmLoading();
-        //    recorder = new CLSGrabador();
-        //    utilities = new Utilities();
-        //    logError = new LogErrorGeneral
-        //    {
-        //        Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
-        //        IDCorresponsal = Utilities.CorrespondentId,
-        //        IdTransaction = Utilities.IDTransactionDB,
-        //        UserId = InfoUserPass.Identification,
-        //        ValuePay = Utilities.PayVal,
-        //    };
-        //    OrganizeValues();
-        //    this.update = update;
-        //    count = 0;
-        //    tries = 0;
-        //    stateUpdate = true;
-        //    InfoUserPass.PayWay = "E";
-        ////}
-
         public FrmPayment()
         {
             InitializeComponent();
-            //Utilities.ValueToPay = value;
             OrganizeValues();
             services = new WCFServices();
-            payPadService = new WCFPayPadService();
             frmLoading = new FrmLoading();
+            payPadService = new WCFPayPadService();
             recorder = new Record();
+            camaraComercio = new CamaraComercio();
             utilities = new Utilities();
+            navigationService = new NavigationService(this);
             logError = new LogErrorGeneral
             {
                 Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
                 IDCorresponsal = Utilities.CorrespondentId,
                 IdTransaction = Utilities.IDTransactionDB,
-                //UserId = InfoUserPass.Identification,
                 ValuePay = Utilities.ValueToPay,
             };
             count = 0;
             tries = 0;
-            stateUpdate = true;
-            //InfoUserPass.PayWay = "E";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -105,7 +81,8 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region Events
-        private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
+
+        private void btnCancelar_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
             try
             {
@@ -113,7 +90,7 @@ namespace WPCamaraComercio.Views
                 //recorder.FinalizarGrabacion();
                 Task.Run(() =>
                 {
-                    UpdateTransaction(4);
+                    utilities.UpdateTransaction(WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
                 });
                 if (PaymentViewModel.ValorIngresado > 0)
                 {
@@ -131,6 +108,7 @@ namespace WPCamaraComercio.Views
                 ErroUpdateTrans(ex.Message);
             }
         }
+
         #endregion
 
         #region Methods
@@ -258,7 +236,6 @@ namespace WPCamaraComercio.Views
         /// <param name="ex">excepción a ser mostrada</param>
         private void ErroUpdateTrans(string message)
         {
-            UpdateTransaction(4);
             var json = Utilities.CreateJSON();
             logError.Description = string.Concat(json, Environment.NewLine, "Ocurrió un error en la transación IdTransaccion:",
                 Utilities.IDTransactionDB,
@@ -276,217 +253,43 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                ApproveTrans();
-                //recorder.FinalizarGrabacion();
-                //InfoUserPass.CollectionVal = Convert.ToInt16(Utilities.PayVal);
-                //await SavePay();
-                Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
-                string message = string.Concat("Reserva realizada con éxito", Environment.NewLine, "gracias por utilizar nuestro servicio,", Environment.NewLine, "espere mientras se imprimen los boleto.");
-                Utilities.OpenModal(message, this, true);
-                //await Task.Run(() =>
-                //{
-                //    Utilities.PrintC(new PrintGenericViewModel
-                //    {
-                //        Cod_Transaction = Utilities.IDTransactionDB.ToString(),
-                //        DateTramite = DateTime.Now.ToString(),
-                //        Identification = "123414124",
-                //        ReturnedVal = Utilities.ValueDelivery.ToString(),
-                //        State = "Aprobada",
-                //        Value = Utilities.PayVal.ToString(),
-                //        Tramite = Utilities.GetTramite(Utilities.Operation)
-                //    });//print tickets    
-                //    //PrintTickets(answer.facturas);
-                //});
-                Thread.Sleep(3000);
-                Utilities.ResetTimer();
-                await Dispatcher.BeginInvoke((Action)delegate
+                //ApproveTrans();
+
+                var confirm = await camaraComercio.ConfirmarCompra();
+                if (!confirm.Equals("0"))
                 {
-                    FinishPayment finishPayment = new FinishPayment();
-                    finishPayment.Show();
-                    Close();
-                });
+                    await Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        FinishPayment summary = new FinishPayment();
+                        summary.Show();
+                        Close();
+                    });
+                }
+                else
+                {
+                    utilities.UpdateTransaction(WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                    navigationService.NavigatorModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                            "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
+                        "Comuniquese con servicio al cliente o diríjase a las taquillas."));
+
+                    navigationService.NavigationTo("FrmCancelledPayment");
+                }
             }
             catch (Exception ex)
             {
                 ErroUpdateTrans(ex.Message);
-                await FinishPayment();
             }
         }
 
         /// <summary>
         /// Método encargado de actualizar la transacción a aprobada, se llama en finalizar pago En caso de fallo se reintenta dos veces más actualizar el estado de la transacción, si el error persiste se guarda en un log local y en el servidor, seguido de esto se continua con la transacción normal
         /// </summary>
-        private void ApproveTrans()
-        {
-            try
-            {
-                if (stateUpdate)
-                {
-                    var state = UpdateTransaction(2);
-                    if (!state)
-                    {
-                        if (count < 2)
-                        {
-                            count++;
-                            ApproveTrans();
-                        }
-                        else
-                        {
-                            string json = Utilities.CreateJSON();
-                            logError.Description = json + "\nNo fue posible actualizar esta transacción a aprobada";
-                            logError.State = "Iniciada";
-                            Utilities.SaveLogTransactions(logError, "LogTransacciones\\Iniciadas");
-                        }
-                    }
-                    else
-                    {
-                        string json = Utilities.CreateJSON();
-                        logError.Description = json + "\nTransacción Exitosa";
-                        logError.State = "Aprobada";
-                        Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                stateUpdate = false;
-                throw ex;
-            }
-        }
-
-        /// <summary>
-        /// Método encargado de actualizar la transacción a cualquiera de los estados posibles
-        /// </summary>
-        /// <param name="state">Id del estado al cual queremos actualizar la transacción</param>
-        /// <returns></returns>
-        private bool UpdateTransaction(int state)
-        {
-            try
-            {
-                bool response = false;
-                if (stateUpdate)
-                {
-                    switch (state)
-                    {
-                        case 1://Iniciada
-                            response = payPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Iniciada);
-                            break;
-                        case 2://Aprobada
-                            response = payPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
-                            break;
-                        case 4://Cancelada
-                            response = payPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                            break;
-                        default://Cancelada
-                            response = payPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                            break;
-                    }
-                }
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        ///// <summary>
-        ///// Guarda el pago
-        ///// </summary>
-        //private async Task<bool> SavePay()
-        //{
-        //    string json;
-        //    var task = services.SavePay(update);
-        //    if (await Task.WhenAny(task, Task.Delay(10000)) == task)
-        //    {
-        //        var response = task.Result;
-        //        var answer = (respuestaConfirmacionPago)response.Result;
-        //        if (answer != null)
-        //        {
-        //            if (!string.IsNullOrEmpty(answer.error))
-        //            {
-        //                Utilities.OpenModal(string.Concat("Lo sentimos, ",
-        //                    Environment.NewLine,
-        //                    "Ha ocurrido un error.",
-        //                    Environment.NewLine,
-        //                    "Error: ", answer.error), this);
-        //                json = Utilities.CreateJSON();
-        //                logError.Description = json + "\nOcurrio un error: " + answer.error;
-        //                logError.State = "Aprobada";
-        //                Utilities.SaveLogTransactions(logError, "LogTransacciones\\AprobadasError");
-        //                return false;
-        //            }
-
-        //            if (response.IsSuccess)
-        //            {
-        //                this.answer = answer;
-        //                json = Utilities.CreateJSON();
-        //                logError.Description = json + "\nTransacción Exitosa";
-        //                logError.State = "Aprobada";
-        //                Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");
-        //                return true;
-        //            }
-        //        }
-
-        //        json = Utilities.CreateJSON();
-        //        logError.Description = json + "\nOcurrio un error al guardar el pago en Confa";
-        //        logError.State = "Aprobada";
-        //        Utilities.SaveLogTransactions(logError, "LogTransacciones\\AprobadasError");
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        if (tries < 1)
-        //        {
-        //            tries++;
-        //            await SavePay();
-        //        }
-
-        //        json = Utilities.CreateJSON();
-        //        logError.Description = json + "\nOcurrió un error al guardar el pago en Confa";
-        //        logError.State = "Aprobada";
-        //        Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");
-        //        return false;
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Método encargado de mandar a imprimir cada factura
-        ///// </summary>
-        ///// <param name="Invoices">Lista de facturas a imprimir</param>
-        //private void PrintTickets(personaFactura[] Invoices)
-        //{
-        //    foreach (var invoice in Invoices)
-        //    {
-        //        PrintInvoiceViewModel print = new PrintInvoiceViewModel
-        //        {
-        //            Category = invoice.categoria,
-        //            ConceptoValue = invoice.valorConcepto,
-        //            CountableDocument = invoice.numeroDocumentoContable,
-        //            DateEnter = invoice.fechaIngreso,
-        //            Document = invoice.documento,
-        //            DocumentType = invoice.tipoDocumento,
-        //            Name = invoice.nombrePersona,
-        //            NameConcept = invoice.nombreConcepto,
-        //            NameIndustry = invoice.nombreEmpresa,
-        //            NameSede = invoice.nombreSede,
-        //            NIT = invoice.nit,
-        //            Paydesk = invoice.caja,
-        //            Politic = invoice.politica,
-        //            Rank = invoice.rango,
-        //            Resolution = invoice.resolucion,
-        //            Text1 = invoice.texto1,
-        //            Text2 = invoice.texto2,
-        //            Text3 = invoice.texto3,
-        //            TicketType = invoice.tipoEntrada,
-        //            Value = invoice.valorTotal
-        //        };
-
-        //        Utilities.PrintTickets(print);
-        //    }
-        //}
 
         #endregion
+
+        private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
+        {
+
+        }
     }
 }
