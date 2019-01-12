@@ -80,7 +80,7 @@ namespace WPCamaraComercio.Classes
                 datos.TipoComprador = Utilities.PayerData.TypeBuyer;
                 datos.TipoIdentificacionComprador = Utilities.PayerData.TypeIdBuyer;
                 datos.ValorCompra = decimal.Parse(Utilities.ValueToPay.ToString());
-                datos.Certificados = Utilities.ListCertificates.ToArray();
+                //datos.Certificados = Utilities.ListCertificates.ToArray();
 
                 var task = service.SendPayInformation(datos);
                 if (await Task.WhenAny(task, Task.Delay(10000000)) == task)

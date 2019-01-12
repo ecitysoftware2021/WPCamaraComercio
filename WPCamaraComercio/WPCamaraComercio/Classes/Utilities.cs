@@ -191,9 +191,10 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         public static void GoToInicial()
         {
-            var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
+                var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
                 MainWindow main = new MainWindow();
                 main.Show();
                 window.Close();

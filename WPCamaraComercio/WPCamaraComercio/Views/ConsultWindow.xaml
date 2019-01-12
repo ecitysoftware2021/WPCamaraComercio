@@ -139,6 +139,7 @@
                      Margin="100,0,0,50" 
                      Width="500"
                      Height="100" 
+                     Text="811040812"
                      TextWrapping="Wrap"
                      TabIndex="1"
                      FontSize="42" 

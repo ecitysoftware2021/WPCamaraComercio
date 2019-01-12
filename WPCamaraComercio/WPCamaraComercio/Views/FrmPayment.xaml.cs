@@ -75,7 +75,10 @@ namespace WPCamaraComercio.Views
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //recorder.Grabar(Utilities.IDTransactionDB);
-            ActivateWallet();
+            Task.Run(() =>
+            {
+                ActivateWallet();
+            });
         }
 
         #endregion
@@ -259,21 +262,23 @@ namespace WPCamaraComercio.Views
                 var confirm = await camaraComercio.ConfirmarCompra();
                 if (!confirm.Equals("0"))
                 {
-                    await Dispatcher.BeginInvoke((Action)delegate
-                    {
-                        FinishPayment summary = new FinishPayment();
-                        summary.Show();
-                        Close();
-                    });
+                    Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
+                    navigationService.NavigationTo("FinishPayment");
                 }
                 else
                 {
+                    Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
                     utilities.UpdateTransaction(WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                    navigationService.NavigatorModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                    Dispatcher.BeginInvoke((Action)delegate {
+                        FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
                             "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
-                        "Comuniquese con servicio al cliente o diríjase a las taquillas."));
-
-                    navigationService.NavigationTo("FrmCancelledPayment");
+                        "Comuniquese con servicio al cliente o diríjase a las taquillas."),this);
+                        modal.ShowDialog();
+                        if (modal.DialogResult.Value)
+                        {
+                            navigationService.NavigationTo("FrmCancelledPayment");
+                        }
+                    });
                 }
             }
             catch (Exception ex)
@@ -290,7 +295,11 @@ namespace WPCamaraComercio.Views
 
         private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
-
+            FrmModal modal = new FrmModal("Esta seguro de cancelar la transaccion?", this);
+            if (modal.DialogResult.Value)
+            {
+                navigationService.NavigationTo("FrmCancelledPayment");
+            }
         }
     }
 }

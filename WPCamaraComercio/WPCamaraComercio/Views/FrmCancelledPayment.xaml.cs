@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
+using WPCamaraComercio.ViewModels;
 
 namespace WPCamaraComercio.Views
 {
@@ -24,6 +25,44 @@ namespace WPCamaraComercio.Views
         {
             InitializeComponent();
             lblValue.Content = Utilities.ValueToPay;
+            ControlPeripherals.deliveryVal = 0;
+            ReturnMoney(3000);
+        }
+
+        /// <summary>
+        /// Método que se encarga de devolver el dinero ya sea por que se canceló la transacción o por que hay valor sobrante
+        /// </summary>
+        /// <param name="returnValue">valor a devolver</param>
+        private void ReturnMoney(decimal returnValue)
+        {
+            try
+            {
+                Utilities.control.callbackValueOut = valueOut =>
+                {
+                    if (valueOut > 0)
+                    {
+
+                    }
+                };
+
+                Utilities.control.callbackTotalOut = totalOut =>
+                {
+                    Utilities.SaveLogDispenser(ControlPeripherals.log);
+                    Utilities.GoToInicial();
+                    //FinishPayment().Wait();
+                };
+
+                Utilities.control.callbackError = error =>
+                {
+                    Utilities.SaveLogDispenser(ControlPeripherals.log);
+                };
+
+                Utilities.control.StartDispenser(returnValue);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

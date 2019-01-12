@@ -485,9 +485,7 @@
     <Resource Include="Images\Buttons\b-Ingrese-Billete.png" />
     <Resource Include="Images\Buttons\b-Leyendo-Billete.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

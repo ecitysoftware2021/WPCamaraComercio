@@ -63,11 +63,16 @@ namespace WPCamaraComercio.Views
                     else
                     {
                         ApproveTrans(CLSEstadoEstadoTransaction.Cancelada);
-                        navigationService.NavigatorModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                        Dispatcher.BeginInvoke((Action)delegate {
+                            FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
                             "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
-                        "Comuniquese con servicio al cliente o diríjase a las taquillas."));
-
-                        navigationService.NavigationTo("FrmCancelledPayment");
+                        "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
+                            modal.ShowDialog();
+                        if (modal.DialogResult.Value)
+                        {
+                            navigationService.NavigationTo("FrmCancelledPayment");
+                        }
+                        });
                     }
                 }
                 else if (t.Status == TaskStatus.Faulted)
@@ -77,6 +82,7 @@ namespace WPCamaraComercio.Views
             });
             return t;
         }
+
         private void ApproveTrans(CLSEstadoEstadoTransaction estate)
         {
             try

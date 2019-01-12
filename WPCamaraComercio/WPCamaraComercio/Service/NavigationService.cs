@@ -48,10 +48,10 @@ namespace WPCamaraComercio.Service
                         FrmDetailCompany frmDetailCompany = new FrmDetailCompany();
                         frmDetailCompany.Show();
                         break;
-                    case "FrmInformationCompany":
-                        //FrmInformationCompany frmInformationCompany = new FrmInformationCompany();
-                        //frmInformationCompany.Show();
-                        //break;
+                    case "FinishPayment":
+                        FinishPayment frmInformationCompany = new FinishPayment();
+                        frmInformationCompany.Show();
+                        break;
                     case "FrmPayment":
                         FrmPayment frmPayment = new FrmPayment();
                         frmPayment.Show();

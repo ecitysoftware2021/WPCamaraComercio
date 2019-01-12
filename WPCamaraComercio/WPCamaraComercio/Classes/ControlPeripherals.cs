@@ -82,6 +82,7 @@ namespace WPCamaraComercio.Classes
         public static string LogMessage;//Mensaje para el log
 
         public static LogDispenser log;//Log del dispenser
+        public static decimal deliveryVal = 0;
 
         #endregion
 
@@ -111,6 +112,7 @@ namespace WPCamaraComercio.Classes
                 throw ex;
             }
         }
+
 
         /// <summary>
         /// Método que inicializa los billeteros
@@ -547,7 +549,7 @@ namespace WPCamaraComercio.Classes
         #endregion
 
         #region Responses
-        decimal deliveryVal = 0;
+
         /// <summary>
         /// Procesa la respuesta del billeteri dispenser
         /// </summary>

@@ -51,9 +51,9 @@
                 <Grid Grid.Row="1" >
                     <TextBlock x:Name="LblMessage" 
                            HorizontalAlignment="Center"
-                           Margin="20,0,0,45" 
+                           Margin="8,0,0,45"
                            Grid.Row="1" 
-                           FontSize="35" 
+                           FontSize="28" 
                            TextWrapping="WrapWithOverflow"
                            VerticalAlignment="Center"
                            FontWeight="Bold" 

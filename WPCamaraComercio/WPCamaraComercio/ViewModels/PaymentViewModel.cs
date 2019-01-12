@@ -191,8 +191,8 @@ namespace WPCamaraComercio.ViewModels
                 if (_valorIngresado != value)
                 {
                     _valorIngresado = value;
-                    ValorFaltante = (PayValue < ValorIngresado) ? 0 : PayValue - ValorIngresado;
-                    ValorSobrante = (PayValue - ValorIngresado) * -1;
+                    ValorFaltante = (ValorIngresado < PayValue) ? PayValue - ValorIngresado : 0;
+                    ValorSobrante = (ValorIngresado > PayValue) ? ValorIngresado - PayValue : 0;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ValorIngresado)));
                 }
             }
