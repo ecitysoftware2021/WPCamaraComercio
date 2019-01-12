@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
         mc:Ignorable="d"
         Title="FinishPayment" 
@@ -23,46 +24,31 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="1">
-            <Label Content="Transacción Cancelada" 
+            <TextBlock Text="GENERANDO CERTIFICADOS, POR FAVOR ESPERE.." 
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    FontWeight="Bold" 
-                   FontSize="90" 
+                   FontSize="50"
+                   Width="1000"
+                   TextAlignment="Center"
                    Foreground="#FF840000"
+                   TextWrapping="Wrap"
                    Margin="0,80,0,0"/>
         </Grid>
 
         <Grid Grid.Row="1">
-            <Label Content="Valor a Devolver" 
-                   HorizontalAlignment="Center"
+            <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/preloader.gif"
+                   HorizontalAlignment="Stretch"
+                   Height="360" 
+                   Margin="0,400,0,0"
+                   Grid.Row="2"
                    VerticalAlignment="Center"
-                   FontWeight="Bold" 
-                   FontSize="90" 
-                   Foreground="#FF840000"/>
-            <Label x:Name="lblValue"
-                   Content="$ 0" 
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontWeight="Bold" 
-                   FontSize="80"
-                   Foreground="Black"
-                   Margin="0,400,0,0"/>
+                   Width="360" 
+                   Visibility="Visible"/>
+            <!--gif:ImageBehavior.AnimatedSource="/Images/Gif/preloader.gif"-->
         </Grid>
 
         <Grid Grid.Row="2">
-            <Label Content="Por favor espere," 
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   FontWeight="Bold" 
-                   FontSize="70" 
-                   Foreground="#FF840000"/>
-            <Label Content="estamos contando su dinero" 
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   FontWeight="Bold" 
-                   FontSize="70" 
-                   Margin="0,70,0,0"
-                   Foreground="#FF840000"/>
         </Grid>
     </Grid>
 </Window>

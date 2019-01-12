@@ -167,7 +167,7 @@
 
         </Grid>
 
-        <Image 
+        <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/preloader.gif"
                    HorizontalAlignment="Stretch"
                    Height="360" 
                    Margin="0,150,0,0"
