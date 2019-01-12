@@ -131,6 +131,10 @@ namespace WPCamaraComercio.Keyboard
         public static RoutedUICommand CmdNI = new RoutedUICommand();
         public static RoutedUICommand CmdM = new RoutedUICommand();
 
+        public static RoutedUICommand CmdGuion = new RoutedUICommand();
+        public static RoutedUICommand CmdPunto = new RoutedUICommand();
+        public static RoutedUICommand CmdGbajo = new RoutedUICommand();
+
         public static RoutedUICommand CmdSpaceBar = new RoutedUICommand();
         public static RoutedUICommand CmdClear = new RoutedUICommand();
 
@@ -206,8 +210,16 @@ namespace WPCamaraComercio.Keyboard
             CommandBinding CbNI = new CommandBinding(CmdNI, RunCommand);
             CommandBinding CbM = new CommandBinding(CmdM, RunCommand);
 
+            CommandBinding CbGuion = new CommandBinding(CmdGuion, RunCommand);
+            CommandBinding CbPunto = new CommandBinding(CmdPunto, RunCommand);
+
+            CommandBinding CbGBajo = new CommandBinding(CmdGbajo, RunCommand);
             CommandBinding CbSpaceBar = new CommandBinding(CmdSpaceBar, RunCommand);
             CommandBinding CbClear = new CommandBinding(CmdClear, RunCommand);
+
+            CommandManager.RegisterClassCommandBinding(typeof(TouchScreenKeyboard), CbGuion);
+            CommandManager.RegisterClassCommandBinding(typeof(TouchScreenKeyboard), CbPunto);
+            CommandManager.RegisterClassCommandBinding(typeof(TouchScreenKeyboard), CbGBajo);
 
             CommandManager.RegisterClassCommandBinding(typeof(TouchScreenKeyboard), CbQ);
             CommandManager.RegisterClassCommandBinding(typeof(TouchScreenKeyboard), Cbw);
@@ -425,6 +437,18 @@ namespace WPCamaraComercio.Keyboard
             else if (e.Command == CmdClear)//Last row
             {
                 TouchScreenKeyboard.TouchScreenText = "";
+            }
+            else if (e.Command  == CmdPunto)
+            {
+                TouchScreenKeyboard.TouchScreenText += ".";
+            }
+            else if (e.Command == CmdGuion)
+            {
+                TouchScreenKeyboard.TouchScreenText += "-";
+            }
+            else if (e.Command == CmdGbajo)
+            {
+                TouchScreenKeyboard.TouchScreenText += "_";
             }
         }
         #endregion

@@ -223,10 +223,6 @@
 
                                         <StackPanel Orientation="Horizontal" >
 
-                                            <Button Style="{StaticResource InformButton}" Command="local:TouchScreenKeyboard.CmdShift" Visibility="Hidden" VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="80" Height="50">
-                                                <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top"  Visibility="Hidden" >Shift</TextBlock>
-                                            </Button>
-
                                             <Button Style="{StaticResource InformButton}" Command="local:TouchScreenKeyboard.CmdZ"   VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
                                                 <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top"   >Z</TextBlock>
                                             </Button>
@@ -252,10 +248,18 @@
                                                 <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top"   >M</TextBlock>
                                             </Button>
 
+                                            <Button Style="{StaticResource InformButton}" Command="local:TouchScreenKeyboard.CmdPunto"   VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
+                                                <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top"   >.</TextBlock>
+                                            </Button>
+
+                                            <Button Style="{StaticResource InformButton}" Command="local:TouchScreenKeyboard.CmdGuion"   VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
+                                                <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top"   >-</TextBlock>
+                                            </Button>
+
                                             <Button Command="local:TouchScreenKeyboard.CmdBackspace" HorizontalContentAlignment="Center"  
                                                     Width="50" 
                                                     Height="50"
-                                                    Margin="15,0,35,0">
+                                                    Margin="0,0,0,0">
                                                 <Button.Background>
                                                     <ImageBrush ImageSource="/Images/Buttons/backspace.png"/>
                                                 </Button.Background>
@@ -270,7 +274,7 @@
                                             <Button Command="local:TouchScreenKeyboard.CmdClear" HorizontalContentAlignment="Center"  
                                                     Width="50" 
                                                     Height="50"
-                                                    Margin="40,0,5,0">
+                                                    Margin="7,0,5,0">
                                                 <Button.Background>
                                                     <ImageBrush ImageSource="/WPCamaraComercio;component/Images/Buttons/x.png"/>
                                                 </Button.Background>
@@ -291,13 +295,13 @@
                                                 <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top" ></TextBlock>
                                             </Button>
 
-                                            <!--<Button Style="{StaticResource InformButton}" Command="local:TouchScreenKeyboard.Cmd2"  VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
-                                                <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top" >@</TextBlock>
-                                            </Button>
+                                            <!--<Button Style="{StaticResource InformButton}" Command="local:TouchScreenKeyboard.Cmd2"  VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">-->
+                                                <!--<TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top" >@</TextBlock>-->
+                                            <!--</Button>-->
 
-                                            <Button Style="{StaticResource InformButton}" Command="local:TouchScreenKeyboard.Cmd2"  VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
+                                            <Button Style="{StaticResource InformButton}" Command="local:TouchScreenKeyboard.CmdGbajo"  VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
                                                 <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top" >_</TextBlock>
-                                            </Button>-->
+                                            </Button>
 
                                             <Button Command="local:TouchScreenKeyboard.CmdEnter" HorizontalContentAlignment="Center"  
                                                     Width="50" 
@@ -344,7 +348,19 @@
                                 <Border BorderBrush="White" BorderThickness="0" CornerRadius="1" Margin="53,0,0,0">
 
                                     <StackPanel Orientation="Vertical">
-
+                                        <StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Button Command="local:TouchScreenKeyNumeric.CmdBackspace" HorizontalContentAlignment="Center"  
+                                                    Width="40" 
+                                                    Height="40"
+                                                    Margin="0,10,60,0">
+                                                <Button.Background>
+                                                    <ImageBrush ImageSource="Images/Buttons/backspace.png"/>
+                                                </Button.Background>
+                                                <Button.BorderThickness>
+                                                    <Thickness></Thickness>
+                                                </Button.BorderThickness>
+                                            </Button>
+                                        </StackPanel>
                                         <StackPanel Orientation="Horizontal" >
                                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Foreground="#d3d3d3">
                                                 __________________________________________</TextBlock>
@@ -387,17 +403,12 @@
                                             </Button>
                                         </StackPanel>
 
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,45,0">
-                                            <Button Style="{StaticResource InformButton}"  Command="local:TouchScreenKeyNumeric.Cmd0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  Width="60" Height="60">
-                                                0
-                                            </Button>
-                                        </StackPanel>
-
                                         <StackPanel Orientation="Horizontal" >
                                             <Button Command="local:TouchScreenKeyNumeric.CmdClear" HorizontalContentAlignment="Center"  
                                                     Width="60" 
                                                     Height="60"
-                                                    Margin="0,5,0,0">
+                                                    Margin="5,0,0,0"
+                                                    >
                                                 <Button.Background>
                                                     <ImageBrush ImageSource="/Images/Buttons/x.png"/>
                                                 </Button.Background>
@@ -405,32 +416,20 @@
                                                     <Thickness></Thickness>
                                                 </Button.BorderThickness>
                                             </Button>
-
-                                            <StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                <!--<Button Command="local:TouchScreenKeyNumeric.CmdBackspace" HorizontalContentAlignment="Center"  
+                                            <Button Style="{StaticResource InformButton}"  Command="local:TouchScreenKeyNumeric.Cmd0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  Width="60" Height="60" Margin="10,0,10,0">
+                                                0
+                                            </Button>
+                                            <Button Command="local:TouchScreenKeyNumeric.CmdEnter" HorizontalContentAlignment="Center"
                                                     Width="60" 
                                                     Height="60"
-                                                    Margin="20,0,20,0">
-                                                    <Button.Background>
-                                                        <ImageBrush ImageSource="Images/backspace.jpg"/>
-                                                    </Button.Background>
-                                                    <Button.BorderThickness>
-                                                        <Thickness></Thickness>
-                                                    </Button.BorderThickness>
-                                                </Button>-->
-
-                                                <Button Command="local:TouchScreenKeyNumeric.CmdEnter" HorizontalContentAlignment="Center"  
-                                                    Width="60" 
-                                                    Height="60"
-                                                    Margin="95,5,0,0">
-                                                    <Button.Background>
-                                                        <ImageBrush ImageSource="/Images/Buttons/ok.png"/>
-                                                    </Button.Background>
-                                                    <Button.BorderThickness>
-                                                        <Thickness></Thickness>
-                                                    </Button.BorderThickness>
-                                                </Button>
-                                            </StackPanel>
+                                                    >
+                                                <Button.Background>
+                                                    <ImageBrush ImageSource="/Images/Buttons/ok.png"/>
+                                                </Button.Background>
+                                                <Button.BorderThickness>
+                                                    <Thickness></Thickness>
+                                                </Button.BorderThickness>
+                                            </Button>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>

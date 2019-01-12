@@ -102,11 +102,12 @@ namespace WPCamaraComercio.Keyboard
         public static RoutedUICommand CmdClear = new RoutedUICommand();
         public static RoutedUICommand CmdEnter = new RoutedUICommand();
 
+
         public TouchScreenKeyNumeric()
         {
             Topmost = true;
             this.Width = WidthTouchKeyboard;
-            this.Height = 420;
+            this.Height = 380;
         }
 
         static TouchScreenKeyNumeric()
