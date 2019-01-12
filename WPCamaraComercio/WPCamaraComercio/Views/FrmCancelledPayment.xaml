@@ -6,79 +6,60 @@
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
-        Title="FrmPagoCancelado" WindowStyle="None"
+        Title="FrmPagoCancelado" 
+        WindowStyle="None"
         WindowState="Maximized"
         Height="2064.095" 
         Width="1250.599"
-        WindowStartupLocation="CenterScreen"
-        >
+        WindowStartupLocation = "CenterScreen"
+        Loaded="Window_Loaded">
     <Window.Background>
-        <ImageBrush ImageSource="../Images/Backgrounds/fondo2.jpg"/>
+        <ImageBrush ImageSource="../Images/Backgrounds/fondo1.jpg"/>
     </Window.Background>
-    <Grid Name="PaymentGrid">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="500" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="600" />
+            <RowDefinition Height="630" />
+            <RowDefinition Height="900" />
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <TextBlock Text="Cancelación de pago"
-                       TextWrapping="Wrap"
-                       TextAlignment="Justify"
-                       FontSize="85"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Bottom"
-                       FontFamily="Arial" 
-                       Foreground="Red" 
-                       FontWeight="Bold"
-                       Margin="0,90,0,0"
-                       />
+        <Grid Grid.Row="1">
+            <Label Content="Transacción Cancelada" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   FontWeight="Bold" 
+                   FontSize="90" 
+                   Foreground="#606060"
+                   Margin="0,80,0,0"/>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="grvPay" Grid.Column="0" Grid.ColumnSpan="2">
-            <TextBlock Text="Cantidad a devolver"
-                       TextWrapping="Wrap"
-                       TextAlignment="Justify"
-                       FontSize="59"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top"
-                       FontFamily="Arial" 
-                       FontWeight="Bold"
-                       Margin="0,140,0,0"
-                       />
-            <TextBlock x:Name="txtValorAregresar" 
-                       Margin="0,0,0,300"
-                       Text="{Binding ValorIngresado, StringFormat={}{0:C0}}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Grid.Row="1"
-                       Grid.Column="2"
-                       Grid.ColumnSpan="2"
-                       FontFamily="Arial" 
-                       FontSize="60"
-                       />
-            <Image 
-                   gif:ImageBehavior.AnimatedSource="/Images/Buttons/espereReciboGIF.gif"
-                   Grid.Column="0"
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Bottom" 
-                   Width="600"
-                   Height="120" 
-                   Margin="0,0,0,0"
-                   Stretch="Uniform"
-                   />
-            <Image 
-                   gif:ImageBehavior.AnimatedSource="/Images/Buttons/recibirCambioGIF.gif"
-                   Grid.Column="0"
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Bottom" 
-                   Width="600"
-                   Height="120" 
-                   Margin="0,0,0,190"
-                   Stretch="Uniform"
-                   />
+        <Grid Grid.Row="1">
+            <Label Content="Valor a Devolver" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold" 
+                   FontSize="90" 
+                   Foreground="#606060"/>
+            <Label x:Name="lblValue"
+                   Content="$ 0" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontWeight="Bold" 
+                   FontSize="80"
+                   Foreground="#FF840000"
+                   Margin="0,400,0,0"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <TextBlock Text="Por favor espere, estamos contando su dinero" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   FontWeight="Bold" 
+                   FontSize="70" 
+                   TextAlignment="Center"
+                   Width="1000"
+                   TextWrapping="Wrap"
+                   Foreground="#606060"/>
         </Grid>
     </Grid>
 </Window>

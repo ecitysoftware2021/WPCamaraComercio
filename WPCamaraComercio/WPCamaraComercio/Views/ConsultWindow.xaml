@@ -128,7 +128,7 @@
                      Foreground="#FF840000"
                      FontWeight="Bold"
                      Visibility="Hidden"
-                    k:TouchScreenKeyboard.TouchScreenKeyboard = "true"
+                     k:TouchScreenKeyboard.TouchScreenKeyboard = "true"
                      />
             <!---->
 

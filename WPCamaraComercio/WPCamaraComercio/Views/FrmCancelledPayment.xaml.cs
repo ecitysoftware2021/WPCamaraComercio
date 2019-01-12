@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPCamaraComercio.Classes;
 
 namespace WPCamaraComercio.Views
 {
@@ -22,6 +23,7 @@ namespace WPCamaraComercio.Views
         public FrmCancelledPayment()
         {
             InitializeComponent();
+            lblValue.Content = Utilities.ValueToPay;
         }
     }
 }
