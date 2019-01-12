@@ -82,18 +82,38 @@ namespace WPCamaraComercio.Classes
                 datos.ValorCompra = decimal.Parse(Utilities.ValueToPay.ToString());
                 datos.Certificados = Utilities.ListCertificates.ToArray();
 
-                var response = await service.SendPayInformation(datos);
-                if (response.IsSuccess)
+                var task = service.SendPayInformation(datos);
+                if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
                 {
-                    responseDic = (Dictionary<string, string>)response.Result;
-                    responseDic.TryGetValue("IDCompra", out idCompra);
-                    utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
-                    IDCompra = idCompra;
-                    return IDCompra;
+                    var response = task.Result;
+
+                    if (response.IsSuccess)
+                    {
+                        responseDic = (Dictionary<string, string>)response.Result;
+                        if (responseDic.Count > 0)
+                        {
+                            responseDic.TryGetValue("IDCompra", out idCompra);
+                            utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
+                            IDCompra = idCompra;
+                            return IDCompra;
+                        }
+                        else
+                        {
+                            Utilities.ModalError(string.Concat("Lo sentimos, ",
+                               Environment.NewLine,
+                               "En este momento el servicio no se encuentra disponible."));
+                        }
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
                 }
                 else
                 {
-                    return string.Empty;
+                    Utilities.ModalError(string.Concat("Lo sentimos, ",
+                           Environment.NewLine,
+                           "En este momento el servicio no se encuentra disponible."));
                 }
             }
             catch (Exception ex)
@@ -117,7 +137,7 @@ namespace WPCamaraComercio.Classes
             logError.Clear();
         }
 
-        public bool ListCertificadosiMPORT()
+        public async Task<bool> ListCertificadosiMPORT()
         {
             try
             {
@@ -137,18 +157,42 @@ namespace WPCamaraComercio.Classes
                     for (int i = 0; i < int.Parse(item.NumeroCertificados); i++)
                     {
                         datosCertificado.copia = (i + 1).ToString();
-                        string urlArchivo = WCFCamara.GetCertifiedString(datosCertificado);
-                        FileName nombreArchivo = new FileName
+
+                        var task = service.GetCertifiedString(datosCertificado);
+                        if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
                         {
-                            matricula = item.matricula,
-                            matriculaest = item.MatriculaEst,
-                            tpcm = item.tpcm,
-                            IdCertificado = item.IdCertificado,
-                            Copia = (i + 1)
-                        };
-                        utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
-                        path = SaveFile(urlArchivo, nombreArchivo);
-                        LRutasCertificados.Add(path);
+                            var response = task.Result;
+
+                            if (response.IsSuccess)
+                            {
+                                string urlArchivo = (string)response.Result;
+                                if (!string.IsNullOrEmpty(urlArchivo))
+                                {
+                                    FileName nombreArchivo = new FileName
+                                    {
+                                        matricula = item.matricula,
+                                        matriculaest = item.MatriculaEst,
+                                        tpcm = item.tpcm,
+                                        IdCertificado = item.IdCertificado,
+                                        Copia = (i + 1)
+                                    };
+                                    utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
+                                    path = SaveFile(urlArchivo, nombreArchivo);
+                                    LRutasCertificados.Add(path);
+                                }
+                                else
+                                {
+                                    printState = false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            printState = false;
+                            Utilities.ModalError(string.Concat("Lo sentimos, ",
+                               Environment.NewLine,
+                               "En este momento el servicio no se encuentra disponible."));
+                        }
                     }
                 }
                 if (printState)
@@ -250,7 +294,6 @@ namespace WPCamaraComercio.Classes
         void Mensaje(string mensaje)
         {
             utilities.FillLogError(mensaje, "Descarga Certificado");
-
         }
 
         public void ImprimirComprobante(string Estado)

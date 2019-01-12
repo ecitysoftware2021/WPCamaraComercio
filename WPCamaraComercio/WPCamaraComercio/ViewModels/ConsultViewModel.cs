@@ -172,10 +172,7 @@ namespace WPCamaraComercio.ViewModels
             bool stateConsult = false;
             try
             {
-
                 this.preload = Visibility.Visible;
-
-
                 //Task.Run(async () =>
                 //{
                 service = new WCFServices();

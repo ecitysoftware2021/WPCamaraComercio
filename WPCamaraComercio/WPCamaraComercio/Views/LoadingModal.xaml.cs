@@ -41,23 +41,39 @@ namespace WPCamaraComercio.Views
         }
 
 
-        private void ConsultDetail()
+        private async void ConsultDetail()
         {
             try
             {
                 Utilities.Enrollment = coincidence.Enrollment;
                 Utilities.Tpcm = coincidence.Tpcm;
 
-                Task.Run(async () =>
+                var task = services.ConsultDetailMerchant(coincidence.Enrollment, coincidence.Tpcm);
+                if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
                 {
-                    var response = await services.ConsultDetailMerchant(coincidence.Enrollment, coincidence.Tpcm);
-
+                    var response = task.Result;
                     if (response.IsSuccess)
                     {
                         Utilities.DetailResponse = (RespuestaDetalle)response.Result;
-                        ChangeView();
+
+                        if (Utilities.DetailResponse.response.resultados != null)
+                        {
+                            ChangeView();
+                        }
+                        else
+                        {
+                            Utilities.ModalError(string.Concat("Lo sentimos, ",
+                               Environment.NewLine,
+                               "En este momento el servicio no se encuentra disponible."));
+                        }
                     }
-                });
+                }
+                else
+                {
+                    Utilities.ModalError(string.Concat("Lo sentimos, ",
+                           Environment.NewLine,
+                           "En este momento el servicio no se encuentra disponible."));
+                }
             }
             catch (Exception ex)
             {

@@ -64,61 +64,108 @@ namespace WPCamaraComercio.Service
             return task;
         }
 
-        public async Task<Response> ConsultDetailMerchant(string enrollment, string tpcm)
+        public Task<Response> ConsultDetailMerchant(string enrollment, string tpcm)
         {
-            response = new Response();
-            try
-            {
-                var r = WCFCamara.GetDetalleComerciante(new PeticionDetalle
-                {
-                    Matricula = enrollment,
-                    Tpcm = tpcm
-                });
+            Task<Response> task = null;
 
-                if (r != null)
+            task = Task.Run(() =>
+            {
+                Response response = new Response();
+                try
                 {
-                    response.IsSuccess = true;
-                    response.Result = r;
+                    var r = WCFCamara.GetDetalleComerciante(new PeticionDetalle
+                    {
+                        Matricula = enrollment,
+                        Tpcm = tpcm
+                    });
+
+                    if (r != null)
+                    {
+                        response.IsSuccess = true;
+                        response.Result = r;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
                     response.IsSuccess = false;
+                    response.Result = null;
+                    response.Message = ex.Message;
                 }
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Result = null;
-                response.Message = ex.Message;
-            }
 
-            return response;
+                return response;
+            });
+
+            return task;
         }
 
-        public async Task<Response> SendPayInformation(Datos data)
+        public Task<Response> SendPayInformation(Datos data)
         {
-            try
+            Task<Response> task = null;
+
+            task = Task.Run(() =>
             {
-                var r = WCFCamara.SendPayInformation(data);
-                if (r != null)
+                Response response = new Response();
+                try
                 {
-                    response.IsSuccess = true;
-                    response.Result = r;
+                    var r = WCFCamara.SendPayInformation(data);
+                    if (r != null)
+                    {
+                        response.IsSuccess = true;
+                        response.Result = r;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
                     response.IsSuccess = false;
+                    response.Result = null;
+                    response.Message = ex.Message;
                 }
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Result = null;
-                response.Message = ex.Message;
-            }
 
-            return response;
+                return response;
+            });
+
+            return task;
         }
 
+        public Task<Response> GetCertifiedString(CLSDatosCertificado data)
+        {
+            Task<Response> task = null;
+
+            task = Task.Run(() =>
+            {
+                Response response = new Response();
+                try
+                {
+                    var r = WCFCamara.GetCertifiedString(data);
+                    if (r != null)
+                    {
+                        response.IsSuccess = true;
+                        response.Result = r;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.IsSuccess = false;
+                    response.Result = null;
+                    response.Message = ex.Message;
+                }
+
+                return response;
+            });
+
+            return task;
+        }
     }
 }
