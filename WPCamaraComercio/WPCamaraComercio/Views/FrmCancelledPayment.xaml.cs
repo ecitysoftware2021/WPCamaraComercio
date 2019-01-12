@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
-using WPCamaraComercio.ViewModels;
 
 namespace WPCamaraComercio.Views
 {
@@ -21,6 +9,7 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class FrmCancelledPayment : Window
     {
+        CamaraComercio camaraComercio = new CamaraComercio();
         public FrmCancelledPayment()
         {
             InitializeComponent();
@@ -48,6 +37,7 @@ namespace WPCamaraComercio.Views
                 Utilities.control.callbackTotalOut = totalOut =>
                 {
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
+                    camaraComercio.ImprimirComprobante("Cancelada");
                     Utilities.GoToInicial();
                     //FinishPayment().Wait();
                 };

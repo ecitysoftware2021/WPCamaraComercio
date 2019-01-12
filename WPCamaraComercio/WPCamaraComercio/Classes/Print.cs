@@ -27,6 +27,8 @@ namespace WPCamaraComercio.Classes
         public decimal ValorDevuelto { get; set; }
         public int SPACE { get { return 145; } }
         public string IDCompra { get; set; }
+        public string Telefono { get; set; }
+        public string Nit = GetConfiguration("NitEntidad");
 
         public void ImprimirComprobante()
         {
@@ -52,41 +54,53 @@ namespace WPCamaraComercio.Classes
         private void PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
-            string RutaIMG = GetConfiguration("RutaLogo");
-
-            //g.DrawRectangle(Pens.Black, 1, 1, 278, 417);
-            g.DrawImage(Image.FromFile(RutaIMG), 2, 2);
-            g.DrawString("NIT 890.905.080-3", fBody, sb, 70, 125);
-            g.DrawString("Trámite:", fBody, sb, 10, SPACE);
-            g.DrawString(Tramite, fBody1, sb, 120, SPACE);
-            g.DrawString("Estado:", fBody, sb, 10, SPACE + 30);
-            g.DrawString(Estado, fBody1, sb, 120, SPACE + 30);
-            g.DrawString("Fecha de pago:", fBody, sb, 10, SPACE + 60);
-            g.DrawString(FechaPago.ToString(), fBody1, sb, 120, SPACE + 60);
-            g.DrawString("Referencia:", fBody, sb, 10, SPACE + 90);
-            g.DrawString(Referencia, fBody1, sb, 120, SPACE + 90);
-
-            g.DrawString("ID Compra:", fBody, sb, 10, SPACE + 120);
-            g.DrawString(IDCompra, fBody1, sb, 120, SPACE + 120);
-
-            g.DrawString("Cédula:", fBody, sb, 10, SPACE + 150);
-            g.DrawString(Cedula, fBody1, sb, 120, SPACE + 150);
-            g.DrawString("Nombre:", fBody, sb, 10, SPACE + 170);
-            g.DrawString(Nombre, fBody1, sb, 120, SPACE + 170);
+            int increment = SPACE;
+           // g.DrawImage(Image.FromFile(Logo), 2, 2);
+            g.DrawString("NIT " + Nit, fBody, sb, 70, 125);
+            g.DrawString("Trámite:", fBody, sb, 10, increment);
+            g.DrawString(Tramite, fBody1, sb, 120, increment);
+            increment += 30;
+            g.DrawString("Estado:", fBody, sb, 10, increment);
+            g.DrawString(Estado, fBody1, sb, 120, increment);
+            increment += 30;
+            g.DrawString("Fecha de pago:", fBody, sb, 10, increment);
+            g.DrawString(FechaPago.ToString(), fBody1, sb, 120, increment);
+            increment += 30;
+            g.DrawString("Referencia:", fBody, sb, 10, increment);
+            g.DrawString(Referencia, fBody1, sb, 120, increment);
+            increment += 30;
+            g.DrawString("ID Compra:", fBody, sb, 10, increment);
+            g.DrawString(IDCompra, fBody1, sb, 120, increment);
+            increment += 30;
+            g.DrawString("Cédula:", fBody, sb, 10, increment);
+            g.DrawString(Cedula, fBody1, sb, 120, increment);
+            increment += 30;
+            g.DrawString("Nombre:", fBody, sb, 10, increment);
+            g.DrawString(Nombre, fBody1, sb, 120, increment);
+            increment += 30;
+            g.DrawString("Teléfono:", fBody, sb, 10, increment);
+            g.DrawString(Telefono, fBody1, sb, 120, increment);
+            increment += 30;
+            //g.DrawString("Correo:", fBody, sb, 10, increment);
+            //g.DrawString(Correo, fBody1, sb, 120, increment);
+            //increment += 30;
             if (Estado != "Rechazada")
             {
-                g.DrawString("Total:", fBody, sb, 10, SPACE + 190);
-                g.DrawString(Valor.ToString(), fBody1, sb, 120, SPACE + 190);
+                g.DrawString("Total:", fBody, sb, 10, increment);
+                g.DrawString(Valor.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
+                increment += 30;
             }
             else
             {
-                g.DrawString("Devolución:", fBody, sb, 10, SPACE + 190);
-                g.DrawString(ValorDevuelto.ToString(), fBody1, sb, 120, SPACE + 190);
+                g.DrawString("Devolución:", fBody, sb, 10, increment);
+                g.DrawString(ValorDevuelto.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
+                increment += 40;
             }
 
 
-            g.DrawString("Su transacciòn se ha realizado exitosamente", fBody1, sb, 50, SPACE + 230);
-            g.DrawString("E-city software", fBody1, sb, 112, SPACE + 250);
+            g.DrawString("Su transacción se ha realizado exitosamente", fBody1, sb, 50, increment);
+            increment += 30;
+            g.DrawString("E-city software", fBody1, sb, 112, increment);
         }
 
         public static string GetConfiguration(string key)

@@ -51,7 +51,7 @@ namespace WPCamaraComercio.Views
         private void Redirect()
         {
             AssingProperties();
-            //CreateTransaction();
+            CreateTransaction();
 
             Utilities.ResetTimer();
             navigationService.NavigationTo("FrmPayment");

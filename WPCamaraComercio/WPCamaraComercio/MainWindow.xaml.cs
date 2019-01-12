@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WPCamaraComercio.Service;
 using System.Configuration;
+using WPCamaraComercio.Classes;
 
 namespace WPCamaraComercio
 {
@@ -36,6 +37,7 @@ namespace WPCamaraComercio
         public MainWindow()
         {
             InitializeComponent();
+            //CamaraComercio.Print("");
             navigationService = new NavigationService(this);
             //Initialize Image control, Image directory path and Image timer.
             IntervalTimer = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalTime"]);

@@ -80,7 +80,7 @@ namespace WPCamaraComercio.Classes
                 datos.TipoComprador = Utilities.PayerData.TypeBuyer;
                 datos.TipoIdentificacionComprador = Utilities.PayerData.TypeIdBuyer;
                 datos.ValorCompra = decimal.Parse(Utilities.ValueToPay.ToString());
-                //datos.Certificados = Utilities.ListCertificates.ToArray();
+                datos.Certificados = Utilities.ListCertificates.ToArray();
 
                 var task = service.SendPayInformation(datos);
                 if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
@@ -228,7 +228,7 @@ namespace WPCamaraComercio.Classes
                     nombreArchivo.tpcm,
                     Delimitador,
                     nombreArchivo.Copia);
-                DirectoryFile = Utilities.GetConfiguration("DirectoryFile");
+                DirectoryFile = "C:\\CertificadosElectronicos";
                 utilities.FillLogError(PatchFile, "Contenido de PatchFile");
                 WebClient myWebClient = new WebClient();
                 bytePDF = myWebClient.DownloadData(PatchFile);
@@ -263,8 +263,9 @@ namespace WPCamaraComercio.Classes
             return path;
         }
 
-        private void Print(string rutaArchivo)
+        public void Print(string rutaArchivo)
         {
+            //rutaArchivo = "C:\\CertificadosElectronicos\\248979-10-317282-0-12-1.pdf";
             try
             {
                 using (GhostscriptProcessor processor = new GhostscriptProcessor(GhostscriptVersionInfo.GetLastInstalledVersion(), true))
@@ -299,6 +300,8 @@ namespace WPCamaraComercio.Classes
         public void ImprimirComprobante(string Estado)
         {
             print.Cedula = Utilities.PayerData.BuyerIdentification;
+            print.Telefono = Utilities.PayerData.Phone;
+
             print.FechaPago = DateTime.Now;
             print.Nombre = Utilities.PayerData.FullNameBuyer;
             print.Referencia = Utilities.IDTransactionDB.ToString();
