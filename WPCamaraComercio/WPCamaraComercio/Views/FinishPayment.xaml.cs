@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.WCFPayPad;
@@ -29,11 +19,15 @@ namespace WPCamaraComercio.Views
         NavigationService navigationService;
         private int count = 0;
         private LogErrorGeneral logError;
+        decimal enterValue = 0;
+        decimal returnValue = 0;
         #endregion
 
-        public FinishPayment()
+        public FinishPayment(decimal _enterValue, decimal _returnValue)
         {
             InitializeComponent();
+            this.enterValue = _enterValue;
+            this.returnValue = _returnValue;
             logError = new LogErrorGeneral();
             navigationService = new NavigationService(this);
         }
@@ -56,22 +50,23 @@ namespace WPCamaraComercio.Views
                 {
                     if (antecedent.Result)
                     {
-                        ApproveTrans(CLSEstadoEstadoTransaction.Aprobada);
+                        utilities.UpdateTransaction(enterValue, 2, returnValue, Utilities.BuyID);
                         camaraComercio.ImprimirComprobante("Aprobada");
-                        utilities.RestartApplication();
+                        Utilities.GoToInicial();
                     }
                     else
                     {
-                        ApproveTrans(CLSEstadoEstadoTransaction.Cancelada);
-                        Dispatcher.BeginInvoke((Action)delegate {
+                        utilities.UpdateTransaction(enterValue, 3, returnValue, Utilities.BuyID);
+                        Dispatcher.BeginInvoke((Action)delegate
+                        {
                             FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
                             "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
                         "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
                             modal.ShowDialog();
-                        if (modal.DialogResult.Value)
-                        {
-                            navigationService.NavigationTo("FrmCancelledPayment");
-                        }
+                            if (modal.DialogResult.Value)
+                            {
+                                navigationService.NavigationTo("FrmCancelledPayment");
+                            }
                         });
                     }
                 }
@@ -82,41 +77,5 @@ namespace WPCamaraComercio.Views
             });
             return t;
         }
-
-        private void ApproveTrans(CLSEstadoEstadoTransaction estate)
-        {
-            try
-            {
-                var state = utilities.UpdateTransaction(estate);
-                if (!state)
-                {
-                    if (count < 2)
-                    {
-                        count++;
-                        ApproveTrans(estate);
-                    }
-                    else
-                    {
-                        string json = Utilities.CreateJSON();
-                        logError.Description = json + "\nNo fue posible actualizar esta transacción a aprobada";
-                        logError.State = "Iniciada";
-                        Utilities.SaveLogTransactions(logError, "LogTransacciones\\Iniciadas");
-                    }
-                }
-                else
-                {
-                    string json = Utilities.CreateJSON();
-                    logError.Description = json + "\nTransacción Exitosa";
-                    logError.State = "Aprobada";
-                    Utilities.SaveLogTransactions(logError, "LogTransacciones\\Aprobadas");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
     }
 }

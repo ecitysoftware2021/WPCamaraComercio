@@ -13,6 +13,9 @@ using System.Windows.Threading;
 using WPCamaraComercio.Service;
 using System.Configuration;
 using WPCamaraComercio.Classes;
+using WPCamaraComercio.Objects;
+using Newtonsoft.Json;
+using WPCamaraComercio.Views;
 
 namespace WPCamaraComercio
 {
@@ -21,127 +24,90 @@ namespace WPCamaraComercio
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DispatcherTimer timerImageChange;
-        private Image[] ImageControls;
-        private List<ImageSource> Images = new List<ImageSource>();
-        private static string[] ValidImageExtensions = new[] { ".png", ".jpg", ".jpeg", ".bmp", ".gif" };
-        private static string[] TransitionEffects = new[] { "Fade" };
-        private string TransitionType;
-        private string strImagePath = string.Empty;
-        private int CurrentSourceIndex;
-        private int CurrentCtrlIndex;
-        private int EffectIndex = 0;
-        private int IntervalTimer = 1;
-        NavigationService navigationService;
+        WCFServices services;
+        Api api;
+        bool state;
 
         public MainWindow()
         {
             InitializeComponent();
-            //CamaraComercio.Print("");
-            navigationService = new NavigationService(this);
-            //Initialize Image control, Image directory path and Image timer.
-            IntervalTimer = Convert.ToInt32(ConfigurationManager.AppSettings["IntervalTime"]);
-            strImagePath = ConfigurationManager.AppSettings["ImagePath"];
-            ImageControls = new[] { myImage, myImage2 };
-
-            LoadImageFolder(strImagePath);
-
-            timerImageChange = new DispatcherTimer();
-            timerImageChange.Interval = new TimeSpan(0, 0, IntervalTimer);
-            timerImageChange.Tick += new EventHandler(timerImageChange_Tick);
-            //Task.Run(() =>
-            //{
-            //    GetScreen();
-            //});
-        }
-
-        private void LoadImageFolder(string folder)
-        {
-            ErrorText.Visibility = Visibility.Collapsed;
-            var sw = System.Diagnostics.Stopwatch.StartNew();
-            if (!System.IO.Path.IsPathRooted(folder))
-                folder = System.IO.Path.Combine(Environment.CurrentDirectory, folder);
-            if (!Directory.Exists(folder))
-            {
-                ErrorText.Text = "The specified folder does not exist: " + Environment.NewLine + folder;
-                ErrorText.Visibility = Visibility.Visible;
-                return;
-            }
-            Random r = new Random();
-            var sources = from file in new DirectoryInfo(folder).GetFiles().AsParallel()
-                          where ValidImageExtensions.Contains(file.Extension, StringComparer.InvariantCultureIgnoreCase)
-                          orderby r.Next()
-                          select CreateImageSource(file.FullName, true);
-            Images.Clear();
-            Images.AddRange(sources);
-            sw.Stop();
-            Console.WriteLine("Total time to load {0} images: {1}ms", Images.Count, sw.ElapsedMilliseconds);
-        }
-
-        private ImageSource CreateImageSource(string file, bool forcePreLoad)
-        {
-            if (forcePreLoad)
-            {
-                var src = new BitmapImage();
-                src.BeginInit();
-                src.UriSource = new Uri(file, UriKind.Absolute);
-                src.CacheOption = BitmapCacheOption.OnLoad;
-                src.EndInit();
-                src.Freeze();
-                return src;
-            }
-            else
-            {
-                var src = new BitmapImage(new Uri(file, UriKind.Absolute));
-                src.Freeze();
-                return src;
-            }
+            services = new WCFServices();
+            api = new Api();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            PlaySlideShow();
-            timerImageChange.IsEnabled = true;
+            GetToken();
         }
 
-        private void timerImageChange_Tick(object sender, EventArgs e)
-        {
-            PlaySlideShow();
-        }
-
-        private void PlaySlideShow()
+        /// <summary>
+        /// Método encargado de obtener el token necesario para que el corresponsal pueda operar, seguido de esto se consulta el estado inicial del corresponsal
+        /// para saber si se pueden realizar transacciones
+        /// </summary>
+        private async void GetToken()
         {
             try
             {
-                if (Images.Count == 0)
-                    return;
-                var oldCtrlIndex = CurrentCtrlIndex;
-                CurrentCtrlIndex = (CurrentCtrlIndex + 1) % 2;
-                CurrentSourceIndex = (CurrentSourceIndex + 1) % Images.Count;
+                state = await api.SecurityToken();
+                if (state)
+                {
+                    var response = await api.GetResponse(new ObjectsApi.RequestApi(), "InitPaypad");
+                    if (response.CodeError == 200)
+                    {
+                        DataPayPad data = JsonConvert.DeserializeObject<DataPayPad>(response.Data.ToString());
+                        //Utilities.ImagesSlider = JsonConvert.DeserializeObject<List<string>>(data.ListImages.ToString());
+                        //Utilities.CountSlider = 1;
 
-                Image imgFadeOut = ImageControls[oldCtrlIndex];
-                Image imgFadeIn = ImageControls[CurrentCtrlIndex];
-                ImageSource newSource = Images[CurrentSourceIndex];
-                imgFadeIn.Source = newSource;
+                        if (data.StateAceptance || data.StateDispenser)
+                        {
+                            Utilities.dataPaypad = data;
+                            //await Task.Run(() =>
+                            //{
+                            //    ConsultImagesSlider();
+                            //});
+                            Utilities util = new Utilities(1);
+                            Utilities.control.callbackToken = isSucces =>
+                            {
+                                //Dispatcher.BeginInvoke((Action)delegate
+                                //{
+                                //    FrmMain main = new FrmMain();
+                                //    main.Show();
+                                //    Close();
+                                //});
+                                Utilities.GoToInicial();
 
-                TransitionType = TransitionEffects[EffectIndex].ToString();
-
-                Storyboard StboardFadeOut = (Resources[string.Format("{0}Out", TransitionType.ToString())] as Storyboard).Clone();
-                StboardFadeOut.Begin(imgFadeOut);
-                Storyboard StboardFadeIn = Resources[string.Format("{0}In", TransitionType.ToString())] as Storyboard;
-                StboardFadeIn.Begin(imgFadeIn);
+                            };
+                            Utilities.control.Start();
+                        }
+                        else
+                        {
+                            ShowModalError();
+                        }
+                    }
+                    else
+                    {
+                        ShowModalError();
+                    }
+                }
+                else
+                {
+                    ShowModalError();
+                }
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                ShowModalError();
+            }
         }
 
-        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ShowModalError()
         {
-            navigationService.NavigationTo("ConsultWindow");
-        }
-
-        private void GetScreen()
-        {
-            //ControlPantalla.ConsultarControlPantalla();
+            FrmModal modal = new FrmModal(string.Concat("Lo sentimos,", Environment.NewLine, "el cajero no se encuentra disponible."), this);
+            modal.ShowDialog();
+            if (modal.DialogResult.HasValue)
+            {
+                Utilities.RestartApp();
+            }
         }
     }
 }

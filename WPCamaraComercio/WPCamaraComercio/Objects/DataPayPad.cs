@@ -8,8 +8,8 @@ namespace WPCamaraComercio.Objects
 {
     public class DataPayPad
     {
-        public bool stateAceptance { get; set; }
-        public bool stateDispenser { get; set; }
+        public bool StateAceptance { get; set; }
+        public bool StateDispenser { get; set; }
         public string Message { get; set; }
         public object ListImages { get; set; }
     }

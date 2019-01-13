@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
+using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Service
 {
@@ -79,6 +80,41 @@ namespace WPCamaraComercio.Service
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+        public async Task<ResponseApi> GetResponse<T>(T model, string controller)
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(model);
+                var content = new StringContent(request, Encoding.UTF8, "Application/json");
+                client = new HttpClient();
+                client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress"));
+                var url = Utilities.GetConfiguration(controller);
+                var authentication = Encoding.ASCII.GetBytes(Utilities.TOKEN);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Utilities.TOKEN);
+                var response = await client.PostAsync(url, content);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new ResponseApi
+                    {
+                        CodeError = 500,
+                        Message = response.ReasonPhrase
+                    };
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var responseApi = JsonConvert.DeserializeObject<ResponseApi>(result);
+                return responseApi;
+            }
+            catch (Exception ex)
+            {
+                return new ResponseApi
+                {
+                    CodeError = 100,
+                    Message = ex.Message
+                };
             }
         }
 

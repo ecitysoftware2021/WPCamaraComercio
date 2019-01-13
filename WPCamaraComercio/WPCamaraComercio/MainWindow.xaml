@@ -7,44 +7,58 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
         Title="MainWindow"    
-       WindowStyle="None"
-        Loaded="Window_Loaded"
+        WindowStyle="None"
         WindowState="Maximized"
-        Height="2064.095" 
-        Width="1250.599">
-    <Window.Resources>
-        <!-- Start Fade -->
-        <Storyboard x:Key="FadeIn" >
-            <DoubleAnimation Duration="0:0:.25" Storyboard.TargetProperty="Opacity" From="0" To="1" />
-        </Storyboard>
-        <Storyboard x:Key="FadeOut">
-            <DoubleAnimation Duration="0:0:.5" Storyboard.TargetProperty="Opacity" To="0" />
-        </Storyboard>
-        <!-- End Fade -->
-    </Window.Resources>
+        Height="2064.095"
+        Width="1250.599"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
     <Grid>
-        <Canvas  Height="2064.095" Width="1250.599" MouseDown="Canvas_MouseDown">
-            <Image x:Name="myImage" Stretch="Fill" 
-               RenderTransformOrigin="0,0" 
-               Height="2000.095" 
-               Width="1080">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <TranslateTransform X="0" Y="0" />
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <Image x:Name="myImage2" Stretch="Fill"
-               RenderTransformOrigin="0,0" 
-               Height="2000.095" 
-               Width="1080">
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <TranslateTransform X="0" Y="0" />
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
-            <TextBlock TextWrapping="Wrap" x:Name="ErrorText" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" Visibility="Collapsed" Text="The specified folder does not exist" FontSize="20" />
-        </Canvas>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/Backgrounds/fondo2.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="350" />
+            <RowDefinition Height="700" />
+            <RowDefinition Height="400"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <TextBlock Text="CONFIGURACIÓN DEL DISPOSITIVO"
+                       FontSize="60"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="10,0,10,0"
+                       Foreground="Black"
+                       FontWeight="Bold"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <TextBlock Text="Espera mientras se configura el dispositivo para iniciar"
+                       FontSize="60"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       Margin="10,100,10,0"
+                       Foreground="Black"
+                       FontWeight="Bold"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"
+                       Width="900"/>
+            <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/preloader.gif" 
+                   gif:ImageBehavior.AnimateInDesignMode="True"
+                   gif:ImageBehavior.AutoStart="True" 
+                    x:Name="GifLoadder" 
+                    Stretch="Fill"
+                    Margin="0,190,0,0" 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" 
+                    Width="500" 
+                    Height="300"/>
+        </Grid>
+
+        <Grid Grid.Row="3">
+
+        </Grid>
     </Grid>
 </Window>

@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
+using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Views
 {
@@ -27,6 +28,7 @@ namespace WPCamaraComercio.Views
         WCFPayPadService WCFPayPad;
         NavigationService navigationService;
         Utilities utilities;
+        Api api;
         #endregion
 
         #region LoadMethods
@@ -37,6 +39,7 @@ namespace WPCamaraComercio.Views
             WCFPayPad = new WCFPayPadService();
             navigationService = new NavigationService(this);
             utilities = new Utilities();
+            api = new Api();
             CmbTypeBuyer.SelectedIndex = 0;
             CmbIdDType.SelectedIndex = 0;
         }
@@ -51,7 +54,7 @@ namespace WPCamaraComercio.Views
         private void Redirect()
         {
             AssingProperties();
-            CreateTransaction();
+            utilities.CreateTransaction();
 
             Utilities.ResetTimer();
             navigationService.NavigationTo("FrmPayment");
@@ -108,6 +111,7 @@ namespace WPCamaraComercio.Views
                 payerData.ClientPlataform = "DISPENSADOR";
 
                 Utilities.PayerData = payerData;
+                utilities.InsertPayerData();
             }
             catch (Exception ex)
             {
@@ -116,7 +120,7 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void CreateTransaction()
+        private void CreateTransacti()
         {
             try
             {
@@ -133,6 +137,8 @@ namespace WPCamaraComercio.Views
             }
         }
 
+
+
         /// <summary>
         /// Método para validar que todos los campos estén llenos
         /// </summary>
@@ -148,7 +154,7 @@ namespace WPCamaraComercio.Views
                     if (control is TextBox)
                     {
                         TextBox textBox = (TextBox)control;
-                        
+
                         string value = textBox.Text;
                         if (value.Length < int.Parse(textBox.Tag.ToString()))
                         {
@@ -285,7 +291,7 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration); 
+        private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
         #endregion
 
         #region HeaderButtons
@@ -307,7 +313,7 @@ namespace WPCamaraComercio.Views
                 utilities.SaveLogErrorMethods("BtnExit_StylusDown", "FrmPaymentData", ex.ToString());
                 navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
-        } 
+        }
         #endregion
     }
 }

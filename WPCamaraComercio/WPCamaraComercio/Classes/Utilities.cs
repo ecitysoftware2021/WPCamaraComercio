@@ -7,15 +7,18 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Objects;
+using WPCamaraComercio.Service;
 using WPCamaraComercio.Views;
 using WPCamaraComercio.WCFCamaraComercio;
 using WPCamaraComercio.WCFPayPad;
+using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Classes
 {
@@ -39,6 +42,8 @@ namespace WPCamaraComercio.Classes
 
         public static string search { get; set; }
 
+        public static string BuyID { get; set; }
+
         public static Resultado ConsultResult = new Resultado();
 
         public static string Enrollment { get; set; }
@@ -50,6 +55,11 @@ namespace WPCamaraComercio.Classes
         public static List<MerchantDetail> ListMerchantDetail = new List<MerchantDetail>();
 
         public static List<Certificado> ListCertificates = new List<Certificado>();
+
+        internal void UpdateTransaction(object _enterValue, int v, string buyID)
+        {
+            throw new NotImplementedException();
+        }
 
         public static decimal ValueToPay { get; set; }
 
@@ -68,6 +78,7 @@ namespace WPCamaraComercio.Classes
         public static decimal DispenserVal { get; set; }
 
         public static DataPayPad dataPaypad = new DataPayPad();
+        Api api = new Api();
 
         #endregion
 
@@ -191,11 +202,11 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         public static void GoToInicial()
         {
-            
+
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
                 var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-                MainWindow main = new MainWindow();
+                FrmInitial main = new FrmInitial();
                 main.Show();
                 window.Close();
                 CloseWindows(main.Title);
@@ -360,16 +371,23 @@ namespace WPCamaraComercio.Classes
             }
         }
 
-        public void RestartApplication()
+        /// <summary>
+        /// Método usado para regresar a la pantalla principal
+        /// </summary>
+        public static void RestartApp()
         {
-            Process pc = new Process();
-            Process pn = new Process();
-            ProcessStartInfo si = new ProcessStartInfo();
-            si.FileName = Path.Combine(Directory.GetCurrentDirectory(), "WPCamaraComercio.exe");
-            pn.StartInfo = si;
-            pn.Start();
-            pc = Process.GetCurrentProcess();
-            pc.Kill();
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+            {
+                Process pc = new Process();
+                Process pn = new Process();
+                ProcessStartInfo si = new ProcessStartInfo();
+                si.FileName = Path.Combine(Directory.GetCurrentDirectory(), "WPCamaraComercio.exe");
+                pn.StartInfo = si;
+                pn.Start();
+                pc = Process.GetCurrentProcess();
+                pc.Kill();
+            }));
+            GC.Collect();
         }
 
         public void SaveLogErrorMethods(string Method, string Class, string Message)
@@ -393,37 +411,143 @@ namespace WPCamaraComercio.Classes
             }
         }
 
+        ///// <summary>
+        ///// Método encargado de actualizar la transacción a cualquiera de los estados posibles
+        ///// </summary>
+        ///// <param name="state">Id del estado al cual queremos actualizar la transacción</param>
+        ///// <returns></returns>
+        //public bool UpdateTransaction(CLSEstadoEstadoTransaction state)
+        //{
+        //    try
+        //    {
+        //        bool response = false;
+
+        //        switch (state)
+        //        {
+        //            case CLSEstadoEstadoTransaction.Iniciada://Iniciada
+        //                response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Iniciada);
+        //                break;
+        //            case CLSEstadoEstadoTransaction.Aprobada://Aprobada
+        //                response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+        //                break;
+        //            case CLSEstadoEstadoTransaction.Cancelada://Cancelada
+        //                response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+        //                break;
+        //            default://Cancelada
+        //                response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+        //                break;
+        //        }
+        //        return response;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
+
+
         /// <summary>
-        /// Método encargado de actualizar la transacción a cualquiera de los estados posibles
+        /// Método encargado de crear la transacciòn en bd y retornar el id de esta misma   
         /// </summary>
-        /// <param name="state">Id del estado al cual queremos actualizar la transacción</param>
-        /// <returns></returns>
-        public bool UpdateTransaction(CLSEstadoEstadoTransaction state)
+        /// TODO:CAMBIAR COMENTARIO
+        /// <param name="payFee">Objeto que contiene la info de la transacción</param>
+        public async void CreateTransaction()
         {
             try
             {
-                bool response = false;
-
-                switch (state)
+                Transaction Transaction = new Transaction
                 {
-                    case CLSEstadoEstadoTransaction.Iniciada://Iniciada
-                        response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Iniciada);
-                        break;
-                    case CLSEstadoEstadoTransaction.Aprobada://Aprobada
-                        response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
-                        break;
-                    case CLSEstadoEstadoTransaction.Cancelada://Cancelada
-                        response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                        break;
-                    default://Cancelada
-                        response = PayPadClient.ActualizarEstadoTransaccion(IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                        break;
+                    TOTAL_AMOUNT = ValueToPay,
+                    DATE_BEGIN = DateTime.Now,
+                    DESCRIPTION = string.Empty,
+                    TYPE_TRANSACTION_ID = 3,
+                    STATE_TRANSACTION_ID = 1,
+                };
+
+                var response = await api.GetResponse(new RequestApi
+                {
+                    Data = Transaction
+                }, "SaveTransaction");
+
+                if (response != null)
+                {
+                    if (response.CodeError == 200)
+                    {
+                        IDTransactionDB = Convert.ToInt32(response.Data);
+                    }
                 }
-                return response;
+            }
+            catch (Exception ex)
+            {
+                SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
+                //navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
+
+        public async Task<bool> UpdateTransaction(decimal Enter, int state, string BuyID, decimal Return = 0)
+        {
+            try
+            {
+
+                Transaction Transaction = new Transaction
+                {
+                    STATE_TRANSACTION_ID = state,
+                    DATE_END = DateTime.Now,
+                    DESCRIPTION = BuyID,
+                    INCOME_AMOUNT = Enter,
+                    RETURN_AMOUNT = Return,
+                    TRANSACTION_ID = IDTransactionDB
+                };
+
+                var response = await api.GetResponse(new RequestApi
+                {
+                    Data = Transaction
+                }, "UpdateTransaction");
+
+                if (response != null)
+                {
+                    if (response.CodeError == 200)
+                    {
+                        IDTransactionDB = Convert.ToInt32(response.Data);
+                        return true;
+                    }
+
+                    return false;
+                }
+
+                return false;
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public async void InsertPayerData()
+        {
+            PayerDataDB payer = new PayerDataDB
+            {
+                ADDRESS = PayerData.BuyerAddress,
+                EMAIL = PayerData.Email,
+                IDENTIFICATION = PayerData.BuyerIdentification,
+                LAST_NAME = PayerData.LastNameBuyer,
+                NAME = PayerData.FirstNameBuyer,
+                PHONE = PayerData.Phone,
+                STATE = true
+            };
+
+            var response = await api.GetResponse(new RequestApi
+            {
+                Data = payer
+            }, "SavePayer");
+
+            if (response != null)
+            {
+                if (response.CodeError == 200)
+                {
+                    //IDTransactionDB = Convert.ToInt32(response.Data);
+                }
             }
         }
         #endregion

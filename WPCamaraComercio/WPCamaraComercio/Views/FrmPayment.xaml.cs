@@ -46,6 +46,8 @@ namespace WPCamaraComercio.Views
         CamaraComercio camaraComercio;
         NavigationService navigationService;
 
+        bool isCancel = false;
+
         #endregion
 
         #region LoadMethods
@@ -91,18 +93,20 @@ namespace WPCamaraComercio.Views
             {
                 Utilities.control.StopAceptance();
                 //recorder.FinalizarGrabacion();
-                Task.Run(() =>
-                {
-                    utilities.UpdateTransaction(WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                });
+
                 if (PaymentViewModel.ValorIngresado > 0)
                 {
                     Utilities.DispenserVal = PaymentViewModel.ValorIngresado;
                     Utilities.Loading(frmLoading, true, this);
+                    isCancel = true;
                     ReturnMoney(Utilities.DispenserVal);
                 }
                 else
                 {
+                    Task.Run(() =>
+                    {
+                        utilities.UpdateTransaction(0, 3, 0, string.Empty);
+                    });
                     Utilities.GoToInicial();
                 }
             }
@@ -259,26 +263,34 @@ namespace WPCamaraComercio.Views
             {
                 //ApproveTrans();
 
-                var confirm = await camaraComercio.ConfirmarCompra();
-                if (!confirm.Equals("0"))
+                if (!isCancel)
                 {
-                    Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
-                    navigationService.NavigationTo("FinishPayment");
+                   Utilities.BuyID = await camaraComercio.ConfirmarCompra();
+                    if (!Utilities.BuyID.Equals("0"))
+                    {
+                        Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
+                        navigationService.NavigationTo("FinishPayment");
+                    }
+                    else
+                    {
+                        Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
+                        Dispatcher.BeginInvoke((Action)delegate
+                        {
+                            FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                                "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
+                            "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
+                            modal.ShowDialog();
+                            if (modal.DialogResult.Value)
+                            {
+                                navigationService.NavigationTo("FrmCancelledPayment");
+                            }
+                        });
+                    }
                 }
                 else
                 {
-                    Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
-                    utilities.UpdateTransaction(WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                    Dispatcher.BeginInvoke((Action)delegate {
-                        FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
-                            "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
-                        "Comuniquese con servicio al cliente o diríjase a las taquillas."),this);
-                        modal.ShowDialog();
-                        if (modal.DialogResult.Value)
-                        {
-                            navigationService.NavigationTo("FrmCancelledPayment");
-                        }
-                    });
+                    utilities.UpdateTransaction(PaymentViewModel.ValorIngresado, 3, PaymentViewModel.ValorSobrante, string.Empty);
+                    Utilities.GoToInicial();
                 }
             }
             catch (Exception ex)

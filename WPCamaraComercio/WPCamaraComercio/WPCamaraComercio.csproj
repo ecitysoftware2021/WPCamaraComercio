@@ -129,12 +129,14 @@
     <Compile Include="Objects\DataPayPad.cs" />
     <Compile Include="Objects\DetailCartificate.cs" />
     <Compile Include="Objects\InfoUser.cs" />
+    <Compile Include="Objects\ObjectsApi.cs" />
     <Compile Include="Objects\PayerData.cs" />
     <Compile Include="Objects\PaymentData.cs" />
     <Compile Include="Objects\Record.cs" />
     <Compile Include="Objects\RequestAuth.cs" />
     <Compile Include="Objects\RosponseAuth.cs" />
     <Compile Include="Objects\SelectedDetail.cs" />
+    <Compile Include="Objects\Transaction.cs" />
     <Compile Include="Service\Api.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Response.cs" />
@@ -150,6 +152,9 @@
     </Compile>
     <Compile Include="Views\FrmDetailCompany.xaml.cs">
       <DependentUpon>FrmDetailCompany.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmInitial.xaml.cs">
+      <DependentUpon>FrmInitial.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmLoading.xaml.cs">
       <DependentUpon>FrmLoading.xaml</DependentUpon>
@@ -209,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmDetailCompany.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmInitial.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
