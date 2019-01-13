@@ -98,12 +98,15 @@ namespace WPCamaraComercio
 
         private void ShowModalError()
         {
-            FrmModal modal = new FrmModal(string.Concat("Lo sentimos,", Environment.NewLine, "el cajero no se encuentra disponible."), this);
-            modal.ShowDialog();
-            if (modal.DialogResult.HasValue)
+            Dispatcher.BeginInvoke((Action)delegate
             {
-                Utilities.RestartApp();
-            }
+                FrmModal modal = new FrmModal(string.Concat("Lo sentimos,", Environment.NewLine, "el cajero no se encuentra disponible."), this);
+                modal.ShowDialog();
+                if (modal.DialogResult.HasValue)
+                {
+                    Utilities.RestartApp();
+                }
+            });
         }
     }
 }

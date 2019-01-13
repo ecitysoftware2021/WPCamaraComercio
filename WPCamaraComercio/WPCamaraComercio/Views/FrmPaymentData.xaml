@@ -248,6 +248,7 @@
                 Margin="0,0,0,0"
                 TextAlignment="Center"
                 FontSize="40"
+                PreviewTextInput="NumberValidationTextBox"
                 Grid.Column="2"
                 Grid.Row="5"
                 Foreground="Black"

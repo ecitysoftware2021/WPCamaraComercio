@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -119,6 +120,15 @@ namespace WPCamaraComercio.Views
                 utilities.SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
                 navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            //if (CmbTypeBuyer.SelectedIndex != 0)
+            //{
+                Regex regex = new Regex("[^0-9]+");
+                e.Handled = regex.IsMatch(e.Text);
+            //}
         }
 
         //private void CreateTransacti()
