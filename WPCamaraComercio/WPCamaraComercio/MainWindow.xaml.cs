@@ -37,7 +37,10 @@ namespace WPCamaraComercio
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            GetToken();
+            Task.Run(() =>
+            {
+                GetToken();
+            });
         }
 
         /// <summary>
@@ -68,14 +71,7 @@ namespace WPCamaraComercio
                             Utilities util = new Utilities(1);
                             Utilities.control.callbackToken = isSucces =>
                             {
-                                //Dispatcher.BeginInvoke((Action)delegate
-                                //{
-                                //    FrmMain main = new FrmMain();
-                                //    main.Show();
-                                //    Close();
-                                //});
                                 Utilities.GoToInicial();
-
                             };
                             Utilities.control.Start();
                         }

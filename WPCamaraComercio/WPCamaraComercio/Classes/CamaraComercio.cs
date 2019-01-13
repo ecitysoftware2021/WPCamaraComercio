@@ -265,7 +265,7 @@ namespace WPCamaraComercio.Classes
 
         public void Print(string rutaArchivo)
         {
-            //rutaArchivo = "C:\\CertificadosElectronicos\\248979-10-317282-0-12-1.pdf";
+            rutaArchivo = "C:\\CertificadosElectronicos\\248979-10-317282-0-12-1.pdf";
             try
             {
                 using (GhostscriptProcessor processor = new GhostscriptProcessor(GhostscriptVersionInfo.GetLastInstalledVersion(), true))

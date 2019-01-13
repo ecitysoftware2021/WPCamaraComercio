@@ -49,9 +49,9 @@ namespace WPCamaraComercio.Service
                         frmDetailCompany.Show();
                         break;
                     case "FinishPayment":
-                        FinishPayment frmInformationCompany = new FinishPayment();
-                        frmInformationCompany.Show();
-                        break;
+                        //FinishPayment frmInformationCompany = new FinishPayment();
+                        //frmInformationCompany.Show();
+                        //break;
                     case "FrmPayment":
                         FrmPayment frmPayment = new FrmPayment();
                         frmPayment.Show();

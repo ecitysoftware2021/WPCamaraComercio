@@ -54,7 +54,7 @@ namespace WPCamaraComercio.Views
         private void Redirect()
         {
             AssingProperties();
-            utilities.CreateTransaction();
+           
 
             Utilities.ResetTimer();
             navigationService.NavigationTo("FrmPayment");
@@ -112,6 +112,7 @@ namespace WPCamaraComercio.Views
 
                 Utilities.PayerData = payerData;
                 utilities.InsertPayerData();
+                utilities.CreateTransaction();
             }
             catch (Exception ex)
             {
@@ -120,22 +121,22 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void CreateTransacti()
-        {
-            try
-            {
-                transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
-                transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite")); ;
-                transaction.Referencia = "0";
-                transaction.Total = Utilities.ValueToPay;
-                Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
-            }
-            catch (Exception ex)
-            {
-                utilities.SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
-                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
-            }
-        }
+        //private void CreateTransacti()
+        //{
+        //    try
+        //    {
+        //        transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
+        //        transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite")); ;
+        //        transaction.Referencia = "0";
+        //        transaction.Total = Utilities.ValueToPay;
+        //        Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        utilities.SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
+        //        navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+        //    }
+        //}
 
 
 

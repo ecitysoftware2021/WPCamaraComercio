@@ -50,13 +50,13 @@ namespace WPCamaraComercio.Views
                 {
                     if (antecedent.Result)
                     {
-                        utilities.UpdateTransaction(enterValue, 2, returnValue, Utilities.BuyID);
+                        utilities.UpdateTransaction(enterValue, 2, Utilities.BuyID, returnValue);
                         camaraComercio.ImprimirComprobante("Aprobada");
                         Utilities.GoToInicial();
                     }
                     else
                     {
-                        utilities.UpdateTransaction(enterValue, 3, returnValue, Utilities.BuyID);
+                        utilities.UpdateTransaction(enterValue, 3, Utilities.BuyID, returnValue);
                         Dispatcher.BeginInvoke((Action)delegate
                         {
                             FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,

@@ -105,7 +105,7 @@ namespace WPCamaraComercio.Views
                 {
                     Task.Run(() =>
                     {
-                        utilities.UpdateTransaction(0, 3, 0, string.Empty);
+                        utilities.UpdateTransaction(0, 3, string.Empty,0);
                     });
                     Utilities.GoToInicial();
                 }
@@ -269,7 +269,12 @@ namespace WPCamaraComercio.Views
                     if (!Utilities.BuyID.Equals("0"))
                     {
                         Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
-                        navigationService.NavigationTo("FinishPayment");
+                        //navigationService.NavigationTo("FinishPayment");
+                        Dispatcher.BeginInvoke((Action)delegate {
+                        FinishPayment frmInformationCompany = new FinishPayment(PaymentViewModel.ValorIngresado, PaymentViewModel.ValorSobrante);
+                        frmInformationCompany.Show();
+                        this.Close();
+                        });
                     }
                     else
                     {
@@ -289,7 +294,7 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
-                    utilities.UpdateTransaction(PaymentViewModel.ValorIngresado, 3, PaymentViewModel.ValorSobrante, string.Empty);
+                    utilities.UpdateTransaction(PaymentViewModel.ValorIngresado, 3, string.Empty, PaymentViewModel.ValorSobrante);
                     Utilities.GoToInicial();
                 }
             }

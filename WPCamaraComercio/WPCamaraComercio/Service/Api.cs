@@ -46,7 +46,7 @@ namespace WPCamaraComercio.Service
                 var content = new StringContent(request, Encoding.UTF8, "Application/json");
                 client = new HttpClient();
                 client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress"));
-                var url = Utilities.GetConfiguration("");
+                var url = Utilities.GetConfiguration("GetToken");
                 var authentication = Encoding.ASCII.GetBytes(User4Told + ":" + Password4Told);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(authentication));
                 var response = await client.PostAsync(url, content);
@@ -64,8 +64,8 @@ namespace WPCamaraComercio.Service
                         if (requestresponse.CodeError == 200)
                         {
                             Utilities.TOKEN = requestresponse.Token;
-                            Utilities.CorrespondentId = (int)requestresponse.User;
-                            Utilities.Session = (int)requestresponse.Session;
+                            Utilities.CorrespondentId = Convert.ToInt16(requestresponse.User);
+                            Utilities.Session = Convert.ToInt16(requestresponse.Session);
                             return true;
                         }
                         else
@@ -120,7 +120,8 @@ namespace WPCamaraComercio.Service
 
         private void ReadKeys()
         {
-            string[] text = File.ReadAllLines(@"C:\Users\Sebastian Betancur\Desktop\keys.txt");
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string[] text = File.ReadAllLines(string.Format(@"{0}\keys.txt", path));
             if (text.Length > 0)
             {
                 string[] line1 = text[0].Split(';');
@@ -130,7 +131,7 @@ namespace WPCamaraComercio.Service
                 string[] line2 = text[1].Split(';');
                 requestAuth = new RequestAuth
                 {
-                    User = line2[0].Split(':')[1],
+                    UserName = line2[0].Split(':')[1],
                     Password = line2[1].Split(':')[1],
                     Type = int.Parse(line2[2].Split(':')[1])
                 };
