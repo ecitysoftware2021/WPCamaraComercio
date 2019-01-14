@@ -240,7 +240,9 @@ namespace WPCamaraComercio.Views
                     quantity = 0;
                 }
 
-                var stablish = selectedDetail.Where(d => d.EstablishCertificate.EstablishEnrollment == establishCertificate.EstablishEnrollment).FirstOrDefault();
+                var stablish = selectedDetail.Where(
+                    d => d.EstablishCertificate.GenerationCode == establishCertificate.GenerationCode 
+                    && d.EstablishCertificate.EstablishEnrollment == establishCertificate.EstablishEnrollment).FirstOrDefault();
                 if (stablish == null)
                 {
                     if (quantity != 0)
@@ -329,6 +331,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+                Utilities.ListMerchantDetail.Clear();
                 Utilities.ResetTimer();
                 Utilities.GoToInicial();
             }
@@ -341,6 +344,7 @@ namespace WPCamaraComercio.Views
 
         private void BtnBack_StylusDown(object sender, StylusDownEventArgs e)
         {
+            Utilities.ListMerchantDetail.Clear();
             Utilities.ResetTimer();
             navigationService.NavigationTo("ConsultWindow");
         } 

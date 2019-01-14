@@ -138,6 +138,7 @@ namespace WPCamaraComercio.Views
                     lv_Files.SelectedItem = null;
                     if (modal.DialogResult.Value)
                     {
+                        Utilities.ResetTimer();
                         navigationService.NavigationTo("FrmDetailCompany");
                     }
                 }

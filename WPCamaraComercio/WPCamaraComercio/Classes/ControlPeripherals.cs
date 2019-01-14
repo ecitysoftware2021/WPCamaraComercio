@@ -445,6 +445,7 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         private void ConfigurateDispenser()
         {
+            dispenserValue = 8;
             try
             {
                 if (dispenserValue > 0)
