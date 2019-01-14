@@ -399,8 +399,8 @@ namespace WPCamaraComercio.Classes
                     Message = Message,
                     NameClass = Class,
                     NameMethod = Method,
-                    IDCorresponsal = Convert.ToInt32(GetConfiguration("8")),
-                    Fecha = DateTime.Now
+                    IDCorresponsal = Convert.ToInt32(GetConfiguration("IDCorresponsal")),
+                    Fecha = DateTime.Now.ToString("yyyy’-‘MM’-‘dd’")
                 };
 
                 error.CreateLogsMethods(error);

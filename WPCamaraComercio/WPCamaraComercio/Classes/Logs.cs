@@ -99,19 +99,19 @@ namespace WPCamaraComercio.Classes
         public string NameClass { get; set; }
         public string NameMethod { get; set; }
         public string Message { get; set; }
-        public DateTime Fecha { get; set; }
+        public string Fecha { get; set; }
         public int IDCorresponsal { get; set; }
 
         public void CreateLogsMethods(LogErrorMethods log)
         {
             var json = JsonConvert.SerializeObject(log);
-            string fullPath = string.Format(@"C:\\LogsMetodos");
+            string fullPath = string.Format(@"C:\LogsMetodos\");
             if (!Directory.Exists(fullPath))
             {
                 Directory.CreateDirectory(fullPath);
             }
 
-            string path2 = string.Concat(log.Fecha.ToString(), "-", log.NameMethod, ".json");
+            string path2 = string.Concat(log.Fecha, "-", log.NameMethod, ".json");
             var nameFile = Path.Combine(fullPath, path2);
             if (!File.Exists(nameFile))
             {

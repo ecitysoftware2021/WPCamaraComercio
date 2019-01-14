@@ -103,7 +103,7 @@ namespace WPCamaraComercio.Views
                 payerData.SecondNameBuyer = CmbTypeBuyer.SelectedIndex != 1 ? TbxData2.Text : "";
                 payerData.TypeBuyer = CmbTypeBuyer.Text;
                 payerData.TypeIdBuyer = ((KeyValuePair<string, string>)CmbIdDType.SelectedItem).Key;
-                payerData.Phone = CmbTypeBuyer.SelectedIndex == 1 ? TbxData3.Text : TbxData4.Text;
+                payerData.Phone = CmbTypeBuyer.SelectedIndex == 1 ? TbxData3dos.Text : TbxData4.Text;
                 payerData.Email = string.Empty;
                 payerData.CodeCountryBuyer = int.Parse(datosPais[0].Replace("( ", ""));
                 payerData.CodeDepartmentBuyer = int.Parse(datosPais[1]);
@@ -158,7 +158,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                bool flag = false;
+                bool flag = true;
                 //Se recorren todos los controles del grid contenedor en busca de que esten llenos los necesarios
                 foreach (var control in grdPaymentData.Children)
                 {
@@ -169,18 +169,12 @@ namespace WPCamaraComercio.Views
                         string value = textBox.Text;
                         if (value.Length < int.Parse(textBox.Tag.ToString()))
                         {
-                            if (textBox.Name == "TbxData4" && textBox.Visibility == Visibility.Hidden)
+                            if (textBox.IsVisible)
                             {
-                                flag = true;
-                            }
-                            else
-                            {
-                                ControlMessageError(textBox.Name, true);
                                 flag = false;
+                                ControlMessageError(textBox.Name, true);
                             }
                         }
-                        else
-                            flag = true;
                     }
                 }
                 return flag;
@@ -272,8 +266,11 @@ namespace WPCamaraComercio.Views
                     data.Data2 = "Segundo Nombre";
                     data.Data3 = "Primer Apellido";
                     data.Data4 = "Teléfono";
+
                     TxbData4.Visibility = Visibility.Visible;
                     TbxData4.Visibility = Visibility.Visible;
+                    TbxData3dos.Visibility = Visibility.Hidden;
+                    TbxData3.Visibility = Visibility.Visible;
 
                     grdPaymentData.DataContext = data;
 
@@ -286,8 +283,11 @@ namespace WPCamaraComercio.Views
                     data.Data2 = "Dirección";
                     data.Data3 = "Teléfono";
                     data.Data4 = "";
+
                     TxbData4.Visibility = Visibility.Hidden;
                     TbxData4.Visibility = Visibility.Hidden;
+                    TbxData3dos.Visibility = Visibility.Visible;
+                    TbxData3.Visibility = Visibility.Hidden;
 
                     grdPaymentData.DataContext = data;
 
