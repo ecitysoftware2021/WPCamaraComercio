@@ -7,7 +7,6 @@ using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.ViewModels;
-using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.Views
 {
