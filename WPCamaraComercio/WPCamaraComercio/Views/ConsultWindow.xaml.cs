@@ -63,7 +63,7 @@ namespace WPCamaraComercio.Views
                     {
                         if (!stateConsult)
                         {
-                            Utilities.OpenModal("No se encontraron resultados para la busqueda", this);
+                            Utilities.OpenModal("No se encontraron resultados para la búsqueda", this);
                             BtnConsultar.IsEnabled = true;
                         }
                         else

@@ -135,7 +135,7 @@ namespace WPCamaraComercio.Views
                         TextBox textBox = (TextBox)control;
 
                         string value = textBox.Text;
-                        if (value.Length < int.Parse(textBox.Tag.ToString()))
+                        if (value.Length < int.Parse(textBox.Tag.ToString()) || value.Length > textBox.MaxLength)
                         {
                             if (textBox.IsVisible)
                             {

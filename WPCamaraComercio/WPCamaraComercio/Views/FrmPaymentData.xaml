@@ -147,7 +147,7 @@
                    FontWeight="Bold"   
                    Foreground="#FF003F6B">
                 <Run Foreground="Red" Text="*"/>
-                <Run Foreground="Black" Text="     VER ↧ / OCULTAR ↥"/>
+                <Run Foreground="Black" Text="Tipo de Identificación"/>
             </TextBlock>
             <TextBlock 
                 HorizontalAlignment="Left"
@@ -171,7 +171,8 @@
                    TextAlignment="Center"
                    FontSize="40"
                    Foreground="Black"
-                   Width="500"
+                   Width="500" 
+                   MaxLength="15"
                    Tag="6"
                    TextWrapping="Wrap"
                    k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="true"
@@ -198,6 +199,7 @@
                 Grid.Column="2"
                 Grid.Row="3"
                 Tag="2"
+                MaxLength="20"
                 Foreground="Black"
                 Width="500"
                 TextWrapping="Wrap"
@@ -223,6 +225,7 @@
                 FontSize="40"
                 Grid.Column="2"
                 Grid.Row="4"
+                MaxLength="15"
                 Tag="0"
                 Foreground="Black"
                 Width="500"
@@ -253,6 +256,7 @@
                 Grid.Row="5"
                 Foreground="Black"
                 Width="500"
+                MaxLength="15"
                 Tag="3"
                 TextWrapping="Wrap"
                 k:TouchScreenKeyboard.TouchScreenKeyboard="true"
@@ -268,6 +272,7 @@
                 Grid.Row="5"
                 Foreground="Black"
                 Width="500"
+                MaxLength="15"
                 Tag="3"
                 TextWrapping="Wrap"
                 Visibility="Hidden"
@@ -296,6 +301,7 @@
                 Grid.Row="6"
                 Foreground="Black"
                 Width="500"
+                MaxLength="15"
                 Tag="7"
                 TextWrapping="Wrap"
                 k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="true"

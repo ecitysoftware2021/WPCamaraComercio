@@ -29,6 +29,7 @@ namespace WPCamaraComercio.Views
         List<Certificado> ListCertificates;
         decimal valueToPay = 0;
         Utilities utilities;
+        int expanderControler = 0;
         #endregion
 
         #region LoadMethods
@@ -218,14 +219,23 @@ namespace WPCamaraComercio.Views
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
-            // ... Set Window Title to Expander Header value.
+            expanderControler++;
+            TbQuantity.Visibility = Visibility.Visible;
+            TbAmount.Visibility = Visibility.Visible;
+
             var expander = sender as Expander;
             this.Title = expander.Header.ToString();
         }
 
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
         {
-            // ... Change Window Title.
+            expanderControler--;
+            if (expanderControler==0)
+            {
+                TbQuantity.Visibility = Visibility.Hidden;
+                TbAmount.Visibility = Visibility.Hidden;
+            }
+            
             var expander = sender as Expander;
             this.Title = expander.Header.ToString();
         }

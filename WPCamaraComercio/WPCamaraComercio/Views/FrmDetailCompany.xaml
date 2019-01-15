@@ -136,10 +136,10 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="TbVigencia"
+            <TextBlock x:Name="TbCertificate"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Margin="0,0,0,0"
+                   Margin="0,0,70,0"
                    Grid.ColumnSpan="2"
                    TextAlignment="Center"
                    TextWrapping="Wrap"
@@ -147,7 +147,7 @@
                    FontSize="30"
                    FontWeight="Bold"   
                    Foreground="#FF003F6B"/>
-            <TextBlock x:Name="TbAmountVigencia"
+            <TextBlock x:Name="TbAmountCer"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"
@@ -158,10 +158,10 @@
                 Grid.Column="2"
                 FontWeight="Bold"   
                 Foreground="#FF003F6B"/>
-            <TextBlock
+            <TextBlock x:Name="TbQuantityCer"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,0,0,0"
+                Margin="0,0,30,0"
                 TextAlignment="Center"
                 TextWrapping="Wrap"
                 Text="CANTIDAD"
@@ -224,9 +224,9 @@
                                 <TextBlock Text="{Binding CertificateName}"
                                            FontSize="30"
                                            TextWrapping="Wrap"
-                                           HorizontalAlignment="Center"                                           
+                                           HorizontalAlignment="Left"                                           
                                            VerticalAlignment="Center"
-                                           Margin="0,0,90,0"
+                                           Margin="20,0,90,0"
                                            Grid.ColumnSpan="2"
                                            />
                                 <TextBlock Text="{Binding Amount, StringFormat={}{0:C0}}"
@@ -295,12 +295,12 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="320" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="TbState"
+            <TextBlock x:Name="TbEstablish"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    Margin="0,0,0,0"
@@ -311,21 +311,23 @@
                    FontWeight="Bold"   
                    Foreground="#FF003F6B"/>
 
-            <TextBlock x:Name="TbReference"
+            <TextBlock x:Name="TbAmount"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Margin="0,0,0,0"
                    TextAlignment="Center"
                    TextWrapping="Wrap"
                    Text="VALOR"
+                   Visibility="Hidden"
                    FontSize="30"
                    Grid.Column="1"
                    FontWeight="Bold"   
                    Foreground="#FF003F6B"/>
-            <TextBlock x:Name="TbAmount"
+            <TextBlock x:Name="TbQuantity"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"
+                Visibility="Hidden"
                 TextAlignment="Center"
                 TextWrapping="Wrap"
                 Text="CANTIDAD"
@@ -333,7 +335,7 @@
                 Grid.Column="2"
                 FontWeight="Bold"   
                 Foreground="#FF003F6B"/>
-            <TextBlock x:Name="TbSelect"
+            <TextBlock x:Name="TbDetails"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Margin="0,0,0,0"
@@ -432,7 +434,7 @@
                                                    TextAlignment="Center"
                                                    TextWrapping="Wrap"
                                                    FontSize="20"
-                                                   HorizontalAlignment="Center"
+                                                   HorizontalAlignment="Left"
                                                    VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="1"
                                                    Margin="0,0,0,0"
@@ -470,6 +472,7 @@
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"                                           
                                            VerticalAlignment="Top"
+                                           Margin="80,0,0,0"
                                            Grid.Column="3"
                                            FontWeight="Bold"
                                            Foreground="#FF840000"
