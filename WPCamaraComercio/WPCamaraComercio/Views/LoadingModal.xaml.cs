@@ -23,27 +23,26 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class LoadingModal : Window
     {
+        #region Reference
         private Coincidence coincidence;
-
         private WCFServices services;
-
         private Utilities utilities;
-
         NavigationService navigationService;
+        #endregion
 
+        #region LoadMethods
         public LoadingModal(Coincidence coincidence)
         {
             InitializeComponent();
-
             this.coincidence = coincidence;
-
             this.services = new WCFServices();
             navigationService = new NavigationService(this);
 
             ConsultDetail();
-        }
+        } 
+        #endregion
 
-
+        #region Methods
         private async void ConsultDetail()
         {
             try
@@ -65,7 +64,7 @@ namespace WPCamaraComercio.Views
 
                             if (datos.certificados != null)
                             {
-                                ChangeView(1); 
+                                ChangeView(1);
                             }
                             else
                             {
@@ -107,7 +106,7 @@ namespace WPCamaraComercio.Views
                         this.GifLoadder.Visibility = Visibility.Hidden;
 
                         this.BtnCancel.Visibility = Visibility.Visible;
-                        this.BtnContinue.Visibility = Visibility.Visible; 
+                        this.BtnContinue.Visibility = Visibility.Visible;
                     }
                     else
                     {
@@ -117,7 +116,7 @@ namespace WPCamaraComercio.Views
 
                         this.BtnCancel.HorizontalAlignment = HorizontalAlignment.Center;
                         this.BtnCancel.Visibility = Visibility.Visible;
-                        
+
 
                         this.BtnContinue.Visibility = Visibility.Hidden;
                     }
@@ -128,8 +127,10 @@ namespace WPCamaraComercio.Views
             {
                 throw ex;
             }
-        }
+        } 
+        #endregion
 
+        #region Events
         private void BtnContinue_StylusDown(object sender, StylusDownEventArgs e)
         {
             this.DialogResult = true;
@@ -138,6 +139,7 @@ namespace WPCamaraComercio.Views
         private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
             this.DialogResult = false;
-        }
+        } 
+        #endregion
     }
 }

@@ -20,7 +20,9 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class FrmModalValidation : Window
     {
-        Utilities utilities;
+        #region References
+        Utilities utilities; 
+        #endregion
 
         #region "Constructor"
         public FrmModalValidation(string message)
@@ -31,6 +33,7 @@ namespace WPCamaraComercio.Views
         }
         #endregion
 
+        #region Methods
         /// <summary>
         /// Método de cancelación de la información
         /// </summary>
@@ -63,6 +66,7 @@ namespace WPCamaraComercio.Views
             {
                 //utilities.saveLogError("imgAceptar_PreviewStylusDown", "ModalValidation", ex.ToString());
             }
-        }
+        } 
+        #endregion
     }
 }

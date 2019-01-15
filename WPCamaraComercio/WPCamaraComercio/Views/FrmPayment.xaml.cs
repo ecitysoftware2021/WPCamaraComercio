@@ -87,32 +87,41 @@ namespace WPCamaraComercio.Views
 
         #region Events
 
-        private void btnCancelar_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            try
-            {
-                Utilities.control.StopAceptance();
-                //recorder.FinalizarGrabacion();
+        //private void btnCancelar_PreviewStylusDown(object sender, StylusDownEventArgs e)
+        //{
+        //    //try
+        //    //{
+        //    //    Utilities.control.StopAceptance();
+        //    //    //recorder.FinalizarGrabacion();
 
-                if (PaymentViewModel.ValorIngresado > 0)
-                {
-                    Utilities.DispenserVal = PaymentViewModel.ValorIngresado;
-                    Utilities.Loading(frmLoading, true, this);
-                    isCancel = true;
-                    ReturnMoney(Utilities.DispenserVal);
-                }
-                else
-                {
-                    Task.Run(() =>
-                    {
-                        utilities.UpdateTransaction(0, 3, string.Empty,0);
-                    });
-                    Utilities.GoToInicial();
-                }
-            }
-            catch (Exception ex)
+        //    //    if (PaymentViewModel.ValorIngresado > 0)
+        //    //    {
+        //    //        Utilities.DispenserVal = PaymentViewModel.ValorIngresado;
+        //    //        Utilities.Loading(frmLoading, true, this);
+        //    //        isCancel = true;
+        //    //        ReturnMoney(Utilities.DispenserVal);
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        Task.Run(() =>
+        //    //        {
+        //    //            utilities.UpdateTransaction(0, 3, string.Empty,0);
+        //    //        });
+        //    //        Utilities.GoToInicial();
+        //    //    }
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    ErroUpdateTrans(ex.Message);
+        //    //}
+        //}
+
+        private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            FrmModal modal = new FrmModal("Esta seguro de cancelar la transacción?", this);
+            if (modal.DialogResult.Value)
             {
-                ErroUpdateTrans(ex.Message);
+                navigationService.NavigationTo("FrmCancelledPayment");
             }
         }
 
@@ -309,13 +318,6 @@ namespace WPCamaraComercio.Views
 
         #endregion
 
-        private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
-        {
-            FrmModal modal = new FrmModal("Esta seguro de cancelar la transaccion?", this);
-            if (modal.DialogResult.Value)
-            {
-                navigationService.NavigationTo("FrmCancelledPayment");
-            }
-        }
+        
     }
 }

@@ -21,6 +21,7 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class FrmInitial : Window
     {
+        #region References
         private DispatcherTimer timerImageChange;
         private Image[] ImageControls;
         private List<ImageSource> Images = new List<ImageSource>();
@@ -33,7 +34,9 @@ namespace WPCamaraComercio.Views
         private int EffectIndex = 0;
         private int IntervalTimer = 1;
         NavigationService navigationService;
+        #endregion
 
+        #region LoadMethods
         public FrmInitial()
         {
             InitializeComponent();
@@ -49,12 +52,16 @@ namespace WPCamaraComercio.Views
             timerImageChange = new DispatcherTimer();
             timerImageChange.Interval = new TimeSpan(0, 0, IntervalTimer);
             timerImageChange.Tick += new EventHandler(timerImageChange_Tick);
-            //Task.Run(() =>
-            //{
-            //    GetScreen();
-            //});
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            PlaySlideShow();
+            timerImageChange.IsEnabled = true;
+        }
+        #endregion
+
+        #region Methods
         private void LoadImageFolder(string folder)
         {
             ErrorText.Visibility = Visibility.Collapsed;
@@ -98,12 +105,6 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            PlaySlideShow();
-            timerImageChange.IsEnabled = true;
-        }
-
         private void timerImageChange_Tick(object sender, EventArgs e)
         {
             PlaySlideShow();
@@ -137,11 +138,7 @@ namespace WPCamaraComercio.Views
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             navigationService.NavigationTo("ConsultWindow");
-        }
-
-        private void GetScreen()
-        {
-            //ControlPantalla.ConsultarControlPantalla();
-        }
+        } 
+        #endregion
     }
 }

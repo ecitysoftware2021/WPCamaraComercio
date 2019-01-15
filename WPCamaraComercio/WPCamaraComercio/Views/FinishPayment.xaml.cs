@@ -23,6 +23,7 @@ namespace WPCamaraComercio.Views
         decimal returnValue = 0;
         #endregion
 
+        #region LoadMethods
         public FinishPayment(decimal _enterValue, decimal _returnValue)
         {
             InitializeComponent();
@@ -36,46 +37,58 @@ namespace WPCamaraComercio.Views
         {
             PDFBYTE();
         }
+        #endregion
 
+        #region Methods
         public Task PDFBYTE()
         {
-            var t = Task.Run(() =>
+            try
             {
-                return camaraComercio.ListCertificadosiMPORT();
-            });
+                var t = Task.Run(() =>
+                    {
+                        return camaraComercio.ListCertificadosiMPORT();
+                    });
 
-            var c = t.ContinueWith((antecedent) =>
-            {
-                if (t.Status == TaskStatus.RanToCompletion)
+                var c = t.ContinueWith((antecedent) =>
                 {
-                    if (antecedent.Result)
+                    if (t.Status == TaskStatus.RanToCompletion)
                     {
-                        utilities.UpdateTransaction(enterValue, 2, Utilities.BuyID, returnValue);
-                        camaraComercio.ImprimirComprobante("Aprobada");
-                        Utilities.GoToInicial();
-                    }
-                    else
-                    {
-                        utilities.UpdateTransaction(enterValue, 3, Utilities.BuyID, returnValue);
-                        Dispatcher.BeginInvoke((Action)delegate
+                        if (antecedent.Result)
                         {
-                            FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
-                            "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
-                        "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
-                            modal.ShowDialog();
-                            if (modal.DialogResult.Value)
+                            utilities.UpdateTransaction(enterValue, 2, Utilities.BuyID, returnValue);
+                            camaraComercio.ImprimirComprobante("Aprobada");
+                            Utilities.GoToInicial();
+                        }
+                        else
+                        {
+                            utilities.UpdateTransaction(enterValue, 3, Utilities.BuyID, returnValue);
+                            Dispatcher.BeginInvoke((Action)delegate
                             {
-                                navigationService.NavigationTo("FrmCancelledPayment");
-                            }
-                        });
+                                FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                                        "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
+                                        "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
+                                modal.ShowDialog();
+                                if (modal.DialogResult.Value)
+                                {
+                                    navigationService.NavigationTo("FrmCancelledPayment");
+                                }
+                            });
+                        }
                     }
-                }
-                else if (t.Status == TaskStatus.Faulted)
-                {
-                    //objUtil.Exception(t.Exception.GetBaseException().Message);
-                }
-            });
-            return t;
-        }
+                    else if (t.Status == TaskStatus.Faulted)
+                    {
+                        //objUtil.Exception(t.Exception.GetBaseException().Message);
+                    }
+                });
+                return t;
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("PDFBYTE", "FinishPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+                return null;
+            }
+        } 
+        #endregion
     }
 }

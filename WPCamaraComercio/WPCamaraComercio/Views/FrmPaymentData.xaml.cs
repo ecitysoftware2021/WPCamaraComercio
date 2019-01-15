@@ -55,7 +55,6 @@ namespace WPCamaraComercio.Views
         private void Redirect()
         {
             AssingProperties();
-           
 
             Utilities.ResetTimer();
             //navigationService.NavigationTo("FrmPayment");
@@ -124,31 +123,9 @@ namespace WPCamaraComercio.Views
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            //if (CmbTypeBuyer.SelectedIndex != 0)
-            //{
-                Regex regex = new Regex("[^0-9]+");
-                e.Handled = regex.IsMatch(e.Text);
-            //}
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
-
-        //private void CreateTransacti()
-        //{
-        //    try
-        //    {
-        //        transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
-        //        transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite")); ;
-        //        transaction.Referencia = "0";
-        //        transaction.Total = Utilities.ValueToPay;
-        //        Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        utilities.SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
-        //        navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
-        //    }
-        //}
-
-
 
         /// <summary>
         /// Método para validar que todos los campos estén llenos

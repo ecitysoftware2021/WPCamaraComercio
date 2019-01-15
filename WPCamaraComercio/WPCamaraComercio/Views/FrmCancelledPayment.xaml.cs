@@ -9,15 +9,22 @@ namespace WPCamaraComercio.Views
     /// </summary>
     public partial class FrmCancelledPayment : Window
     {
-        CamaraComercio camaraComercio = new CamaraComercio();
+        #region References
+        CamaraComercio camaraComercio;
+        #endregion
+
+        #region LoadMethods
         public FrmCancelledPayment()
         {
             InitializeComponent();
+            camaraComercio = new CamaraComercio();
             lblValue.Content = Utilities.ValueToPay;
             ControlPeripherals.deliveryVal = 0;
             ReturnMoney(3000);
         }
+        #endregion
 
+        #region Methods
         /// <summary>
         /// Método que se encarga de devolver el dinero ya sea por que se canceló la transacción o por que hay valor sobrante
         /// </summary>
@@ -53,6 +60,7 @@ namespace WPCamaraComercio.Views
             {
                 throw ex;
             }
-        }
+        } 
+        #endregion
     }
 }

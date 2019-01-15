@@ -24,11 +24,6 @@ namespace WPCamaraComercio.Views
         {
             InitializeComponent();
             TxbBusinessName.Text = merchantDetail.rSocial;
-            //if (string.IsNullOrEmpty(merchantDetail.sigla))
-            //{
-            //    label12.Visible = false;
-            //}
-            //lblSigla.Text = objComerciante.sigla;
             TxbNit.Text = merchantDetail.ident.Replace(",", ".").Trim();
             TxbSocietyType.Text = merchantDetail.tSociedad;
             TxbAddress.Text = string.Concat(merchantDetail.dComercial, " - ", merchantDetail.mun);
