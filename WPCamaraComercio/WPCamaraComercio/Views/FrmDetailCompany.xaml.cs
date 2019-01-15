@@ -219,6 +219,8 @@ namespace WPCamaraComercio.Views
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
             // ... Set Window Title to Expander Header value.
+            TbQuantity.Visibility = Visibility.Visible;
+            TbAmount.Visibility = Visibility.Visible;
             var expander = sender as Expander;
             this.Title = expander.Header.ToString();
         }
@@ -226,6 +228,8 @@ namespace WPCamaraComercio.Views
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
         {
             // ... Change Window Title.
+            TbQuantity.Visibility = Visibility.Hidden;
+            TbAmount.Visibility = Visibility.Hidden;
             var expander = sender as Expander;
             this.Title = expander.Header.ToString();
         }
