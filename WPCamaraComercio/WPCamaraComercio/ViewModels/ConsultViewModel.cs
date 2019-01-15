@@ -173,19 +173,15 @@ namespace WPCamaraComercio.ViewModels
             try
             {
                 this.preload = Visibility.Visible;
-                //Task.Run(async () =>
-                //{
+
                 service = new WCFServices();
+
                 var task = service.ConsultInformation(value, type);
-                //Utilities.Loading(frmLoading, true, this);
                 if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
                 {
-                    // Service.Response response = service.ConsultInformation(value, type);
                     var response = task.Result;
                     if (response.IsSuccess)
                     {
-                        //    if (response.Result != null)
-                        //{
                         Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
 
                         if (Utilities.RespuestaConsulta.response.resultados.Count() > 0)
@@ -215,7 +211,6 @@ namespace WPCamaraComercio.ViewModels
                     }
                     else
                     {
-                        // Utilities.Loading(frmLoading, false, this);
                         Utilities.ModalError(string.Concat("Lo sentimos, ",
                             Environment.NewLine,
                             "En este momento el servicio no se encuentra disponible."));
@@ -223,7 +218,6 @@ namespace WPCamaraComercio.ViewModels
                     this.preload = Visibility.Hidden;
                     callbackSearch?.Invoke(stateConsult);
                 }
-                //});
             }
             catch (Exception ex)
             {

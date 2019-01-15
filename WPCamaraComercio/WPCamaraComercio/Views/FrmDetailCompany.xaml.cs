@@ -127,22 +127,25 @@ namespace WPCamaraComercio.Views
                         objDetail.mat = item.MatriculaEst;
                         objDetail.estado = item.EstadoEstablecimiento;
 
-                        foreach (var item2 in item.CertificadosEstablecimiento)
+                        if (item.CertificadosEstablecimiento != null)
                         {
-                            EstablishCertificate objEstablishCertificate = new EstablishCertificate();
-                            objEstablishCertificate.CertificateCost = decimal.Parse(item2.ValorCertificado);
-                            objEstablishCertificate.CertificateId = item2.IdCertificado;
-                            objEstablishCertificate.EstablishEnrollment = item2.MatriculaEstablecimiento;
-                            objEstablishCertificate.GenerationCode = item2.CodigoGeneracion;
-
-                            lstDetailEstablish.Add(new DetailEstablish
+                            foreach (var item2 in item.CertificadosEstablecimiento)
                             {
-                                Establish = item.NombreEstablecimiento,
-                                Amount = item2.ValorCertificado,
-                                Details = objDetail,
-                                Certificate = item2.NombreCertificado,
-                                EstablishCertificate = objEstablishCertificate
-                            });
+                                EstablishCertificate objEstablishCertificate = new EstablishCertificate();
+                                objEstablishCertificate.CertificateCost = decimal.Parse(item2.ValorCertificado);
+                                objEstablishCertificate.CertificateId = item2.IdCertificado;
+                                objEstablishCertificate.EstablishEnrollment = item2.MatriculaEstablecimiento;
+                                objEstablishCertificate.GenerationCode = item2.CodigoGeneracion;
+
+                                lstDetailEstablish.Add(new DetailEstablish
+                                {
+                                    Establish = item.NombreEstablecimiento,
+                                    Amount = Convert.ToDecimal(item2.ValorCertificado),
+                                    Details = objDetail,
+                                    Certificate = item2.NombreCertificado,
+                                    EstablishCertificate = objEstablishCertificate
+                                });
+                            } 
                         }
                     }
                 }

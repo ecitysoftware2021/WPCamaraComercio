@@ -147,7 +147,7 @@
                    FontWeight="Bold"   
                    Foreground="#FF003F6B">
                 <Run Foreground="Red" Text="*"/>
-                <Run Foreground="Black" Text="Tipo de Identificación"/>
+                <Run Foreground="Black" Text="     VER ↧ / OCULTAR ↥"/>
             </TextBlock>
             <TextBlock 
                 HorizontalAlignment="Left"

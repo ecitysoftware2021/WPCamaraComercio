@@ -58,7 +58,7 @@ namespace WPCamaraComercio.Views
            
 
             Utilities.ResetTimer();
-            navigationService.NavigationTo("FrmPayment");
+            //navigationService.NavigationTo("FrmPayment");
         }
 
         public void FillTypeDocument(int type)
@@ -227,6 +227,12 @@ namespace WPCamaraComercio.Views
                             navigationService.NavigatorModal("Por favor, ingrese un teléfono válido");
                         }
                         break;
+                    case "TbxData3dos":
+                        if (TbxData3dos.Visibility == Visibility.Visible)
+                        {
+                            navigationService.NavigatorModal("Por favor, ingrese un teléfono válido");
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
@@ -309,6 +315,8 @@ namespace WPCamaraComercio.Views
         private void BtnBack_StylusDown(object sender, StylusDownEventArgs e)
         {
             Utilities.ResetTimer();
+            Utilities.PayerData = null;
+            Utilities.ListCertificates.Clear();
             navigationService.NavigationTo("FrmDetailCompany");
         }
 
@@ -317,6 +325,8 @@ namespace WPCamaraComercio.Views
             try
             {
                 Utilities.ResetTimer();
+                Utilities.PayerData = null;
+                Utilities.ListCertificates.Clear();
                 Utilities.GoToInicial();
             }
             catch (Exception ex)

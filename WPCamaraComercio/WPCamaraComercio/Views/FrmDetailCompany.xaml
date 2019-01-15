@@ -301,7 +301,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="TbState"
-                   HorizontalAlignment="Center"
+                   HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    Margin="0,0,0,0"
                    TextAlignment="Center"
@@ -412,8 +412,12 @@
                                         Expanded="Expander_Expanded"
                                         Collapsed="Expander_Collapsed">
                                     <Expander.Header >
-                                        <TextBlock Foreground="#FF840000" Text="{Binding Establish}" 
-                                                   FontSize="20" FontWeight="Bold" />
+                                        <TextBlock 
+                                                   FontSize="20" 
+                                                   FontWeight="Bold" >
+                                            <Run Foreground="Black" Text="{Binding Establish}"/>
+                                            <Run Foreground="#FF840000" Text="     VER ↧ / OCULTAR ↥"/>
+                                            </TextBlock>
                                     </Expander.Header>
                                     <Grid Margin="0,0,0,0">
                                         <Grid.ColumnDefinitions>
@@ -456,7 +460,6 @@
                                             <ComboBoxItem Content="3"></ComboBoxItem>
                                             <ComboBoxItem Content="4"></ComboBoxItem>
                                             <ComboBoxItem Content="5"></ComboBoxItem>
-                                            <ComboBoxItem Content="0"></ComboBoxItem>
                                         </ComboBox>
                                     </Grid>
                                 </Expander>
@@ -468,7 +471,8 @@
                                            HorizontalAlignment="Center"                                           
                                            VerticalAlignment="Top"
                                            Grid.Column="3"
-                                           Foreground="Red"
+                                           FontWeight="Bold"
+                                           Foreground="#FF840000"
                                            StylusDown="TextBlock_StylusDown" 
                                             />
                             </Grid>

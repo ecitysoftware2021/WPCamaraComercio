@@ -29,6 +29,8 @@ namespace WPCamaraComercio.Views
 
         private Utilities utilities;
 
+        NavigationService navigationService;
+
         public LoadingModal(Coincidence coincidence)
         {
             InitializeComponent();
@@ -36,6 +38,7 @@ namespace WPCamaraComercio.Views
             this.coincidence = coincidence;
 
             this.services = new WCFServices();
+            navigationService = new NavigationService(this);
 
             ConsultDetail();
         }
@@ -58,7 +61,17 @@ namespace WPCamaraComercio.Views
 
                         if (Utilities.DetailResponse.response.resultados != null)
                         {
-                            ChangeView();
+                            var datos = Utilities.DetailResponse.response.resultados[0];
+
+                            if (datos.certificados != null)
+                            {
+                                ChangeView(1); 
+                            }
+                            else
+                            {
+                                navigationService.NavigatorModal("En el momento no hay certificados para generar, vuelva pronto.");
+                                ChangeView(2);
+                            }
                         }
                         else
                         {
@@ -81,18 +94,33 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void ChangeView()
+        private void ChangeView(int type)
         {
             try
             {
                 Dispatcher.BeginInvoke((Action)delegate
                 {
-                    this.LblMessage.Text = string.Concat("Ha seleccionado, ", coincidence.BusinessName, " Desea continuar");
+                    if (type == 1)
+                    {
+                        this.LblMessage.Text = string.Concat("Ha seleccionado, ", coincidence.BusinessName, " Desea continuar");
 
-                    this.GifLoadder.Visibility = Visibility.Hidden;
+                        this.GifLoadder.Visibility = Visibility.Hidden;
 
-                    this.BtnCancel.Visibility = Visibility.Visible;
-                    this.BtnContinue.Visibility = Visibility.Visible;
+                        this.BtnCancel.Visibility = Visibility.Visible;
+                        this.BtnContinue.Visibility = Visibility.Visible; 
+                    }
+                    else
+                    {
+                        this.LblMessage.Text = string.Concat("Cancelar busqueda de certificados de ", coincidence.BusinessName);
+
+                        this.GifLoadder.Visibility = Visibility.Hidden;
+
+                        this.BtnCancel.HorizontalAlignment = HorizontalAlignment.Center;
+                        this.BtnCancel.Visibility = Visibility.Visible;
+                        
+
+                        this.BtnContinue.Visibility = Visibility.Hidden;
+                    }
                 });
                 GC.Collect();
             }

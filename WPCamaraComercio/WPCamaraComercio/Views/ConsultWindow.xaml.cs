@@ -65,11 +65,13 @@ namespace WPCamaraComercio.Views
                         if (!stateConsult)
                         {
                             Utilities.OpenModal("No se encontraron resultados para la busqueda", this);
+                            BtnConsultar.IsEnabled = true;
                         }
                         else
                         {
                             this.consultViewModel.headers = Visibility.Visible;
                             CreatePages(consultViewModel.countConcidences);
+                            BtnConsultar.IsEnabled = true;
                         }
                     };
                 }
@@ -112,7 +114,7 @@ namespace WPCamaraComercio.Views
                 GC.Collect();
 
                 Dispatcher.BeginInvoke((Action)delegate
-                {
+                {   
                     consultViewModel.viewList.Source = consultViewModel.coincidences;
                     consultViewModel.viewList.Filter += new FilterEventHandler(View_Filter);
                     lv_Files.DataContext = consultViewModel.viewList;
@@ -187,7 +189,7 @@ namespace WPCamaraComercio.Views
         {
             this.currentPageIndex = 0;
             this.totalPage = 0;
-            this.consultViewModel.coincidences.Clear();
+            consultViewModel.coincidences.Clear();
             this.consultViewModel.headers = Visibility.Hidden;
         }
         #endregion
@@ -219,6 +221,7 @@ namespace WPCamaraComercio.Views
 
         private void BtnConsultar_StylusDown(object sender, StylusDownEventArgs e)
         {
+            BtnConsultar.IsEnabled = false;
             ConsulParameter();
         }
 

@@ -11,7 +11,7 @@ namespace WPCamaraComercio.Models
     {
         public string Establish { get; set; }
 
-        public string Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public Details Details { get; set; }
 
