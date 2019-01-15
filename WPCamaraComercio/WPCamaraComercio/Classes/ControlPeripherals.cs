@@ -70,17 +70,11 @@ namespace WPCamaraComercio.Classes
         #region Variables
 
         private decimal payValue;//Valor a pagar
-
         private decimal enterValue;//Valor ingresado
-
         private decimal deliveryValue;//Valor entregado
-
         private decimal dispenserValue;//Valor a dispensar
-
         private static string TOKEN;//Llabe que retorna el dispenser
-
         public static string LogMessage;//Mensaje para el log
-
         public static LogDispenser log;//Log del dispenser
         public static decimal deliveryVal = 0;
 
@@ -445,7 +439,7 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         private void ConfigurateDispenser()
         {
-            dispenserValue = 8;
+            //dispenserValue = 8;
             try
             {
                 if (dispenserValue > 0)
