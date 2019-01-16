@@ -9,6 +9,7 @@
         Title="FrmDetailCompany" 
         WindowStyle="None"
         WindowState="Maximized"
+        StylusDown="Window_StylusDown"
         Loaded="Window_Loaded"
         Height="2064.095" 
         Width="1250.599">

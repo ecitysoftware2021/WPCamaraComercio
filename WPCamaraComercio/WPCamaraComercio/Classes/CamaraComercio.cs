@@ -3,10 +3,8 @@ using Ghostscript.NET.Processor;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Printing;
-using System.Text;
 using System.Threading.Tasks;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
@@ -16,50 +14,34 @@ namespace WPCamaraComercio.Classes
 {
     public class CamaraComercio
     {
+        #region References
         Certificado Certificate = new Certificado();
-
         Print print = new Print();
-
         LocalPrintServer server = new LocalPrintServer();
-
         Utilities utilities = new Utilities();
-
         List<DetailCartificate> ListDetailCert = new List<DetailCartificate>();
-
         WCFCamaraComercioClient WCFCamara = new WCFCamaraComercioClient();
-
         WCFServices service = new WCFServices();
-
         Datos datos = new Datos();
-
         Dictionary<string, string> responseDic = new Dictionary<string, string>();
-
         private string FileName { get; set; }
-
         private bool printState { get; set; }
-
         private static string IDCompra { get; set; }
-
         public static string Delimitador { get { return "-"; } }
-
         private string DirectoryFile { get; set; }
-
         private string path { get; set; }
-
         private byte[] bytePDF { get; set; }
-
         public static string PrinterName { get; set; }
-
         private List<string> LRutasCertificados = new List<string>();
-
         List<LogError> logError = new List<LogError>();
+        #endregion
 
+        #region Methods
         public async Task<string> ConfirmarCompra()
         {
             try
             {
                 string idCompra = string.Empty;
-                //Utilities.ReferenciaPago = Utilities.IDTransactionDB.ToString();
                 datos.AutorizaEnvioEmail = "NO";
                 datos.AutorizaEnvioSMS = "NO";
                 datos.CodigoDepartamentoComprador = Utilities.PayerData.CodeDepartmentBuyer;
@@ -312,7 +294,8 @@ namespace WPCamaraComercio.Classes
             print.Tramite = "Certificados Electrónicos";
             print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"LogoComprobante\LCamaraComercio.png");
             print.ImprimirComprobante();
-        }
+        } 
+        #endregion
     }
 
     public class FileName

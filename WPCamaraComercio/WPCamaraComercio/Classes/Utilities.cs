@@ -182,7 +182,6 @@ namespace WPCamaraComercio.Classes
                     timer.Stop();
                     GoToInicial();
                 }
-                Debug.WriteLine(time.Seconds);
             };
 
             timer.Start();

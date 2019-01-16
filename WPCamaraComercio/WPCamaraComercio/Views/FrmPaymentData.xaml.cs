@@ -276,7 +276,10 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
+        private void Window_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            Utilities.time = TimeSpan.Parse(Utilities.Duration);
+        }
         #endregion
 
         #region HeaderButtons

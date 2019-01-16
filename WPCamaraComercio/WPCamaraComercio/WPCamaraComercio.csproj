@@ -195,7 +195,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Print.cs" />
-    <Compile Include="Classes\ImageSleader.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

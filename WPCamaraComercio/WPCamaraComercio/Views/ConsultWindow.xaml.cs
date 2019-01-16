@@ -113,7 +113,7 @@ namespace WPCamaraComercio.Views
                 GC.Collect();
 
                 Dispatcher.BeginInvoke((Action)delegate
-                {   
+                {
                     consultViewModel.viewList.Source = consultViewModel.coincidences;
                     consultViewModel.viewList.Filter += new FilterEventHandler(View_Filter);
                     lv_Files.DataContext = consultViewModel.viewList;
@@ -194,7 +194,10 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region Events
-        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
+        private void Window_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            Utilities.time = TimeSpan.Parse(Utilities.Duration);
+        }
 
         private void View_Filter(object sender, FilterEventArgs e)
         {
@@ -355,5 +358,7 @@ namespace WPCamaraComercio.Views
             Utilities.GoToInicial();
         }
         #endregion
+
+       
     }
 }

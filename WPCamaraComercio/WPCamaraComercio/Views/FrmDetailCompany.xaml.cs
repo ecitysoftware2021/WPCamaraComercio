@@ -145,7 +145,7 @@ namespace WPCamaraComercio.Views
                                     Certificate = item2.NombreCertificado,
                                     EstablishCertificate = objEstablishCertificate
                                 });
-                            } 
+                            }
                         }
                     }
                 }
@@ -190,7 +190,7 @@ namespace WPCamaraComercio.Views
         {
             FrmModalDetailEstablish FrmModalDetailEstablish = new FrmModalDetailEstablish(details);
             FrmModalDetailEstablish.ShowDialog();
-        } 
+        }
         #endregion
 
         #region Events
@@ -230,12 +230,12 @@ namespace WPCamaraComercio.Views
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
         {
             expanderControler--;
-            if (expanderControler==0)
+            if (expanderControler == 0)
             {
                 TbQuantity.Visibility = Visibility.Hidden;
                 TbAmount.Visibility = Visibility.Hidden;
             }
-            
+
             var expander = sender as Expander;
             this.Title = expander.Header.ToString();
         }
@@ -253,7 +253,7 @@ namespace WPCamaraComercio.Views
                 }
 
                 var stablish = selectedDetail.Where(
-                    d => d.EstablishCertificate.GenerationCode == establishCertificate.GenerationCode 
+                    d => d.EstablishCertificate.GenerationCode == establishCertificate.GenerationCode
                     && d.EstablishCertificate.EstablishEnrollment == establishCertificate.EstablishEnrollment).FirstOrDefault();
                 if (stablish == null)
                 {
@@ -335,7 +335,10 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void Window_PreviewStylusDown(object sender, StylusDownEventArgs e) => Utilities.time = TimeSpan.Parse(Utilities.Duration);
+        private void Window_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            Utilities.time = TimeSpan.Parse(Utilities.Duration);
+        }
         #endregion
 
         #region HeaderButtons
@@ -359,7 +362,7 @@ namespace WPCamaraComercio.Views
             Utilities.ListMerchantDetail.Clear();
             Utilities.ResetTimer();
             navigationService.NavigationTo("ConsultWindow");
-        } 
+        }
         #endregion
     }
 }

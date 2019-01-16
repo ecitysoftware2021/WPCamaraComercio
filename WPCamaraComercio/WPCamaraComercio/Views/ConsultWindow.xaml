@@ -12,6 +12,7 @@
         WindowState="Maximized"
         Height="2064.095" 
         Width="1250.599"
+        StylusDown="Window_StylusDown"
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         >

@@ -10,6 +10,7 @@
         WindowStyle="None"
         WindowState="Maximized"
         Loaded="Window_Loaded"
+        StylusDown="Window_StylusDown"
         Height="2064.095" 
         Width="1250.599">
     <Window.Background>
