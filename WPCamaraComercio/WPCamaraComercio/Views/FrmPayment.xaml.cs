@@ -19,12 +19,12 @@ namespace WPCamaraComercio.Views
         #region References
         //BackgroundViewModel backgroundViewModel;
         NavigationService navigationService;
-        WCFService wCFService;
+        WCFPayPadService WFCPayPadService;
+        WCFServices wCFService;
         PaymentController pay;
-        ApiService apiService;
         PayViewModel payModel;
         decimal amount = 0;
-        List<Log> logs;
+        //List<Log> logs;
         #endregion
 
         #region InitialMethods
@@ -33,12 +33,12 @@ namespace WPCamaraComercio.Views
             try
             {
                 InitializeComponent();
-                logs = new List<Log>();
+                //logs = new List<Log>();
+                WFCPayPadService = new WCFPayPadService();
                 //backgroundViewModel = new BackgroundViewModel(Utilities.Operation);
                 navigationService = new NavigationService(this);
-                wCFService = new WCFService();
-                apiService = new ApiService();
-                this.DataContext = backgroundViewModel;
+                wCFService = new WCFServices();
+                //this.DataContext = backgroundViewModel;
                 InitPay();
                 //SendFinish();
             }
@@ -102,18 +102,7 @@ namespace WPCamaraComercio.Views
                 {
                     Task.Run(() =>
                     {
-                        foreach (var item in Utilities.TransactionIds)
-                        {
-                            wCFService.UpdateTransaction(item, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
-                        }
-                        //if (Utilities.Operation == 1)
-                        //{
-                        //    NotifySignusPay();
-                        //}
-                        //else
-                        //{
-                        //    NotifyFiscoPay();
-                        //}
+                        WFCPayPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
                     });
                     ValidatePayment(valueInto);
 
@@ -135,7 +124,6 @@ namespace WPCamaraComercio.Views
             try
             {
                 Utilities.ValueEnter = intoValue;
-                CreateLog();
                 if (intoValue > amount)
                 {
                     decimal value = intoValue - amount;
@@ -152,34 +140,6 @@ namespace WPCamaraComercio.Views
                 {
                     SendFinish();
                 }
-            }
-            catch (Exception ex)
-            {
-                navigationService.NavigatorModal(ex.Message);
-            }
-        }
-
-        private void CreateLog()
-        {
-            try
-            {
-                foreach (var item in Utilities.TransactionIds)
-                {
-                    logs.Add(new Log
-                    {
-                        Date = DateTime.Now,
-                        IDTransaccion = item,
-                        Operation = "Transaccion Aprobada",
-                        ValueToReturn = payModel.ValorRestante,
-                        ValueReturn = Utilities.ValueReturn.ToString(),
-                        ValuePayment = Utilities.ValuePayment.ToString(),
-                        ValueEnter = Utilities.ValueEnter.ToString(),
-                        Quantity = 1,
-                        StateTransaction = "Aprobada"
-                    });
-                }
-
-                Utilities.CreateLogsTransaction(logs);
             }
             catch (Exception ex)
             {
