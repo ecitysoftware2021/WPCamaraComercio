@@ -108,6 +108,11 @@
     <Compile Include="Classes\CamaraComercio.cs" />
     <Compile Include="Classes\ControlPeripherals.cs" />
     <Compile Include="Classes\Logs.cs" />
+    <Compile Include="Classes\PaymentController.cs" />
+    <Compile Include="Classes\Smart\CCommands.cs" />
+    <Compile Include="Classes\Smart\CHelpers.cs" />
+    <Compile Include="Classes\Smart\Payout.cs" />
+    <Compile Include="Classes\Smart\SmartCoins.cs" />
     <Compile Include="Connected Services\WCFCamaraComercio\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
@@ -15,299 +17,347 @@ namespace WPCamaraComercio.Views
     public partial class FrmPayment : Window
     {
         #region References
-
-        private PaymentViewModel PaymentViewModel;//Modelo para el pago(Valores e imagenes)
-
-        private WCFServices services;//Instancia para invocar los servicios web
-
-        private FrmLoading frmLoading;
-
-        private Utilities utilities;
-
-        WCFPayPadService payPadService;
-
-        private LogErrorGeneral logError;
-
-        private Record recorder;//Instancia
-
-        private int count;//Contador utilizado para los reintentos en UpdateTrans
-
-        private int tries;//Contador utilizado para los reintentos en SavePay
-        CamaraComercio camaraComercio;
+        //BackgroundViewModel backgroundViewModel;
         NavigationService navigationService;
-
-        bool isCancel = false;
-
+        WCFService wCFService;
+        PaymentController pay;
+        ApiService apiService;
+        PayViewModel payModel;
+        decimal amount = 0;
+        List<Log> logs;
         #endregion
 
-        #region LoadMethods
-
+        #region InitialMethods
         public FrmPayment()
         {
-            InitializeComponent();
-            OrganizeValues();
-            services = new WCFServices();
-            frmLoading = new FrmLoading();
-            payPadService = new WCFPayPadService();
-            recorder = new Record();
-            camaraComercio = new CamaraComercio();
-            utilities = new Utilities();
-            navigationService = new NavigationService(this);
-            logError = new LogErrorGeneral
+            try
             {
-                Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
-                IDCorresponsal = Utilities.CorrespondentId,
-                IdTransaction = Utilities.IDTransactionDB,
-                ValuePay = Utilities.ValueToPay,
-            };
-            count = 0;
-            tries = 0;
+                InitializeComponent();
+                logs = new List<Log>();
+                //backgroundViewModel = new BackgroundViewModel(Utilities.Operation);
+                navigationService = new NavigationService(this);
+                wCFService = new WCFService();
+                apiService = new ApiService();
+                this.DataContext = backgroundViewModel;
+                InitPay();
+                //SendFinish();
+            }
+            catch (Exception ex)
+            {
+                navigationService.NavigatorModal(ex.Message);
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //recorder.Grabar(Utilities.IDTransactionDB);
-            Task.Run(() =>
-            {
-                ActivateWallet();
-            });
+            lblValorPagar.Content = string.Format("{0:C0}", Math.Floor(Utilities.ValueToPay));
         }
-
-        #endregion
-
-        #region Events
-
-        //private void btnCancelar_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        //{
-        //    //try
-        //    //{
-        //    //    Utilities.control.StopAceptance();
-        //    //    //recorder.FinalizarGrabacion();
-
-        //    //    if (PaymentViewModel.ValorIngresado > 0)
-        //    //    {
-        //    //        Utilities.DispenserVal = PaymentViewModel.ValorIngresado;
-        //    //        Utilities.Loading(frmLoading, true, this);
-        //    //        isCancel = true;
-        //    //        ReturnMoney(Utilities.DispenserVal);
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        Task.Run(() =>
-        //    //        {
-        //    //            utilities.UpdateTransaction(0, 3, string.Empty,0);
-        //    //        });
-        //    //        Utilities.GoToInicial();
-        //    //    }
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    ErroUpdateTrans(ex.Message);
-        //    //}
-        //}
-
-        private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
-        {
-            FrmModal modal = new FrmModal("Esta seguro de cancelar la transacción?", this);
-            if (modal.DialogResult.Value)
-            {
-                navigationService.NavigationTo("FrmCancelledPayment");
-            }
-        }
-
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Método encargado de activar el billetero aceptance, seguido de esto crea un callback esperando a que este le indique que puede finalizar la transacción
-        /// </summary>
-        private void ActivateWallet()
+        private void InitPay()
         {
             try
             {
-                Utilities.control.callbackValueIn = enterValue =>
+                amount = Math.Floor(Utilities.ValueToPay);
+                lblValorPagar.Content = string.Format("{0:C0}", amount);
+                pay = new PaymentController();
+                TimerTime();
+                payModel = new PayViewModel
                 {
-                    if (enterValue > 0)
-                    {
-                        PaymentViewModel.ValorIngresado += enterValue;
-                    }
+                    ValorFaltante = string.Format("{0:C0}", amount),
+                    ValorIngresado = string.Format("{0:C0}", 0),
+                    ValorRestante = string.Format("{0:C0}", 0),
+                    ImgCancel = Visibility.Visible,
+                    ImgEspereCambio = Visibility.Hidden,
+                    ImgIngreseBillete = Visibility.Visible,
+                    ImgLeyendoBillete = Visibility.Hidden,
+                    ImgRecibo = Visibility.Hidden,
                 };
 
-                Utilities.control.callbackTotalIn = enterTotal =>
+                PaymentGrid.DataContext = payModel;
+                pay.callback = value =>
                 {
-                    Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, true, this); });
-                    Utilities.SaveLogDispenser(ControlPeripherals.log);
-                    Utilities.EnterTotal = enterTotal;
-                    if (enterTotal > 0 && PaymentViewModel.ValorSobrante > 0)
-                    {
-                        ReturnMoney(PaymentViewModel.ValorSobrante);
-                    }
-                    else
-                    {
-                        FinishPayment().Wait();
-                    }
+                    FinishPayment(value);
                 };
 
-                Utilities.control.callbackError = error =>
+                pay.callbackValue = newValue =>
                 {
-                    Utilities.SaveLogDispenser(ControlPeripherals.log);
+                    SetMountInsert(newValue.ToString());
                 };
 
-                Utilities.control.StartAceptance(PaymentViewModel.PayValue);
+                pay.Start(amount);
             }
             catch (Exception ex)
             {
-                ErroUpdateTrans(ex.Message);
-                Dispatcher.BeginInvoke(new Action(() =>
+                navigationService.NavigatorModal(ex.Message);
+            }
+        }
+
+        private void FinishPayment(decimal valueInto)
+        {
+            try
+            {
+                this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    FrmModal modal = new FrmModal(string.Concat("Lo sentimos,", Environment.NewLine, "Ha ocurrido un error."), this);
-                    modal.ShowDialog();
-                    if (modal.DialogResult.HasValue)
+                    Task.Run(() =>
                     {
-                        Utilities.GoToInicial();
-                    }
+                        foreach (var item in Utilities.TransactionIds)
+                        {
+                            wCFService.UpdateTransaction(item, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                        }
+                        //if (Utilities.Operation == 1)
+                        //{
+                        //    NotifySignusPay();
+                        //}
+                        //else
+                        //{
+                        //    NotifyFiscoPay();
+                        //}
+                    });
+                    ValidatePayment(valueInto);
+
+                    payModel.ImgCancel = Visibility.Hidden;
+                    payModel.ImgEspereCambio = Visibility.Hidden;
+                    payModel.ImgIngreseBillete = Visibility.Hidden;
+                    payModel.ImgLeyendoBillete = Visibility.Hidden;
+                    payModel.ImgRecibo = Visibility.Visible;
                 }));
             }
-        }
-
-        /// <summary>
-        /// Método que se encarga de devolver el dinero ya sea por que se canceló la transacción o por que hay valor sobrante
-        /// </summary>
-        /// <param name="returnValue">valor a devolver</param>
-        private void ReturnMoney(decimal returnValue)
-        {
-            try
-            {
-                Utilities.control.callbackValueOut = valueOut =>
-                {
-                    if (valueOut > 0)
-                    {
-
-                    }
-                };
-
-                Utilities.control.callbackTotalOut = totalOut =>
-                {
-                    Utilities.SaveLogDispenser(ControlPeripherals.log);
-                    FinishPayment().Wait();
-                };
-
-                Utilities.control.callbackError = error =>
-                {
-                    Utilities.SaveLogDispenser(ControlPeripherals.log);
-                };
-
-                Utilities.control.StartDispenser(returnValue);
-            }
             catch (Exception ex)
             {
-                throw ex;
+                navigationService.NavigatorModal(ex.Message);
             }
         }
 
-        /// <summary>
-        /// Método encargado de dar el estado inicial de todas las imagenes/botones de la vista
-        /// </summary>
-        private void VisibilityImage()
-        {
-            PaymentViewModel.ImgCancel = Visibility.Visible;
-            PaymentViewModel.ImgIngreseBillete = Visibility.Visible;
-            PaymentViewModel.ImgEspereCambio = Visibility.Hidden;
-            PaymentViewModel.ImgLeyendoBillete = Visibility.Hidden;
-            PaymentViewModel.ImgRecibo = Visibility.Hidden;
-        }
-
-        /// <summary>
-        /// Método encargado de organizar todos los valores de la transacción en la vista
-        /// </summary>
-        private void OrganizeValues()
-        {
-            lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
-            PaymentViewModel = new PaymentViewModel
-            {
-                PayValue = Utilities.ValueToPay,
-                ValorFaltante = Utilities.ValueToPay,
-                ValorSobrante = 0,
-                ValorIngresado = 0
-            };
-
-            VisibilityImage();
-            this.DataContext = PaymentViewModel;
-        }
-
-        /// <summary>
-        /// Método que se encarga de llenar un log de error general, esto cuando se produce una excepción
-        /// </summary>
-        /// <param name="ex">excepción a ser mostrada</param>
-        private void ErroUpdateTrans(string message)
-        {
-            var json = Utilities.CreateJSON();
-            logError.Description = string.Concat(json, Environment.NewLine, "Ocurrió un error en la transación IdTransaccion:",
-                Utilities.IDTransactionDB,
-                "\n error: ", message,
-                "\n Total Ingresado: " + PaymentViewModel.ValorIngresado);
-            logError.State = "Cancelada";
-            Utilities.SaveLogTransactions(logError, "LogTransacciones\\Canceladas");
-            //recorder.FinalizarGrabacion();
-        }
-
-        /// <summary>
-        /// Método encargado de finalizar el pago y realizar las tareas pertinentes como actualizar la transacción e imprimir los recibos
-        /// </summary>
-        private async Task FinishPayment()
+        private void ValidatePayment(decimal intoValue)
         {
             try
             {
-                //ApproveTrans();
-
-                if (!isCancel)
+                Utilities.ValueEnter = intoValue;
+                CreateLog();
+                if (intoValue > amount)
                 {
-                   Utilities.BuyID = await camaraComercio.ConfirmarCompra();
-                    if (!Utilities.BuyID.Equals("0"))
+                    decimal value = intoValue - amount;
+                    Utilities.ValueReturn = value;
+                    pay.callbackReturn = valueDispenser =>
                     {
-                        Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
-                        //navigationService.NavigationTo("FinishPayment");
-                        Dispatcher.BeginInvoke((Action)delegate {
-                        FinishPayment frmInformationCompany = new FinishPayment(PaymentViewModel.ValorIngresado, PaymentViewModel.ValorSobrante);
-                        frmInformationCompany.Show();
-                        this.Close();
-                        });
-                    }
-                    else
-                    {
-                        Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
-                        Dispatcher.BeginInvoke((Action)delegate
-                        {
-                            FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
-                                "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
-                            "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
-                            modal.ShowDialog();
-                            if (modal.DialogResult.Value)
-                            {
-                                navigationService.NavigationTo("FrmCancelledPayment");
-                            }
-                        });
-                    }
+                        //InsertDetails(value, false);
+                        SendFinish();
+                    };
+
+                    pay.StartReturn(value);
                 }
                 else
                 {
-                    utilities.UpdateTransaction(PaymentViewModel.ValorIngresado, 3, string.Empty, PaymentViewModel.ValorSobrante);
-                    Utilities.GoToInicial();
+                    SendFinish();
                 }
             }
             catch (Exception ex)
             {
-                ErroUpdateTrans(ex.Message);
+                navigationService.NavigatorModal(ex.Message);
             }
         }
 
-        /// <summary>
-        /// Método encargado de actualizar la transacción a aprobada, se llama en finalizar pago En caso de fallo se reintenta dos veces más actualizar el estado de la transacción, si el error persiste se guarda en un log local y en el servidor, seguido de esto se continua con la transacción normal
-        /// </summary>
+        private void CreateLog()
+        {
+            try
+            {
+                foreach (var item in Utilities.TransactionIds)
+                {
+                    logs.Add(new Log
+                    {
+                        Date = DateTime.Now,
+                        IDTransaccion = item,
+                        Operation = "Transaccion Aprobada",
+                        ValueToReturn = payModel.ValorRestante,
+                        ValueReturn = Utilities.ValueReturn.ToString(),
+                        ValuePayment = Utilities.ValuePayment.ToString(),
+                        ValueEnter = Utilities.ValueEnter.ToString(),
+                        Quantity = 1,
+                        StateTransaction = "Aprobada"
+                    });
+                }
 
+                Utilities.CreateLogsTransaction(logs);
+            }
+            catch (Exception ex)
+            {
+                navigationService.NavigatorModal(ex.Message);
+            }
+        }
+
+        public void SendFinish()
+        {
+            try
+            {
+                pay.Finish();
+                navigationService.NavigationTo("FrmFinishTransaction");
+            }
+            catch (Exception ex)
+            {
+                navigationService.NavigatorModal(ex.Message);
+            }
+        }
+
+        private void TimerTime()
+        {
+            try
+            {
+                DispatcherTimer dispatcherTimer = new DispatcherTimer();
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+                dispatcherTimer.Tick += (s, a) =>
+                {
+                    ChangeView(pay.GetStatus());
+                };
+
+                dispatcherTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                navigationService.NavigatorModal(ex.Message);
+            }
+        }
+
+        private void ChangeView(string statusPay)
+        {
+            try
+            {
+                if (statusPay == null)
+                {
+                    return;
+                }
+
+                if (statusPay.Contains("LEYENDO"))
+                {
+                    payModel.ImgRecibo = Visibility.Hidden;
+                    payModel.ImgLeyendoBillete = Visibility.Visible;
+                    payModel.ImgEspereCambio = Visibility.Hidden;
+                    payModel.ImgIngreseBillete = Visibility.Hidden;
+                    payModel.ImgCancel = Visibility.Hidden;
+                }
+                else if (statusPay.Contains("ALMACENADO") || statusPay.Contains("BODEGA"))
+                {
+                    if (double.Parse(payModel.ValorFaltante.Replace("$", "")) > 0)
+                    {
+                        payModel.ImgRecibo = Visibility.Hidden;
+                        payModel.ImgLeyendoBillete = Visibility.Hidden;
+                        payModel.ImgEspereCambio = Visibility.Hidden;
+                        payModel.ImgIngreseBillete = Visibility.Visible;
+                        payModel.ImgCancel = Visibility.Visible;
+                    }
+                    else if (double.Parse(payModel.ValorRestante.Replace("$", "")) > 0)
+                    {
+                        payModel.ImgRecibo = Visibility.Hidden;
+                        payModel.ImgLeyendoBillete = Visibility.Hidden;
+                        payModel.ImgEspereCambio = Visibility.Visible;
+                        payModel.ImgIngreseBillete = Visibility.Hidden;
+                        payModel.ImgCancel = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        payModel.ImgRecibo = Visibility.Visible;
+                        payModel.ImgLeyendoBillete = Visibility.Hidden;
+                        payModel.ImgEspereCambio = Visibility.Hidden;
+                        payModel.ImgIngreseBillete = Visibility.Hidden;
+                        payModel.ImgCancel = Visibility.Hidden;
+
+                    }
+                }
+                else if (statusPay.Contains("INGRESANDO"))
+                {
+                    payModel.ImgRecibo = Visibility.Hidden;
+                    payModel.ImgLeyendoBillete = Visibility.Visible;
+                    payModel.ImgEspereCambio = Visibility.Hidden;
+                    payModel.ImgIngreseBillete = Visibility.Hidden;
+                    payModel.ImgCancel = Visibility.Hidden;
+                }
+                else if (statusPay.Contains("NO SE PUDO CONECTAR"))
+                {
+                    HideImages();
+                }
+            }
+            catch (Exception ex)
+            {
+                navigationService.NavigatorModal(ex.Message);
+            }
+        }
+
+        private void HideImages()
+        {
+            try
+            {
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    payModel.ImgRecibo = Visibility.Hidden;
+                    payModel.ImgLeyendoBillete = Visibility.Hidden;
+                    payModel.ImgEspereCambio = Visibility.Hidden;
+                    payModel.ImgIngreseBillete = Visibility.Visible;
+                    payModel.ImgCancel = Visibility.Visible;
+                }));
+
+            }
+            catch (Exception ex)
+            {
+                navigationService.NavigatorModal(ex.Message);
+            }
+        }
+
+        private void SetMountInsert(string value) => Application.Current.Dispatcher.Invoke((Action)delegate
+        {
+            try
+            {
+                payModel.ValorIngresado = string.Format("{0:C0}", decimal.Parse(value));
+                //InsertDetails(decimal.Parse(value), true);
+                decimal faltante = amount - decimal.Parse(value);
+                decimal restante = 0;
+                if (faltante < 0)
+                {
+                    restante = faltante * (-1);
+                    faltante = 0;
+                }
+
+                payModel.ValorFaltante = string.Format("{0:C0}", faltante);
+                payModel.ValorRestante = string.Format("{0:C0}", restante);
+            }
+            catch (Exception ex)
+            {
+                navigationService.NavigatorModal(ex.Message);
+            }
+        });
+
+        private void BtnCancelar_PreviewStylusDown(object sender, StylusDownEventArgs e)
+        {
+            FrmModal frmConfirmation = new FrmModal("¿Está seguro que desea cancelar la transacción?",this);
+            frmConfirmation.ShowDialog();
+            if (frmConfirmation.DialogResult.Value && frmConfirmation.DialogResult.HasValue)
+            {
+                var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));
+                Utilities.ValueEnter = valueInto;
+                if (valueInto != 0)
+                {
+                    Utilities.ValueReturn = valueInto;
+                    GotoCancel();
+                }
+                else
+                {
+                    pay.Finish();
+                    Utilities.GoToInicial();
+                }
+            }
+        }
+
+        private void GotoCancel()
+        {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                FrmCancelledPayment frmCancelPay = new FrmCancelledPayment(pay);
+                frmCancelPay.Show();
+                Close();
+            }));
+        }
         #endregion
 
-        
+
     }
 }
