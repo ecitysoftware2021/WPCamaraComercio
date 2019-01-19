@@ -133,9 +133,10 @@ namespace WPCamaraComercio.Views
             {
                 if (coincidence != null)
                 {
+                    this.Opacity = 0.5;
                     LoadingModal modal = new LoadingModal(coincidence);
                     modal.ShowDialog();
-
+                    this.Opacity = 1;
                     lv_Files.SelectedItem = null;
                     if (modal.DialogResult.Value)
                     {

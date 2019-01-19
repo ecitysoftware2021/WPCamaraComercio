@@ -87,7 +87,7 @@
                     Text="Certificados"/>
             <TextBlock VerticalAlignment="Center"
                     HorizontalAlignment="Left"
-                    Margin="120,300,0,0"
+                    Margin="120,0,0,0"
                     FontSize="30"                    
                     Grid.ColumnSpan="2"
                     FontWeight="Bold"
@@ -96,7 +96,7 @@
                     Text="data 1"/>
             <TextBlock VerticalAlignment="Center"
                     HorizontalAlignment="Right"
-                    Margin="0,300,120,0"
+                    Margin="0,0,120,0"
                     FontSize="30"                    
                     Grid.ColumnSpan="2"
                     FontWeight="Bold"
@@ -107,7 +107,7 @@
                     />
             <Image Source="/Images/Buttons/comerciante.png" 
                    Name="BtnComerciant"
-                   Margin="0,0,0,0"
+                   Margin="0,300,0,0"
                    Width="400"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
@@ -115,7 +115,7 @@
                    />
             <Image Source="/Images/Buttons/establecimiento.png" 
                    Name="BtnEstablish"
-                   Margin="0,0,0,0"
+                   Margin="0,300,0,0"
                    Width="450"
                    Grid.Column="1"
                    Opacity="0.4"
