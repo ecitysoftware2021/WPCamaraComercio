@@ -11,6 +11,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WPCamaraComercio.Service;
 using System.Configuration;
+using WPCamaraComercio.Classes;
+using System.Threading.Tasks;
 
 namespace WPCamaraComercio.Views
 {
@@ -50,6 +52,11 @@ namespace WPCamaraComercio.Views
             timerImageChange = new DispatcherTimer();
             timerImageChange.Interval = new TimeSpan(0, 0, IntervalTimer);
             timerImageChange.Tick += new EventHandler(timerImageChange_Tick);
+
+            Task.Run(() =>
+            {
+                GetScreen();
+            });
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -136,7 +143,12 @@ namespace WPCamaraComercio.Views
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             navigationService.NavigationTo("ConsultWindow");
-        } 
+        }
+
+        private void GetScreen()
+        {
+            //ScreenControl.ConsultarControlPantalla();
+        }
         #endregion
     }
 }

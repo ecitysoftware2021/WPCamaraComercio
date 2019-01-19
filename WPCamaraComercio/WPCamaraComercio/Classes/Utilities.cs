@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -107,6 +108,37 @@ namespace WPCamaraComercio.Classes
             {
                 throw ex;
             }
+        }
+
+        public static int GetDescriptionEnum(string value)
+        {
+            // Declaracion de una variable numerica
+            int idTypeEnum = 0;
+            try
+            {
+                // Obtener tipo de enumeracion
+                Type enumType = typeof(EDenominacion);
+                // Obtener el valor de las enumeraciones 
+                var values = enumType.GetEnumValues();
+                // Recorrer cada enumeracion 
+                foreach (EDenominacion item in values)
+                {
+                    // Obtener el nombre de la enumeracion recorrida
+                    MemberInfo info = enumType.GetMember(item.ToString()).First();
+                    // Obtener la descripcion del nombre de la enumeracion
+                    var description = info.GetCustomAttribute<DescriptionAttribute>();
+                    // Validar que el valor sea igual a la descripcion
+                    if (value == description.Description.Replace(",00", ""))
+                    {
+                        EDenominacion enumm = (EDenominacion)Enum.Parse(typeof(EDenominacion), item.ToString());
+                        idTypeEnum = (int)enumm;
+                        break;
+                    }
+                }
+            }
+            catch { }
+            // Retornar el id 
+            return idTypeEnum;
         }
 
         /// <summary>
@@ -555,5 +587,29 @@ namespace WPCamaraComercio.Classes
             }
         }
         #endregion
+    }
+
+    public enum EDenominacion
+    {
+        [Description("100")]
+        Cien = 1,
+        [Description("200")]
+        Doscientos = 2,
+        [Description("500")]
+        Quinientos = 3,
+        [Description("1000")]
+        Mil = 4,
+        [Description("2000,00")]
+        BDosMil = 5,
+        [Description("5000,00")]
+        BCincoMil = 6,
+        [Description("10000,00")]
+        BDiezMil = 7,
+        [Description("20000,00")]
+        BVeinteMil = 8,
+        [Description("50000,00")]
+        BCincuentaMil = 9,
+        [Description("1000,00")]
+        BMil = 10
     }
 }
