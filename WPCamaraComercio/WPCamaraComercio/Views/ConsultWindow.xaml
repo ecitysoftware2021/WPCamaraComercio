@@ -197,7 +197,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock 
-                    Text="Razon social"
+                    Text="Razón social"
                     Grid.Column="0"
                     FontSize="35"
                     TextAlignment="Center"

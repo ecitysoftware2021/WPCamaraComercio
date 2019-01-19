@@ -78,41 +78,12 @@ namespace WPCamaraComercio.Views
 
         #region Events
 
-        //private void btnCancelar_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        //{
-        //    //try
-        //    //{
-        //    //    Utilities.control.StopAceptance();
-        //    //    //recorder.FinalizarGrabacion();
-
-        //    //    if (PaymentViewModel.ValorIngresado > 0)
-        //    //    {
-        //    //        Utilities.DispenserVal = PaymentViewModel.ValorIngresado;
-        //    //        Utilities.Loading(frmLoading, true, this);
-        //    //        isCancel = true;
-        //    //        ReturnMoney(Utilities.DispenserVal);
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        Task.Run(() =>
-        //    //        {
-        //    //            utilities.UpdateTransaction(0, 3, string.Empty,0);
-        //    //        });
-        //    //        Utilities.GoToInicial();
-        //    //    }
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    ErroUpdateTrans(ex.Message);
-        //    //}
-        //}
-
         private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
             Dispatcher.BeginInvoke((Action)delegate
             {
 
-                FrmModal modal = new FrmModal("Esta seguro de cancelar la transacción?", this);
+                FrmModalConfirmation modal = new FrmModalConfirmation("¿Está seguro de cancelar la transacción?");
                 modal.ShowDialog();
                 if (modal.DialogResult.Value)
                 {

@@ -19,6 +19,9 @@ namespace WPCamaraComercio.Views
         private WCFServices services;
         private Utilities utilities;
         NavigationService navigationService;
+        string message = string.Concat("Lo sentimos, ",
+                               Environment.NewLine,
+                               "En este momento el servicio no se encuentra disponible.");
         #endregion
 
         #region LoadMethods
@@ -65,17 +68,15 @@ namespace WPCamaraComercio.Views
                         }
                         else
                         {
-                            Utilities.ModalError(string.Concat("Lo sentimos, ",
-                               Environment.NewLine,
-                               "En este momento el servicio no se encuentra disponible."));
+                            FrmModal modal = new FrmModal(message);
+                            modal.ShowDialog();
                         }
                     }
                 }
                 else
                 {
-                    Utilities.ModalError(string.Concat("Lo sentimos, ",
-                           Environment.NewLine,
-                           "En este momento el servicio no se encuentra disponible."));
+                    FrmModal modal = new FrmModal(message);
+                    modal.ShowDialog();
                 }
             }
             catch (Exception ex)
@@ -92,7 +93,7 @@ namespace WPCamaraComercio.Views
                 {
                     if (type == 1)
                     {
-                        this.LblMessage.Text = string.Concat("Ha seleccionado, ", coincidence.BusinessName, " Desea continuar");
+                        this.LblMessage.Text = string.Concat("Ha seleccionado ", coincidence.BusinessName, ", ¿desea continuar?");
 
                         this.GifLoadder.Visibility = Visibility.Hidden;
 
@@ -101,7 +102,7 @@ namespace WPCamaraComercio.Views
                     }
                     else
                     {
-                        this.LblMessage.Text = string.Concat("Cancelar busqueda de certificados de ", coincidence.BusinessName);
+                        this.LblMessage.Text = string.Concat("Cancelar búsqueda de certificados de ", coincidence.BusinessName);
 
                         this.GifLoadder.Visibility = Visibility.Hidden;
 
