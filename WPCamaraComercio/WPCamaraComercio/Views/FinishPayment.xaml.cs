@@ -70,7 +70,9 @@ namespace WPCamaraComercio.Views
                                 modal.ShowDialog();
                                 if (modal.DialogResult.Value)
                                 {
-                                    navigationService.NavigationTo("FrmCancelledPayment");
+                                    FrmCancelledPayment cancel = new FrmCancelledPayment(enterValue);
+                                    cancel.Show();
+                                    this.Close();
                                 }
                             });
                         }

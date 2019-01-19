@@ -50,6 +50,8 @@ namespace WPCamaraComercio.Classes
 
         public Action<decimal> callbackTotalOut;//Calback para cuando sale la totalidad del dinero
 
+        public Action<decimal> callbackOut;//Calback para cuando sale cieerta cantidad del dinero
+
         public Action<string> callbackError;//Calback de error
 
         public Action<string> callbackMessage;//Calback de mensaje
@@ -70,13 +72,20 @@ namespace WPCamaraComercio.Classes
         #region Variables
 
         private decimal payValue;//Valor a pagar
+
         private decimal enterValue;//Valor ingresado
+
         private decimal deliveryValue;//Valor entregado
+
         private decimal dispenserValue;//Valor a dispensar
+
         private static string TOKEN;//Llabe que retorna el dispenser
+
         public static string LogMessage;//Mensaje para el log
+
         public static LogDispenser log;//Log del dispenser
-        public static decimal deliveryVal = 0;
+
+        public string ResponseTotal;
 
         #endregion
 
@@ -106,7 +115,6 @@ namespace WPCamaraComercio.Classes
                 throw ex;
             }
         }
-
 
         /// <summary>
         /// Método que inicializa los billeteros
@@ -356,10 +364,15 @@ namespace WPCamaraComercio.Classes
         /// <param name="response">respuesta</param>
         private void ProcessER(string[] response)
         {
-            if (response[1] == "DP")
+            if (response[1] == "DP" || response[1] == "MD")
             {
                 LogMessage += string.Concat("Error: ", response[2], Environment.NewLine, "Valor entregado: ", deliveryValue, Environment.NewLine);
                 callbackError?.Invoke(string.Concat("Error, se alcanzó a entregar:", deliveryValue));
+            }
+            if (response[1] == "AP")
+            {
+                LogMessage += string.Concat("Error: ", response[2], Environment.NewLine);
+                callbackError?.Invoke("Error, en el billetero Aceptance");
             }
             else if (response[1] == "FATAL")
             {
@@ -385,10 +398,25 @@ namespace WPCamaraComercio.Classes
             }
             else
             {
-                enterValue += decimal.Parse(response[2]) * _mil;
-                callbackValueIn?.Invoke(Convert.ToDecimal(response[2]) * _mil);
+                if (response[1] == "AP")
+                {
+                    enterValue += decimal.Parse(response[2]) * _mil;
+                    callbackValueIn?.Invoke(Convert.ToDecimal(response[2]) * _mil);
+                }
+                else if (response[1] == "MA")
+                {
+                    enterValue += decimal.Parse(response[2]);
+                    callbackValueIn?.Invoke(Convert.ToDecimal(response[2]));
+                }
+
                 ValidateEnterValue();
             }
+        }
+
+        public void StartValues()
+        {
+            deliveryValue = 0;
+            enterValue = 0;
         }
 
         /// <summary>
@@ -439,7 +467,6 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         private void ConfigurateDispenser()
         {
-            //dispenserValue = 8;
             try
             {
                 if (dispenserValue > 0)
@@ -544,7 +571,7 @@ namespace WPCamaraComercio.Classes
         #endregion
 
         #region Responses
-
+        decimal deliveryVal = 0;
         /// <summary>
         /// Procesa la respuesta del billeteri dispenser
         /// </summary>
@@ -553,7 +580,6 @@ namespace WPCamaraComercio.Classes
         private void ConfigDataDispenser(string data, bool isRj = false)
         {
             string[] values = data.Split(';');
-
             foreach (var value in values)
             {
                 int denominacion = int.Parse(value.Split('-')[0]);
@@ -571,7 +597,13 @@ namespace WPCamaraComercio.Classes
             }
             if (dispenserValue == deliveryVal)
             {
+                ResponseTotal = data.Replace("\r", string.Empty);
                 callbackTotalOut?.Invoke(deliveryVal);
+            }
+            else if (dispenserValue > deliveryVal)
+            {
+                ResponseTotal = data.Replace("\r", string.Empty);
+                callbackOut?.Invoke(deliveryVal);
             }
         }
 
@@ -596,5 +628,6 @@ namespace WPCamaraComercio.Classes
         }
 
         #endregion
+
     }
 }

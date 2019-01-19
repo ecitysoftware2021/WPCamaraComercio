@@ -14,13 +14,13 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region LoadMethods
-        public FrmCancelledPayment()
+        public FrmCancelledPayment(decimal valueReturn)
         {
             InitializeComponent();
             camaraComercio = new CamaraComercio();
-            lblValue.Content = Utilities.ValueToPay;
-            ControlPeripherals.deliveryVal = 0;
-            ReturnMoney(3000);
+            lblValue.Content = valueReturn;
+            Utilities.control.StartValues();
+            ReturnMoney(valueReturn);
         }
         #endregion
 
@@ -33,6 +33,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+                Utilities.ValueReturned = returnValue;
                 Utilities.control.callbackValueOut = valueOut =>
                 {
                     if (valueOut > 0)
@@ -45,8 +46,10 @@ namespace WPCamaraComercio.Views
                 {
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                     camaraComercio.ImprimirComprobante("Cancelada");
-                    Utilities.GoToInicial();
-                    //FinishPayment().Wait();
+                    Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        Utilities.GoToInicial();
+                    });
                 };
 
                 Utilities.control.callbackError = error =>

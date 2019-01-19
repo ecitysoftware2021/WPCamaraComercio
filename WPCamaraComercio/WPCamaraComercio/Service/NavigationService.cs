@@ -33,9 +33,9 @@ namespace WPCamaraComercio.Service
                 switch (page)
                 {
                     case "FrmCancelledPayment":
-                        FrmCancelledPayment frmCancelledPayment = new FrmCancelledPayment();
-                        frmCancelledPayment.Show();
-                        break;
+                        //FrmCancelledPayment frmCancelledPayment = new FrmCancelledPayment();
+                        //frmCancelledPayment.Show();
+                        //break;
                     case "ConsultWindow":
                         ConsultWindow frmConsult = new ConsultWindow();
                         frmConsult.Show();

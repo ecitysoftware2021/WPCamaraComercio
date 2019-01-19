@@ -57,7 +57,7 @@ namespace WPCamaraComercio.Classes
             string RutaIMG = Path.Combine(Directory.GetCurrentDirectory(), @"PrintLogo\LCamaraComercio.png");
 
             int increment = SPACE;
-            g.DrawImage(Image.FromFile(Logo), 2, 2);
+            g.DrawImage(Image.FromFile(RutaIMG), 2, 2);
             g.DrawString("NIT " + Nit, fBody, sb, 70, 125);
             g.DrawString("Trámite:", fBody, sb, 10, increment);
             g.DrawString(Tramite, fBody1, sb, 120, increment);
@@ -74,7 +74,7 @@ namespace WPCamaraComercio.Classes
             g.DrawString("ID Compra:", fBody, sb, 10, increment);
             g.DrawString(IDCompra, fBody1, sb, 120, increment);
             increment += 30;
-            g.DrawString("Cédula:", fBody, sb, 10, increment);
+            g.DrawString("Identificación:", fBody, sb, 10, increment);
             g.DrawString(Cedula, fBody1, sb, 120, increment);
             increment += 30;
             g.DrawString("Nombre:", fBody, sb, 10, increment);
@@ -86,7 +86,7 @@ namespace WPCamaraComercio.Classes
             //g.DrawString("Correo:", fBody, sb, 10, increment);
             //g.DrawString(Correo, fBody1, sb, 120, increment);
             //increment += 30;
-            if (Estado != "Rechazada")
+            if (Estado != "Cancelada")
             {
                 g.DrawString("Total:", fBody, sb, 10, increment);
                 g.DrawString(Valor.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);

@@ -34,6 +34,8 @@ namespace WPCamaraComercio.Views
             api = new Api();
             CmbTypeBuyer.SelectedIndex = 0;
             CmbIdDType.SelectedIndex = 0;
+            //CamaraComercio CM = new CamaraComercio();
+            //CM.StartValues();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -48,7 +50,7 @@ namespace WPCamaraComercio.Views
             AssingProperties();
 
             Utilities.ResetTimer();
-            //navigationService.NavigationTo("FrmPayment");
+            navigationService.NavigationTo("FrmPayment");
         }
 
         public void FillTypeDocument(int type)

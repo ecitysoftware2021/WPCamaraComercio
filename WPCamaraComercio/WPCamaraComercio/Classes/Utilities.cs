@@ -80,6 +80,9 @@ namespace WPCamaraComercio.Classes
         public static DataPayPad dataPaypad = new DataPayPad();
         Api api = new Api();
 
+        public static decimal ValueReturned { get; set; }
+        
+
         #endregion
 
         #region GeneralEvents

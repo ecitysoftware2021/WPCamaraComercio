@@ -247,7 +247,7 @@ namespace WPCamaraComercio.Classes
 
         public void Print(string rutaArchivo)
         {
-            rutaArchivo = "C:\\CertificadosElectronicos\\248979-10-317282-0-12-1.pdf";
+            //rutaArchivo = "C:\\CertificadosElectronicos\\248979-10-317282-0-12-1.pdf";
             try
             {
                 using (GhostscriptProcessor processor = new GhostscriptProcessor(GhostscriptVersionInfo.GetLastInstalledVersion(), true))
@@ -289,10 +289,10 @@ namespace WPCamaraComercio.Classes
             print.Referencia = Utilities.IDTransactionDB.ToString();
             print.Valor = Utilities.ValueToPay;
             print.Estado = Estado;
-            //print.ValorDevuelto = Utilities.ValorDevolver;
+            print.ValorDevuelto = Utilities.ValueReturned;
             print.IDCompra = IDCompra;
             print.Tramite = "Certificados Electrónicos";
-            print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"LogoComprobante\LCamaraComercio.png");
+            print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"PrintLogo\LCamaraComercio.png");
             print.ImprimirComprobante();
         } 
         #endregion

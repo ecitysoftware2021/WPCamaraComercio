@@ -69,6 +69,7 @@ namespace WPCamaraComercio.Views
             //recorder.Grabar(Utilities.IDTransactionDB);
             Task.Run(() =>
             {
+                Utilities.control.StartValues();
                 ActivateWallet();
             });
         }
@@ -108,11 +109,25 @@ namespace WPCamaraComercio.Views
 
         private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
-            FrmModal modal = new FrmModal("Esta seguro de cancelar la transacción?", this);
-            if (modal.DialogResult.Value)
+            Dispatcher.BeginInvoke((Action)delegate
             {
-                navigationService.NavigationTo("FrmCancelledPayment");
-            }
+
+                FrmModal modal = new FrmModal("Esta seguro de cancelar la transacción?", this);
+                modal.ShowDialog();
+                if (modal.DialogResult.Value)
+                {
+                    if (PaymentViewModel.ValorIngresado > 0)
+                    {
+                        FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
+                        cancel.Show();
+                        this.Close(); 
+                    }
+                    else
+                    {
+                        Utilities.GoToInicial();
+                    }
+                }
+            });
         }
 
         #endregion
@@ -263,15 +278,16 @@ namespace WPCamaraComercio.Views
 
                 if (!isCancel)
                 {
-                   Utilities.BuyID = await camaraComercio.ConfirmarCompra();
+                    Utilities.BuyID = await camaraComercio.ConfirmarCompra();
                     if (!Utilities.BuyID.Equals("0"))
                     {
                         Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
                         //navigationService.NavigationTo("FinishPayment");
-                        Dispatcher.BeginInvoke((Action)delegate {
-                        FinishPayment frmInformationCompany = new FinishPayment(PaymentViewModel.ValorIngresado, PaymentViewModel.ValorSobrante);
-                        frmInformationCompany.Show();
-                        this.Close();
+                        Dispatcher.BeginInvoke((Action)delegate
+                        {
+                            FinishPayment frmInformationCompany = new FinishPayment(PaymentViewModel.ValorIngresado, PaymentViewModel.ValorSobrante);
+                            frmInformationCompany.Show();
+                            this.Close();
                         });
                     }
                     else
@@ -285,7 +301,9 @@ namespace WPCamaraComercio.Views
                             modal.ShowDialog();
                             if (modal.DialogResult.Value)
                             {
-                                navigationService.NavigationTo("FrmCancelledPayment");
+                                FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
+                                cancel.Show();
+                                this.Close();
                             }
                         });
                     }
@@ -308,6 +326,6 @@ namespace WPCamaraComercio.Views
 
         #endregion
 
-        
+
     }
 }
