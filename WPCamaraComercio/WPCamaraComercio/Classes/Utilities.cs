@@ -96,11 +96,8 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                //Duration = GetConfiguration("Duration");
-                //CountSlider = 0;
-                //flagSlider = false;
-                //dataPaypad = new DataPaypad();
                 control = new ControlPeripherals();
+                control.StopAceptance();
             }
             catch (Exception ex)
             {
@@ -130,8 +127,8 @@ namespace WPCamaraComercio.Classes
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
-                FrmModalErrors modal = new FrmModalErrors(Message);
-                modal.ShowDialog();
+                //FrmModalErrors modal = new FrmModalErrors(Message);
+                //modal.ShowDialog();
             }));
             return;
         }

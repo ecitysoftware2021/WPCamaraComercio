@@ -52,6 +52,7 @@
                     <TextBlock x:Name="LblMessage" 
                            HorizontalAlignment="Center"
                            Margin="20,0,0,45" 
+                           TextAlignment="Center"
                            Grid.Row="1" 
                            FontSize="35" 
                            TextWrapping="WrapWithOverflow"
@@ -72,7 +73,7 @@
                        HorizontalAlignment="Left" 
                        VerticalAlignment="Center"
                        Width="230"
-                       Height="70"
+                       Height="67"
                        Margin="15,0,0,0"
                        StylusDown="BtnCancel_StylusDown"
                         >

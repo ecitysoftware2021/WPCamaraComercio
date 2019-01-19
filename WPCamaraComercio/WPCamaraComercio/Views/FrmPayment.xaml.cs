@@ -82,11 +82,16 @@ namespace WPCamaraComercio.Views
         {
             Dispatcher.BeginInvoke((Action)delegate
             {
-
+                this.Opacity = 0.5;
                 FrmModalConfirmation modal = new FrmModalConfirmation("¿Está seguro de cancelar la transacción?");
                 modal.ShowDialog();
+                this.Opacity = 1;
                 if (modal.DialogResult.Value)
                 {
+                    Task.Run(() =>
+                    {
+                        Utilities.control.StopAceptance();
+                    });
                     if (PaymentViewModel.ValorIngresado > 0)
                     {
                         FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
