@@ -284,7 +284,6 @@ namespace WPCamaraComercio.Classes
         {
             print.Cedula = Utilities.PayerData.BuyerIdentification;
             print.Telefono = Utilities.PayerData.Phone;
-
             print.FechaPago = DateTime.Now;
             print.Nombre = Utilities.PayerData.FullNameBuyer;
             print.Referencia = Utilities.IDTransactionDB.ToString();
@@ -293,7 +292,6 @@ namespace WPCamaraComercio.Classes
             print.ValorDevuelto = Utilities.ValueReturned;
             print.IDCompra = IDCompra;
             print.Tramite = "Certificados Electrónicos";
-            print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"PrintLogo\LCamaraComercio.png");
             print.ImprimirComprobante();
         } 
         #endregion
