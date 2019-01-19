@@ -40,6 +40,8 @@ namespace WPCamaraComercio.Classes
 
         public ReturnObject returnObject;
 
+        WCFPayPadService WCFPayPadService;
+
         #endregion
 
         public PaymentController()
@@ -51,6 +53,8 @@ namespace WPCamaraComercio.Classes
             this.smartCoins = new SmartCoins();
 
             wCFService = new WCFServices();
+
+            WCFPayPadService = new WCFPayPadService();
         }
 
         public void Start(decimal paymentValue)
@@ -282,11 +286,7 @@ namespace WPCamaraComercio.Classes
                     var data = (IsPay) ? WCFPayPad.CLSEstadoEstadoDetalle.Ingresando :
                                         WCFPayPad.CLSEstadoEstadoDetalle.Devolviendo;
 
-                    foreach (var item in Utilities.TransactionIds)
-                    {
-
-                        wCFService.InsertDetailsTransaction(item, value, data);
-                    }
+                    WCFPayPadService.WCFPayPad.InsertarDetalleTransaccion(Utilities.IDTransactionDB, data, value);
                 });
             }
             catch (Exception ex)

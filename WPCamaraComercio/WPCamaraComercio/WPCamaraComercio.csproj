@@ -153,6 +153,7 @@
     <Compile Include="Service\WCFServices.cs" />
     <Compile Include="ViewModels\ConsultViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
+    <Compile Include="ViewModels\PayViewModel.cs" />
     <Compile Include="Views\ConsultWindow.xaml.cs">
       <DependentUpon>ConsultWindow.xaml</DependentUpon>
     </Compile>

@@ -286,7 +286,7 @@ namespace WPCamaraComercio.Views
             }
         });
 
-        private void BtnCancelar_PreviewStylusDown(object sender, StylusDownEventArgs e)
+        private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
             FrmModal frmConfirmation = new FrmModal("¿Está seguro que desea cancelar la transacción?",this);
             frmConfirmation.ShowDialog();
@@ -316,8 +316,7 @@ namespace WPCamaraComercio.Views
                 Close();
             }));
         }
+
         #endregion
-
-
     }
 }
