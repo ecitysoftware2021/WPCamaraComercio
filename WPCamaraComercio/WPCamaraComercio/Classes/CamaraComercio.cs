@@ -310,7 +310,7 @@ namespace WPCamaraComercio.Classes
             //print.ValorDevuelto = Utilities.ValorDevolver;
             print.IDCompra = IDCompra;
             print.Tramite = "Certificados Electrónicos";
-            print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"LogoComprobante\LCamaraComercio.png");
+            print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"PrintLogo\LCamaraComercio.png");
             print.ImprimirComprobante();
         }
     }

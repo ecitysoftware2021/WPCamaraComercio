@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="sp_DatosTransaccionCM_Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CedulaPagador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Estado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FechaTransaccion" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IDCompra" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IDCorresponsal" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="IDTransaccion" type="xs:int" />
+      <xs:element minOccurs="0" name="Valor" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="sp_DatosTransaccionCM_Result" nillable="true" type="tns:sp_DatosTransaccionCM_Result" />
   <xs:complexType name="TblDipMap">
     <xs:sequence>
       <xs:element minOccurs="0" name="Active" nillable="true" type="xs:boolean" />
@@ -50,4 +62,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TblSeat" nillable="true" type="tns:TblSeat" />
+  <xs:complexType name="Tbl_TransaccionPaices">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Devolucion" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="0" name="FechaFinal" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FechaInicio" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IDCorresponsal" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="IDEstado" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="IDTramite" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="IDTransaccion" type="xs:int" />
+      <xs:element minOccurs="0" name="PersonaID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Referencia" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RuteID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Total" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalDevuelto" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalIngresado" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Tbl_TransaccionPaices" nillable="true" type="tns:Tbl_TransaccionPaices" />
 </xs:schema>

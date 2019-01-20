@@ -488,77 +488,77 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         /// TODO:CAMBIAR COMENTARIO
         /// <param name="payFee">Objeto que contiene la info de la transacción</param>
-        public async void CreateTransaction()
-        {
-            try
-            {
-                Transaction Transaction = new Transaction
-                {
-                    TOTAL_AMOUNT = ValueToPay,
-                    DATE_BEGIN = DateTime.Now,
-                    DESCRIPTION = string.Empty,
-                    TYPE_TRANSACTION_ID = 3,
-                    STATE_TRANSACTION_ID = 1,
-                };
+        //public async void CreateTransaction()
+        //{
+        //    try
+        //    {
+        //        Transaction Transaction = new Transaction
+        //        {
+        //            TOTAL_AMOUNT = ValueToPay,
+        //            DATE_BEGIN = DateTime.Now,
+        //            DESCRIPTION = string.Empty,
+        //            TYPE_TRANSACTION_ID = 3,
+        //            STATE_TRANSACTION_ID = 1,
+        //        };
 
-                var response = await api.GetResponse(new RequestApi
-                {
-                    Data = Transaction
-                }, "SaveTransaction");
+        //        var response = await api.GetResponse(new RequestApi
+        //        {
+        //            Data = Transaction
+        //        }, "SaveTransaction");
 
-                if (response != null)
-                {
-                    if (response.CodeError == 200)
-                    {
-                        IDTransactionDB = Convert.ToInt32(response.Data);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
-                //navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
-            }
-        }
+        //        if (response != null)
+        //        {
+        //            if (response.CodeError == 200)
+        //            {
+        //                IDTransactionDB = Convert.ToInt32(response.Data);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
+        //        //navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+        //    }
+        //}
 
-        public async Task<bool> UpdateTransaction(decimal Enter, int state, string BuyID, decimal Return = 0)
-        {
-            try
-            {
+        //public async Task<bool> UpdateTransaction(decimal Enter, int state, string BuyID, decimal Return = 0)
+        //{
+        //    try
+        //    {
 
-                Transaction Transaction = new Transaction
-                {
-                    STATE_TRANSACTION_ID = state,
-                    DATE_END = DateTime.Now,
-                    DESCRIPTION = BuyID,
-                    INCOME_AMOUNT = Enter,
-                    RETURN_AMOUNT = Return,
-                    TRANSACTION_ID = IDTransactionDB
-                };
+        //        Transaction Transaction = new Transaction
+        //        {
+        //            STATE_TRANSACTION_ID = state,
+        //            DATE_END = DateTime.Now,
+        //            DESCRIPTION = BuyID,
+        //            INCOME_AMOUNT = Enter,
+        //            RETURN_AMOUNT = Return,
+        //            TRANSACTION_ID = IDTransactionDB
+        //        };
 
-                var response = await api.GetResponse(new RequestApi
-                {
-                    Data = Transaction
-                }, "UpdateTransaction");
+        //        var response = await api.GetResponse(new RequestApi
+        //        {
+        //            Data = Transaction
+        //        }, "UpdateTransaction");
 
-                if (response != null)
-                {
-                    if (response.CodeError == 200)
-                    {
-                        IDTransactionDB = Convert.ToInt32(response.Data);
-                        return true;
-                    }
+        //        if (response != null)
+        //        {
+        //            if (response.CodeError == 200)
+        //            {
+        //                IDTransactionDB = Convert.ToInt32(response.Data);
+        //                return true;
+        //            }
 
-                    return false;
-                }
+        //            return false;
+        //        }
 
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //        return false;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         public async void InsertPayerData()
         {

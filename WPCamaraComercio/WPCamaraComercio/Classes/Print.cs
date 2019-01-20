@@ -54,7 +54,7 @@ namespace WPCamaraComercio.Classes
         private void PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
-            string RutaIMG = Path.Combine(Directory.GetCurrentDirectory(), @"PrintLogo\LCamaraComercio.png");
+            string RutaIMG =Logo;
 
             int increment = SPACE;
             g.DrawImage(Image.FromFile(Logo), 2, 2);

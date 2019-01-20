@@ -16,6 +16,11 @@ namespace WPCamaraComercio.Service
             return WCFPayPad.InsertarTransaccion(objTransaction);
         }
 
+        public bool ActualizarEstadoTransaccion(int IDTransaccionDB, CLSEstadoEstadoTransaction estado)
+        {
+            return WCFPayPad.ActualizarEstadoTransaccion(IDTransaccionDB, estado);
+        }
+
         public bool InsertarDetalleTransaccion(int IDTransaccion, CLSEstadoEstadoDetalle Estado, decimal Valor)
         {
             return WCFPayPad.InsertarDetalleTransaccion(IDTransaccion, Estado, Valor);

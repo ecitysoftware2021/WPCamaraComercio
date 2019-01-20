@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Service;
-using WPCamaraComercio.WCFPayPad;
+//using WPCamaraComercio.WCFPayPad;
 
 namespace WPCamaraComercio.Views
 {
@@ -15,7 +15,8 @@ namespace WPCamaraComercio.Views
         #region Referencias
         Utilities utilities = new Utilities();
         CamaraComercio camaraComercio = new CamaraComercio();
-        ServicePayPadClient WCFPayPadInsert = new ServicePayPadClient();
+        //ServicePayPadClient WCFPayPadInsert = new ServicePayPadClient();
+        WCFPayPadService payPadService;
         NavigationService navigationService;
         private int count = 0;
         private LogErrorGeneral logError;
@@ -27,6 +28,7 @@ namespace WPCamaraComercio.Views
         public FinishPayment(decimal _enterValue, decimal _returnValue)
         {
             InitializeComponent();
+            payPadService = new WCFPayPadService();
             this.enterValue = _enterValue;
             this.returnValue = _returnValue;
             logError = new LogErrorGeneral();
@@ -55,13 +57,15 @@ namespace WPCamaraComercio.Views
                     {
                         if (antecedent.Result)
                         {
-                            utilities.UpdateTransaction(enterValue, 2, Utilities.BuyID, returnValue);
+                            //utilities.UpdateTransaction(enterValue, 2, Utilities.BuyID, returnValue);
+                            payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
                             camaraComercio.ImprimirComprobante("Aprobada");
                             Utilities.GoToInicial();
                         }
                         else
                         {
-                            utilities.UpdateTransaction(enterValue, 3, Utilities.BuyID, returnValue);
+                            //utilities.UpdateTransaction(enterValue, 3, Utilities.BuyID, returnValue);
+                            payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
                             Dispatcher.BeginInvoke((Action)delegate
                             {
                                 FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,

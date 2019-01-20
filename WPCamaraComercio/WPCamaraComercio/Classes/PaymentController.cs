@@ -285,8 +285,7 @@ namespace WPCamaraComercio.Classes
                 {
                     var data = (IsPay) ? WCFPayPad.CLSEstadoEstadoDetalle.Ingresando :
                                         WCFPayPad.CLSEstadoEstadoDetalle.Devolviendo;
-
-                    WCFPayPadService.WCFPayPad.InsertarDetalleTransaccion(Utilities.IDTransactionDB, data, value);
+                    WCFPayPadService.InsertarDetalleTransaccion(Utilities.IDTransactionDB, data, value);
                 });
             }
             catch (Exception ex)

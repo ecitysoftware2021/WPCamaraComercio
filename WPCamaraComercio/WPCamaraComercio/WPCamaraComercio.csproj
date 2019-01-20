@@ -311,26 +311,23 @@
     <None Include="Connected Services\WCFCamaraComercio\WPCamaraComercio.WCFCamaraComercio.RespuestaDetalle.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad.wsdl" />
-    <None Include="Connected Services\WCFPayPad\ServicePayPad.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad1.wsdl" />
     <None Include="Connected Services\WCFPayPad\ServicePayPad1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad2.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad11.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad3.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad12.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad4.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad13.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad5.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad14.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad6.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad15.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.CLSDataControlScreen.datasource">
@@ -346,6 +343,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.sp_DatosTransaccionCM_Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.TransactionByClientData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -444,7 +444,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad.disco" />
     <None Include="Connected Services\WCFPayPad\configuration91.svcinfo" />
     <None Include="Connected Services\WCFPayPad\configuration.svcinfo" />
     <None Include="Connected Services\WCFPayPad\Reference.svcmap">
@@ -506,7 +505,9 @@
     <Resource Include="Images\Buttons\b-Ingrese-Billete.png" />
     <Resource Include="Images\Buttons\b-Leyendo-Billete.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Connected Services\WCFPayPad\ServicePayPad1.disco" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

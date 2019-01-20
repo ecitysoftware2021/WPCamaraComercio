@@ -11,7 +11,7 @@
         WindowState="Maximized"
         Height="2064.095" 
         Width="1250.599"
-        WindowStartupLocation = "CenterScreen">
+        WindowStartupLocation = "CenterScreen" Loaded="Window_Loaded">
     <Window.Background>
         <ImageBrush ImageSource="../Images/Backgrounds/fondo1.jpg"/>
     </Window.Background>

@@ -2,13 +2,12 @@
 <wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ServicePayPad" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad" />
-      <xsd:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd3" />
-      <xsd:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" />
-      <xsd:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/" />
-      <xsd:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" />
+      <xsd:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad" />
+      <xsd:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd3" />
+      <xsd:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" />
+      <xsd:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IServicePayPad_InsertarTransaccion_InputMessage">
@@ -215,6 +214,18 @@
   <wsdl:message name="IServicePayPad_FinalizarTransaccionPaises_OutputMessage">
     <wsdl:part name="parameters" element="tns:FinalizarTransaccionPaisesResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicePayPad_GetTop5TransactionsByClient_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTop5TransactionsByClient" />
+  </wsdl:message>
+  <wsdl:message name="IServicePayPad_GetTop5TransactionsByClient_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTop5TransactionsByClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicePayPad_UpdateTransactionByID_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTransactionByID" />
+  </wsdl:message>
+  <wsdl:message name="IServicePayPad_UpdateTransactionByID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateTransactionByIDResponse" />
+  </wsdl:message>
   <wsdl:portType name="IServicePayPad">
     <wsdl:operation name="InsertarTransaccion">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicePayPad/InsertarTransaccion" message="tns:IServicePayPad_InsertarTransaccion_InputMessage" />
@@ -351,6 +362,14 @@
     <wsdl:operation name="FinalizarTransaccionPaises">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicePayPad/FinalizarTransaccionPaises" message="tns:IServicePayPad_FinalizarTransaccionPaises_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicePayPad/FinalizarTransaccionPaisesResponse" message="tns:IServicePayPad_FinalizarTransaccionPaises_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTop5TransactionsByClient">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicePayPad/GetTop5TransactionsByClient" message="tns:IServicePayPad_GetTop5TransactionsByClient_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicePayPad/GetTop5TransactionsByClientResponse" message="tns:IServicePayPad_GetTop5TransactionsByClient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransactionByID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicePayPad/UpdateTransactionByID" message="tns:IServicePayPad_UpdateTransactionByID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicePayPad/UpdateTransactionByIDResponse" message="tns:IServicePayPad_UpdateTransactionByID_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IServicePayPad" type="tns:IServicePayPad">
@@ -661,10 +680,28 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetTop5TransactionsByClient">
+      <soap:operation soapAction="http://tempuri.org/IServicePayPad/GetTop5TransactionsByClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTransactionByID">
+      <soap:operation soapAction="http://tempuri.org/IServicePayPad/UpdateTransactionByID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ServicePayPad">
     <wsdl:port name="BasicHttpBinding_IServicePayPad" binding="tns:BasicHttpBinding_IServicePayPad">
-      <soap:address location="http://200.122.221.193:7997/ServicePayPad.svc" />
+      <soap:address location="http://200.122.221.209/ServicePayPad.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

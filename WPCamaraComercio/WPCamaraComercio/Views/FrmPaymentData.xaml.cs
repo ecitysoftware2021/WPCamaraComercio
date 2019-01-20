@@ -17,7 +17,7 @@ namespace WPCamaraComercio.Views
     {
         #region References
         WCFPayPad.CLSTransaction transaction;
-        WCFPayPadService WCFPayPad;
+        WCFPayPadService payPadService;
         NavigationService navigationService;
         Utilities utilities;
         Api api;
@@ -28,7 +28,7 @@ namespace WPCamaraComercio.Views
         {
             InitializeComponent();
             transaction = new WCFPayPad.CLSTransaction();
-            WCFPayPad = new WCFPayPadService();
+            payPadService = new WCFPayPadService();
             navigationService = new NavigationService(this);
             utilities = new Utilities();
             api = new Api();
@@ -49,7 +49,7 @@ namespace WPCamaraComercio.Views
             //CrearTransaccion();
 
             Utilities.ResetTimer();
-            //navigationService.NavigationTo("FrmPayment");
+            navigationService.NavigationTo("FrmPayment");
         }
 
         public void FillTypeDocument(int type)
@@ -104,7 +104,8 @@ namespace WPCamaraComercio.Views
 
                 Utilities.PayerData = payerData;
                 utilities.InsertPayerData();
-                utilities.CreateTransaction();
+                CrearTransaccion();
+                //utilities.CreateTransaction();
             }
             catch (Exception ex)
             {
@@ -163,8 +164,11 @@ namespace WPCamaraComercio.Views
                 transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
                 transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite")); ;
                 transaction.Referencia = "0";
+                transaction.CedulaPagador = TbxIdentification.Text;
+                transaction.Contrato = string.Empty;
+                transaction.FechaCuota = string.Empty;
                 transaction.Total = Utilities.ValueToPay;
-                Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
+                Utilities.IDTransactionDB = payPadService.InsertarTransaccion(transaction);
             }
             catch (Exception ex)
             {

@@ -76,7 +76,7 @@ namespace WPCamaraComercio.Views
             {
                 Task.Run(() =>
                 {
-                    WFCPayPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                    WFCPayPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
                 });
             }
             catch (Exception ex)

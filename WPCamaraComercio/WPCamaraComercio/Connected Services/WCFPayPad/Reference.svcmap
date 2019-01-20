@@ -19,18 +19,17 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://200.122.221.193:7997/ServicePayPad.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://200.122.221.209/ServicePayPad.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ServicePayPad.wsdl" MetadataType="Wsdl" ID="a9500086-8a47-4a9f-8f42-116219d1d1c5" SourceId="1" SourceUrl="http://200.122.221.193:7997/ServicePayPad.svc?wsdl" />
-    <MetadataFile FileName="ServicePayPad.xsd" MetadataType="Schema" ID="5f1f3cbb-b7a5-44db-92f3-cb4afc7b67c7" SourceId="1" SourceUrl="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd4" />
-    <MetadataFile FileName="ServicePayPad1.xsd" MetadataType="Schema" ID="c80bc1cc-2fdd-4342-a6f2-ababd7a4d5c4" SourceId="1" SourceUrl="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd6" />
-    <MetadataFile FileName="ServicePayPad2.xsd" MetadataType="Schema" ID="eae0e9b9-e597-4356-a7db-a9ec15ab11ee" SourceId="1" SourceUrl="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd1" />
-    <MetadataFile FileName="ServicePayPad3.xsd" MetadataType="Schema" ID="afbec923-2ee7-4507-9db6-6d4ae2de2433" SourceId="1" SourceUrl="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd0" />
-    <MetadataFile FileName="ServicePayPad4.xsd" MetadataType="Schema" ID="7b6610a0-2c3a-48ae-a025-66960097c51e" SourceId="1" SourceUrl="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd3" />
-    <MetadataFile FileName="ServicePayPad5.xsd" MetadataType="Schema" ID="c51ebfc7-692d-4f68-a567-25eb41bcf336" SourceId="1" SourceUrl="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd2" />
-    <MetadataFile FileName="ServicePayPad.disco" MetadataType="Disco" ID="ff67a68a-5a42-4de3-98fe-025022b943bc" SourceId="1" SourceUrl="http://200.122.221.193:7997/ServicePayPad.svc?disco" />
-    <MetadataFile FileName="ServicePayPad6.xsd" MetadataType="Schema" ID="d04b0108-5d23-4498-98a1-6c69eed44f09" SourceId="1" SourceUrl="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd5" />
+    <MetadataFile FileName="ServicePayPad1.disco" MetadataType="Disco" ID="f6ed12fe-6ae5-4e02-b9c0-66f78d178503" SourceId="1" SourceUrl="http://200.122.221.209/ServicePayPad.svc?disco" />
+    <MetadataFile FileName="ServicePayPad1.xsd" MetadataType="Schema" ID="16918862-ad79-473d-a377-768341f5ac5a" SourceId="1" SourceUrl="http://200.122.221.209/ServicePayPad.svc?xsd=xsd5" />
+    <MetadataFile FileName="ServicePayPad11.xsd" MetadataType="Schema" ID="dd584a3e-ee5b-4cfa-a210-815fc65e21df" SourceId="1" SourceUrl="http://200.122.221.209/ServicePayPad.svc?xsd=xsd4" />
+    <MetadataFile FileName="ServicePayPad12.xsd" MetadataType="Schema" ID="c03ea22d-9fe9-4e86-ad60-a37e8d66dd2d" SourceId="1" SourceUrl="http://200.122.221.209/ServicePayPad.svc?xsd=xsd1" />
+    <MetadataFile FileName="ServicePayPad13.xsd" MetadataType="Schema" ID="5c972c68-a3d3-41a1-9942-c48c2b924ec5" SourceId="1" SourceUrl="http://200.122.221.209/ServicePayPad.svc?xsd=xsd0" />
+    <MetadataFile FileName="ServicePayPad14.xsd" MetadataType="Schema" ID="1889e027-078b-4caf-afa8-a4251711a521" SourceId="1" SourceUrl="http://200.122.221.209/ServicePayPad.svc?xsd=xsd3" />
+    <MetadataFile FileName="ServicePayPad15.xsd" MetadataType="Schema" ID="2ad18d76-6ac0-4cf7-87e5-9c389c8df6ec" SourceId="1" SourceUrl="http://200.122.221.209/ServicePayPad.svc?xsd=xsd2" />
+    <MetadataFile FileName="ServicePayPad1.wsdl" MetadataType="Wsdl" ID="d76a61f8-ccec-4ddd-94ef-d42ddb662a23" SourceId="1" SourceUrl="http://200.122.221.209/ServicePayPad.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
