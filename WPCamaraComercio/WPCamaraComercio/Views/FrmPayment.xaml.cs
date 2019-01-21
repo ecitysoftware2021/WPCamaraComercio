@@ -23,6 +23,7 @@ namespace WPCamaraComercio.Views
         WCFServices wCFService;
         PaymentController pay;
         PayViewModel payModel;
+        CamaraComercio camaraComercio;
         decimal amount = 0;
         //List<Log> logs;
         #endregion
@@ -38,6 +39,7 @@ namespace WPCamaraComercio.Views
                 //backgroundViewModel = new BackgroundViewModel(Utilities.Operation);
                 navigationService = new NavigationService(this);
                 wCFService = new WCFServices();
+                camaraComercio = new CamaraComercio();
                 //this.DataContext = backgroundViewModel;
                 InitPay();
                 //SendFinish();
@@ -147,10 +149,49 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        public void SendFinish()
+        public async void SendFinish()
         {
             try
             {
+                var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));
+                Utilities.BuyID = await camaraComercio.ConfirmarCompra();
+                if (!Utilities.BuyID.Equals("0"))
+                {
+                    //Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
+                    //navigationService.NavigationTo("FinishPayment");
+                    Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        FinishPayment frmInformationCompany = new FinishPayment(pay,valueInto);
+                        frmInformationCompany.Show();
+                        this.Close();
+                    });
+                }
+                else
+                {
+                   // Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
+                    Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                            "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
+                        "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
+                        modal.ShowDialog();
+                        if (modal.DialogResult.Value)
+                        {
+                            Utilities.ValueEnter = valueInto;
+                            if (valueInto != 0)
+                            {
+                                Utilities.ValueReturn = valueInto;
+                                GotoCancel();
+                            }
+                            else
+                            {
+                                pay.Finish();
+                                Utilities.GoToInicial();
+                            }
+                        }
+                    });
+                }
+
                 pay.Finish();
                 navigationService.NavigationTo("FinishPayment");
             }

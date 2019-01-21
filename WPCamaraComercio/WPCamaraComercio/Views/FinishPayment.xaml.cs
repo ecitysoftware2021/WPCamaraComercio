@@ -18,6 +18,7 @@ namespace WPCamaraComercio.Views
         //ServicePayPadClient WCFPayPadInsert = new ServicePayPadClient();
         WCFPayPadService payPadService;
         NavigationService navigationService;
+        PaymentController pay;
         private int count = 0;
         private LogErrorGeneral logError;
         decimal enterValue = 0;
@@ -25,14 +26,15 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region LoadMethods
-        public FinishPayment(decimal _enterValue, decimal _returnValue)
+        public FinishPayment(PaymentController pay,decimal valueInto)
         {
             InitializeComponent();
             payPadService = new WCFPayPadService();
-            this.enterValue = _enterValue;
-            this.returnValue = _returnValue;
+            pay = new PaymentController();
+            this.returnValue = valueInto;
             logError = new LogErrorGeneral();
             navigationService = new NavigationService(this);
+            this.pay = pay;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -74,7 +76,16 @@ namespace WPCamaraComercio.Views
                                 modal.ShowDialog();
                                 if (modal.DialogResult.Value)
                                 {
-                                    navigationService.NavigationTo("FrmCancelledPayment");
+                                    if (returnValue != 0)
+                                    {
+                                        Utilities.ValueReturn = returnValue;
+                                        GotoCancel();
+                                    }
+                                    else
+                                    {
+                                        pay.Finish();
+                                        Utilities.GoToInicial();
+                                    }
                                 }
                             });
                         }
@@ -92,7 +103,17 @@ namespace WPCamaraComercio.Views
                 navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
                 return null;
             }
-        } 
+        }
+
+        private void GotoCancel()
+        {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                FrmCancelledPayment frmCancelPay = new FrmCancelledPayment(pay);
+                frmCancelPay.Show();
+                Close();
+            }));
+        }
         #endregion
     }
 }
