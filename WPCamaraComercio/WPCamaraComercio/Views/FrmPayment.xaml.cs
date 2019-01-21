@@ -61,7 +61,8 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                amount = Math.Floor(Utilities.ValueToPay);
+                amount = 10000;
+                    //Math.Floor(Utilities.ValueToPay);
                 lblValorPagar.Content = string.Format("{0:C0}", amount);
                 pay = new PaymentController();
                 TimerTime();
@@ -149,12 +150,13 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        public async void SendFinish()
+        public void SendFinish()
         {
             try
             {
                 var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));
-                Utilities.BuyID = await camaraComercio.ConfirmarCompra();
+                Utilities.BuyID = "1";// await camaraComercio.ConfirmarCompra();
+                //camaraComercio.Print("h");
                 if (!Utilities.BuyID.Equals("0"))
                 {
                     //Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
@@ -192,8 +194,8 @@ namespace WPCamaraComercio.Views
                     });
                 }
 
-                pay.Finish();
-                navigationService.NavigationTo("FinishPayment");
+                //pay.Finish();
+                //navigationService.NavigationTo("FinishPayment");
             }
             catch (Exception ex)
             {

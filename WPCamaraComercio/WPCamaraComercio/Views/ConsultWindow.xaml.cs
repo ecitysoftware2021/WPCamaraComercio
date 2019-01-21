@@ -220,8 +220,15 @@ namespace WPCamaraComercio.Views
 
         private void BtnConsultar_StylusDown(object sender, StylusDownEventArgs e)
         {
-            BtnConsultar.IsEnabled = false;
-            ConsulParameter();
+            //if (ScreenControl.EstadoBaul && ScreenControl.EstadoBilletes && ScreenControl.EstadoMonedas)
+            //{
+                BtnConsultar.IsEnabled = false;
+                ConsulParameter();
+            //}
+            //else
+            //{
+            //    navigationService.NavigatorModal("En este momento no se pueden realizar transacciones, por favor intente más tarde.");
+            //}
         }
 
         private void chkIdentification_StylusDown(object sender, StylusDownEventArgs e)

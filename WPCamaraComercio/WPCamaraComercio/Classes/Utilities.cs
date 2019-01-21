@@ -113,7 +113,7 @@ namespace WPCamaraComercio.Classes
         public static int GetDescriptionEnum(string value)
         {
             // Declaracion de una variable numerica
-            int idTypeEnum = 0;
+            int idTypeEnum = 1;
             try
             {
                 // Obtener tipo de enumeracion
