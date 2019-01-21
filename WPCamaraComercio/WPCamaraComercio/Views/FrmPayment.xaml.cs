@@ -152,7 +152,7 @@ namespace WPCamaraComercio.Views
             try
             {
                 pay.Finish();
-                navigationService.NavigationTo("FrmFinishTransaction");
+                navigationService.NavigationTo("FinishPayment");
             }
             catch (Exception ex)
             {
