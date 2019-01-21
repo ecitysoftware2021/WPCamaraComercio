@@ -85,7 +85,7 @@
                            TextWrapping="Wrap"
                            Foreground="Black"
                                />
-                    <Label Content="Matricula:"
+                    <Label Content="Matrícula:"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"
                            FontSize="35"
@@ -109,7 +109,7 @@
                            FontSize="35"
                            FontWeight="Bold"
                            Foreground="Black"
-                           Margin="0,0,10,50"
+                           Margin="0,0,15,50"
                            Width="280"
                         />
                     <TextBlock x:Name="TxbState" 

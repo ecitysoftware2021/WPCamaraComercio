@@ -150,17 +150,15 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        public void SendFinish()
+        public async void SendFinish()
         {
             try
             {
                 var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));
-                Utilities.BuyID = "1";// await camaraComercio.ConfirmarCompra();
+                Utilities.BuyID =  await camaraComercio.ConfirmarCompra();
                 //camaraComercio.Print("h");
                 if (!Utilities.BuyID.Equals("0"))
                 {
-                    //Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
-                    //navigationService.NavigationTo("FinishPayment");
                     Dispatcher.BeginInvoke((Action)delegate
                     {
                         FinishPayment frmInformationCompany = new FinishPayment(pay,valueInto);
@@ -170,7 +168,6 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
-                   // Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
                     Dispatcher.BeginInvoke((Action)delegate
                     {
                         FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
@@ -193,7 +190,6 @@ namespace WPCamaraComercio.Views
                         }
                     });
                 }
-
                 //pay.Finish();
                 //navigationService.NavigationTo("FinishPayment");
             }
@@ -311,7 +307,6 @@ namespace WPCamaraComercio.Views
             try
             {
                 payModel.ValorIngresado = string.Format("{0:C0}", decimal.Parse(value));
-                //InsertDetails(decimal.Parse(value), true);
                 decimal faltante = amount - decimal.Parse(value);
                 decimal restante = 0;
                 if (faltante < 0)

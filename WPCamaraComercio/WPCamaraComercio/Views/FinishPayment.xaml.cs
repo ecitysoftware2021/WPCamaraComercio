@@ -50,50 +50,44 @@ namespace WPCamaraComercio.Views
             {
                 var t = Task.Run(() =>
                     {
-                        //return camaraComercio.ListCertificadosiMPORT();
-                        camaraComercio.Print("2");
+                        return camaraComercio.ListCertificadosiMPORT();
+                        //camaraComercio.Print("2");
                     });
 
                 var c = t.ContinueWith((antecedent) =>
                 {
                     if (t.Status == TaskStatus.RanToCompletion)
                     {
-                        //utilities.UpdateTransaction(enterValue, 2, Utilities.BuyID, returnValue);
-                        payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                        camaraComercio.ImprimirComprobante("Aprobada");
-                        Utilities.GoToInicial();
-                    //    if (antecedent.Result)
-                    //    {
-                    //        //utilities.UpdateTransaction(enterValue, 2, Utilities.BuyID, returnValue);
-                    //        payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                    //        camaraComercio.ImprimirComprobante("Aprobada");
-                    //        Utilities.GoToInicial();
-                    //    }
-                    //    else
-                    //    {
-                    //        //utilities.UpdateTransaction(enterValue, 3, Utilities.BuyID, returnValue);
-                    //        payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                    //        Dispatcher.BeginInvoke((Action)delegate
-                    //        {
-                    //            FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
-                    //                    "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
-                    //                    "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
-                    //            modal.ShowDialog();
-                    //            if (modal.DialogResult.Value)
-                    //            {
-                    //                if (returnValue != 0)
-                    //                {
-                    //                    Utilities.ValueReturn = returnValue;
-                    //                    GotoCancel();
-                    //                }
-                    //                else
-                    //                {
-                    //                    pay.Finish();
-                    //                    Utilities.GoToInicial();
-                    //                }
-                    //            }
-                    //        });
-                    //    }
+                        if (antecedent.Result)
+                        {
+                            payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                            camaraComercio.ImprimirComprobante("Aprobada");
+                            Utilities.GoToInicial();
+                        }
+                        else
+                        {
+                            payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                            Dispatcher.BeginInvoke((Action)delegate
+                            {
+                                FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                                        "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
+                                        "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
+                                modal.ShowDialog();
+                                if (modal.DialogResult.Value)
+                                {
+                                    if (returnValue != 0)
+                                    {
+                                        Utilities.ValueReturn = returnValue;
+                                        GotoCancel();
+                                    }
+                                    else
+                                    {
+                                        pay.Finish();
+                                        Utilities.GoToInicial();
+                                    }
+                                }
+                            });
+                        }
                     }
                     else if (t.Status == TaskStatus.Faulted)
                     {

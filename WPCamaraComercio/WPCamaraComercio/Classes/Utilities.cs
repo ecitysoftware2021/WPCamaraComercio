@@ -57,11 +57,6 @@ namespace WPCamaraComercio.Classes
 
         public static List<Certificado> ListCertificates = new List<Certificado>();
 
-        //internal void UpdateTransaction(object _enterValue, int v, string buyID)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public static decimal ValueToPay { get; set; }
 
         public static int IDTransactionDB { get; set; }
