@@ -6,6 +6,7 @@ using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.ViewModels;
+using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Views
 {
@@ -35,9 +36,9 @@ namespace WPCamaraComercio.Views
         private int tries;//Contador utilizado para los reintentos en SavePay
         CamaraComercio camaraComercio;
         NavigationService navigationService;
-
+        private Api api;
         bool isCancel = false;
-
+        private TransactionDetails transactionDetails;
         #endregion
 
         #region LoadMethods
@@ -50,6 +51,8 @@ namespace WPCamaraComercio.Views
             frmLoading = new FrmLoading();
             payPadService = new WCFPayPadService();
             recorder = new Record();
+            api = new Api();
+            transactionDetails = new TransactionDetails();
             camaraComercio = new CamaraComercio();
             utilities = new Utilities();
             navigationService = new NavigationService(this);
@@ -170,18 +173,15 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                Utilities.control.callbackValueOut = valueOut =>
-                {
-                    if (valueOut > 0)
-                    {
-
-                    }
-                };
 
                 Utilities.control.callbackTotalOut = totalOut =>
                 {
-                    Utilities.SaveLogDispenser(ControlPeripherals.log);
-                    FinishPayment().Wait();
+                    EndDispenserMoney(totalOut, 2);
+                };
+
+                Utilities.control.callbackOut = quiantityOut =>
+                {
+                    EndDispenserMoney(quiantityOut, 2);
                 };
 
                 Utilities.control.callbackError = error =>
@@ -195,6 +195,30 @@ namespace WPCamaraComercio.Views
             {
                 throw ex;
             }
+        }
+
+        private async void EndDispenserMoney(decimal quiantity, int state)
+        {
+            Utilities.ValueDelivery = (long)quiantity;
+            await Task.Run(() =>
+            {
+                Utilities.SaveLogDispenser(ControlPeripherals.log);
+                Utilities.UpdateTransaction(0, state, Utilities.ValueDelivery).Wait();
+            });
+
+            transactionDetails.Description = Utilities.control.LogMessage;
+            RequestApi requestApi = new RequestApi
+            {
+                Data = transactionDetails//TODO: cambiar el idtransaction
+            };
+
+            var response = await api.GetResponse(requestApi, "SaveTransactionDetail");
+            await Dispatcher.BeginInvoke(new Action(() =>
+            {
+                Utilities.Loading(frmLoading, false, this);
+            }));
+
+            FinishPayment();
         }
 
         /// <summary>
@@ -251,7 +275,6 @@ namespace WPCamaraComercio.Views
             try
             {
                 //ApproveTrans();
-
                 if (!isCancel)
                 {
                     Utilities.BuyID = await camaraComercio.ConfirmarCompra();
@@ -286,7 +309,7 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
-                    utilities.UpdateTransaction(PaymentViewModel.ValorIngresado, 3, string.Empty, PaymentViewModel.ValorSobrante);
+                    Utilities.UpdateTransaction(PaymentViewModel.ValorIngresado, 3, PaymentViewModel.ValorSobrante);
                     Utilities.GoToInicial();
                 }
             }
@@ -301,7 +324,5 @@ namespace WPCamaraComercio.Views
         /// </summary>
 
         #endregion
-
-
     }
 }

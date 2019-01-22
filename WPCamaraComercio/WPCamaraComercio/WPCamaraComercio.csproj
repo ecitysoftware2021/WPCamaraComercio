@@ -137,6 +137,7 @@
     <Compile Include="Objects\RosponseAuth.cs" />
     <Compile Include="Objects\SelectedDetail.cs" />
     <Compile Include="Objects\Transaction.cs" />
+    <Compile Include="Objects\TransactionDetails.cs" />
     <Compile Include="Service\Api.cs" />
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Response.cs" />

@@ -81,7 +81,9 @@ namespace WPCamaraComercio.Classes
         Api api = new Api();
 
         public static decimal ValueReturned { get; set; }
-        
+
+        public static long ValueDelivery { get; set; }// valor entregado en la pantalla de retiro
+
 
         #endregion
 
@@ -484,7 +486,7 @@ namespace WPCamaraComercio.Classes
             }
         }
 
-        public async Task<bool> UpdateTransaction(decimal Enter, int state, string BuyID, decimal Return = 0)
+        public async static Task<bool> UpdateTransaction(decimal Enter, int state, decimal Return = 0)
         {
             try
             {

@@ -79,13 +79,13 @@ namespace WPCamaraComercio.Classes
 
         private decimal dispenserValue;//Valor a dispensar
 
+        private bool stateError;
+
         private static string TOKEN;//Llabe que retorna el dispenser
 
-        public static string LogMessage;//Mensaje para el log
+        public string LogMessage;//Mensaje para el log
 
         public static LogDispenser log;//Log del dispenser
-
-        public string ResponseTotal;
 
         #endregion
 
@@ -102,11 +102,7 @@ namespace WPCamaraComercio.Classes
             {
                 _serialPortBills = new SerialPort();
                 _serialPortCoins = new SerialPort();
-                log = new LogDispenser
-                {
-                    DateDispenser = DateTime.Now,
-                    TransactionId = Utilities.IDTransactionDB.ToString(),
-                };
+                log = new LogDispenser();
                 InitPortBills();
                 InitPortPurses();
             }
@@ -366,12 +362,12 @@ namespace WPCamaraComercio.Classes
         {
             if (response[1] == "DP" || response[1] == "MD")
             {
-                LogMessage += string.Concat("Error: ", response[2], Environment.NewLine, "Valor entregado: ", deliveryValue, Environment.NewLine);
+                stateError = true;
                 callbackError?.Invoke(string.Concat("Error, se alcanzó a entregar:", deliveryValue));
             }
             if (response[1] == "AP")
             {
-                LogMessage += string.Concat("Error: ", response[2], Environment.NewLine);
+                stateError = true;
                 callbackError?.Invoke("Error, en el billetero Aceptance");
             }
             else if (response[1] == "FATAL")
@@ -417,6 +413,7 @@ namespace WPCamaraComercio.Classes
         {
             deliveryValue = 0;
             enterValue = 0;
+            LogMessage = string.Empty;
         }
 
         /// <summary>
@@ -425,18 +422,26 @@ namespace WPCamaraComercio.Classes
         /// <param name="response">respuesta</param>
         private void ProcessTO(string[] response)
         {
+            string responseFull;
             if (response[1] == "OK")
             {
-                if (response[2] == "DP" || response[2] == "MD")
+                responseFull = string.Concat(response[2], ":", response[3]);
+                if (response[2] == "DP")
                 {
-                    ConfigDataDispenser(response[3]);
+                    ConfigDataDispenser(responseFull, 1);
+                }
+
+                if (response[2] == "MD")
+                {
+                    ConfigDataDispenser(responseFull);
                 }
             }
             else
             {
+                responseFull = string.Concat(response[2], ":", response[3]);
                 if (response[2] == "DP")
                 {
-                    ConfigDataDispenser(response[3], true);
+                    ConfigDataDispenser(responseFull, 2);
                 }
             }
         }
@@ -565,45 +570,50 @@ namespace WPCamaraComercio.Classes
         public void StopAceptance()
         {
             SendMessageBills(_AceptanceBillOFF);
-            //SendMessageCoins(_AceptanceCoinOff);
+            SendMessageCoins(_AceptanceCoinOff);
         }
 
         #endregion
 
         #region Responses
-        decimal deliveryVal = 0;
+
+        public decimal deliveryVal = 0;
         /// <summary>
-        /// Procesa la respuesta del billeteri dispenser
+        /// Procesa la respuesta de los dispenser M y B
         /// </summary>
         /// <param name="data">respuesta</param>
         /// <param name="isRj">si se fue o no al reject</param>
-        private void ConfigDataDispenser(string data, bool isRj = false)
+        private void ConfigDataDispenser(string data, int isBX = 0)
         {
-            string[] values = data.Split(';');
-            foreach (var value in values)
+            string[] values = data.Split(':')[1].Split(';');
+            if (isBX < 2)
             {
-                int denominacion = int.Parse(value.Split('-')[0]);
-                int cantidad = int.Parse(value.Split('-')[1]);
-                deliveryVal += denominacion * cantidad;
-                LogMessage += string.Concat("Respuesta: ", values.ToString(), Environment.NewLine);
-                if (isRj)
+                foreach (var value in values)
                 {
-                    LogMessage += string.Concat("Cantidad en el reject: ", deliveryValue, Environment.NewLine);
-                }
-                else
-                {
-                    LogMessage += string.Concat("Cantidad dispensada: ", deliveryValue, Environment.NewLine);
+                    int denominacion = int.Parse(value.Split('-')[0]);
+                    int cantidad = int.Parse(value.Split('-')[1]);
+                    deliveryVal += denominacion * cantidad;
                 }
             }
-            if (dispenserValue == deliveryVal)
+
+            if (isBX == 0 || isBX == 2)
             {
-                ResponseTotal = data.Replace("\r", string.Empty);
-                callbackTotalOut?.Invoke(deliveryVal);
+                LogMessage += string.Concat(data.Replace("\r", string.Empty), "!");
             }
-            else if (dispenserValue > deliveryVal)
+
+            if (!stateError)
             {
-                ResponseTotal = data.Replace("\r", string.Empty);
-                callbackOut?.Invoke(deliveryVal);
+                if (dispenserValue == deliveryVal && isBX == 2)
+                {
+                    callbackTotalOut?.Invoke(deliveryVal);
+                }
+            }
+            else
+            {
+                if (isBX == 2)
+                {
+                    callbackOut?.Invoke(deliveryVal);
+                }
             }
         }
 
@@ -628,6 +638,5 @@ namespace WPCamaraComercio.Classes
         }
 
         #endregion
-
     }
 }
