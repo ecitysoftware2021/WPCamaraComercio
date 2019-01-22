@@ -326,8 +326,10 @@ namespace WPCamaraComercio.Views
 
         private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
-            FrmModal frmConfirmation = new FrmModal("¿Está seguro que desea cancelar la transacción?",this);
+            this.Opacity = 0.5;
+            FrmModalConfirmation frmConfirmation = new FrmModalConfirmation("¿Está seguro que desea cancelar la transacción?");
             frmConfirmation.ShowDialog();
+            this.Opacity = 1;
             if (frmConfirmation.DialogResult.Value && frmConfirmation.DialogResult.HasValue)
             {
                 var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));

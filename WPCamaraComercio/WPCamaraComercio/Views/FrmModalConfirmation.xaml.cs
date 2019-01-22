@@ -6,9 +6,9 @@ namespace WPCamaraComercio.Views
     /// <summary>
     /// Interaction logic for FrmModalErrors.xaml
     /// </summary>
-    public partial class FrmModalErrors : Window
+    public partial class FrmModalConfirmation : Window
     {
-        public FrmModalErrors(string message)
+        public FrmModalConfirmation(string message)
         {
             InitializeComponent();
             LblMessage.Text = message;
@@ -16,7 +16,12 @@ namespace WPCamaraComercio.Views
 
         private void BtnOk_StylusDown(object sender, StylusDownEventArgs e)
         {
-            this.Close();
+            DialogResult = true;
+        }
+
+        private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
+        {
+            DialogResult = false;
         }
     }
 }

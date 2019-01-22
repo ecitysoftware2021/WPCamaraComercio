@@ -187,8 +187,10 @@ namespace WPCamaraComercio.Views
 
         private void Details(Details details)
         {
+            this.Opacity = 0.5;
             FrmModalDetailEstablish FrmModalDetailEstablish = new FrmModalDetailEstablish(details);
             FrmModalDetailEstablish.ShowDialog();
+            this.Opacity = 1;
         } 
         #endregion
 
@@ -289,8 +291,10 @@ namespace WPCamaraComercio.Views
 
         private void TxbData2_StylusDown(object sender, StylusDownEventArgs e)
         {
+            this.Opacity = 0.5;
             FrmModalDetailMerchant frmModalDetail = new FrmModalDetailMerchant(Utilities.ListMerchantDetail[0]);
             frmModalDetail.ShowDialog();
+            this.Opacity = 1;
         }
 
         private void BtnAcept_StylusDown(object sender, StylusDownEventArgs e)

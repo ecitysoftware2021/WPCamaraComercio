@@ -154,15 +154,15 @@ namespace WPCamaraComercio.Classes
         /// Se usa para abrir la modal de información/error
         /// </summary>
         /// <param name="Message">mensaje para ser mostrado</param>
-        public static void ModalError(string Message)
-        {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-            {
-                FrmModalErrors modal = new FrmModalErrors(Message);
-                modal.ShowDialog();
-            }));
-            return;
-        }
+        //public static void ModalError(string Message)
+        //{
+        //    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+        //    {
+        //        FrmModalErrors modal = new FrmModalErrors(Message);
+        //        modal.ShowDialog();
+        //    }));
+        //    return;
+        //}
 
         /// <summary>
         /// Se usa para ocultar o mostrar la modal de carga

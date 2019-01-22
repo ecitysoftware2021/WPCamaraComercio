@@ -19,6 +19,9 @@ namespace WPCamaraComercio.Views
         private WCFServices services;
         private Utilities utilities;
         NavigationService navigationService;
+        string message = string.Concat("Lo sentimos, ",
+                               Environment.NewLine,
+                               "En este momento el servicio no se encuentra disponible.");
         #endregion
 
         #region LoadMethods
@@ -65,17 +68,15 @@ namespace WPCamaraComercio.Views
                         }
                         else
                         {
-                            Utilities.ModalError(string.Concat("Lo sentimos, ",
-                               Environment.NewLine,
-                               "En este momento el servicio no se encuentra disponible."));
+                            FrmModal modal = new FrmModal(message);
+                            modal.ShowDialog();
                         }
                     }
                 }
                 else
                 {
-                    Utilities.ModalError(string.Concat("Lo sentimos, ",
-                           Environment.NewLine,
-                           "En este momento el servicio no se encuentra disponible."));
+                    FrmModal modal = new FrmModal(message);
+                    modal.ShowDialog();
                 }
             }
             catch (Exception ex)

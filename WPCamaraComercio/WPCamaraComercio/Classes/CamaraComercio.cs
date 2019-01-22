@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
+using WPCamaraComercio.Views;
 using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.Classes
@@ -53,6 +54,10 @@ namespace WPCamaraComercio.Classes
         private List<string> LRutasCertificados = new List<string>();
 
         List<LogError> logError = new List<LogError>();
+
+        string message = string.Concat("Lo sentimos, ",
+                           Environment.NewLine,
+                           "En este momento el servicio no se encuentra disponible.");
 
         public async Task<string> ConfirmarCompra()
         {
@@ -99,9 +104,8 @@ namespace WPCamaraComercio.Classes
                         }
                         else
                         {
-                            Utilities.ModalError(string.Concat("Lo sentimos, ",
-                               Environment.NewLine,
-                               "En este momento el servicio no se encuentra disponible."));
+                            FrmModal modal = new FrmModal(message);
+                            modal.ShowDialog();
                         }
                     }
                     else
@@ -111,9 +115,8 @@ namespace WPCamaraComercio.Classes
                 }
                 else
                 {
-                    Utilities.ModalError(string.Concat("Lo sentimos, ",
-                           Environment.NewLine,
-                           "En este momento el servicio no se encuentra disponible."));
+                    FrmModal modal = new FrmModal(message);
+                    modal.ShowDialog();
                 }
             }
             catch (Exception ex)
@@ -189,9 +192,8 @@ namespace WPCamaraComercio.Classes
                         else
                         {
                             printState = false;
-                            Utilities.ModalError(string.Concat("Lo sentimos, ",
-                               Environment.NewLine,
-                               "En este momento el servicio no se encuentra disponible."));
+                            FrmModal modal = new FrmModal(message);
+                            modal.ShowDialog();
                         }
                     }
                 }

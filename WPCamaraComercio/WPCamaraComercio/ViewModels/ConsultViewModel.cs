@@ -9,6 +9,7 @@ using System.Windows.Data;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
+using WPCamaraComercio.Views;
 using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.ViewModels
@@ -20,6 +21,10 @@ namespace WPCamaraComercio.ViewModels
         public Action<bool> callbackSearch;
 
         private List<Coincidence> _coincidences;
+
+        string modalMessage = string.Concat("Lo sentimos, ",
+                            Environment.NewLine,
+                            "En este momento el servicio no se encuentra disponible.");
 
         public List<Coincidence> coincidences
         {
@@ -204,16 +209,14 @@ namespace WPCamaraComercio.ViewModels
                         }
                         else
                         {
-                            Utilities.ModalError(string.Concat("Lo sentimos, ",
-                            Environment.NewLine,
-                            "En este momento el servicio no se encuentra disponible."));
+                            FrmModal modal = new FrmModal(modalMessage);
+                            modal.ShowDialog();
                         }
                     }
                     else
                     {
-                        Utilities.ModalError(string.Concat("Lo sentimos, ",
-                            Environment.NewLine,
-                            "En este momento el servicio no se encuentra disponible."));
+                        FrmModal modal = new FrmModal(modalMessage);
+                        modal.ShowDialog();
                     }
                     this.preload = Visibility.Hidden;
                     callbackSearch?.Invoke(stateConsult);

@@ -1,11 +1,11 @@
-﻿<Window x:Class="WPCamaraComercio.Views.FrmModalErrors"
+﻿<Window x:Class="WPCamaraComercio.Views.FrmModalConfirmation"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
         mc:Ignorable="d"
-        Title="FrmModalErrors" 
+        Title="FrmModalConfirmation" 
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
@@ -52,6 +52,7 @@
                     <TextBlock x:Name="LblMessage" 
                            HorizontalAlignment="Center"
                            Margin="20,0,0,45" 
+                           TextAlignment="Center"
                            Grid.Row="1" 
                            FontSize="35" 
                            TextWrapping="WrapWithOverflow"
@@ -67,22 +68,39 @@
                     BorderThickness="4,2,2,2"
                     CornerRadius="0,0,30,30" Margin="0,4,-4,-4" Grid.ColumnSpan="2"
                     >
-                <Button Name="BtnOk"
-                       HorizontalAlignment="Center" 
+
+                <Button Name="BtnCancel"
+                       HorizontalAlignment="Left" 
                        VerticalAlignment="Center"
                        Width="230"
-                       Height="70"
-                       Margin="0,0,0,0"
-                       StylusDown="BtnOk_StylusDown"
+                       Height="67"
+                       Margin="15,0,0,0"
+                       StylusDown="BtnCancel_StylusDown"
                         >
                     <Button.Background>
-                        <ImageBrush ImageSource="/Images/Buttons/b-Aceptar.png" Stretch="Fill" />
+                        <ImageBrush ImageSource="/Images/Buttons/btnCancelar.png" Stretch="Fill" />
                     </Button.Background>
                     <Button.BorderThickness>
                         <Thickness></Thickness>
                     </Button.BorderThickness>
                 </Button>
             </Border>
+            <Button Name="BtnOk"
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Center"
+                       Width="230"
+                       Height="70"
+                       Grid.Row="2"
+                       Margin="0,0,10,0"
+                       StylusDown="BtnOk_StylusDown"
+                        >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/Buttons/b-Aceptar.png" Stretch="Fill" />
+                </Button.Background>
+                <Button.BorderThickness>
+                    <Thickness></Thickness>
+                </Button.BorderThickness>
+            </Button>
         </Grid>
     </Border>
 </Window>

@@ -14,7 +14,7 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region LoadMethods
-        public FrmModal(string mensaje, Window w, bool state = false)
+        public FrmModal(string mensaje, Window w = null, bool state = false)
         {
             InitializeComponent();
             LblMessage.Text = mensaje;
