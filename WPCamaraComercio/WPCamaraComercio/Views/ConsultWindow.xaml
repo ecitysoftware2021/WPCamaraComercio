@@ -62,7 +62,7 @@
                     Foreground="Black" 
                     FontSize="55" 
                     FontWeight="Bold" 
-                    Margin="0,150,0,150"/>
+                    Margin="0,90,0,150"/>
 
             <Image  x:Name="chkIdentification"
                     Source="{Binding sourceCheckNit}"
@@ -71,7 +71,7 @@
                     Height="60"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Margin="150,0,0,0"
+                    Margin="150,0,0,50"
                     StylusDown="chkIdentification_StylusDown" />
 
             <TextBlock TextWrapping="WrapWithOverflow" 
@@ -81,7 +81,7 @@
                     Text="Identificación" 
                     Foreground="Black" 
                     FontSize="50" 
-                    Margin="230,0,0,0"/>
+                    Margin="230,0,0,50"/>
 
             <Image  x:Name="chkName"
                     Source="{Binding sourceCheckName}"
@@ -90,7 +90,8 @@
                     Tag="N"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Margin="0,0,300,0" StylusDown="chkName_StylusDown"/>
+                    Margin="0,0,300,50" 
+                    StylusDown="chkName_StylusDown"/>
 
             <TextBlock TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Right" 
@@ -99,7 +100,7 @@
                     Text="Nombre" 
                     Foreground="Black" 
                     FontSize="50" 
-                    Margin="0,0,100,0"/>
+                    Margin="0,0,100,50"/>
 
             <TextBlock
                     x:Name="LblTitle"
@@ -111,7 +112,7 @@
                     Foreground="Black" 
                     FontSize="45" 
                     FontWeight="Bold" 
-                    Margin="0,280,0,0"
+                    Margin="0,280,0,40"
                     Height="122"
                     Width="850"
                         />
