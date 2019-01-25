@@ -104,7 +104,7 @@ namespace WPCamaraComercio.Classes
                         }
                         else
                         {
-                            FrmModal modal = new FrmModal(message);
+                            FrmModal modal = new FrmModal(message,null);
                             modal.ShowDialog();
                         }
                     }
@@ -115,7 +115,7 @@ namespace WPCamaraComercio.Classes
                 }
                 else
                 {
-                    FrmModal modal = new FrmModal(message);
+                    FrmModal modal = new FrmModal(message,null);
                     modal.ShowDialog();
                 }
             }
@@ -192,7 +192,7 @@ namespace WPCamaraComercio.Classes
                         else
                         {
                             printState = false;
-                            FrmModal modal = new FrmModal(message);
+                            FrmModal modal = new FrmModal(message,null);
                             modal.ShowDialog();
                         }
                     }
@@ -303,13 +303,12 @@ namespace WPCamaraComercio.Classes
         {
             print.Cedula = Utilities.PayerData.BuyerIdentification;
             print.Telefono = Utilities.PayerData.Phone;
-
             print.FechaPago = DateTime.Now;
             print.Nombre = Utilities.PayerData.FullNameBuyer;
             print.Referencia = Utilities.IDTransactionDB.ToString();
             print.Valor = Utilities.ValueToPay;
             print.Estado = Estado;
-            //print.ValorDevuelto = Utilities.ValorDevolver;
+            print.ValorDevuelto = Utilities.ValueReturn;
             print.IDCompra = IDCompra;
             print.Tramite = "Certificados Electrónicos";
             print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"PrintLogo\LCamaraComercio.png");

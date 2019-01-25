@@ -61,8 +61,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                amount = 10000;
-                    //Math.Floor(Utilities.ValueToPay);
+                amount = Math.Floor(Utilities.ValueToPay);
                 lblValorPagar.Content = string.Format("{0:C0}", amount);
                 pay = new PaymentController();
                 TimerTime();
@@ -70,7 +69,7 @@ namespace WPCamaraComercio.Views
                 {
                     ValorFaltante = string.Format("{0:C0}", amount),
                     ValorIngresado = string.Format("{0:C0}", 0),
-                    ValorRestante = string.Format("{0:C0}", 0),
+                    ValorSobrante = string.Format("{0:C0}", 0),
                     ImgCancel = Visibility.Visible,
                     ImgEspereCambio = Visibility.Hidden,
                     ImgIngreseBillete = Visibility.Visible,
@@ -155,7 +154,7 @@ namespace WPCamaraComercio.Views
             try
             {
                 var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));
-                Utilities.BuyID =  await camaraComercio.ConfirmarCompra();
+                Utilities.BuyID = "0"; //await camaraComercio.ConfirmarCompra();
                 //camaraComercio.Print("h");
                 if (!Utilities.BuyID.Equals("0"))
                 {
@@ -168,7 +167,7 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
-                    Dispatcher.BeginInvoke((Action)delegate
+                    await Dispatcher.BeginInvoke((Action)delegate
                     {
                         FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
                             "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
@@ -179,7 +178,7 @@ namespace WPCamaraComercio.Views
                             Utilities.ValueEnter = valueInto;
                             if (valueInto != 0)
                             {
-                                Utilities.ValueReturn = valueInto;
+                                Utilities.ValueReturn = Math.Floor(Utilities.ValueToPay);
                                 GotoCancel();
                             }
                             else
@@ -190,8 +189,6 @@ namespace WPCamaraComercio.Views
                         }
                     });
                 }
-                //pay.Finish();
-                //navigationService.NavigationTo("FinishPayment");
             }
             catch (Exception ex)
             {
@@ -245,7 +242,7 @@ namespace WPCamaraComercio.Views
                         payModel.ImgIngreseBillete = Visibility.Visible;
                         payModel.ImgCancel = Visibility.Visible;
                     }
-                    else if (double.Parse(payModel.ValorRestante.Replace("$", "")) > 0)
+                    else if (double.Parse(payModel.ValorSobrante.Replace("$", "")) > 0)
                     {
                         payModel.ImgRecibo = Visibility.Hidden;
                         payModel.ImgLeyendoBillete = Visibility.Hidden;
@@ -316,7 +313,7 @@ namespace WPCamaraComercio.Views
                 }
 
                 payModel.ValorFaltante = string.Format("{0:C0}", faltante);
-                payModel.ValorRestante = string.Format("{0:C0}", restante);
+                payModel.ValorSobrante = string.Format("{0:C0}", restante);
             }
             catch (Exception ex)
             {

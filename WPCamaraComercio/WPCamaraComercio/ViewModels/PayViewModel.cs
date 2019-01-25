@@ -16,7 +16,7 @@ namespace WPCamaraComercio.ViewModels
 
         #region Attribute
         private string _valorIngresado;
-        private string _valorRestante;
+        private string _valorSobrante;
         private string _valorFaltante;
         private Visibility _imgLeyendoBillete;
         private Visibility _imgRecibo;
@@ -107,15 +107,15 @@ namespace WPCamaraComercio.ViewModels
             }
         }
 
-        public string ValorRestante
+        public string ValorSobrante
         {
-            get { return _valorRestante; }
+            get { return _valorSobrante; }
             set
             {
-                if (_valorRestante != value)
+                if (_valorSobrante != value)
                 {
-                    _valorRestante = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ValorRestante)));
+                    _valorSobrante = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ValorSobrante)));
                 }
 
             }

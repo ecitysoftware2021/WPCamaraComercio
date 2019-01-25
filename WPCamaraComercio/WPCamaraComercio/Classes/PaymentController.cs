@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using WPCamaraComercio.Classes.Smart;
 using WPCamaraComercio.Service;
@@ -129,6 +130,7 @@ namespace WPCamaraComercio.Classes
                                 if (returnObject.state)
                                 {
                                     returnObject.state = false;
+                                    Thread.Sleep(1500);
                                     decimal dispenValue = payout.PayOut(returnObject.amount);
 
                                     if (dispenValue == returnObject.amount && returnObject.tryPay < 3)

@@ -90,7 +90,10 @@ namespace WPCamaraComercio.Views
         /// </summary>
         private void FinishTransaction()
         {
-            camaraComercio.ImprimirComprobante("Cancelada");
+            Task.Run(() =>
+            {
+                camaraComercio.ImprimirComprobante("Cancelada");
+            });
             Utilities.GoToInicial();
         }
         #endregion

@@ -7,6 +7,7 @@ using System.Windows.Input;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
+using WPCamaraComercio.WCFPayPad;
 
 namespace WPCamaraComercio.Views
 {
@@ -16,7 +17,7 @@ namespace WPCamaraComercio.Views
     public partial class FrmPaymentData : Window
     {
         #region References
-        WCFPayPad.CLSTransaction transaction;
+       // WCFPayPad.CLSTransaction transaction;
         WCFPayPadService payPadService;
         NavigationService navigationService;
         Utilities utilities;
@@ -27,7 +28,7 @@ namespace WPCamaraComercio.Views
         public FrmPaymentData()
         {
             InitializeComponent();
-            transaction = new WCFPayPad.CLSTransaction();
+            //transaction = new WCFPayPad.CLSTransaction();
             payPadService = new WCFPayPadService();
             navigationService = new NavigationService(this);
             utilities = new Utilities();
@@ -46,10 +47,11 @@ namespace WPCamaraComercio.Views
         private void Redirect()
         {
             AssingProperties();
-            //CrearTransaccion();
-
-            Utilities.ResetTimer();
-            navigationService.NavigationTo("FrmPayment");
+            if (CreateTransaction())
+            {
+                Utilities.ResetTimer();
+                navigationService.NavigationTo("FrmPayment"); 
+            }
         }
 
         public void FillTypeDocument(int type)
@@ -104,8 +106,6 @@ namespace WPCamaraComercio.Views
 
                 Utilities.PayerData = payerData;
                 utilities.InsertPayerData();
-                CrearTransaccion();
-                //utilities.CreateTransaction();
             }
             catch (Exception ex)
             {
@@ -157,10 +157,12 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private void CrearTransaccion()
+        private bool CreateTransaction()
         {
             try
             {
+                ServicePayPadClient WCFPayPad = new ServicePayPadClient();
+                CLSTransaction transaction = new CLSTransaction();
                 transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
                 transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite")); ;
                 transaction.Referencia = "0";
@@ -168,10 +170,14 @@ namespace WPCamaraComercio.Views
                 transaction.Contrato = string.Empty;
                 transaction.FechaCuota = string.Empty;
                 transaction.Total = Utilities.ValueToPay;
-                Utilities.IDTransactionDB = payPadService.InsertarTransaccion(transaction);
+                Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
+                return true;
             }
             catch (Exception ex)
             {
+                utilities.SaveLogErrorMethods("CreateTransaction", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+                return false;
             }
         }
 

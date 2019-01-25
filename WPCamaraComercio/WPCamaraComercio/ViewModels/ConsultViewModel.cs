@@ -182,7 +182,7 @@ namespace WPCamaraComercio.ViewModels
                 service = new WCFServices();
 
                 var task = service.ConsultInformation(value, type);
-                if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                if (await Task.WhenAny(task, Task.Delay(40000)) == task)
                 {
                     var response = task.Result;
                     if (response.IsSuccess)
@@ -209,13 +209,13 @@ namespace WPCamaraComercio.ViewModels
                         }
                         else
                         {
-                            FrmModal modal = new FrmModal(modalMessage);
+                            FrmModal modal = new FrmModal(modalMessage,null);
                             modal.ShowDialog();
                         }
                     }
                     else
                     {
-                        FrmModal modal = new FrmModal(modalMessage);
+                        FrmModal modal = new FrmModal(modalMessage,null);
                         modal.ShowDialog();
                     }
                     this.preload = Visibility.Hidden;

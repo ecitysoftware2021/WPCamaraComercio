@@ -79,7 +79,7 @@
                    FontFamily="Arial"
                    FontSize="50" 
                    Grid.Row="2"/>
-        <Label Content="Valor Restante" 
+        <Label Content="Valor Sobrante" 
                    Foreground="#606060"
                    Margin="200,200,0,0" 
                    HorizontalAlignment="Left"

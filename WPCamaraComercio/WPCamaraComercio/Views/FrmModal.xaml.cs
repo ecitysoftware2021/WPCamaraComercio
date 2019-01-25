@@ -14,15 +14,18 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region LoadMethods
-        public FrmModal(string mensaje, Window w = null, bool state = false)
+        public FrmModal(string mensaje, Window w, bool state = false)
         {
             InitializeComponent();
             LblMessage.Text = mensaje;
             this.w = w;
-            Dispatcher.BeginInvoke((Action)delegate
+            if (this.w != null)
             {
-                w.Opacity = 0.6;
-            });
+                Dispatcher.BeginInvoke((Action)delegate
+                {
+                    w.Opacity = 0.6;
+                });
+            }
         }
 
         #endregion
@@ -30,10 +33,13 @@ namespace WPCamaraComercio.Views
         #region Events
         private void Image_PreviewStylusDown(object sender, StylusDownEventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)delegate
+            if (this.w != null)
             {
-                w.Opacity = 1;
-            });
+                Dispatcher.BeginInvoke((Action)delegate
+                {
+                    w.Opacity = 1;
+                });
+            }
             DialogResult = true;
         }
         #endregion

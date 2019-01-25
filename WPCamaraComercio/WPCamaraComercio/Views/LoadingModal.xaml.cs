@@ -45,7 +45,7 @@ namespace WPCamaraComercio.Views
                 Utilities.Tpcm = coincidence.Tpcm;
 
                 var task = services.ConsultDetailMerchant(coincidence.Enrollment, coincidence.Tpcm);
-                if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                if (await Task.WhenAny(task, Task.Delay(40000)) == task)
                 {
                     var response = task.Result;
                     if (response.IsSuccess)
@@ -68,15 +68,17 @@ namespace WPCamaraComercio.Views
                         }
                         else
                         {
-                            FrmModal modal = new FrmModal(message);
+                            FrmModal modal = new FrmModal(message,null);
                             modal.ShowDialog();
+                            this.Close();
                         }
                     }
                 }
                 else
                 {
-                    FrmModal modal = new FrmModal(message);
+                    FrmModal modal = new FrmModal(message,null);
                     modal.ShowDialog();
+                    this.Close();
                 }
             }
             catch (Exception ex)
