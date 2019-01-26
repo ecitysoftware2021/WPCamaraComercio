@@ -392,7 +392,7 @@ namespace WPCamaraComercio.Keyboard
                     window.IsEnabled = true;
                     _InstanceObject = null;
                 }
-                _CurrentControl.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                _CurrentControl.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
             }
             else if (e.Command == CmdShift) //Fourth Row
             {

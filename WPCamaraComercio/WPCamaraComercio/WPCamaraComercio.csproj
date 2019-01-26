@@ -508,6 +508,12 @@
   <ItemGroup>
     <None Include="Connected Services\WCFPayPad\ServicePayPad1.disco" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Others\show.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Others\flecha-down.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

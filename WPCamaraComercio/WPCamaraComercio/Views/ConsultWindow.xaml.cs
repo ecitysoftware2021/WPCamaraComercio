@@ -172,9 +172,14 @@ namespace WPCamaraComercio.Views
                     valueSearch = TxtIdentificacion.Text.ToString();
                 }
 
-                if (!string.IsNullOrWhiteSpace(valueSearch))
+                if (!string.IsNullOrEmpty(valueSearch))
                 {
                     consultViewModel.ConsultConcidences(valueSearch, consultViewModel.typeSearch);
+                }
+                else
+                {
+                    Utilities.OpenModal("No se encontraron resultados para la búsqueda", this);
+                    BtnConsultar.IsEnabled = true;
                 }
             }
             catch (Exception ex)

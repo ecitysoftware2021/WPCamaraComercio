@@ -330,5 +330,39 @@ namespace WPCamaraComercio.Views
             }
         }
         #endregion
+
+        private void TbxIdentification_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (TbxIdentification.Text.Length > TbxIdentification.MaxLength)
+                {
+                    TbxIdentification.Text = TbxIdentification.Text.Remove(TbxIdentification.MaxLength,1);
+                }
+                else if (TbxData1.Text.Length > TbxData1.MaxLength)
+                {
+                    TbxData1.Text = TbxData1.Text.Remove(TbxData1.MaxLength, 1);
+                }
+                else if (TbxData2.Text.Length > TbxData2.MaxLength)
+                {
+                    TbxData2.Text = TbxData2.Text.Remove(TbxData2.MaxLength, 1);
+                }
+                else if (TbxData3.Text.Length > TbxData3.MaxLength)
+                {
+                    TbxData3.Text = TbxData3.Text.Remove(TbxData3.MaxLength, 1);
+                }
+                else if (TbxData3dos.Text.Length > TbxData3dos.MaxLength)
+                {
+                    TbxData3dos.Text = TbxData3dos.Text.Remove(TbxData3dos.MaxLength,1);
+                }
+                else if (TbxData4.Text.Length > TbxData4.MaxLength)
+                {
+                    TbxData4.Text = TbxData4.Text.Remove(TbxData4.MaxLength, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
     }
 }

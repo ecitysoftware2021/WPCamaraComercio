@@ -47,13 +47,11 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                Task.Run(() =>
-                {
-                    Canceltransactions();
-                });
+                Canceltransactions();
 
                 pay.callbackReturn = valueDispenser =>
                 {
+                    //Utilities.ValueReturn += valueDispenser;
                     FinishTransaction();
                 };
                 pay.StartReturn(Utilities.ValueReturn);
@@ -90,6 +88,7 @@ namespace WPCamaraComercio.Views
         /// </summary>
         private void FinishTransaction()
         {
+            pay.Finish();
             Task.Run(() =>
             {
                 camaraComercio.ImprimirComprobante("Cancelada");

@@ -154,7 +154,7 @@ namespace WPCamaraComercio.Views
             try
             {
                 var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));
-                Utilities.BuyID = "0"; //await camaraComercio.ConfirmarCompra();
+                Utilities.BuyID = "123456"; //await camaraComercio.ConfirmarCompra();
                 //camaraComercio.Print("h");
                 if (!Utilities.BuyID.Equals("0"))
                 {
@@ -176,16 +176,8 @@ namespace WPCamaraComercio.Views
                         if (modal.DialogResult.Value)
                         {
                             Utilities.ValueEnter = valueInto;
-                            if (valueInto != 0)
-                            {
-                                Utilities.ValueReturn = Math.Floor(Utilities.ValueToPay);
-                                GotoCancel();
-                            }
-                            else
-                            {
-                                pay.Finish();
-                                Utilities.GoToInicial();
-                            }
+                            Utilities.ValueReturn = Math.Floor(Utilities.ValueToPay);
+                            GotoCancel();
                         }
                     });
                 }

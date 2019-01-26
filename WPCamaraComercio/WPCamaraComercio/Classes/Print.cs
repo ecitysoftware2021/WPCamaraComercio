@@ -22,6 +22,7 @@ namespace WPCamaraComercio.Classes
         public string Nombre { get; set; }
         public string Estado { get; set; }
         public decimal Valor { get; set; }
+        public decimal ValorIngresado { get; set; }
         public string Logo { get; set; }
         public int IDTramite { get; set; }
         public decimal ValorDevuelto { get; set; }
@@ -58,50 +59,62 @@ namespace WPCamaraComercio.Classes
 
             int increment = SPACE;
             g.DrawImage(Image.FromFile(Logo), 2, 2);
-            g.DrawString("NIT " + Nit, fBody, sb, 70, 125);
+            g.DrawString("NIT " + Nit, fBody, sb, 80, 125);
             g.DrawString("Trámite:", fBody, sb, 10, increment);
             g.DrawString(Tramite, fBody1, sb, 120, increment);
-            increment += 30;
+            increment += 20;
             g.DrawString("Estado:", fBody, sb, 10, increment);
             g.DrawString(Estado, fBody1, sb, 120, increment);
-            increment += 30;
+            increment += 20;
             g.DrawString("Fecha de pago:", fBody, sb, 10, increment);
             g.DrawString(FechaPago.ToString(), fBody1, sb, 120, increment);
-            increment += 30;
+            increment += 20;
             g.DrawString("Referencia:", fBody, sb, 10, increment);
             g.DrawString(Referencia, fBody1, sb, 120, increment);
-            increment += 30;
+            increment += 20;
             g.DrawString("ID Compra:", fBody, sb, 10, increment);
             g.DrawString(IDCompra, fBody1, sb, 120, increment);
-            increment += 30;
+            increment += 20;
             g.DrawString("Cédula:", fBody, sb, 10, increment);
             g.DrawString(Cedula, fBody1, sb, 120, increment);
-            increment += 30;
+            increment += 20;
             g.DrawString("Nombre:", fBody, sb, 10, increment);
             g.DrawString(Nombre, fBody1, sb, 120, increment);
-            increment += 30;
+            increment += 20;
             g.DrawString("Teléfono:", fBody, sb, 10, increment);
             g.DrawString(Telefono, fBody1, sb, 120, increment);
-            increment += 30;
+            increment += 20;
             //g.DrawString("Correo:", fBody, sb, 10, increment);
             //g.DrawString(Correo, fBody1, sb, 120, increment);
             //increment += 30;
-            if (Estado != "Rechazada")
+            if (Estado != "Cancelada")
             {
                 g.DrawString("Total:", fBody, sb, 10, increment);
                 g.DrawString(Valor.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
-                increment += 30;
+                increment += 20;
+                g.DrawString("Total Ingresado:", fBody, sb, 10, increment);
+                g.DrawString(ValorIngresado.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
+                increment += 20;
+                g.DrawString("Total Devuelto:", fBody, sb, 10, increment);
+                g.DrawString(ValorIngresado.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
+                increment += 20;
             }
             else
             {
-                g.DrawString("Devolución:", fBody, sb, 10, increment);
+                g.DrawString("Total:", fBody, sb, 10, increment);
+                g.DrawString(Valor.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
+                increment += 20;
+                g.DrawString("Total Ingresado:", fBody, sb, 10, increment);
+                g.DrawString(ValorIngresado.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
+                increment += 20;
+                g.DrawString("Total Devuelto:", fBody, sb, 10, increment);
                 g.DrawString(ValorDevuelto.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
-                increment += 40;
+                increment += 20;
             }
 
 
             g.DrawString("Su transacción se ha realizado exitosamente", fBody1, sb, 50, increment);
-            increment += 30;
+            increment += 20;
             g.DrawString("E-city software", fBody1, sb, 112, increment);
         }
 

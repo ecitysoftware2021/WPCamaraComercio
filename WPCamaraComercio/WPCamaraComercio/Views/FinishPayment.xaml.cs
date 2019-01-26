@@ -30,7 +30,6 @@ namespace WPCamaraComercio.Views
         {
             InitializeComponent();
             payPadService = new WCFPayPadService();
-            pay = new PaymentController();
             this.returnValue = valueInto;
             logError = new LogErrorGeneral();
             navigationService = new NavigationService(this);
@@ -39,71 +38,94 @@ namespace WPCamaraComercio.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            PDFBYTE();
+            InitPrinter();
         }
-        #endregion
 
-        #region Methods
-        public Task PDFBYTE()
+        private void InitPrinter()
         {
             try
             {
-                var t = Task.Run(() =>
-                    {
-                        return camaraComercio.ListCertificadosiMPORT();
-                        //camaraComercio.Print("2");
-                    });
-
-                var c = t.ContinueWith((antecedent) =>
+                var taskPrint = Task.Run(() =>
                 {
-                    if (t.Status == TaskStatus.RanToCompletion)
-                    {
-                        if (antecedent.Result)
-                        {
-                            payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
-                            camaraComercio.ImprimirComprobante("Aprobada");
-                            Utilities.GoToInicial();
-                        }
-                        else
-                        {
-                            payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
-                            Dispatcher.BeginInvoke((Action)delegate
-                            {
-                                FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
-                                        "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
-                                        "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
-                                modal.ShowDialog();
-                                if (modal.DialogResult.Value)
-                                {
-                                    if (returnValue != 0)
-                                    {
-                                        Utilities.ValueReturn = returnValue;
-                                        GotoCancel();
-                                    }
-                                    else
-                                    {
-                                        pay.Finish();
-                                        Utilities.GoToInicial();
-                                    }
-                                }
-                            });
-                        }
-                    }
-                    else if (t.Status == TaskStatus.Faulted)
-                    {
-                        //objUtil.Exception(t.Exception.GetBaseException().Message);
-                    }
+                    return camaraComercio.ListCertificadosiMPORT();
+                    //camaraComercio.Print("2");
                 });
-                return t;
+
+                if (taskPrint != null)
+                {
+                    var responseTask = taskPrint.ContinueWith((antecedent) =>
+                    {
+                        if (taskPrint.Status == TaskStatus.RanToCompletion)
+                        {
+                            if (antecedent.Result)
+                            {
+                                FinishPrint(WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                            }
+                            else
+                            {
+                                FinishPrint(WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                            }
+                        }
+                        else if (taskPrint.Status == TaskStatus.Faulted)
+                        {
+                            FinishPrint(WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                        }
+                    });
+                }
             }
             catch (Exception ex)
             {
-                utilities.SaveLogErrorMethods("PDFBYTE", "FinishPayment", ex.ToString());
-                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
-                return null;
+
             }
         }
 
+        private void FinishPrint(WCFPayPad.CLSEstadoEstadoTransaction state)
+        {
+            try
+            {
+                Task.Run(() =>
+                {
+                    payPadService.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, state);
+                });
+
+                if (state == WCFPayPad.CLSEstadoEstadoTransaction.Aprobada)
+                {
+                    pay.Finish();
+                    camaraComercio.ImprimirComprobante("Aprobada");
+                    Utilities.GoToInicial();
+                }
+                else
+                {
+                    Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                                "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
+                                "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
+                        modal.ShowDialog();
+                        if (modal.DialogResult.Value)
+                        {
+                            if (returnValue != 0)
+                            {
+                                Utilities.ValueReturn = Utilities.ValueToPay;
+                                GotoCancel();
+                            }
+                            else
+                            {
+                                pay.Finish();
+                                Utilities.GoToInicial();
+                            }
+                        }
+                    });
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        #endregion
+
+        #region Methods
         private void GotoCancel()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>

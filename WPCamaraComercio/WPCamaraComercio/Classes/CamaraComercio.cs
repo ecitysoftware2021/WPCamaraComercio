@@ -161,40 +161,40 @@ namespace WPCamaraComercio.Classes
                     {
                         datosCertificado.copia = (i + 1).ToString();
 
-                        var task = service.GetCertifiedString(datosCertificado);
-                        if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
-                        {
-                            var response = task.Result;
+                       // var task = service.GetCertifiedString(datosCertificado);
+                        //if (await Task.WhenAny(task, Task.Delay(10000)) == task)
+                        //{
+                        //    var response = task.Result;
 
-                            if (response.IsSuccess)
-                            {
-                                string urlArchivo = (string)response.Result;
-                                if (!string.IsNullOrEmpty(urlArchivo))
+                            //if (response.IsSuccess)
+                            //{
+                              //  string urlArchivo = (string)response.Result;
+                                if (datosCertificado == null)//!string.IsNullOrEmpty(urlArchivo))
                                 {
-                                    FileName nombreArchivo = new FileName
-                                    {
-                                        matricula = item.matricula,
-                                        matriculaest = item.MatriculaEst,
-                                        tpcm = item.tpcm,
-                                        IdCertificado = item.IdCertificado,
-                                        Copia = (i + 1)
-                                    };
-                                    utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
-                                    path = SaveFile(urlArchivo, nombreArchivo);
-                                    LRutasCertificados.Add(path);
+                                    //FileName nombreArchivo = new FileName
+                                    //{
+                                    //    matricula = item.matricula,
+                                    //    matriculaest = item.MatriculaEst,
+                                    //    tpcm = item.tpcm,
+                                    //    IdCertificado = item.IdCertificado,
+                                    //    Copia = (i + 1)
+                                    //};
+                                    //utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
+                                    //path = SaveFile(urlArchivo, nombreArchivo);
+                                    //LRutasCertificados.Add(path);
                                 }
                                 else
                                 {
                                     printState = false;
                                 }
-                            }
-                        }
-                        else
-                        {
-                            printState = false;
-                            FrmModal modal = new FrmModal(message,null);
-                            modal.ShowDialog();
-                        }
+                           // }
+                        //}
+                        //else
+                        //{
+                        //    printState = false;
+                        //    FrmModal modal = new FrmModal(message,null);
+                        //    modal.ShowDialog();
+                        //}
                     }
                 }
                 if (printState)
@@ -299,7 +299,7 @@ namespace WPCamaraComercio.Classes
             utilities.FillLogError(mensaje, "Descarga Certificado");
         }
 
-        public void ImprimirComprobante(string Estado)
+        public async void ImprimirComprobante(string Estado)
         {
             print.Cedula = Utilities.PayerData.BuyerIdentification;
             print.Telefono = Utilities.PayerData.Phone;
@@ -309,6 +309,7 @@ namespace WPCamaraComercio.Classes
             print.Valor = Utilities.ValueToPay;
             print.Estado = Estado;
             print.ValorDevuelto = Utilities.ValueReturn;
+            print.ValorIngresado = Utilities.ValueEnter;
             print.IDCompra = IDCompra;
             print.Tramite = "Certificados Electrónicos";
             print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"PrintLogo\LCamaraComercio.png");

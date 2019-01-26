@@ -217,7 +217,7 @@ namespace WPCamaraComercio.Classes
             InsertDetails(devolucion, false);
             if (dispenserValue >= this.returnValue)
             {
-                Finish();
+                //Finish();
                 this.callbackReturn?.Invoke(dispenserValue);
             }
         }
@@ -244,7 +244,7 @@ namespace WPCamaraComercio.Classes
             {
                 if (intoValue == paymentValue)
                 {
-                    Finish();
+                    //Finish();
                 }
                 this.callback?.Invoke(intoValue);
             }
