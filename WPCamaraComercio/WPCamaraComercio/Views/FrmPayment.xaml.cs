@@ -25,7 +25,7 @@ namespace WPCamaraComercio.Views
         PayViewModel payModel;
         CamaraComercio camaraComercio;
         decimal amount = 0;
-        //List<Log> logs;
+        List<Log> log;
         #endregion
 
         #region InitialMethods
@@ -34,7 +34,7 @@ namespace WPCamaraComercio.Views
             try
             {
                 InitializeComponent();
-                //logs = new List<Log>();
+                log = new List<Log>();
                 WFCPayPadService = new WCFPayPadService();
                 //backgroundViewModel = new BackgroundViewModel(Utilities.Operation);
                 navigationService = new NavigationService(this);
@@ -96,6 +96,22 @@ namespace WPCamaraComercio.Views
             }
         }
 
+        private void FillLog(string menssage)
+        {
+            log.Add(new Log
+            {
+                Fecha = DateTime.Now,
+                IDTrsansaccion = Utilities.IDTransactionDB,
+                Operacion = menssage,
+                ValorDevolver = 0,
+                ValorDevuelto = "0",
+                ValorPago = Utilities.ValueToPay,
+                ValorIngresado = Utilities.ValueEnter,
+                CantidadDevolucion = 0,
+                EstadoTransaccion = "En proceso"
+            });
+        }
+
         private void FinishPayment(decimal valueInto)
         {
             try
@@ -128,11 +144,23 @@ namespace WPCamaraComercio.Views
                 Utilities.ValueEnter = intoValue;
                 if (intoValue > amount)
                 {
+                    log.Add(new Log
+                    {
+                        Fecha = DateTime.Now,
+                        IDTrsansaccion = Utilities.IDTransactionDB,
+                        Operacion = "Orden Devolucion Billetero",
+                        ValorDevolver = decimal.Parse(payModel.ValorSobrante.Replace("$", "")),
+                        ValorDevuelto = "0",
+                        ValorPago = Utilities.ValueToPay,
+                        ValorIngresado = decimal.Parse(payModel.ValorIngresado.Replace("$", "")),
+                        CantidadDevolucion = 0,
+                        EstadoTransaccion = "En proceso"
+                    });
+
                     decimal value = intoValue - amount;
                     Utilities.ValueReturn = value;
                     pay.callbackReturn = valueDispenser =>
                     {
-                        //InsertDetails(value, false);
                         SendFinish();
                     };
 
@@ -154,7 +182,9 @@ namespace WPCamaraComercio.Views
             try
             {
                 var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));
-                Utilities.BuyID = "123456"; //await camaraComercio.ConfirmarCompra();
+                FillLog("Llamando el servicio para extraer el certificado");
+                Utilities.BuyID = await camaraComercio.ConfirmarCompra();
+                FillLog("El servicio respondió: " + Utilities.BuyID);
                 //camaraComercio.Print("h");
                 if (!Utilities.BuyID.Equals("0"))
                 {
@@ -164,6 +194,7 @@ namespace WPCamaraComercio.Views
                         frmInformationCompany.Show();
                         this.Close();
                     });
+                    FillLog("Llamó al formulario frmFinalizar");
                 }
                 else
                 {

@@ -37,7 +37,7 @@ namespace WPCamaraComercio.Classes
 
         private string FileName { get; set; }
 
-        private bool printState { get; set; }
+        private bool printState = true;
 
         private static string IDCompra { get; set; }
 
@@ -104,7 +104,7 @@ namespace WPCamaraComercio.Classes
                         }
                         else
                         {
-                            FrmModal modal = new FrmModal(message,null);
+                            FrmModal modal = new FrmModal(message, null);
                             modal.ShowDialog();
                         }
                     }
@@ -115,7 +115,7 @@ namespace WPCamaraComercio.Classes
                 }
                 else
                 {
-                    FrmModal modal = new FrmModal(message,null);
+                    FrmModal modal = new FrmModal(message, null);
                     modal.ShowDialog();
                 }
             }
@@ -161,42 +161,43 @@ namespace WPCamaraComercio.Classes
                     {
                         datosCertificado.copia = (i + 1).ToString();
 
-                       // var task = service.GetCertifiedString(datosCertificado);
-                        //if (await Task.WhenAny(task, Task.Delay(10000)) == task)
-                        //{
-                        //    var response = task.Result;
+                        var task = service.GetCertifiedString(datosCertificado);
+                        if (await Task.WhenAny(task, Task.Delay(10000)) == task)
+                        {
+                            var response = task.Result;
 
-                            //if (response.IsSuccess)
-                            //{
-                              //  string urlArchivo = (string)response.Result;
-                                if (datosCertificado == null)//!string.IsNullOrEmpty(urlArchivo))
+                            if (response.IsSuccess)
+                            {
+                                string urlArchivo = (string)response.Result;
+                                if (!string.IsNullOrEmpty(urlArchivo))
                                 {
-                                    //FileName nombreArchivo = new FileName
-                                    //{
-                                    //    matricula = item.matricula,
-                                    //    matriculaest = item.MatriculaEst,
-                                    //    tpcm = item.tpcm,
-                                    //    IdCertificado = item.IdCertificado,
-                                    //    Copia = (i + 1)
-                                    //};
-                                    //utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
-                                    //path = SaveFile(urlArchivo, nombreArchivo);
-                                    //LRutasCertificados.Add(path);
+                                    FileName nombreArchivo = new FileName
+                                    {
+                                        matricula = item.matricula,
+                                        matriculaest = item.MatriculaEst,
+                                        tpcm = item.tpcm,
+                                        IdCertificado = item.IdCertificado,
+                                        Copia = (i + 1)
+                                    };
+                                    utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
+                                    path = SaveFile(urlArchivo, nombreArchivo);
+                                    LRutasCertificados.Add(path);
                                 }
                                 else
                                 {
                                     printState = false;
                                 }
-                           // }
-                        //}
-                        //else
-                        //{
-                        //    printState = false;
-                        //    FrmModal modal = new FrmModal(message,null);
-                        //    modal.ShowDialog();
-                        //}
+                            }
+                        }
+                        else
+                        {
+                            printState = false;
+                            FrmModal modal = new FrmModal(message, null);
+                            modal.ShowDialog();
+                        }
                     }
                 }
+                printState = true;
                 if (printState)
                 {
                     foreach (var item in LRutasCertificados)
@@ -209,6 +210,7 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 Mensaje(ex.Message);
+                utilities.SaveLogErrorMethods("ListCertificadosiMPORT", "CamaraComercio", ex.ToString());
                 printState = false;
             }
             return printState;
@@ -261,13 +263,14 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 Mensaje(ex.Message);
+                utilities.SaveLogErrorMethods("SaveFile", "CamaraComercio", ex.ToString());
             }
             return path;
         }
 
         public void Print(string rutaArchivo)
         {
-            rutaArchivo = "C:\\CertificadosElectronicos\\248979-10-317282-0-12-1.pdf";
+            //rutaArchivo = "C:\\CertificadosElectronicos\\test.pdf";
             try
             {
                 using (GhostscriptProcessor processor = new GhostscriptProcessor(GhostscriptVersionInfo.GetLastInstalledVersion(), true))
@@ -291,6 +294,7 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 Mensaje(ex.Message);
+                utilities.SaveLogErrorMethods("Print", "CamaraComercio", ex.ToString());
             }
         }
 
@@ -301,19 +305,26 @@ namespace WPCamaraComercio.Classes
 
         public async void ImprimirComprobante(string Estado)
         {
-            print.Cedula = Utilities.PayerData.BuyerIdentification;
-            print.Telefono = Utilities.PayerData.Phone;
-            print.FechaPago = DateTime.Now;
-            print.Nombre = Utilities.PayerData.FullNameBuyer;
-            print.Referencia = Utilities.IDTransactionDB.ToString();
-            print.Valor = Utilities.ValueToPay;
-            print.Estado = Estado;
-            print.ValorDevuelto = Utilities.ValueReturn;
-            print.ValorIngresado = Utilities.ValueEnter;
-            print.IDCompra = IDCompra;
-            print.Tramite = "Certificados Electrónicos";
-            print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"PrintLogo\LCamaraComercio.png");
-            print.ImprimirComprobante();
+            try
+            {
+                print.Cedula = Utilities.PayerData.BuyerIdentification;
+                print.Telefono = Utilities.PayerData.Phone;
+                print.FechaPago = DateTime.Now;
+                print.Nombre = Utilities.PayerData.FullNameBuyer;
+                print.Referencia = Utilities.IDTransactionDB.ToString();
+                print.Valor = Utilities.ValueToPay;
+                print.Estado = Estado;
+                print.ValorDevuelto = Utilities.ValueReturn;
+                print.ValorIngresado = Utilities.ValueEnter;
+                print.IDCompra = IDCompra;
+                print.Tramite = "Certificados Electrónicos";
+                print.Logo = Path.Combine(Directory.GetCurrentDirectory(), @"PrintLogo\LCamaraComercio.png");
+                print.ImprimirComprobante();
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("ImprimirComprobante", "CamaraComercio", ex.ToString());
+            }
         }
     }
 

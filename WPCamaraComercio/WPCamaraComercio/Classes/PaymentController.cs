@@ -43,6 +43,8 @@ namespace WPCamaraComercio.Classes
 
         WCFPayPadService WCFPayPadService;
 
+        List<Log> log;
+
         #endregion
 
         public PaymentController()
@@ -56,6 +58,8 @@ namespace WPCamaraComercio.Classes
             wCFService = new WCFServices();
 
             WCFPayPadService = new WCFPayPadService();
+
+            log = new List<Log>();
         }
 
         public void Start(decimal paymentValue)
@@ -186,9 +190,20 @@ namespace WPCamaraComercio.Classes
                     {
                         returnObject.state = false;
                         //returnObject.amount = 0;
-
+                        log.Add(new Log
+                        {
+                            Fecha = DateTime.Now,
+                            IDTrsansaccion = Utilities.IDTransactionDB,
+                            Operacion = "Orden Devolver Billetero",
+                            ValorDevolver = valueDispenser,
+                            ValorDevuelto = "0",
+                            ValorPago = Utilities.ValueToPay,
+                            ValorIngresado = Utilities.ValueEnter,
+                            EstadoTransaccion = "En proceso"
+                        });
                         OperationDispenser(returnObject.amount);
                     };
+
 
                     returnObject.state = true;
                     returnObject.amount = value;
@@ -199,6 +214,17 @@ namespace WPCamaraComercio.Classes
                 {
                     smartCoins.callbackTotal = total =>
                     {
+                        log.Add(new Log
+                        {
+                            Fecha = DateTime.Now,
+                            IDTrsansaccion = Utilities.IDTransactionDB,
+                            Operacion = "Orden Devolver Monedero",
+                            ValorDevolver = total,
+                            ValorDevuelto = "0",
+                            ValorPago = Utilities.ValueToPay,
+                            ValorIngresado = Utilities.ValueEnter,
+                            EstadoTransaccion = "En proceso"
+                        });
                         OperationDispenser(total);
                     };
 

@@ -89,6 +89,7 @@ namespace WPCamaraComercio.Classes
             //increment += 30;
             if (Estado != "Cancelada")
             {
+                decimal VDevuelto = ValorIngresado - Valor;
                 g.DrawString("Total:", fBody, sb, 10, increment);
                 g.DrawString(Valor.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
                 increment += 20;
@@ -96,7 +97,7 @@ namespace WPCamaraComercio.Classes
                 g.DrawString(ValorIngresado.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
                 increment += 20;
                 g.DrawString("Total Devuelto:", fBody, sb, 10, increment);
-                g.DrawString(ValorIngresado.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
+                g.DrawString(VDevuelto.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
                 increment += 20;
             }
             else
@@ -108,7 +109,7 @@ namespace WPCamaraComercio.Classes
                 g.DrawString(ValorIngresado.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
                 increment += 20;
                 g.DrawString("Total Devuelto:", fBody, sb, 10, increment);
-                g.DrawString(ValorDevuelto.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
+                g.DrawString(ValorIngresado.ToString("C", CultureInfo.CurrentCulture), fBody1, sb, 120, increment);
                 increment += 20;
             }
 

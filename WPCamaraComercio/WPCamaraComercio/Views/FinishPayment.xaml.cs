@@ -26,7 +26,7 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region LoadMethods
-        public FinishPayment(PaymentController pay,decimal valueInto)
+        public FinishPayment(PaymentController pay, decimal valueInto)
         {
             InitializeComponent();
             payPadService = new WCFPayPadService();
@@ -75,7 +75,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-
+                utilities.SaveLogErrorMethods("InitPrinter", "FinishPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -92,7 +93,16 @@ namespace WPCamaraComercio.Views
                 {
                     pay.Finish();
                     camaraComercio.ImprimirComprobante("Aprobada");
-                    Utilities.GoToInicial();
+                    //Dispatcher.BeginInvoke((Action)delegate
+                    //{
+                    //    Utilities.GoToInicial();
+                    //});
+                    Dispatcher.BeginInvoke((Action)delegate
+                    {
+                        FrmInitial initial = new FrmInitial();
+                        initial.Show();
+                        this.Close();
+                    });
                 }
                 else
                 {
@@ -118,8 +128,10 @@ namespace WPCamaraComercio.Views
                     });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                utilities.SaveLogErrorMethods("FinishPrint", "FinishPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 

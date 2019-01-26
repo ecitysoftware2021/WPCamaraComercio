@@ -217,7 +217,7 @@ namespace WPCamaraComercio.Keyboard
                     window.IsEnabled = true;
                     _InstanceObject = null;
                 }
-                _CurrentControl.MoveFocus(new TraversalRequest(FocusNavigationDirection.Right));
+                _CurrentControl.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
         }
         #endregion

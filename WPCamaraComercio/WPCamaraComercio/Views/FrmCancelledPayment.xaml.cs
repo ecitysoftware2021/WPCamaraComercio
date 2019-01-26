@@ -51,7 +51,6 @@ namespace WPCamaraComercio.Views
 
                 pay.callbackReturn = valueDispenser =>
                 {
-                    //Utilities.ValueReturn += valueDispenser;
                     FinishTransaction();
                 };
                 pay.StartReturn(Utilities.ValueReturn);

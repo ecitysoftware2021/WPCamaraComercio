@@ -46,6 +46,8 @@ namespace WPCamaraComercio.Classes.Smart
 
         private decimal returnValue;
 
+        List<Log> log = new List<Log>();
+
         public SmartCoins()
         {
             _serialPortCoins = new SerialPort();
@@ -183,6 +185,7 @@ namespace WPCamaraComercio.Classes.Smart
                     }
                     else
                     {
+                       
                         decimal totalDispenser = 0;
                         if (message.ToUpper().Contains("OFF"))
                         {
@@ -198,6 +201,17 @@ namespace WPCamaraComercio.Classes.Smart
                                 }
                                 control++;
                             }
+                            log.Add(new Log
+                            {
+                                Fecha = DateTime.Now,
+                                IDTrsansaccion = Utilities.IDTransactionDB,
+                                Operacion = "El monedero retornó: " + message,
+                                ValorDevolver = totalDispenser,
+                                ValorDevuelto = "0",
+                                ValorPago = Utilities.ValueToPay,
+                                ValorIngresado = Utilities.ValueEnter,
+                                EstadoTransaccion = "Aprobada"
+                            });
                         }
                         callbackTotal?.Invoke(totalDispenser);
                     }
