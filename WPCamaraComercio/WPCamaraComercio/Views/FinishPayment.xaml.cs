@@ -99,6 +99,7 @@ namespace WPCamaraComercio.Views
                     //});
                     Dispatcher.BeginInvoke((Action)delegate
                     {
+                        Utilities.PayerData = null;
                         FrmInitial initial = new FrmInitial();
                         initial.Show();
                         this.Close();

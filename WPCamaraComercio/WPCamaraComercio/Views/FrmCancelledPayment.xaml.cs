@@ -92,6 +92,7 @@ namespace WPCamaraComercio.Views
             {
                 camaraComercio.ImprimirComprobante("Cancelada");
             });
+            Utilities.PayerData = null;
             Utilities.GoToInicial();
         }
         #endregion
