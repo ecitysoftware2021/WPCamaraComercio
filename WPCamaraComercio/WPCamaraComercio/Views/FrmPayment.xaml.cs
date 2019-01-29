@@ -203,7 +203,7 @@ namespace WPCamaraComercio.Views
                 //camaraComercio.Print("h");
                 if (!Utilities.BuyID.Equals("0"))
                 {
-                    InsertTransactionDBCM();
+                    //InsertTransactionDBCM();
                     Dispatcher.BeginInvoke((Action)delegate
                     {
                         FinishPayment frmInformationCompany = new FinishPayment(pay, valueInto);

@@ -96,7 +96,7 @@ namespace WPCamaraComercio.Views
                 payerData.BuyerIdentification = TbxIdentification.Text;
                 payerData.LastNameBuyer = TbxData3.Text;
                 payerData.FirstNameBuyer = TbxData1.Text;
-                payerData.SecondNameBuyer = CmbTypeBuyer.SelectedIndex != 1 ? TbxData2.Text : "";
+                payerData.SecondNameBuyer = string.Empty;
                 payerData.TypeBuyer = CmbTypeBuyer.Text;
                 payerData.TypeIdBuyer = ((KeyValuePair<string, string>)CmbIdDType.SelectedItem).Key;
                 payerData.Phone = CmbTypeBuyer.SelectedIndex == 1 ? TbxData3dos.Text : TbxData4.Text;
@@ -108,7 +108,7 @@ namespace WPCamaraComercio.Views
                 payerData.ClientPlataform = "DISPENSADOR";
 
                 Utilities.PayerData = payerData;
-                InsertPayerData(payerData);
+                //InsertPayerData(payerData);
             }
             catch (Exception ex)
             {
