@@ -167,5 +167,71 @@ namespace WPCamaraComercio.Service
 
             return task;
         }
+
+        public Task<Response> InsertPayerDBCM(DatosPagador data)
+        {
+            Task<Response> task = null;
+
+            task = Task.Run(() =>
+            {
+                Response response = new Response();
+                try
+                {
+                    var r = WCFCamara.SavePayerDBCM(data);
+                    if (r != null)
+                    {
+                        response.IsSuccess = true;
+                        response.Result = r;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.IsSuccess = false;
+                    response.Result = null;
+                    response.Message = ex.Message;
+                }
+
+                return response;
+            });
+
+            return task;
+        }
+
+        public Task<Response> InserTransactionDBCM(DatosTransaccionDBCamaraCM data)
+        {
+            Task<Response> task = null;
+
+            task = Task.Run(() =>
+            {
+                Response response = new Response();
+                try
+                {
+                    var r = WCFCamara.SaveTransactionDBCM(data);
+                    if (r != null)
+                    {
+                        response.IsSuccess = true;
+                        response.Result = r;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.IsSuccess = false;
+                    response.Result = null;
+                    response.Message = ex.Message;
+                }
+
+                return response;
+            });
+
+            return task;
+        }
     }
 }

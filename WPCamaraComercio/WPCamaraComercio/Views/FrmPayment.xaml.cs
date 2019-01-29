@@ -8,6 +8,7 @@ using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.ViewModels;
+using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.Views
 {
@@ -61,7 +62,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                amount = Math.Floor(Utilities.ValueToPay);
+                amount = 1100;// Math.Floor(Utilities.ValueToPay);
                 lblValorPagar.Content = string.Format("{0:C0}", amount);
                 pay = new PaymentController();
                 TimerTime();
@@ -177,6 +178,18 @@ namespace WPCamaraComercio.Views
             }
         }
 
+        void InsertTransactionDBCM()
+        {
+            DatosTransaccionDBCamaraCM datos = new DatosTransaccionDBCamaraCM
+            {
+                CedulaPagador = Utilities.PayerData.BuyerIdentification,
+                IDCompra = Utilities.BuyID,
+                IDTransaccion = Utilities.IDTransactionDB,
+                Valor = Utilities.ValueToPay
+            };
+            wCFService.InserTransactionDBCM(datos);
+        }
+
         public async void SendFinish()
         {
             try
@@ -185,12 +198,15 @@ namespace WPCamaraComercio.Views
                 FillLog("Llamando el servicio para extraer el certificado");
                 Utilities.BuyID = await camaraComercio.ConfirmarCompra();
                 FillLog("El servicio respondió: " + Utilities.BuyID);
+
+
                 //camaraComercio.Print("h");
                 if (!Utilities.BuyID.Equals("0"))
                 {
+                    InsertTransactionDBCM();
                     Dispatcher.BeginInvoke((Action)delegate
                     {
-                        FinishPayment frmInformationCompany = new FinishPayment(pay,valueInto);
+                        FinishPayment frmInformationCompany = new FinishPayment(pay, valueInto);
                         frmInformationCompany.Show();
                         this.Close();
                     });

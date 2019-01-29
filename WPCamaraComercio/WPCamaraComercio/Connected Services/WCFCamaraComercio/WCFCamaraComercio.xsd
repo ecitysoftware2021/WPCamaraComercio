@@ -233,4 +233,26 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CLSDatosCertificado" nillable="true" type="tns:CLSDatosCertificado" />
+  <xs:complexType name="DatosPagador">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailComprador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IdentificacionComprador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimerApellidoComprador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimerNombreComprador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SegundoNombreComprador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TelefonoComprador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoComprador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TipoIdentificacionComprador" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DatosPagador" nillable="true" type="tns:DatosPagador" />
+  <xs:complexType name="DatosTransaccionDBCamaraCM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CedulaPagador" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IDCompra" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IDTransaccion" type="xs:int" />
+      <xs:element minOccurs="0" name="Valor" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DatosTransaccionDBCamaraCM" nillable="true" type="tns:DatosTransaccionDBCamaraCM" />
 </xs:schema>

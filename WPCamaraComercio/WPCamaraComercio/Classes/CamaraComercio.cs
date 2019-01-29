@@ -33,7 +33,7 @@ namespace WPCamaraComercio.Classes
 
         Datos datos = new Datos();
 
-        Dictionary<string, string> responseDic = new Dictionary<string, string>();
+        string responseDic = string.Empty;
 
         private string FileName { get; set; }
 
@@ -94,13 +94,14 @@ namespace WPCamaraComercio.Classes
 
                     if (response.IsSuccess)
                     {
-                        responseDic = (Dictionary<string, string>)response.Result;
-                        if (responseDic.Count > 0)
+                        int validator = 0;
+                        responseDic = response.Result.ToString();
+                        if (int.TryParse(responseDic, out validator))
                         {
-                            responseDic.TryGetValue("IDCompra", out idCompra);
+                            idCompra = responseDic;
                             utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
-                            IDCompra = idCompra;
-                            return IDCompra;
+
+                            return idCompra;
                         }
                         else
                         {

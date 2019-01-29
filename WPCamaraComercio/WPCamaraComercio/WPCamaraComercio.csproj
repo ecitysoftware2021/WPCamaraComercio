@@ -296,9 +296,6 @@
     <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio2.xsd">
       <SubType>Designer</SubType>
     </None>
