@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using WPCamaraComercio.Classes;
@@ -51,6 +52,7 @@ namespace WPCamaraComercio.Views
 
                 pay.callbackReturn = valueDispenser =>
                 {
+                    Thread.Sleep(2000);
                     FinishTransaction();
                 };
                 pay.StartReturn(Utilities.ValueReturn);
@@ -93,7 +95,9 @@ namespace WPCamaraComercio.Views
                 camaraComercio.ImprimirComprobante("Cancelada");
             });
             Utilities.PayerData = null;
-            Utilities.GoToInicial();
+            //Utilities.GoToInicial();
+            Thread.Sleep(1000);
+            Utilities.RestartApp();
         }
         #endregion
     }

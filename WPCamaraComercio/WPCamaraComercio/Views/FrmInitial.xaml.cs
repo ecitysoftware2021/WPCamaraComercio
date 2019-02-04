@@ -142,19 +142,19 @@ namespace WPCamaraComercio.Views
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //if (ScreenControl.EstadoBaul && ScreenControl.EstadoBilletes && ScreenControl.EstadoMonedas)
-            //{
+            if (ScreenControl.EstadoBaul && ScreenControl.EstadoBilletes && ScreenControl.EstadoMonedas)
+            {
                 navigationService.NavigationTo("ConsultWindow");
-            //}
-            //else
-            //{
-            //    navigationService.NavigatorModal("En este momento no se pueden realizar transacciones, por favor intente más tarde.");
-            //}
+            }
+            else
+            {
+                navigationService.NavigatorModal("En este momento no se pueden realizar transacciones, por favor intente más tarde.");
+            }
         }
 
         private void GetScreen()
         {
-            //ScreenControl.ConsultarControlPantalla();
+            ScreenControl.ConsultarControlPantalla();
         }
         #endregion
     }

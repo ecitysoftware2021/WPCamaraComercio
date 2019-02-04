@@ -2,10 +2,9 @@
 <wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WCFCamaraComercio" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://200.122.221.193:9197/WCFCamaraComercio.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://200.122.221.193:9197/WCFCamaraComercio.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://200.122.221.193:9197/WCFCamaraComercio.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases" />
-      <xsd:import schemaLocation="http://200.122.221.193:9197/WCFCamaraComercio.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IWCFCamaraComercio_GetGeneralInformation_InputMessage">
@@ -26,35 +25,23 @@
   <wsdl:message name="IWCFCamaraComercio_SendPayInformation_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendPayInformationResponse" />
   </wsdl:message>
-  <wsdl:message name="IWCFCamaraComercio_GetPayReference_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetPayReference" />
-  </wsdl:message>
-  <wsdl:message name="IWCFCamaraComercio_GetPayReference_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetPayReferenceResponse" />
-  </wsdl:message>
-  <wsdl:message name="IWCFCamaraComercio_UpdatePrintedCopy_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdatePrintedCopy" />
-  </wsdl:message>
-  <wsdl:message name="IWCFCamaraComercio_UpdatePrintedCopy_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdatePrintedCopyResponse" />
-  </wsdl:message>
-  <wsdl:message name="IWCFCamaraComercio_InsertError_InputMessage">
-    <wsdl:part name="parameters" element="tns:InsertError" />
-  </wsdl:message>
-  <wsdl:message name="IWCFCamaraComercio_InsertError_OutputMessage">
-    <wsdl:part name="parameters" element="tns:InsertErrorResponse" />
-  </wsdl:message>
-  <wsdl:message name="IWCFCamaraComercio_GetCertified_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetCertified" />
-  </wsdl:message>
-  <wsdl:message name="IWCFCamaraComercio_GetCertified_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetCertifiedResponse" />
-  </wsdl:message>
   <wsdl:message name="IWCFCamaraComercio_GetCertifiedString_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCertifiedString" />
   </wsdl:message>
   <wsdl:message name="IWCFCamaraComercio_GetCertifiedString_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCertifiedStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFCamaraComercio_SavePayerDBCM_InputMessage">
+    <wsdl:part name="parameters" element="tns:SavePayerDBCM" />
+  </wsdl:message>
+  <wsdl:message name="IWCFCamaraComercio_SavePayerDBCM_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SavePayerDBCMResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFCamaraComercio_SaveTransactionDBCM_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveTransactionDBCM" />
+  </wsdl:message>
+  <wsdl:message name="IWCFCamaraComercio_SaveTransactionDBCM_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveTransactionDBCMResponse" />
   </wsdl:message>
   <wsdl:portType name="IWCFCamaraComercio">
     <wsdl:operation name="GetGeneralInformation">
@@ -69,25 +56,17 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IWCFCamaraComercio/SendPayInformation" message="tns:IWCFCamaraComercio_SendPayInformation_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IWCFCamaraComercio/SendPayInformationResponse" message="tns:IWCFCamaraComercio_SendPayInformation_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetPayReference">
-      <wsdl:input wsaw:Action="http://tempuri.org/IWCFCamaraComercio/GetPayReference" message="tns:IWCFCamaraComercio_GetPayReference_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IWCFCamaraComercio/GetPayReferenceResponse" message="tns:IWCFCamaraComercio_GetPayReference_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="UpdatePrintedCopy">
-      <wsdl:input wsaw:Action="http://tempuri.org/IWCFCamaraComercio/UpdatePrintedCopy" message="tns:IWCFCamaraComercio_UpdatePrintedCopy_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IWCFCamaraComercio/UpdatePrintedCopyResponse" message="tns:IWCFCamaraComercio_UpdatePrintedCopy_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="InsertError">
-      <wsdl:input wsaw:Action="http://tempuri.org/IWCFCamaraComercio/InsertError" message="tns:IWCFCamaraComercio_InsertError_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IWCFCamaraComercio/InsertErrorResponse" message="tns:IWCFCamaraComercio_InsertError_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetCertified">
-      <wsdl:input wsaw:Action="http://tempuri.org/IWCFCamaraComercio/GetCertified" message="tns:IWCFCamaraComercio_GetCertified_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IWCFCamaraComercio/GetCertifiedResponse" message="tns:IWCFCamaraComercio_GetCertified_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetCertifiedString">
       <wsdl:input wsaw:Action="http://tempuri.org/IWCFCamaraComercio/GetCertifiedString" message="tns:IWCFCamaraComercio_GetCertifiedString_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IWCFCamaraComercio/GetCertifiedStringResponse" message="tns:IWCFCamaraComercio_GetCertifiedString_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SavePayerDBCM">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFCamaraComercio/SavePayerDBCM" message="tns:IWCFCamaraComercio_SavePayerDBCM_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFCamaraComercio/SavePayerDBCMResponse" message="tns:IWCFCamaraComercio_SavePayerDBCM_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveTransactionDBCM">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFCamaraComercio/SaveTransactionDBCM" message="tns:IWCFCamaraComercio_SaveTransactionDBCM_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFCamaraComercio/SaveTransactionDBCMResponse" message="tns:IWCFCamaraComercio_SaveTransactionDBCM_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IWCFCamaraComercio" type="tns:IWCFCamaraComercio">
@@ -119,44 +98,26 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetPayReference">
-      <soap:operation soapAction="http://tempuri.org/IWCFCamaraComercio/GetPayReference" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpdatePrintedCopy">
-      <soap:operation soapAction="http://tempuri.org/IWCFCamaraComercio/UpdatePrintedCopy" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="InsertError">
-      <soap:operation soapAction="http://tempuri.org/IWCFCamaraComercio/InsertError" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetCertified">
-      <soap:operation soapAction="http://tempuri.org/IWCFCamaraComercio/GetCertified" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetCertifiedString">
       <soap:operation soapAction="http://tempuri.org/IWCFCamaraComercio/GetCertifiedString" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SavePayerDBCM">
+      <soap:operation soapAction="http://tempuri.org/IWCFCamaraComercio/SavePayerDBCM" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveTransactionDBCM">
+      <soap:operation soapAction="http://tempuri.org/IWCFCamaraComercio/SaveTransactionDBCM" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -167,7 +128,7 @@
   </wsdl:binding>
   <wsdl:service name="WCFCamaraComercio">
     <wsdl:port name="BasicHttpBinding_IWCFCamaraComercio" binding="tns:BasicHttpBinding_IWCFCamaraComercio">
-      <soap:address location="http://200.122.221.193:9197/WCFCamaraComercio.svc" />
+      <soap:address location="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

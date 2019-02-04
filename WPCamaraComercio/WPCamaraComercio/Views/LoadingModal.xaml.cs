@@ -73,12 +73,6 @@ namespace WPCamaraComercio.Views
                             this.Close();
                         }
                     }
-                    else
-                    {
-                        FrmModal modal = new FrmModal(message, null);
-                        modal.ShowDialog();
-                        this.Close();
-                    }
                 }
                 else
                 {

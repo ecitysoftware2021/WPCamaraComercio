@@ -7,7 +7,6 @@ using System.Windows.Input;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
-using WPCamaraComercio.WCFCamaraComercio;
 using WPCamaraComercio.WCFPayPad;
 
 namespace WPCamaraComercio.Views
@@ -21,7 +20,6 @@ namespace WPCamaraComercio.Views
        // WCFPayPad.CLSTransaction transaction;
         WCFPayPadService payPadService;
         NavigationService navigationService;
-        WCFServices services;
         Utilities utilities;
         Api api;
         #endregion
@@ -35,7 +33,6 @@ namespace WPCamaraComercio.Views
             navigationService = new NavigationService(this);
             utilities = new Utilities();
             api = new Api();
-            services = new WCFServices();
             CmbTypeBuyer.SelectedIndex = 0;
             CmbIdDType.SelectedIndex = 0;
         }
@@ -108,29 +105,13 @@ namespace WPCamaraComercio.Views
                 payerData.ClientPlataform = "DISPENSADOR";
 
                 Utilities.PayerData = payerData;
-                //InsertPayerData(payerData);
+                utilities.InsertPayerData();
             }
             catch (Exception ex)
             {
                 utilities.SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
                 navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
-        }
-
-        private void InsertPayerData(PayerData payerData)
-        {
-            DatosPagador payer = new DatosPagador
-            {
-                EmailComprador = payerData.Email,
-                IdentificacionComprador = payerData.BuyerIdentification,
-                PrimerApellidoComprador = payerData.LastNameBuyer,
-                PrimerNombreComprador = payerData.FirstNameBuyer,
-                SegundoNombreComprador = payerData.SecondNameBuyer,
-                TelefonoComprador = payerData.Phone,
-                TipoComprador = payerData.TypeBuyer,
-                TipoIdentificacionComprador = payerData.TypeIdBuyer
-            };
-            services.InsertPayerDBCM(payer);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -340,7 +321,8 @@ namespace WPCamaraComercio.Views
                 Utilities.ResetTimer();
                 Utilities.PayerData = null;
                 Utilities.ListCertificates.Clear();
-                Utilities.GoToInicial();
+                //Utilities.GoToInicial();
+                Utilities.RestartApp();
             }
             catch (Exception ex)
             {
@@ -381,6 +363,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
+                utilities.SaveLogErrorMethods("TbxIdentification_TextChanged", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
     }

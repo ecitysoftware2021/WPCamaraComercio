@@ -8,7 +8,6 @@ using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.ViewModels;
-using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.Views
 {
@@ -18,13 +17,13 @@ namespace WPCamaraComercio.Views
     public partial class FrmPayment : Window
     {
         #region References
-        //BackgroundViewModel backgroundViewModel;
         NavigationService navigationService;
         WCFPayPadService WFCPayPadService;
         WCFServices wCFService;
         PaymentController pay;
         PayViewModel payModel;
         CamaraComercio camaraComercio;
+        Utilities utilities;
         decimal amount = 0;
         List<Log> log;
         #endregion
@@ -36,24 +35,19 @@ namespace WPCamaraComercio.Views
             {
                 InitializeComponent();
                 log = new List<Log>();
+                utilities = new Utilities();
                 WFCPayPadService = new WCFPayPadService();
-                //backgroundViewModel = new BackgroundViewModel(Utilities.Operation);
                 navigationService = new NavigationService(this);
                 wCFService = new WCFServices();
                 camaraComercio = new CamaraComercio();
-                //this.DataContext = backgroundViewModel;
                 InitPay();
                 //SendFinish();
             }
             catch (Exception ex)
             {
-                navigationService.NavigatorModal(ex.Message);
+                utilities.SaveLogErrorMethods("FrmPayment", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            lblValorPagar.Content = string.Format("{0:C0}", Math.Floor(Utilities.ValueToPay));
         }
         #endregion
 
@@ -62,7 +56,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                amount = 1100;// Math.Floor(Utilities.ValueToPay);
+                amount = Math.Floor(Utilities.ValueToPay);
                 lblValorPagar.Content = string.Format("{0:C0}", amount);
                 pay = new PaymentController();
                 TimerTime();
@@ -93,7 +87,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                navigationService.NavigatorModal(ex.Message);
+                utilities.SaveLogErrorMethods("InitPay", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -119,10 +114,6 @@ namespace WPCamaraComercio.Views
             {
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Task.Run(() =>
-                    {
-                        WFCPayPadService.WCFPayPad.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
-                    });
                     ValidatePayment(valueInto);
 
                     payModel.ImgCancel = Visibility.Hidden;
@@ -134,7 +125,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                navigationService.NavigatorModal(ex.Message);
+                utilities.SaveLogErrorMethods("FinishPayment", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -174,20 +166,9 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                navigationService.NavigatorModal(ex.Message);
+                utilities.SaveLogErrorMethods("ValidatePayment", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
-        }
-
-        void InsertTransactionDBCM()
-        {
-            DatosTransaccionDBCamaraCM datos = new DatosTransaccionDBCamaraCM
-            {
-                CedulaPagador = Utilities.PayerData.BuyerIdentification,
-                IDCompra = Utilities.BuyID,
-                IDTransaccion = Utilities.IDTransactionDB,
-                Valor = Utilities.ValueToPay
-            };
-            wCFService.InserTransactionDBCM(datos);
         }
 
         public async void SendFinish()
@@ -198,15 +179,12 @@ namespace WPCamaraComercio.Views
                 FillLog("Llamando el servicio para extraer el certificado");
                 Utilities.BuyID = await camaraComercio.ConfirmarCompra();
                 FillLog("El servicio respondió: " + Utilities.BuyID);
-
-
                 //camaraComercio.Print("h");
-                if (!Utilities.BuyID.Equals("0"))
+                if (!Utilities.BuyID.Equals("0") && !string.IsNullOrEmpty(Utilities.BuyID))
                 {
-                    //InsertTransactionDBCM();
                     Dispatcher.BeginInvoke((Action)delegate
                     {
-                        FinishPayment frmInformationCompany = new FinishPayment(pay, valueInto);
+                        FinishPayment frmInformationCompany = new FinishPayment(pay,valueInto);
                         frmInformationCompany.Show();
                         this.Close();
                     });
@@ -231,7 +209,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                navigationService.NavigatorModal(ex.Message);
+                utilities.SaveLogErrorMethods("SendFinish", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -250,7 +229,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                navigationService.NavigatorModal(ex.Message);
+                utilities.SaveLogErrorMethods("TimerTime", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -314,7 +294,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                navigationService.NavigatorModal(ex.Message);
+                utilities.SaveLogErrorMethods("ChangeView", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -334,7 +315,8 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                navigationService.NavigatorModal(ex.Message);
+                utilities.SaveLogErrorMethods("HideImages", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -356,30 +338,40 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                navigationService.NavigatorModal(ex.Message);
+                utilities.SaveLogErrorMethods("SetMountInsert", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         });
 
         private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
-            this.Opacity = 0.5;
-            FrmModalConfirmation frmConfirmation = new FrmModalConfirmation("¿Está seguro que desea cancelar la transacción?");
-            frmConfirmation.ShowDialog();
-            this.Opacity = 1;
-            if (frmConfirmation.DialogResult.Value && frmConfirmation.DialogResult.HasValue)
+            try
             {
-                var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));
-                Utilities.ValueEnter = valueInto;
-                if (valueInto != 0)
+                this.Opacity = 0.5;
+                FrmModalConfirmation frmConfirmation = new FrmModalConfirmation("¿Está seguro que desea cancelar la transacción?");
+                frmConfirmation.ShowDialog();
+                this.Opacity = 1;
+                if (frmConfirmation.DialogResult.Value && frmConfirmation.DialogResult.HasValue)
                 {
-                    Utilities.ValueReturn = valueInto;
-                    GotoCancel();
+                    var valueInto = decimal.Parse(payModel.ValorIngresado.Replace("$", ""));
+                    Utilities.ValueEnter = valueInto;
+                    if (valueInto != 0)
+                    {
+                        Utilities.ValueReturn = valueInto;
+                        GotoCancel();
+                    }
+                    else
+                    {
+                        pay.Finish();
+                        //Utilities.GoToInicial();
+                        Utilities.RestartApp();
+                    }
                 }
-                else
-                {
-                    pay.Finish();
-                    Utilities.GoToInicial();
-                }
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("BtnCancel_StylusDown", "FrmPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }
 
@@ -392,7 +384,6 @@ namespace WPCamaraComercio.Views
                 Close();
             }));
         }
-
         #endregion
     }
 }

@@ -343,7 +343,8 @@ namespace WPCamaraComercio.Views
             {
                 Utilities.ListMerchantDetail.Clear();
                 Utilities.ResetTimer();
-                Utilities.GoToInicial();
+                //Utilities.GoToInicial();
+                Utilities.RestartApp();
             }
             catch (Exception ex)
             {

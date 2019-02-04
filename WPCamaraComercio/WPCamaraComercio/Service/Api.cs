@@ -33,7 +33,7 @@ namespace WPCamaraComercio.Service
             basseAddress = Utilities.GetConfiguration(nameof(basseAddress));
             client = new HttpClient();
             client.BaseAddress = new Uri(basseAddress);
-            ReadKeys();
+           // ReadKeys();
         }
 
         #endregion
@@ -118,24 +118,24 @@ namespace WPCamaraComercio.Service
             }
         }
 
-        private void ReadKeys()
-        {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string[] text = File.ReadAllLines(string.Format(@"{0}\keys.txt", path));
-            if (text.Length > 0)
-            {
-                string[] line1 = text[0].Split(';');
-                User4Told = line1[0].Split(':')[1];
-                Password4Told = line1[1].Split(':')[1];
+        //private void ReadKeys()
+        //{
+        //    string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        //    string[] text = File.ReadAllLines(string.Format(@"{0}\keys.txt", path));
+        //    if (text.Length > 0)
+        //    {
+        //        string[] line1 = text[0].Split(';');
+        //        User4Told = line1[0].Split(':')[1];
+        //        Password4Told = line1[1].Split(':')[1];
 
-                string[] line2 = text[1].Split(';');
-                requestAuth = new RequestAuth
-                {
-                    UserName = line2[0].Split(':')[1],
-                    Password = line2[1].Split(':')[1],
-                    Type = int.Parse(line2[2].Split(':')[1])
-                };
-            }
-        }
+        //        string[] line2 = text[1].Split(';');
+        //        requestAuth = new RequestAuth
+        //        {
+        //            UserName = line2[0].Split(':')[1],
+        //            Password = line2[1].Split(':')[1],
+        //            Type = int.Parse(line2[2].Split(':')[1])
+        //        };
+        //    }
+        //}
     }
 }
