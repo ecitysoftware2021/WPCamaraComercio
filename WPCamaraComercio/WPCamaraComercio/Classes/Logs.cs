@@ -53,7 +53,7 @@ namespace WPCamaraComercio.Classes
         public void CreateLogsTransactions<T>(T model)
         {
             var json = JsonConvert.SerializeObject(model);
-            string fullPath = string.Format(@"C:\\Logs\{0}\", NamePath);
+            string fullPath = string.Format(@"C:\\LogsCamaraMedellin\{0}\", NamePath);
             if (!Directory.Exists(fullPath))
             {
                 Directory.CreateDirectory(fullPath);
@@ -76,7 +76,6 @@ namespace WPCamaraComercio.Classes
 
     public class LogErrorGeneral
     {
-        public string UserId { get; set; }
         public int IdTransaction { get; set; }
         public decimal ValuePay { get; set; }
         public string Date { get; set; }
@@ -105,7 +104,7 @@ namespace WPCamaraComercio.Classes
         public void CreateLogsMethods(LogErrorMethods log)
         {
             var json = JsonConvert.SerializeObject(log);
-            string fullPath = string.Format(@"C:\LogsMetodos\");
+            string fullPath = string.Format(@"C:\LogsMetodosCCM\");
             if (!Directory.Exists(fullPath))
             {
                 Directory.CreateDirectory(fullPath);

@@ -24,9 +24,9 @@ namespace WPCamaraComercio.Classes
         WCFCamaraComercioClient WCFCamara = new WCFCamaraComercioClient();
         WCFServices service = new WCFServices();
         Datos datos = new Datos();
-        Dictionary<string, string> responseDic = new Dictionary<string, string>();
+        string responseDic = string.Empty;
         private string FileName { get; set; }
-        private bool printState { get; set; }
+        private bool printState = true;
         private static string IDCompra { get; set; }
         public static string Delimitador { get { return "-"; } }
         private string DirectoryFile { get; set; }
@@ -75,13 +75,14 @@ namespace WPCamaraComercio.Classes
 
                     if (response.IsSuccess)
                     {
-                        responseDic = (Dictionary<string, string>)response.Result;
-                        if (responseDic.Count > 0)
+                        int validator = 0;
+                        responseDic = response.Result.ToString();
+                        if (int.TryParse(responseDic, out validator))
                         {
-                            responseDic.TryGetValue("IDCompra", out idCompra);
+                            idCompra = responseDic;
                             utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
-                            IDCompra = idCompra;
-                            return IDCompra;
+
+                            return idCompra;
                         }
                         else
                         {
@@ -130,7 +131,7 @@ namespace WPCamaraComercio.Classes
                 {
                     CLSDatosCertificado datosCertificado = new CLSDatosCertificado();
                     datosCertificado.IdCertificado = item.IdCertificado;
-                    datosCertificado.idcompra = IDCompra;
+                    datosCertificado.idcompra = Utilities.BuyID;
                     datosCertificado.matricula = item.matricula;
                     datosCertificado.matriculaest = item.MatriculaEst;
                     datosCertificado.referenciaPago = Utilities.IDTransactionDB.ToString();
@@ -275,6 +276,7 @@ namespace WPCamaraComercio.Classes
             }
         }
 
+
         void Mensaje(string mensaje)
         {
             utilities.FillLogError(mensaje, "Descarga Certificado");
@@ -290,14 +292,14 @@ namespace WPCamaraComercio.Classes
             print.Valor = Utilities.ValueToPay;
             print.Estado = Estado;
             print.ValorDevuelto = Utilities.ValueReturned;
-            print.IDCompra = IDCompra;
+            print.IDCompra = Utilities.BuyID;
             print.Tramite = "Certificados Electrónicos";
             print.ImprimirComprobante();
-        } 
+        }
         #endregion
     }
 
-    public class FileName
+        public class FileName
     {
         public string IdCertificado { get; set; }
         public string matricula { get; set; }

@@ -18,7 +18,7 @@ namespace WPCamaraComercio.Views
         ServicePayPadClient WCFPayPadInsert = new ServicePayPadClient();
         NavigationService navigationService;
         private int count = 0;
-        private LogErrorGeneral logError;
+        private LogErrorGeneral log;
         decimal enterValue = 0;
         decimal returnValue = 0;
         #endregion
@@ -29,7 +29,7 @@ namespace WPCamaraComercio.Views
             InitializeComponent();
             this.enterValue = _enterValue;
             this.returnValue = _returnValue;
-            logError = new LogErrorGeneral();
+            log = new LogErrorGeneral();
             navigationService = new NavigationService(this);
         }
 
@@ -55,13 +55,19 @@ namespace WPCamaraComercio.Views
                     {
                         if (antecedent.Result)
                         {
-                            utilities.UpdateTransaction(enterValue, 2, Utilities.BuyID, returnValue);
+                            WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                            CreateLog();
                             camaraComercio.ImprimirComprobante("Aprobada");
-                            Utilities.GoToInicial();
+
+                            Dispatcher.BeginInvoke((Action)delegate
+                            {
+                                FrmInitial initial = new FrmInitial();
+                                initial.Show();
+                                this.Close();
+                            });
                         }
                         else
                         {
-                            utilities.UpdateTransaction(enterValue, 3, Utilities.BuyID, returnValue);
                             Dispatcher.BeginInvoke((Action)delegate
                             {
                                 FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
@@ -90,7 +96,26 @@ namespace WPCamaraComercio.Views
                 navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
                 return null;
             }
-        } 
+        }
+
+        private void CreateLog()
+        {
+            try
+            {
+                log.IdTransaction = Utilities.IDTransactionDB;
+                log.Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
+                log.Description = "Se actualiza la transacción y se deja en estado Aprobada";
+                log.ValuePay = Utilities.ValueToPay;
+                log.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
+                log.State = "Aprobada";
+                Utilities.SaveLogTransactions(log, "LogTransacciones\\Aprobadas");
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("CreateLog", "FinishPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
         #endregion
     }
 }

@@ -30,8 +30,6 @@ namespace WPCamaraComercio.Classes
 
         private string _AceptanceBillOFF = "OR:OFF:AP";//Cerrar billetero Aceptance
 
-        private string _DispenserBillOFF = "OR:OFF:DP";//Cerrar billetero Dispenser
-
         private string _AceptanceCoinOn = "OR:ON:MA";//Operar Monedero Aceptance
 
         private string _DispenserCoinOn = "OR:ON:MD:";//Operar Monedero Dispenser
@@ -65,7 +63,6 @@ namespace WPCamaraComercio.Classes
 
         private static int _mil = 1000;
         private static int _hundred = 100;
-        private static int _tens = 10;
 
         #endregion
 
@@ -79,9 +76,9 @@ namespace WPCamaraComercio.Classes
 
         private decimal dispenserValue;//Valor a dispensar
 
-        private bool stateError;
+        private bool stateError;//Si sucede algun error en un periférico, se pone en true
 
-        private static string TOKEN;//Llabe que retorna el dispenser
+        private static string TOKEN;//Llave que retorna el dispenser
 
         public string LogMessage;//Mensaje para el log
 
@@ -128,6 +125,17 @@ namespace WPCamaraComercio.Classes
         }
 
         /// <summary>
+        /// Método usado para iniciar los valores de la clase
+        /// </summary>
+        public void StartValues()
+        {
+            deliveryValue = 0;//valor entregado TEST
+            enterValue = 0;//valor ingresado
+            deliveryVal = 0;//valor entregado
+            LogMessage = string.Empty;//Mensaje del log del dispenser
+        }
+
+        /// <summary>
         /// Método para inciar el puerto de los billeteros
         /// </summary>
         private void InitPortBills()
@@ -137,7 +145,7 @@ namespace WPCamaraComercio.Classes
                 if (!_serialPortBills.IsOpen)
                 {
                     _serialPortBills.PortName = Utilities.GetConfiguration("PortBills");
-                    _serialPortBills.ReadTimeout = 500;
+                    _serialPortBills.ReadTimeout = 3000;
                     _serialPortBills.WriteTimeout = 500;
                     _serialPortBills.BaudRate = 57600;
                     _serialPortBills.Open();
@@ -161,7 +169,7 @@ namespace WPCamaraComercio.Classes
                 if (!_serialPortCoins.IsOpen)
                 {
                     _serialPortCoins.PortName = Utilities.GetConfiguration("PortCoins");
-                    _serialPortCoins.ReadTimeout = 500;
+                    _serialPortCoins.ReadTimeout = 3000;
                     _serialPortCoins.WriteTimeout = 500;
                     _serialPortCoins.BaudRate = 57600;
                     _serialPortCoins.Open();
@@ -220,6 +228,7 @@ namespace WPCamaraComercio.Classes
                 throw ex;
             }
         }
+
         #endregion
 
         #region Listeners
@@ -409,13 +418,6 @@ namespace WPCamaraComercio.Classes
             }
         }
 
-        public void StartValues()
-        {
-            deliveryValue = 0;
-            enterValue = 0;
-            LogMessage = string.Empty;
-        }
-
         /// <summary>
         /// Respuesta para el caso de total cuando responde el billetero/monedero dispenser
         /// </summary>
@@ -490,13 +492,13 @@ namespace WPCamaraComercio.Classes
                         DispenserMoney(valuePay.ToString());
                         if (amountCoins > 0)
                         {
-                            SendMessageCoins("OR:ON:MD:" + (amountCoins / _hundred).ToString());
+                            SendMessageCoins(_DispenserCoinOn + (amountCoins / _hundred).ToString());
                         }
                     }
                     else
                     {
                         decimal valuePayCoin = dispenserValue / _hundred;
-                        SendMessageCoins("OR:ON:MD:" + valuePayCoin.ToString());
+                        SendMessageCoins(_DispenserCoinOn + valuePayCoin.ToString());
                     }
                 }
             }
@@ -539,10 +541,8 @@ namespace WPCamaraComercio.Classes
             try
             {
                 this.payValue = payValue;
-
                 SendMessageBills(_AceptanceBillOn);
-
-                //SendMessageCoins(_AceptanceCoinOn);
+                SendMessageCoins(_AceptanceCoinOn);
             }
             catch (Exception ex)
             {
@@ -577,7 +577,7 @@ namespace WPCamaraComercio.Classes
 
         #region Responses
 
-        public decimal deliveryVal = 0;
+        public decimal deliveryVal;
         /// <summary>
         /// Procesa la respuesta de los dispenser M y B
         /// </summary>
@@ -603,9 +603,14 @@ namespace WPCamaraComercio.Classes
 
             if (!stateError)
             {
-                if (dispenserValue == deliveryVal && isBX == 2)
+                //if (deliveryVal == 50000) { deliveryVal = 2000; }
+
+                if (dispenserValue == deliveryVal)
                 {
-                    callbackTotalOut?.Invoke(deliveryVal);
+                    if (isBX == 2 || isBX == 0)
+                    {
+                        callbackTotalOut?.Invoke(deliveryVal);
+                    }
                 }
             }
             else

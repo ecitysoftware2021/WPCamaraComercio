@@ -6,6 +6,7 @@ using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.ViewModels;
+using WPCamaraComercio.WCFPayPad;
 using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Views
@@ -31,14 +32,25 @@ namespace WPCamaraComercio.Views
 
         private Record recorder;//Instancia
 
+        private Api api;
+
+        private TransactionDetails transactionDetails;
+
         private int count;//Contador utilizado para los reintentos en UpdateTrans
 
         private int tries;//Contador utilizado para los reintentos en SavePay
+
+        private bool stateUpdate;
+
+        private bool payState;
+
         CamaraComercio camaraComercio;
+
         NavigationService navigationService;
-        private Api api;
+
         bool isCancel = false;
-        private TransactionDetails transactionDetails;
+
+        ServicePayPadClient WCFPayPadInsert;
         #endregion
 
         #region LoadMethods
@@ -52,6 +64,7 @@ namespace WPCamaraComercio.Views
             payPadService = new WCFPayPadService();
             recorder = new Record();
             api = new Api();
+            WCFPayPadInsert = new ServicePayPadClient();
             transactionDetails = new TransactionDetails();
             camaraComercio = new CamaraComercio();
             utilities = new Utilities();
@@ -65,6 +78,7 @@ namespace WPCamaraComercio.Views
             };
             count = 0;
             tries = 0;
+            Utilities.control.StartValues();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -72,9 +86,39 @@ namespace WPCamaraComercio.Views
             //recorder.Grabar(Utilities.IDTransactionDB);
             Task.Run(() =>
             {
-                Utilities.control.StartValues();
+                //Utilities.control.StartValues();
                 ActivateWallet();
             });
+        }
+
+        /// <summary>
+        /// Método encargado de dar el estado inicial de todas las imagenes/botones de la vista
+        /// </summary>
+        private void VisibilityImage()
+        {
+            PaymentViewModel.ImgCancel = Visibility.Visible;
+            PaymentViewModel.ImgIngreseBillete = Visibility.Visible;
+            PaymentViewModel.ImgEspereCambio = Visibility.Hidden;
+            PaymentViewModel.ImgLeyendoBillete = Visibility.Hidden;
+            PaymentViewModel.ImgRecibo = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// Método encargado de organizar todos los valores de la transacción en la vista
+        /// </summary>
+        private void OrganizeValues()
+        {
+            lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
+            PaymentViewModel = new PaymentViewModel
+            {
+                PayValue = Utilities.ValueToPay,
+                ValorFaltante = Utilities.ValueToPay,
+                ValorSobrante = 0,
+                ValorIngresado = 0
+            };
+
+            VisibilityImage();
+            this.DataContext = PaymentViewModel;
         }
 
         #endregion
@@ -85,16 +129,14 @@ namespace WPCamaraComercio.Views
         {
             Dispatcher.BeginInvoke((Action)delegate
             {
+                Utilities.control.StopAceptance();
                 this.Opacity = 0.5;
                 FrmModalConfirmation modal = new FrmModalConfirmation("¿Está seguro de cancelar la transacción?");
                 modal.ShowDialog();
                 this.Opacity = 1;
                 if (modal.DialogResult.Value)
                 {
-                    Task.Run(() =>
-                    {
-                        Utilities.control.StopAceptance();
-                    });
+                    
                     if (PaymentViewModel.ValorIngresado > 0)
                     {
                         FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
@@ -106,6 +148,7 @@ namespace WPCamaraComercio.Views
                         Utilities.GoToInicial();
                     }
                 }
+                Utilities.control.StartAceptance(PaymentViewModel.PayValue);
             });
         }
 
@@ -197,59 +240,46 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private async void EndDispenserMoney(decimal quiantity, int state)
+        private async void EndDispenserMoney(decimal quiantity, int stateTrans = 2, bool state = true)
         {
             Utilities.ValueDelivery = (long)quiantity;
             await Task.Run(() =>
             {
                 Utilities.SaveLogDispenser(ControlPeripherals.log);
-                Utilities.UpdateTransaction(0, state, Utilities.ValueDelivery).Wait();
             });
 
             transactionDetails.Description = Utilities.control.LogMessage;
             RequestApi requestApi = new RequestApi
             {
-                Data = transactionDetails//TODO: cambiar el idtransaction
+                Data = transactionDetails
             };
-
             var response = await api.GetResponse(requestApi, "SaveTransactionDetail");
+
             await Dispatcher.BeginInvoke(new Action(() =>
             {
                 Utilities.Loading(frmLoading, false, this);
             }));
 
-            FinishPayment();
-        }
-
-        /// <summary>
-        /// Método encargado de dar el estado inicial de todas las imagenes/botones de la vista
-        /// </summary>
-        private void VisibilityImage()
-        {
-            PaymentViewModel.ImgCancel = Visibility.Visible;
-            PaymentViewModel.ImgIngreseBillete = Visibility.Visible;
-            PaymentViewModel.ImgEspereCambio = Visibility.Hidden;
-            PaymentViewModel.ImgLeyendoBillete = Visibility.Hidden;
-            PaymentViewModel.ImgRecibo = Visibility.Hidden;
-        }
-
-        /// <summary>
-        /// Método encargado de organizar todos los valores de la transacción en la vista
-        /// </summary>
-        private void OrganizeValues()
-        {
-            lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
-            PaymentViewModel = new PaymentViewModel
+            if (state)
             {
-                PayValue = Utilities.ValueToPay,
-                ValorFaltante = Utilities.ValueToPay,
-                ValorSobrante = 0,
-                ValorIngresado = 0
-            };
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    BtnCancel.IsEnabled = false;
+                }));
 
-            VisibilityImage();
-            this.DataContext = PaymentViewModel;
+                FinishPayment();
+            }
+            else
+            {
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    BtnCancel.IsEnabled = false;
+                }));
+
+                FinishPayment();
+            }
         }
+        
 
         /// <summary>
         /// Método que se encarga de llenar un log de error general, esto cuando se produce una excepción
@@ -280,9 +310,12 @@ namespace WPCamaraComercio.Views
                     Utilities.BuyID = await camaraComercio.ConfirmarCompra();
                     if (!Utilities.BuyID.Equals("0"))
                     {
-                        Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
+                        await Dispatcher.BeginInvoke((Action)delegate 
+                        {
+                            Utilities.Loading(frmLoading, false, this);
+                        });
                         //navigationService.NavigationTo("FinishPayment");
-                        Dispatcher.BeginInvoke((Action)delegate
+                        await Dispatcher.BeginInvoke((Action)delegate
                         {
                             FinishPayment frmInformationCompany = new FinishPayment(PaymentViewModel.ValorIngresado, PaymentViewModel.ValorSobrante);
                             frmInformationCompany.Show();
@@ -291,8 +324,11 @@ namespace WPCamaraComercio.Views
                     }
                     else
                     {
-                        Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, false, this); });
-                        Dispatcher.BeginInvoke((Action)delegate
+                        await Dispatcher.BeginInvoke((Action)delegate 
+                        {
+                            Utilities.Loading(frmLoading, false, this);
+                        });
+                        await Dispatcher.BeginInvoke((Action)delegate
                         {
                             FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
                                 "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
@@ -309,7 +345,7 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
-                    Utilities.UpdateTransaction(PaymentViewModel.ValorIngresado, 3, PaymentViewModel.ValorSobrante);
+                    WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
                     Utilities.GoToInicial();
                 }
             }
@@ -318,10 +354,6 @@ namespace WPCamaraComercio.Views
                 ErroUpdateTrans(ex.Message);
             }
         }
-
-        /// <summary>
-        /// Método encargado de actualizar la transacción a aprobada, se llama en finalizar pago En caso de fallo se reintenta dos veces más actualizar el estado de la transacción, si el error persiste se guarda en un log local y en el servidor, seguido de esto se continua con la transacción normal
-        /// </summary>
 
         #endregion
     }

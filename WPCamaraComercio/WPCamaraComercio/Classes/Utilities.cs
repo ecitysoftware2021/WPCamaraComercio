@@ -78,7 +78,7 @@ namespace WPCamaraComercio.Classes
         public static decimal DispenserVal { get; set; }
 
         public static DataPayPad dataPaypad = new DataPayPad();
-        Api api = new Api();
+        public static Api api;
 
         public static decimal ValueReturned { get; set; }
 
@@ -98,6 +98,7 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
+                api = new Api();
                 control = new ControlPeripherals();
                 control.StopAceptance();
             }
@@ -117,20 +118,6 @@ namespace WPCamaraComercio.Classes
             {
                 FrmModal modal = new FrmModal(Message, w, state);
                 modal.ShowDialog();
-            }));
-            return;
-        }
-
-        /// <summary>
-        /// Se usa para abrir la modal de información/error
-        /// </summary>
-        /// <param name="Message">mensaje para ser mostrado</param>
-        public static void ModalError(string Message)
-        {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-            {
-                //FrmModalErrors modal = new FrmModalErrors(Message);
-                //modal.ShowDialog();
             }));
             return;
         }
@@ -206,10 +193,10 @@ namespace WPCamaraComercio.Classes
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
-                var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+                //var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
                 FrmInitial main = new FrmInitial();
                 main.Show();
-                window.Close();
+                //window.Close();
                 CloseWindows(main.Title);
             }));
             GC.Collect();
@@ -245,37 +232,12 @@ namespace WPCamaraComercio.Classes
         }
 
         /// <summary>
-        /// Método que me llama a la clase CLSPrint para imprimir la factura
-        /// </summary>
-        public void ImprimirComprobante()
-        {
-            try
-            {
-                Print print = new Print();
-
-                //dataPrinter.Tipo = Utilities.Tipo;
-                //dataPrinter.FechaPago = DateTime.Now;
-                //dataPrinter.Usuario = receipt.PROPIETARIO;
-                //dataPrinter.Identificacion = receipt.DOCUMENTO;
-                //dataPrinter.Valor = String.Format("{0:C0}", transaction.ValueTotal);
-                //dataPrinter.ValorIngresado = String.Format("{0:C2}", payModel.ValorIngresado);
-                //dataPrinter.ValorDevuelto = String.Format("{0:C2}", payModel.ValorRestante);
-
-                print.ImprimirComprobante();
-            }
-            catch (Exception ex)
-            {
-                //saveLogError("btnConsultar_StylusDown", "FrmSearch", ex.ToString());
-            }
-        }
-
-        /// <summary>
         /// Método que me guarda un error ocurrido en la aplicación
         /// </summary>
         /// <param name="Metodo"></param>
         /// <param name="Clase"></param>
         /// <param name="Mensaje"></param>
-        /// 
+        /// </summary>
         public void FillLogError(string error, string operacion)
         {
             List<LogError> logError = new List<LogError>();
@@ -445,7 +407,6 @@ namespace WPCamaraComercio.Classes
         //        throw ex;
         //    }
         //}
-
 
 
         /// <summary>
