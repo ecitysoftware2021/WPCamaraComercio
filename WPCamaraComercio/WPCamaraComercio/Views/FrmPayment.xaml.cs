@@ -129,7 +129,11 @@ namespace WPCamaraComercio.Views
         {
             Dispatcher.BeginInvoke((Action)delegate
             {
-                Utilities.control.StopAceptance();
+                Task.Run(() => 
+                {
+                    Utilities.control.StopAceptance();
+                });
+                
                 this.Opacity = 0.5;
                 FrmModalConfirmation modal = new FrmModalConfirmation("¿Está seguro de cancelar la transacción?");
                 modal.ShowDialog();
@@ -148,7 +152,10 @@ namespace WPCamaraComercio.Views
                         Utilities.GoToInicial();
                     }
                 }
-                Utilities.control.StartAceptance(PaymentViewModel.PayValue);
+                else
+                {
+                    Utilities.control.StartAceptance(PaymentViewModel.PayValue);
+                }
             });
         }
 
