@@ -45,49 +45,68 @@ namespace WPCamaraComercio.Classes
 
         List<Log> log;
 
+        Utilities utilities;
+
         #endregion
 
         public PaymentController()
         {
-            this.idCorrespo = Utilities.CorrespondentId;
-
-            this.payout = new Payout();
-
-            this.smartCoins = new SmartCoins();
-
-            wCFService = new WCFServices();
-
-            WCFPayPadService = new WCFPayPadService();
-
-            log = new List<Log>();
+            try
+            {
+                this.idCorrespo = Utilities.CorrespondentId;
+                this.payout = new Payout();
+                this.smartCoins = new SmartCoins();
+                wCFService = new WCFServices();
+                WCFPayPadService = new WCFPayPadService();
+                log = new List<Log>();
+                utilities = new Utilities();
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("PaymentController", "PaymentController", ex.ToString());
+            }
         }
 
         public void Start(decimal paymentValue)
         {
-            this.paymentValue = paymentValue;
-
-            returnObject = new ReturnObject
+            try
             {
-                state = false,
-                amount = 0,
-                tryPay = 0
-            };
+                this.paymentValue = paymentValue;
 
-            InitSmartPayout();
+                returnObject = new ReturnObject
+                {
+                    state = false,
+                    amount = 0,
+                    tryPay = 0
+                };
 
-            InitAcceptanceCoins();
+                InitSmartPayout();
+
+                InitAcceptanceCoins();
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("Start", "PaymentController", ex.ToString());
+            }
         }
 
         private void InitAcceptanceCoins()
         {
-            Task.Run(() =>
+            try
             {
-                smartCoins.callbackValue = value =>
-                {
-                    OperationAcceptance(value);
-                };
-                smartCoins.Start();
-            });
+                Task.Run(() =>
+                    {
+                        smartCoins.callbackValue = value =>
+                        {
+                            OperationAcceptance(value);
+                        };
+                        smartCoins.Start();
+                    });
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("InitAcceptanceCoins", "PaymentController", ex.ToString());
+            }
         }
 
         public void StartReturn(decimal returnValue)
@@ -115,6 +134,16 @@ namespace WPCamaraComercio.Classes
                             OperationAcceptance(value);
                         }
                     };
+                    this.payout.callbackError = error =>
+                    {
+                        if (GetStatus() == "DISPENSER")
+                        {
+                            decimal value = payout.GetReturnMoney();
+                            returnObject.amount = returnObject.amount - value;
+                            dispenserValue = dispenserValue + value;
+                            returnObject.state = true;
+                        }
+                    };
                     statePay = payout.IsStart();
                     if (statePay)
                     {
@@ -125,8 +154,9 @@ namespace WPCamaraComercio.Classes
                             {
                                 if (!payout.IsStart())
                                 {
-                                    statePay = false;
-                                    InitSmartPayout();
+                                    Thread.Sleep(1000);
+                                    //statePay = false;
+                                    //InitSmartPayout();
                                 }
                             }
                             else
@@ -134,7 +164,7 @@ namespace WPCamaraComercio.Classes
                                 if (returnObject.state)
                                 {
                                     returnObject.state = false;
-                                    Thread.Sleep(1500);
+
                                     decimal dispenValue = payout.PayOut(returnObject.amount);
 
                                     if (dispenValue == returnObject.amount && returnObject.tryPay < 3)
@@ -144,12 +174,17 @@ namespace WPCamaraComercio.Classes
                                     }
                                     else if (dispenValue > 0)
                                     {
-                                        //returnObject.amount = dispenValue;
+                                        returnObject.amount = returnObject.amount - dispenValue;
                                         ReturnMoney(dispenValue, 2);
                                     }
                                 }
                             }
                         }
+                    }
+                    else
+                    {
+                        Thread.Sleep(1000);
+                        InitSmartPayout();
                     }
                 });
             }

@@ -182,7 +182,7 @@ namespace WPCamaraComercio.Views
                 //camaraComercio.Print("h");
                 if (!Utilities.BuyID.Equals("0") && !string.IsNullOrEmpty(Utilities.BuyID))
                 {
-                    Dispatcher.BeginInvoke((Action)delegate
+                    await Dispatcher.BeginInvoke((Action)delegate
                     {
                         FinishPayment frmInformationCompany = new FinishPayment(pay,valueInto);
                         frmInformationCompany.Show();

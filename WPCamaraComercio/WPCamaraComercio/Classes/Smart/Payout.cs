@@ -30,6 +30,7 @@ namespace WPCamaraComercio.Classes.Smart
         // A list of dataset data, sorted by value. Holds the info on channel number, value, currency,
         // level and whether it is being recycled.
         private List<ChannelData> m_UnitDataList;
+        private List<Bills> billsReturns;
         //variables que muestran la suma del dinero
         private decimal intoValue;
         //variable dinero ingresado
@@ -512,7 +513,7 @@ namespace WPCamaraComercio.Classes.Smart
             cmd.CommandDataLength = 1;
             if (!ValidateCommand())
             {
-                statusPayout = "Error";
+                //statusPayout = "Error";
                 return false;
             }
 
@@ -628,6 +629,7 @@ namespace WPCamaraComercio.Classes.Smart
                     case CCommands.SSP_POLL_PAYOUT_ERROR: // Note: Will be reported only when Protocol version >= 7
                         Console.WriteLine("Detected error with payout device\r\n");
                         i += (byte)((response[i + 1] * 7) + 2);
+                        callbackError?.Invoke("Detected error with payout device\r\n");
                         break;
                     // A fraud attempt has been detected. 
                     case CCommands.SSP_POLL_FRAUD_ATTEMPT:
@@ -672,6 +674,7 @@ namespace WPCamaraComercio.Classes.Smart
                     case CCommands.SSP_POLL_NOTE_DISPENSING:
                         Console.WriteLine("Dispensing note(s)\r\n");
                         i += (byte)((response[i + 1] * 7) + 1);
+                        statusPayout = "DISPENSER";
                         break;
                     // The note has been dispensed and removed from the bezel by the user.
                     case CCommands.SSP_POLL_NOTE_DISPENSED:
@@ -680,6 +683,7 @@ namespace WPCamaraComercio.Classes.Smart
                         UpdateData();
                         EnableValidator();
                         i += (byte)((response[i + 1] * 7) + 1);
+                        statusPayout = "DISPENSER";
                         ProccesPayment("", 2);
                         break;
                     // The payout device is in the process of emptying all its stored notes to the cashbox. This
@@ -873,7 +877,7 @@ namespace WPCamaraComercio.Classes.Smart
                 byte length = 0;
                 int dataIndex = 0;
                 byte denomsToPayout = 0;
-
+                billsReturns = GetBills();
 
                 // For each denomination
                 for (int i = m_NumberOfChannels - 1; i >= 0; i--)
@@ -1011,6 +1015,24 @@ namespace WPCamaraComercio.Classes.Smart
             catch (Exception ex)
             {
                 return "Error";
+            }
+        }
+
+        public decimal GetReturnMoney()
+        {
+            try
+            {
+                decimal valueReturn = 0;
+                for (int i = 0; i < billsReturns.Count; i++)
+                {
+                    valueReturn += Convert.ToDecimal(billsReturns[i].Denomination) * (Convert.ToInt32(billsReturns[i].Quantity) - m_UnitDataList[i].Level);
+                }
+                return valueReturn;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                throw;
             }
         }
 
