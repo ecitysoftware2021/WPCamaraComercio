@@ -74,12 +74,15 @@ namespace WPCamaraComercio.Classes
         public static decimal DispenserVal { get; set; }
 
         public static DataPayPad dataPaypad = new DataPayPad();
+
         Api api = new Api();
 
         public static decimal ValueEnter { get; set; }
 
         public static decimal ValueReturn { get; set; }
-        
+
+        public static List<Log> log = new List<Log>();
+
         #endregion
 
         #region GeneralEvents
@@ -302,6 +305,31 @@ namespace WPCamaraComercio.Classes
             {
                 var json = JsonConvert.SerializeObject(dato);
                 var pathFile = "C:\\LogErrores";
+                if (!Directory.Exists(pathFile))
+                {
+                    Directory.CreateDirectory(pathFile);
+                }
+                var file = "Log" + DateTime.Now.ToString("yyyyMMdd") + ".json";
+                var nameFile = Path.Combine(pathFile, file);
+                if (!File.Exists(nameFile))
+                {
+                    var archivo = File.CreateText(nameFile);
+                    archivo.Close();
+                }
+                using (StreamWriter sw = File.AppendText(nameFile))
+                {
+                    sw.WriteLine(json);
+                }
+            }
+            catch { }
+        }
+
+        public static void CrearLogTransactional(List<Log> data)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(data);
+                var pathFile = "C:\\LogTransactionalCCM";
                 if (!Directory.Exists(pathFile))
                 {
                     Directory.CreateDirectory(pathFile);

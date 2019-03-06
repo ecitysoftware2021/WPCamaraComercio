@@ -185,7 +185,6 @@ namespace WPCamaraComercio.Classes.Smart
                     }
                     else
                     {
-                       
                         decimal totalDispenser = 0;
                         if (message.ToUpper().Contains("OFF"))
                         {
@@ -198,20 +197,22 @@ namespace WPCamaraComercio.Classes.Smart
                                     string denomination = item.Split(':')[0];
                                     int cuantity = int.Parse(item.Split(':')[1]);
                                     totalDispenser = totalDispenser + (Convert.ToDecimal(denomination) * cuantity);
+
+                                    log.Add(new Log
+                                    {
+                                        Fecha = DateTime.Now,
+                                        IDTrsansaccion = Utilities.IDTransactionDB,
+                                        Operacion = "Devolución más respuesta monedero " + message,
+                                        ValorDevolver = totalDispenser,
+                                        ValorDevuelto = denomination,
+                                        CantidadDevolucion = cuantity,
+                                        ValorPago = Utilities.ValueToPay,
+                                        ValorIngresado = Utilities.ValueEnter,
+                                        EstadoTransaccion = "Aprobada"
+                                    });
                                 }
                                 control++;
                             }
-                            log.Add(new Log
-                            {
-                                Fecha = DateTime.Now,
-                                IDTrsansaccion = Utilities.IDTransactionDB,
-                                Operacion = "El monedero retornó: " + message,
-                                ValorDevolver = totalDispenser,
-                                ValorDevuelto = "0",
-                                ValorPago = Utilities.ValueToPay,
-                                ValorIngresado = Utilities.ValueEnter,
-                                EstadoTransaccion = "Aprobada"
-                            });
                         }
                         callbackTotal?.Invoke(totalDispenser);
                     }

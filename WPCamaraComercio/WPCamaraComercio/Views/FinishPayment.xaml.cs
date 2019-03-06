@@ -93,17 +93,13 @@ namespace WPCamaraComercio.Views
                 {
                     pay.Finish();
                     camaraComercio.ImprimirComprobante("Aprobada");
-                    //Dispatcher.BeginInvoke((Action)delegate
-                    //{
-                    //    Utilities.GoToInicial();
-                    //});
+                    Utilities.CrearLogTransactional(Utilities.log);
+
                     Dispatcher.BeginInvoke((Action)delegate
                     {
                         Utilities.PayerData = null;
                         Utilities.RestartApp();
-                        //FrmInitial initial = new FrmInitial();
-                        //initial.Show();
-                        //this.Close();
+                       
                     });
                 }
                 else

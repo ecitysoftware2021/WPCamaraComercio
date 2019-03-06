@@ -95,7 +95,7 @@ namespace WPCamaraComercio.Views
                 camaraComercio.ImprimirComprobante("Cancelada");
             });
             Utilities.PayerData = null;
-            //Utilities.GoToInicial();
+            Utilities.CrearLogTransactional(Utilities.log);
             Thread.Sleep(1000);
             Utilities.RestartApp();
         }

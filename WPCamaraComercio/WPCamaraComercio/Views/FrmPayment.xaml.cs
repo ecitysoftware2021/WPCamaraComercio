@@ -25,7 +25,6 @@ namespace WPCamaraComercio.Views
         CamaraComercio camaraComercio;
         Utilities utilities;
         decimal amount = 0;
-        List<Log> log;
         #endregion
 
         #region InitialMethods
@@ -34,7 +33,6 @@ namespace WPCamaraComercio.Views
             try
             {
                 InitializeComponent();
-                log = new List<Log>();
                 utilities = new Utilities();
                 WFCPayPadService = new WCFPayPadService();
                 navigationService = new NavigationService(this);
@@ -75,6 +73,7 @@ namespace WPCamaraComercio.Views
                 PaymentGrid.DataContext = payModel;
                 pay.callback = value =>
                 {
+                    Utilities.CrearLogTransactional(Utilities.log);
                     FinishPayment(value);
                 };
 
@@ -94,7 +93,7 @@ namespace WPCamaraComercio.Views
 
         private void FillLog(string menssage)
         {
-            log.Add(new Log
+            Utilities.log.Add(new Log
             {
                 Fecha = DateTime.Now,
                 IDTrsansaccion = Utilities.IDTransactionDB,
@@ -137,7 +136,7 @@ namespace WPCamaraComercio.Views
                 Utilities.ValueEnter = intoValue;
                 if (intoValue > amount)
                 {
-                    log.Add(new Log
+                    Utilities.log.Add(new Log
                     {
                         Fecha = DateTime.Now,
                         IDTrsansaccion = Utilities.IDTransactionDB,
@@ -179,7 +178,7 @@ namespace WPCamaraComercio.Views
                 FillLog("Llamando el servicio para extraer el certificado");
                 Utilities.BuyID = await camaraComercio.ConfirmarCompra();
                 FillLog("El servicio respondió: " + Utilities.BuyID);
-                //camaraComercio.Print("h");
+                Utilities.CrearLogTransactional(Utilities.log);
                 if (!Utilities.BuyID.Equals("0") && !string.IsNullOrEmpty(Utilities.BuyID))
                 {
                     await Dispatcher.BeginInvoke((Action)delegate

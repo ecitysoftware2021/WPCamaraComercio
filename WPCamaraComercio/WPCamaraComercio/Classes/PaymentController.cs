@@ -43,8 +43,6 @@ namespace WPCamaraComercio.Classes
 
         WCFPayPadService WCFPayPadService;
 
-        List<Log> log;
-
         Utilities utilities;
 
         #endregion
@@ -58,7 +56,6 @@ namespace WPCamaraComercio.Classes
                 this.smartCoins = new SmartCoins();
                 wCFService = new WCFServices();
                 WCFPayPadService = new WCFPayPadService();
-                log = new List<Log>();
                 utilities = new Utilities();
             }
             catch (Exception ex)
@@ -80,6 +77,19 @@ namespace WPCamaraComercio.Classes
                     tryPay = 0
                 };
 
+                Utilities.log.Add(new Log
+                {
+                    Fecha = DateTime.Now,
+                    IDTrsansaccion = Utilities.IDTransactionDB,
+                    Operacion = "Opereción Aceptar Dinero",
+                    ValorDevolver = 0,
+                    ValorDevuelto = "0",
+                    ValorPago = Utilities.ValueToPay,
+                    ValorIngresado = 0,
+                    CantidadDevolucion = 0,
+                    EstadoTransaccion = "En proceso"
+                });
+
                 InitSmartPayout();
 
                 InitAcceptanceCoins();
@@ -98,6 +108,19 @@ namespace WPCamaraComercio.Classes
                     {
                         smartCoins.callbackValue = value =>
                         {
+                            Utilities.log.Add(new Log
+                            {
+                                Fecha = DateTime.Now,
+                                IDTrsansaccion = Utilities.IDTransactionDB,
+                                Operacion = "Aceptando Monedas",
+                                ValorDevolver = 0,
+                                ValorDevuelto = "0",
+                                ValorPago = Utilities.ValueToPay,
+                                ValorIngresado = value,
+                                CantidadDevolucion = 0,
+                                EstadoTransaccion = "En proceso"
+                            });
+
                             OperationAcceptance(value);
                         };
                         smartCoins.Start();
@@ -111,26 +134,45 @@ namespace WPCamaraComercio.Classes
 
         public void StartReturn(decimal returnValue)
         {
-            this.returnValue = returnValue;
-
-            if (!statePay)
+            try
             {
-                InitSmartPayout();
+                this.returnValue = returnValue;
+
+                if (!statePay)
+                {
+                    InitSmartPayout();
+                }
+                InitDispenser(returnValue);
             }
-            InitDispenser(returnValue);
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("StartReturn", "PaymentController", ex.ToString());
+            }
         }
 
         public void InitSmartPayout()
         {
             try
             {
-
                 Task.Run(() =>
                 {
                     this.payout.callbackValue = value =>
                     {
                         if (!returnObject.state)
                         {
+                            Utilities.log.Add(new Log
+                            {
+                                Fecha = DateTime.Now,
+                                IDTrsansaccion = Utilities.IDTransactionDB,
+                                Operacion = "Aceptando Billetes",
+                                ValorDevolver = 0,
+                                ValorDevuelto = "0",
+                                ValorPago = Utilities.ValueToPay,
+                                ValorIngresado = value,
+                                CantidadDevolucion = 0,
+                                EstadoTransaccion = "En proceso"
+                            });
+
                             OperationAcceptance(value);
                         }
                     };
@@ -190,28 +232,36 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                utilities.SaveLogErrorMethods("InitSmartPayout", "PaymentController", ex.ToString());
             }
         }
 
         private void InitDispenser(decimal valueReturn)
         {
-            int amountCoint = Convert.ToInt32(valueReturn % 1000);
-            if (valueReturn >= 1000)
+            try
             {
-                var valueInBills = valueReturn - amountCoint;
-                if (amountCoint > 0)
+                int amountCoint = Convert.ToInt32(valueReturn % 1000);
+                if (valueReturn >= 1000)
                 {
-                    ReturnMoney(amountCoint, 2);
-                }
+                    var valueInBills = valueReturn - amountCoint;
+                    if (amountCoint > 0)
+                    {
+                        ReturnMoney(amountCoint, 2);
+                    }
 
-                ReturnMoney(valueInBills, 1);
-            }
-            else
-            {
-                if (amountCoint > 0)
-                {
-                    ReturnMoney(amountCoint, 2);
+                    ReturnMoney(valueInBills, 1);
                 }
+                else
+                {
+                    if (amountCoint > 0)
+                    {
+                        ReturnMoney(amountCoint, 2);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("InitDispenser", "PaymentController", ex.ToString());
             }
         }
 
@@ -225,7 +275,7 @@ namespace WPCamaraComercio.Classes
                     {
                         returnObject.state = false;
                         //returnObject.amount = 0;
-                        log.Add(new Log
+                        Utilities.log.Add(new Log
                         {
                             Fecha = DateTime.Now,
                             IDTrsansaccion = Utilities.IDTransactionDB,
@@ -249,7 +299,7 @@ namespace WPCamaraComercio.Classes
                 {
                     smartCoins.callbackTotal = total =>
                     {
-                        log.Add(new Log
+                        Utilities.log.Add(new Log
                         {
                             Fecha = DateTime.Now,
                             IDTrsansaccion = Utilities.IDTransactionDB,
@@ -268,18 +318,25 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
-
+                utilities.SaveLogErrorMethods("ReturnMoney", "PaymentController", ex.ToString());
             }
         }
 
         private void OperationDispenser(decimal devolucion)
         {
-            dispenserValue = dispenserValue + devolucion;
-            InsertDetails(devolucion, false);
-            if (dispenserValue >= this.returnValue)
+            try
             {
-                //Finish();
-                this.callbackReturn?.Invoke(dispenserValue);
+                dispenserValue = dispenserValue + devolucion;
+                InsertDetails(devolucion, false);
+                if (dispenserValue >= this.returnValue)
+                {
+                    //Finish();
+                    this.callbackReturn?.Invoke(dispenserValue);
+                }
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("OperationDispenser", "PaymentController", ex.ToString());
             }
         }
 
@@ -292,30 +349,45 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 return "Error";
+                utilities.SaveLogErrorMethods("GetStatus", "PaymentController", ex.ToString());
             }
         }
 
         private void OperationAcceptance(decimal value)
         {
-            intoValue += value;
-            InsertDetails(value, true);
-            this.callbackValue?.Invoke(intoValue);
-
-            if (intoValue >= paymentValue)
+            try
             {
-                if (intoValue == paymentValue)
+                intoValue += value;
+                InsertDetails(value, true);
+                this.callbackValue?.Invoke(intoValue);
+
+                if (intoValue >= paymentValue)
                 {
-                    //Finish();
+                    if (intoValue == paymentValue)
+                    {
+                        //Finish();
+                    }
+                    this.callback?.Invoke(intoValue);
                 }
-                this.callback?.Invoke(intoValue);
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("OperationAcceptance", "PaymentController", ex.ToString());
             }
         }
 
         public void Finish()
         {
-            statePay = false;
-            payout.Close();
-            smartCoins.Stop();
+            try
+            {
+                statePay = false;
+                payout.Close();
+                smartCoins.Stop();
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("Finish", "PaymentController", ex.ToString());
+            }
         }
 
         public List<Bills> ValidateBills()
@@ -334,9 +406,10 @@ namespace WPCamaraComercio.Classes
                 }
                 return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
+                utilities.SaveLogErrorMethods("ValidateBills", "PaymentController", ex.ToString());
             }
         }
 
@@ -353,6 +426,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                utilities.SaveLogErrorMethods("InsertDetails", "PaymentController", ex.ToString());
             }
         }
     }
