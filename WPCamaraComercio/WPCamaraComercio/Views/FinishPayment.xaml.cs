@@ -20,7 +20,7 @@ namespace WPCamaraComercio.Views
         NavigationService navigationService;
         PaymentController pay;
         private int count = 0;
-        private LogErrorGeneral logError;
+        private LogErrorGeneral log;
         decimal enterValue = 0;
         decimal returnValue = 0;
         #endregion
@@ -31,7 +31,7 @@ namespace WPCamaraComercio.Views
             InitializeComponent();
             payPadService = new WCFPayPadService();
             this.returnValue = valueInto;
-            logError = new LogErrorGeneral();
+            log = new LogErrorGeneral();
             navigationService = new NavigationService(this);
             this.pay = pay;
         }
@@ -92,8 +92,10 @@ namespace WPCamaraComercio.Views
                 if (state == WCFPayPad.CLSEstadoEstadoTransaction.Aprobada)
                 {
                     pay.Finish();
-                    camaraComercio.ImprimirComprobante("Aprobada");
                     Utilities.CrearLogTransactional(Utilities.log);
+                    CreateLog();
+                    camaraComercio.ImprimirComprobante("Aprobada");
+                    
 
                     Dispatcher.BeginInvoke((Action)delegate
                     {
@@ -136,6 +138,25 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region Methods
+        private void CreateLog()
+        {
+            try
+            {
+                log.IdTransaction = Utilities.IDTransactionDB;
+                log.Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
+                log.Description = "Se actualiza la transacción y se deja en estado Aprobada";
+                log.ValuePay = Utilities.ValueToPay;
+                log.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
+                log.State = "Aprobada";
+                Utilities.SaveLogTransactions(log, "LogTransacciones\\Aprobadas");
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("CreateLog", "FinishPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
+
         private void GotoCancel()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>

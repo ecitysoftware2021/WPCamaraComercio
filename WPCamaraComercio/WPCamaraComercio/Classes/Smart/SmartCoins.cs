@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WPCamaraComercio.WCFPayPad;
 
 namespace WPCamaraComercio.Classes.Smart
 {
@@ -47,6 +49,10 @@ namespace WPCamaraComercio.Classes.Smart
         private decimal returnValue;
 
         List<Log> log = new List<Log>();
+
+        ServicePayPadClient WCFPayPadWS = new ServicePayPadClient();
+
+        int idCorrespo = int.Parse(ConfigurationManager.AppSettings["IDCorresponsal"]);
 
         public SmartCoins()
         {
@@ -210,6 +216,8 @@ namespace WPCamaraComercio.Classes.Smart
                                         ValorIngresado = Utilities.ValueEnter,
                                         EstadoTransaccion = "Aprobada"
                                     });
+
+                                    //WCFPayPadWS.InsertarControlMonedas(idDenominacion, idCorrespo, 0, cuantity);
                                 }
                                 control++;
                             }

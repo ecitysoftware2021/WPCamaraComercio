@@ -9,6 +9,7 @@
         WindowStyle="None"
         Loaded="Window_Loaded"
         WindowState="Maximized"
+        Topmost="True"
         Height="2064.095" 
         Width="1250.599">
     <Window.Resources>

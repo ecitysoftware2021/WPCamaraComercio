@@ -22,6 +22,7 @@ namespace WPCamaraComercio.Views
         NavigationService navigationService;
         Utilities utilities;
         Api api;
+        private LogErrorGeneral log;
         #endregion
 
         #region LoadMethods
@@ -33,6 +34,7 @@ namespace WPCamaraComercio.Views
             navigationService = new NavigationService(this);
             utilities = new Utilities();
             api = new Api();
+            log = new LogErrorGeneral();
             CmbTypeBuyer.SelectedIndex = 0;
             CmbIdDType.SelectedIndex = 0;
         }
@@ -49,6 +51,7 @@ namespace WPCamaraComercio.Views
             AssingProperties();
             if (CreateTransaction())
             {
+                CreateLog();
                 Utilities.ResetTimer();
                 navigationService.NavigationTo("FrmPayment"); 
             }
@@ -110,6 +113,25 @@ namespace WPCamaraComercio.Views
             catch (Exception ex)
             {
                 utilities.SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
+
+        private void CreateLog()
+        {
+            try
+            {
+                log.IdTransaction = Utilities.IDTransactionDB;
+                log.Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
+                log.Description = "Se crea la transacción y se deja en estado iniciada";
+                log.ValuePay = Utilities.ValueToPay;
+                log.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
+                log.State = "Iniciada";
+                Utilities.SaveLogTransactions(log, "LogTransacciones\\Iniciadas");
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("CreateLog", "FrmPaymentData", ex.ToString());
                 navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
             }
         }

@@ -17,7 +17,8 @@ namespace WPCamaraComercio.Views
         WCFServices wcfService;
         WCFPayPadService WFCPayPadService;
         CamaraComercio camaraComercio;
-        //BackgroundViewModel backgroundViewModel;
+        private LogErrorGeneral log;
+        private Utilities utilities;
         PaymentController pay;
         #endregion
 
@@ -33,10 +34,10 @@ namespace WPCamaraComercio.Views
             wcfService = new WCFServices();
             WFCPayPadService = new WCFPayPadService();
             camaraComercio = new CamaraComercio();
-            //backgroundViewModel = new BackgroundViewModel(Utilities.Operation);
+            log = new LogErrorGeneral();
+            utilities = new Utilities();
             lblValue.Content = string.Format("{0:C0}", Utilities.ValueReturn);
             this.pay = pay;
-            // this.DataContext = backgroundViewModel;
         }
 
         /// <summary>
@@ -84,18 +85,38 @@ namespace WPCamaraComercio.Views
             }
         }
 
+        private void CreateLog()
+        {
+            try
+            {
+                log.IdTransaction = Utilities.IDTransactionDB;
+                log.Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
+                log.Description = "Se actualiza la transacción y se deja en estado Cancelada";
+                log.ValuePay = Utilities.ValueToPay;
+                log.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
+                log.State = "Cancelada";
+                Utilities.SaveLogTransactions(log, "LogTransacciones\\Canceladas");
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("CreateLog", "FrmCancelledPayment", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
+
         /// <summary>
         /// Metodo para realizar la impresion del comprobante de pago con su respectivo estado y reinicio de la aplicacion.
         /// </summary>
         private void FinishTransaction()
         {
             pay.Finish();
+            Utilities.CrearLogTransactional(Utilities.log);
+            CreateLog();
             Task.Run(() =>
             {
                 camaraComercio.ImprimirComprobante("Cancelada");
             });
             Utilities.PayerData = null;
-            Utilities.CrearLogTransactional(Utilities.log);
             Thread.Sleep(1000);
             Utilities.RestartApp();
         }
