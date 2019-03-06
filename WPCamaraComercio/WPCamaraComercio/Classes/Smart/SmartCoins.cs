@@ -202,6 +202,7 @@ namespace WPCamaraComercio.Classes.Smart
                                 {
                                     string denomination = item.Split(':')[0];
                                     int cuantity = int.Parse(item.Split(':')[1]);
+                                    int idDenomination = Utilities.GetDescriptionEnum(denomination);
                                     totalDispenser = totalDispenser + (Convert.ToDecimal(denomination) * cuantity);
 
                                     log.Add(new Log
@@ -216,8 +217,10 @@ namespace WPCamaraComercio.Classes.Smart
                                         ValorIngresado = Utilities.ValueEnter,
                                         EstadoTransaccion = "Aprobada"
                                     });
-
-                                    //WCFPayPadWS.InsertarControlMonedas(idDenominacion, idCorrespo, 0, cuantity);
+                                    Task.Run(() => 
+                                    {
+                                        WCFPayPadWS.InsertarControlMonedas(idDenomination, idCorrespo, 0, cuantity);
+                                    });
                                 }
                                 control++;
                             }
