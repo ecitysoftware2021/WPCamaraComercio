@@ -280,8 +280,8 @@ namespace WPCamaraComercio.Classes
                             Fecha = DateTime.Now,
                             IDTrsansaccion = Utilities.IDTransactionDB,
                             Operacion = "Orden Devolver Billetero",
-                            ValorDevolver = valueDispenser,
-                            ValorDevuelto = "0",
+                            ValorDevolver = Utilities.ValueReturn,
+                            ValorDevuelto = valueDispenser.ToString(),
                             ValorPago = Utilities.ValueToPay,
                             ValorIngresado = Utilities.ValueEnter,
                             EstadoTransaccion = "En proceso"
@@ -304,8 +304,8 @@ namespace WPCamaraComercio.Classes
                             Fecha = DateTime.Now,
                             IDTrsansaccion = Utilities.IDTransactionDB,
                             Operacion = "Orden Devolver Monedero",
-                            ValorDevolver = total,
-                            ValorDevuelto = "0",
+                            ValorDevolver = Utilities.ValueReturn,
+                            ValorDevuelto = total.ToString(),
                             ValorPago = Utilities.ValueToPay,
                             ValorIngresado = Utilities.ValueEnter,
                             EstadoTransaccion = "En proceso"

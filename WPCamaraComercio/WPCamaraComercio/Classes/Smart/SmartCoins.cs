@@ -48,8 +48,6 @@ namespace WPCamaraComercio.Classes.Smart
 
         private decimal returnValue;
 
-        List<Log> log = new List<Log>();
-
         ServicePayPadClient WCFPayPadWS = new ServicePayPadClient();
 
         int idCorrespo = int.Parse(ConfigurationManager.AppSettings["IDCorresponsal"]);
@@ -205,7 +203,7 @@ namespace WPCamaraComercio.Classes.Smart
                                     int idDenomination = Utilities.GetDescriptionEnum(denomination);
                                     totalDispenser = totalDispenser + (Convert.ToDecimal(denomination) * cuantity);
 
-                                    log.Add(new Log
+                                    Utilities.log.Add(new Log
                                     {
                                         Fecha = DateTime.Now,
                                         IDTrsansaccion = Utilities.IDTransactionDB,
@@ -215,7 +213,7 @@ namespace WPCamaraComercio.Classes.Smart
                                         CantidadDevolucion = cuantity,
                                         ValorPago = Utilities.ValueToPay,
                                         ValorIngresado = Utilities.ValueEnter,
-                                        EstadoTransaccion = "Aprobada"
+                                        EstadoTransaccion = "Devolviendo"
                                     });
                                     Task.Run(() => 
                                     {
