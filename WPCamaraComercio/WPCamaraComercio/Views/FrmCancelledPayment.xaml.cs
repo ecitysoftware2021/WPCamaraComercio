@@ -108,12 +108,14 @@ namespace WPCamaraComercio.Views
 
                 if (state)
                 {
+                    Utilities.CrearLogTransactional(Utilities.log);
                     CreateLog();
                     camaraComercio.ImprimirComprobante("Cancelada");
                     Utilities.GoToInicial();
                 }
                 else
                 {
+                    Utilities.CrearLogTransactional(Utilities.log);
                     CreateLog();
                     camaraComercio.ImprimirComprobante("Cancelada");
                     Utilities.GoToInicial();

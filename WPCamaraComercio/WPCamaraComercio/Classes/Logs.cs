@@ -124,4 +124,17 @@ namespace WPCamaraComercio.Classes
             }
         }
     }
+
+    public class LogTransactional
+    {
+        public DateTime Fecha { get; set; }
+        public int IDTrsansaccion { get; set; }
+        public decimal ValorPago { get; set; }
+        public decimal ValorIngresado { get; set; }
+        public decimal ValorDevolver { get; set; }
+        public string ValorDevuelto { get; set; }
+        public int CantidadDevolucion { get; set; }
+        public string Operacion { get; set; }
+        public string EstadoTransaccion { get; set; }
+    }
 }

@@ -395,11 +395,37 @@ namespace WPCamaraComercio.Classes
             {
                 deliveryValue += decimal.Parse(response[2]) * _mil;
                 callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _mil);
+
+                Utilities.log.Add(new LogTransactional
+                {
+                    Fecha = DateTime.Now,
+                    IDTrsansaccion = Utilities.IDTransactionDB,
+                    Operacion = "Devolviendo Billetes",
+                    ValorDevolver = dispenserValue,
+                    ValorDevuelto = (decimal.Parse(response[2]) * _mil).ToString(),
+                    ValorPago = Utilities.ValueToPay,
+                    ValorIngresado = Utilities.EnterTotal,
+                    CantidadDevolucion = 1,
+                    EstadoTransaccion = "En Proceso"
+                });
             }
             else if (response[1] == "MD")
             {
                 deliveryValue += decimal.Parse(response[2]) * _hundred;
                 callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _hundred);
+
+                Utilities.log.Add(new LogTransactional
+                {
+                    Fecha = DateTime.Now,
+                    IDTrsansaccion = Utilities.IDTransactionDB,
+                    Operacion = "Devolviendo Monedas",
+                    ValorDevolver = dispenserValue,
+                    ValorDevuelto = (decimal.Parse(response[2]) * _hundred).ToString(),
+                    ValorPago = Utilities.ValueToPay,
+                    ValorIngresado = Utilities.EnterTotal,
+                    CantidadDevolucion = 1,
+                    EstadoTransaccion = "En Proceso"
+                });
             }
             else
             {
@@ -407,11 +433,37 @@ namespace WPCamaraComercio.Classes
                 {
                     enterValue += decimal.Parse(response[2]) * _mil;
                     callbackValueIn?.Invoke(Convert.ToDecimal(response[2]) * _mil);
+
+                    Utilities.log.Add(new LogTransactional
+                    {
+                        Fecha = DateTime.Now,
+                        IDTrsansaccion = Utilities.IDTransactionDB,
+                        Operacion = "Aceptando Billetes",
+                        ValorDevolver = 0,
+                        ValorDevuelto = "0",
+                        ValorPago = Utilities.ValueToPay,
+                        ValorIngresado = decimal.Parse(response[2]) * _mil,
+                        CantidadDevolucion = 0,
+                        EstadoTransaccion = "En Proceso"
+                    });
                 }
                 else if (response[1] == "MA")
                 {
                     enterValue += decimal.Parse(response[2]);
                     callbackValueIn?.Invoke(Convert.ToDecimal(response[2]));
+
+                    Utilities.log.Add(new LogTransactional
+                    {
+                        Fecha = DateTime.Now,
+                        IDTrsansaccion = Utilities.IDTransactionDB,
+                        Operacion = "Aceptando Monedas",
+                        ValorDevolver = 0,
+                        ValorDevuelto = "0",
+                        ValorPago = Utilities.ValueToPay,
+                        ValorIngresado = decimal.Parse(response[2]),
+                        CantidadDevolucion = 0,
+                        EstadoTransaccion = "En Proceso"
+                    });
                 }
 
                 ValidateEnterValue();

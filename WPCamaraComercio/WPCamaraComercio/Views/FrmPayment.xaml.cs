@@ -198,6 +198,19 @@ namespace WPCamaraComercio.Views
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                 };
 
+                Utilities.log.Add(new LogTransactional
+                {
+                    Fecha = DateTime.Now,
+                    IDTrsansaccion = Utilities.IDTransactionDB,
+                    Operacion = "Orden Aceptar Dinero",
+                    ValorDevolver = 0,
+                    ValorDevuelto = "0",
+                    ValorPago = Utilities.ValueToPay,
+                    ValorIngresado = 0,
+                    CantidadDevolucion = 0,
+                    EstadoTransaccion = "En Proceso"
+                });
+
                 Utilities.control.StartAceptance(PaymentViewModel.PayValue);
             }
             catch (Exception ex)
@@ -238,6 +251,19 @@ namespace WPCamaraComercio.Views
                 {
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                 };
+
+                Utilities.log.Add(new LogTransactional
+                {
+                    Fecha = DateTime.Now,
+                    IDTrsansaccion = Utilities.IDTransactionDB,
+                    Operacion = "Orden Devolver Dinero",
+                    ValorDevolver = PaymentViewModel.ValorSobrante,
+                    ValorDevuelto = "0",
+                    ValorPago = Utilities.ValueToPay,
+                    ValorIngresado = PaymentViewModel.ValorIngresado,
+                    CantidadDevolucion = 0,
+                    EstadoTransaccion = "En Proceso"
+                });
 
                 Utilities.control.StartDispenser(returnValue);
             }

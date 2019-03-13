@@ -56,11 +56,6 @@ namespace WPCamaraComercio.Classes
 
         public static List<Certificado> ListCertificates = new List<Certificado>();
 
-        //internal void UpdateTransaction(object _enterValue, int v, string buyID)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public static decimal ValueToPay { get; set; }
 
         public static int IDTransactionDB { get; set; }
@@ -78,13 +73,14 @@ namespace WPCamaraComercio.Classes
         public static decimal DispenserVal { get; set; }
 
         public static DataPayPad dataPaypad = new DataPayPad();
+
         public static Api api;
 
         public static decimal ValueReturned { get; set; }
 
         public static long ValueDelivery { get; set; }// valor entregado en la pantalla de retiro
 
-
+        public static List<LogTransactional> log = new List<LogTransactional>();
         #endregion
 
         #region GeneralEvents
@@ -278,6 +274,31 @@ namespace WPCamaraComercio.Classes
             catch { }
         }
 
+        public static void CrearLogTransactional(List<LogTransactional> data)
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(data);
+                var pathFile = "C:\\LogTransactionalCCM";
+                if (!Directory.Exists(pathFile))
+                {
+                    Directory.CreateDirectory(pathFile);
+                }
+                var file = "Log" + DateTime.Now.ToString("yyyyMMdd") + ".json";
+                var nameFile = Path.Combine(pathFile, file);
+                if (!File.Exists(nameFile))
+                {
+                    var archivo = File.CreateText(nameFile);
+                    archivo.Close();
+                }
+                using (StreamWriter sw = File.AppendText(nameFile))
+                {
+                    sw.WriteLine(json);
+                }
+            }
+            catch { }
+        }
+
         public static void SaveLogDispenser(LogDispenser log)
         {
             LogService logService = new LogService
@@ -414,38 +435,38 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         /// TODO:CAMBIAR COMENTARIO
         /// <param name="payFee">Objeto que contiene la info de la transacción</param>
-        public async void CreateTransaction()
-        {
-            try
-            {
-                Transaction Transaction = new Transaction
-                {
-                    TOTAL_AMOUNT = ValueToPay,
-                    DATE_BEGIN = DateTime.Now,
-                    DESCRIPTION = string.Empty,
-                    TYPE_TRANSACTION_ID = 3,
-                    STATE_TRANSACTION_ID = 1,
-                };
+        //public async void CreateTransaction()
+        //{
+        //    try
+        //    {
+        //        Transaction Transaction = new Transaction
+        //        {
+        //            TOTAL_AMOUNT = ValueToPay,
+        //            DATE_BEGIN = DateTime.Now,
+        //            DESCRIPTION = string.Empty,
+        //            TYPE_TRANSACTION_ID = 3,
+        //            STATE_TRANSACTION_ID = 1,
+        //        };
 
-                var response = await api.GetResponse(new RequestApi
-                {
-                    Data = Transaction
-                }, "SaveTransaction");
+        //        var response = await api.GetResponse(new RequestApi
+        //        {
+        //            Data = Transaction
+        //        }, "SaveTransaction");
 
-                if (response != null)
-                {
-                    if (response.CodeError == 200)
-                    {
-                        IDTransactionDB = Convert.ToInt32(response.Data);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
-                //navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
-            }
-        }
+        //        if (response != null)
+        //        {
+        //            if (response.CodeError == 200)
+        //            {
+        //                IDTransactionDB = Convert.ToInt32(response.Data);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        SaveLogErrorMethods("AssingProperties", "FrmPaymentData", ex.ToString());
+        //        //navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+        //    }
+        //}
 
         public async static Task<bool> UpdateTransaction(decimal Enter, int state, decimal Return = 0)
         {

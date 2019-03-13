@@ -7,6 +7,7 @@ using System.Windows.Input;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
+using WPCamaraComercio.WCFPayPad;
 
 namespace WPCamaraComercio.Views
 {
@@ -21,6 +22,7 @@ namespace WPCamaraComercio.Views
         NavigationService navigationService;
         Utilities utilities;
         Api api;
+        private LogErrorGeneral log;
         #endregion
 
         #region LoadMethods
@@ -32,6 +34,7 @@ namespace WPCamaraComercio.Views
             navigationService = new NavigationService(this);
             utilities = new Utilities();
             api = new Api();
+            log = new LogErrorGeneral();
             CmbTypeBuyer.SelectedIndex = 0;
             CmbIdDType.SelectedIndex = 0;
             //CamaraComercio CM = new CamaraComercio();
@@ -48,9 +51,59 @@ namespace WPCamaraComercio.Views
         private void Redirect()
         {
             AssingProperties();
+            if (CreateTransaction())
+            {
+                CreateLog();
+                Utilities.ResetTimer();
+                navigationService.NavigationTo("FrmPayment");
+            }
+            else
+            {
+                navigationService.NavigatorModal("No se pudo crear la transacción, por favor intente más tarde.");
+            }
+        }
 
-            Utilities.ResetTimer();
-            navigationService.NavigationTo("FrmPayment");
+        private void CreateLog()
+        {
+            try
+            {
+                log.IdTransaction = Utilities.IDTransactionDB;
+                log.Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
+                log.Description = "Se crea la transacción y se deja en estado iniciada";
+                log.ValuePay = Utilities.ValueToPay;
+                log.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
+                log.State = "Iniciada";
+                Utilities.SaveLogTransactions(log, "LogTransacciones\\Iniciadas");
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("CreateLog", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+            }
+        }
+
+        private bool CreateTransaction()
+        {
+            try
+            {
+                CLSTransaction transaction = new CLSTransaction();
+                transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
+                transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite")); ;
+                transaction.Referencia = "0";
+                transaction.CedulaPagador = TbxIdentification.Text;
+                transaction.Contrato = string.Empty;
+                //transaction.PersonaID = 1;
+                transaction.FechaCuota = string.Empty;
+                transaction.Total = Utilities.ValueToPay;
+                Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                utilities.SaveLogErrorMethods("CreateTransaction", "FrmPaymentData", ex.ToString());
+                navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+                return false;
+            }
         }
 
         public void FillTypeDocument(int type)
@@ -88,11 +141,11 @@ namespace WPCamaraComercio.Views
                 string[] datosPais = municipio[0].ToString().Split('-');
 
                 PayerData payerData = new PayerData();
-                payerData.BuyerAddress = CmbTypeBuyer.SelectedIndex == 1 ? TbxData2.Text : "";
+                payerData.BuyerAddress = string.Empty;
                 payerData.BuyerIdentification = TbxIdentification.Text;
                 payerData.LastNameBuyer = TbxData3.Text;
                 payerData.FirstNameBuyer = TbxData1.Text;
-                payerData.SecondNameBuyer = CmbTypeBuyer.SelectedIndex != 1 ? TbxData2.Text : "";
+                payerData.SecondNameBuyer = string.Empty;
                 payerData.TypeBuyer = CmbTypeBuyer.Text;
                 payerData.TypeIdBuyer = ((KeyValuePair<string, string>)CmbIdDType.SelectedItem).Key;
                 payerData.Phone = CmbTypeBuyer.SelectedIndex == 1 ? TbxData3dos.Text : TbxData4.Text;
@@ -105,7 +158,6 @@ namespace WPCamaraComercio.Views
 
                 Utilities.PayerData = payerData;
                 utilities.InsertPayerData();
-                utilities.CreateTransaction();
             }
             catch (Exception ex)
             {
