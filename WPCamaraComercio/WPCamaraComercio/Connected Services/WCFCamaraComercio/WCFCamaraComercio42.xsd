@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases" />
+  <xs:element name="GetGeneralInformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="paramConsulta" nillable="true" type="xs:string" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases" minOccurs="0" name="tipo_Busqueda" type="q1:tipo_busqueda" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetGeneralInformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases" minOccurs="0" name="GetGeneralInformationResult" nillable="true" type="q2:RespuestaConsulta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDetalleComerciante">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases" minOccurs="0" name="paramConsulta" nillable="true" type="q3:PeticionDetalle" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDetalleComercianteResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases" minOccurs="0" name="GetDetalleComercianteResult" nillable="true" type="q4:RespuestaDetalle" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendPayInformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases" minOccurs="0" name="payInformation" nillable="true" type="q5:Datos" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendPayInformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SendPayInformationResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCertifiedString">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases" minOccurs="0" name="datosCertificado" nillable="true" type="q6:CLSDatosCertificado" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCertifiedStringResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCertifiedStringResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

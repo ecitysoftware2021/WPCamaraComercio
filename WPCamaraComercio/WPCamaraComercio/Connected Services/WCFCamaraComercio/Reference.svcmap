@@ -19,15 +19,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://200.122.221.193:9197/WCFCamaraComercio.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="WCFCamaraComercio.disco" MetadataType="Disco" ID="4056e2ec-60b7-4dd7-9da6-7fd6288e73fd" SourceId="1" SourceUrl="http://200.122.221.193:9197/WCFCamaraComercio.svc?disco" />
-    <MetadataFile FileName="WCFCamaraComercio.xsd" MetadataType="Schema" ID="cc339417-449f-421c-9014-54d5e00b704b" SourceId="1" SourceUrl="http://200.122.221.193:9197/WCFCamaraComercio.svc?xsd=xsd2" />
-    <MetadataFile FileName="WCFCamaraComercio1.xsd" MetadataType="Schema" ID="fd028576-69d7-4300-9817-083d50b7dc8c" SourceId="1" SourceUrl="http://200.122.221.193:9197/WCFCamaraComercio.svc?xsd=xsd3" />
-    <MetadataFile FileName="WCFCamaraComercio2.xsd" MetadataType="Schema" ID="6c28d8a9-fbed-4fec-8f69-b43ba6e55786" SourceId="1" SourceUrl="http://200.122.221.193:9197/WCFCamaraComercio.svc?xsd=xsd0" />
-    <MetadataFile FileName="WCFCamaraComercio3.xsd" MetadataType="Schema" ID="a10a67fa-fdca-43cf-a97b-0e3f38aeca33" SourceId="1" SourceUrl="http://200.122.221.193:9197/WCFCamaraComercio.svc?xsd=xsd1" />
-    <MetadataFile FileName="WCFCamaraComercio.wsdl" MetadataType="Wsdl" ID="72b32f28-da64-4994-ab0d-777aeb75d100" SourceId="1" SourceUrl="http://200.122.221.193:9197/WCFCamaraComercio.svc?wsdl" />
+    <MetadataFile FileName="WCFCamaraComercio1.wsdl" MetadataType="Wsdl" ID="7d504614-58f4-43c3-a66e-270dfb8959c8" SourceId="1" SourceUrl="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc?wsdl" />
+    <MetadataFile FileName="WCFCamaraComercio4.xsd" MetadataType="Schema" ID="bc097e7c-1c69-4199-a125-9d906c62b1be" SourceId="1" SourceUrl="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc?xsd=xsd1" />
+    <MetadataFile FileName="WCFCamaraComercio41.xsd" MetadataType="Schema" ID="63516d4a-0d1c-4242-9ebe-1423df97a80e" SourceId="1" SourceUrl="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc?xsd=xsd2" />
+    <MetadataFile FileName="WCFCamaraComercio42.xsd" MetadataType="Schema" ID="7f257443-e48a-4c46-8250-37dcce214ea3" SourceId="1" SourceUrl="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc?xsd=xsd0" />
+    <MetadataFile FileName="WCFCamaraComercio1.disco" MetadataType="Disco" ID="7a544753-0c60-4a86-9afd-87442defe2c7" SourceId="1" SourceUrl="http://200.122.221.195/WCFCamaraMigration/WCFCamaraComercio.svc?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

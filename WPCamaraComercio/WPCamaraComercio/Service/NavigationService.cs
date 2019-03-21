@@ -32,10 +32,6 @@ namespace WPCamaraComercio.Service
             {
                 switch (page)
                 {
-                    case "FrmCancelledPayment":
-                        //FrmCancelledPayment frmCancelledPayment = new FrmCancelledPayment();
-                        //frmCancelledPayment.Show();
-                        //break;
                     case "ConsultWindow":
                         ConsultWindow frmConsult = new ConsultWindow();
                         frmConsult.Show();
@@ -48,29 +44,9 @@ namespace WPCamaraComercio.Service
                         FrmDetailCompany frmDetailCompany = new FrmDetailCompany();
                         frmDetailCompany.Show();
                         break;
-                    case "FinishPayment":
-                        //FinishPayment frmInformationCompany = new FinishPayment();
-                        //frmInformationCompany.Show();
-                        //break;
                     case "FrmPayment":
                         FrmPayment frmPayment = new FrmPayment();
                         frmPayment.Show();
-                        break;
-                    case "FrmCancelPay":
-                        //FrmCancelPay frmcancelpayment = new FrmCancelPay();
-                        //frmcancelpayment.Show();
-                        //break;
-                    case "FrmFinishTransaction":
-                        //FrmFinishTransaction frmFinishTransaction = new FrmFinishTransaction();
-                        //frmFinishTransaction.Show();
-                        break;
-                    case "FrmCoincidence":
-                        //FrmCoincidence frmCoincidence = new FrmCoincidence();
-                        //frmCoincidence.Show();
-                        //break;
-                    case "FrmLoading":
-                        //FrmLoading frmLoading = new FrmLoading();
-                        //frmLoading.Show();
                         break;
                     default:
                         break;

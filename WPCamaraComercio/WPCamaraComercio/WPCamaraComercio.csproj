@@ -70,9 +70,8 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -95,9 +94,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WpfAnimatedGif, Version=1.4.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WpfAnimatedGif.1.4.16\lib\net\WpfAnimatedGif.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="WpfAnimatedGif, Version=1.4.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -280,17 +278,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.wsdl" />
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.xsd">
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio1.wsdl" />
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio1.xsd">
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio41.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio3.xsd">
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio42.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\WCFCamaraComercio\WPCamaraComercio.WCFCamaraComercio.RespuestaConsulta.datasource">
@@ -425,7 +420,6 @@
     <Resource Include="Images\Gif\tocarPantallaGIF.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.disco" />
     <None Include="Connected Services\WCFCamaraComercio\configuration91.svcinfo" />
     <None Include="Connected Services\WCFCamaraComercio\configuration.svcinfo" />
     <None Include="Connected Services\WCFCamaraComercio\Reference.svcmap">
@@ -494,7 +488,15 @@
     <Resource Include="Images\Buttons\b-Ingrese-Billete.png" />
     <Resource Include="Images\Buttons\b-Leyendo-Billete.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Gif\flecha-down.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Buttons\b-seleccione.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

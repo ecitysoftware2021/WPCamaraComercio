@@ -101,7 +101,7 @@
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="0"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="500"/>
@@ -206,7 +206,7 @@
                 TextWrapping="Wrap"
                 k:TouchScreenKeyboard.TouchScreenKeyboard="true"      
                 />
-            <TextBlock Name="TxbData2"
+            <!--<TextBlock Name="TxbData2"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
                    Margin="135,0,0,0"
@@ -232,7 +232,7 @@
                 Width="500"
                 TextWrapping="Wrap"
                 k:TouchScreenKeyboard.TouchScreenKeyboard="true"
-                     />
+                     />-->
             <TextBlock Name="TxbData3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"

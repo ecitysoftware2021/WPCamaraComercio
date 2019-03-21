@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -358,8 +359,12 @@ namespace WPCamaraComercio.Views
             Utilities.ResetTimer();
             Utilities.GoToInicial();
         }
+
         #endregion
 
-       
+        private void TxtIdentificacion_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
     }
 }
