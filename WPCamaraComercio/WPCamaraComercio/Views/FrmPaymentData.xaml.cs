@@ -88,7 +88,7 @@ namespace WPCamaraComercio.Views
             {
                 CLSTransaction transaction = new CLSTransaction();
                 transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
-                transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite")); ;
+                transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite"));
                 transaction.Referencia = "0";
                 transaction.CedulaPagador = TbxIdentification.Text;
                 transaction.Contrato = string.Empty;

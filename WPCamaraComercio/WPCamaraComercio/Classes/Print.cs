@@ -39,7 +39,7 @@ namespace WPCamaraComercio.Classes
 
                 PrintDocument pd = new PrintDocument();
                 pd.PrintController = printcc;
-                pd.PrinterSettings.PrinterName = "MS-D347";
+                pd.PrinterSettings.PrinterName = GetConfiguration("TicketPrinterName");
                 PaperSize ps = new PaperSize("Recibo Pago", 475, 470);
                 pd.PrintPage += new PrintPageEventHandler(PrintPage);
                 pd.Print();
