@@ -59,7 +59,6 @@ namespace WPCamaraComercio.Views
         {
             InitializeComponent();
             OrganizeValues();
-            Utilities.ValueToPay = 2000;
             services = new WCFServices();
             frmLoading = new FrmLoading();
             payPadService = new WCFPayPadService();
