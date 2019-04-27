@@ -60,6 +60,7 @@ namespace WPCamaraComercio.Views
             else
             {
                 navigationService.NavigatorModal("No se pudo crear la transacción, por favor intente más tarde.");
+                BtnPay.IsEnabled = true;
             }
         }
 
@@ -270,15 +271,21 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+                BtnPay.IsEnabled = false;
                 if (ValidateFields())
                 {
                     Redirect();
+                }
+                else
+                {
+                    BtnPay.IsEnabled = true;
                 }
             }
             catch (Exception ex)
             {
                 utilities.SaveLogErrorMethods("BtnPay_StylusDown", "FrmPaymentData", ex.ToString());
                 navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+                BtnPay.IsEnabled = true;
             }
         }
 

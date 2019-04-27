@@ -126,74 +126,74 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                PrinterName = Utilities.GetConfiguration("PrinterName");
-                foreach (var item in Utilities.ListCertificates)
-                {
-                    CLSDatosCertificado datosCertificado = new CLSDatosCertificado();
-                    datosCertificado.IdCertificado = item.IdCertificado;
-                    datosCertificado.idcompra = Utilities.BuyID;
-                    datosCertificado.matricula = item.matricula;
-                    datosCertificado.matriculaest = item.MatriculaEst;
-                    datosCertificado.referenciaPago = Utilities.IDTransactionDB.ToString();
-                    datosCertificado.tpcm = item.tpcm;
+                //PrinterName = Utilities.GetConfiguration("PrinterName");
+                //foreach (var item in Utilities.ListCertificates)
+                //{
+                //    CLSDatosCertificado datosCertificado = new CLSDatosCertificado();
+                //    datosCertificado.IdCertificado = item.IdCertificado;
+                //    datosCertificado.idcompra = Utilities.BuyID;
+                //    datosCertificado.matricula = item.matricula;
+                //    datosCertificado.matriculaest = item.MatriculaEst;
+                //    datosCertificado.referenciaPago = Utilities.IDTransactionDB.ToString();
+                //    datosCertificado.tpcm = item.tpcm;
 
-                    bytePDF = null;
+                //    bytePDF = null;
 
-                    for (int i = 0; i < int.Parse(item.NumeroCertificados); i++)
-                    {
-                        datosCertificado.copia = (i + 1).ToString();
+                //    for (int i = 0; i < int.Parse(item.NumeroCertificados); i++)
+                //    {
+                //        datosCertificado.copia = (i + 1).ToString();
 
-                        var task = service.GetCertifiedString(datosCertificado);
-                        if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
-                        {
-                            var response = task.Result;
+                //        var task = service.GetCertifiedString(datosCertificado);
+                //        if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                //        {
+                //            var response = task.Result;
 
-                            if (response.IsSuccess)
-                            {
-                                string urlArchivo = (string)response.Result;
-                                if (!string.IsNullOrEmpty(urlArchivo))
-                                {
-                                    FileName nombreArchivo = new FileName
-                                    {
-                                        matricula = item.matricula,
-                                        matriculaest = item.MatriculaEst,
-                                        tpcm = item.tpcm,
-                                        IdCertificado = item.IdCertificado,
-                                        Copia = (i + 1)
-                                    };
-                                    utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
-                                    path = SaveFile(urlArchivo, nombreArchivo);
-                                    LRutasCertificados.Add(path);
-                                }
-                                else
-                                {
-                                    printState = false;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            printState = false;
-                            FrmModal modal = new FrmModal(message);
-                            modal.ShowDialog();
-                        }
-                    }
-                }
-                if (printState)
-                {
-                    foreach (var item in LRutasCertificados)
-                    {
-                        Print(item);
-                    }
-                }
-                return printState;
+                //            if (response.IsSuccess)
+                //            {
+                //                string urlArchivo = (string)response.Result;
+                //                if (!string.IsNullOrEmpty(urlArchivo))
+                //                {
+                //                    FileName nombreArchivo = new FileName
+                //                    {
+                //                        matricula = item.matricula,
+                //                        matriculaest = item.MatriculaEst,
+                //                        tpcm = item.tpcm,
+                //                        IdCertificado = item.IdCertificado,
+                //                        Copia = (i + 1)
+                //                    };
+                //                    utilities.FillLogError(urlArchivo, $"URL del Certificado {datosCertificado.copia}");
+                //                    path = SaveFile(urlArchivo, nombreArchivo);
+                //                    LRutasCertificados.Add(path);
+                //                }
+                //                else
+                //                {
+                //                    printState = false;
+                //                }
+                //            }
+                //        }
+                //        else
+                //        {
+                //            printState = false;
+                //            FrmModal modal = new FrmModal(message);
+                //            modal.ShowDialog();
+                //        }
+                //    }
+                //}
+                //if (printState)
+                //{
+                //    foreach (var item in LRutasCertificados)
+                //    {
+                //        Print(item);
+                //    }
+                //}
+                //return printState;
             }
             catch (Exception ex)
             {
                 Mensaje(ex.Message);
                 printState = false;
             }
-            return printState;
+            return true;
         }
 
         public string SaveFile(string PatchFile, FileName nombreArchivo)

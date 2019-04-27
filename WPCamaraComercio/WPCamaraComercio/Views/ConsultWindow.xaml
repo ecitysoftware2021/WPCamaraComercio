@@ -123,7 +123,7 @@
                      TextAlignment="Center"
                      Margin="100,0,0,100" 
                      Width="500"
-                     Height="100" 
+                     Height="120" 
                      TextWrapping="Wrap"
                      TabIndex="0"
                      FontSize="42" 
@@ -131,6 +131,7 @@
                      FontWeight="Bold"
                      Visibility="Hidden"
                      k:TouchScreenKeyboard.TouchScreenKeyboard = "true"
+                     TextChanged="TxtName_TextChanged"
                      />
             <!---->
 
@@ -147,6 +148,7 @@
                      Foreground="Black"
                      FontWeight="Bold"
                      k:TouchScreenKeyNumeric.TouchScreenKeyNumeric = "true"
+                     TextChanged="TxtIdentificacion_TextChanged_1"
                      />
                      <!---->
 

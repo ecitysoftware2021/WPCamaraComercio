@@ -45,20 +45,20 @@
                        TextWrapping="Wrap"
                        TextAlignment="Center"
                        Width="900"/>
+           
+        </Grid>
+
+        <Grid Grid.Row="3">
             <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/preloader.gif" 
                    gif:ImageBehavior.AnimateInDesignMode="True"
                    gif:ImageBehavior.AutoStart="True" 
                     x:Name="GifLoadder" 
                     Stretch="Fill"
-                    Margin="0,190,0,0" 
+                    Margin="0,0,0,0" 
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Center" 
                     Width="500" 
                     Height="300"/>
-        </Grid>
-
-        <Grid Grid.Row="3">
-
         </Grid>
     </Grid>
 </Window>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using WPCamaraComercio.Classes;
@@ -150,6 +152,8 @@ namespace WPCamaraComercio.Views
             {
                 utilities.SaveLogErrorMethods("LoadInfoDetails", "ConsultWindow", ex.ToString());
                 navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+                BtnConsultar.IsEnabled = true;
+
             }
         }
 
@@ -183,6 +187,7 @@ namespace WPCamaraComercio.Views
             {
                 utilities.SaveLogErrorMethods("ConsulParameter", "ConsultWindow", ex.ToString());
                 navigationService.NavigatorModal("Lo sentimos ha ocurrido un error, intente mas tarde.");
+                BtnConsultar.IsEnabled = true;
             }
         }
 
@@ -225,8 +230,16 @@ namespace WPCamaraComercio.Views
 
         private void BtnConsultar_StylusDown(object sender, StylusDownEventArgs e)
         {
-            BtnConsultar.IsEnabled = false;
-            ConsulParameter();
+            if (string.IsNullOrEmpty(TxtIdentificacion.Text) && string.IsNullOrEmpty(TxtName.Text))
+            {
+                FrmModal modal = new FrmModal("Debe de ingresar una referencia.",this);
+                modal.ShowDialog();
+            }
+            else
+            {
+                BtnConsultar.IsEnabled = false;
+                ConsulParameter();
+            }
         }
 
         private void chkIdentification_StylusDown(object sender, StylusDownEventArgs e)
@@ -252,6 +265,8 @@ namespace WPCamaraComercio.Views
                     this.consultViewModel.sourceCheckName = Utilities.GetConfiguration("ImageCheckOut");
 
                     this.consultViewModel.message = "Ingrese NIT/Cédula sin dígito de verificación";
+
+                    BtnConsultar.IsEnabled = true;
                 }
             }
             catch (Exception ex)
@@ -283,7 +298,9 @@ namespace WPCamaraComercio.Views
 
                     this.consultViewModel.sourceCheckNit = Utilities.GetConfiguration("ImageCheckOut");
 
-                    this.consultViewModel.message = "Ingrese un nombre valido";
+                    //this.consultViewModel.message = "Ingrese un nombre válido";
+
+                    BtnConsultar.IsEnabled = true;
                 }
             }
             catch (Exception ex)
@@ -356,15 +373,52 @@ namespace WPCamaraComercio.Views
         #region HeaderButtons
         private void BtnExit_StylusDown(object sender, StylusDownEventArgs e)
         {
+            Thread.Sleep(500);
             Utilities.ResetTimer();
             Utilities.GoToInicial();
         }
 
         #endregion
-
-        private void TxtIdentificacion_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        
+        private void TxtIdentificacion_TextChanged_1(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
+            try
+            {
+                TextBox textBox = (TextBox)sender;
+                string text = textBox.Text;
+                int length = text.Length;
+                if (length <= 12)
+                {
+                }
+                else
+                {
+                    textBox.Text = text.Remove(text.Length - 1);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
 
+        private void TxtName_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            try
+            {
+                TextBox textBox = (TextBox)sender;
+                string text = textBox.Text;
+                int length = text.Length;
+                if (length <= 20)
+                {
+                    
+                }
+                else
+                {
+                    textBox.Text = text.Remove(text.Length - 1);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

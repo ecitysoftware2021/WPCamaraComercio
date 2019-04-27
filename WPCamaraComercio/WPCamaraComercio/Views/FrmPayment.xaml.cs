@@ -175,6 +175,7 @@ namespace WPCamaraComercio.Views
                     if (enterValue > 0)
                     {
                         PaymentViewModel.ValorIngresado += enterValue;
+
                     }
                 };
 
@@ -343,7 +344,7 @@ namespace WPCamaraComercio.Views
                     Utilities.BuyID = await camaraComercio.ConfirmarCompra();
                     if (!Utilities.BuyID.Equals("0"))
                     {
-                        await Dispatcher.BeginInvoke((Action)delegate 
+                        await Dispatcher.BeginInvoke((Action)delegate
                         {
                             Utilities.Loading(frmLoading, false, this);
                         });
@@ -357,7 +358,7 @@ namespace WPCamaraComercio.Views
                     }
                     else
                     {
-                        await Dispatcher.BeginInvoke((Action)delegate 
+                        await Dispatcher.BeginInvoke((Action)delegate
                         {
                             Utilities.Loading(frmLoading, false, this);
                         });

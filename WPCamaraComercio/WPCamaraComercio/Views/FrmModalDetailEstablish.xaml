@@ -49,7 +49,7 @@
                     BorderThickness="4,2,4,0" Margin="0,4,-4,76" Grid.ColumnSpan="2" Grid.RowSpan="2">
                 <Grid >
                     <Label Content="Nombre establecimiento:"
-                           VerticalAlignment="Center"
+                           VerticalAlignment="Top"
                            HorizontalAlignment="Left"
                            FontSize="35"
                            FontWeight="Bold"
@@ -86,7 +86,7 @@
                            Foreground="Black"
                                />
                     <Label Content="Matrícula:"
-                           VerticalAlignment="Center"
+                           VerticalAlignment="Top"
                            HorizontalAlignment="Right"
                            FontSize="35"
                            FontWeight="Bold"

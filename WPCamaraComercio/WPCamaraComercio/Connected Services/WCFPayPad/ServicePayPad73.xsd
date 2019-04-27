@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad" />
-  <xs:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" />
-  <xs:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/" />
+  <xs:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad" />
+  <xs:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" />
+  <xs:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" />
   <xs:element name="InsertarTransaccion">
     <xs:complexType>
       <xs:sequence>
@@ -379,7 +379,7 @@
   <xs:element name="DatosTransaccionCMResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="DatosTransaccionCMResult" nillable="true" type="q8:sp_DatosTransaccionCM_Result" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" minOccurs="0" name="DatosTransaccionCMResult" nillable="true" type="q8:sp_DatosTransaccionCM_Result" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -482,7 +482,7 @@
   <xs:element name="InsertarTransaccionPaises">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/" minOccurs="0" name="paises" nillable="true" type="q15:Tbl_TransaccionPaices" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" minOccurs="0" name="paises" nillable="true" type="q15:Tbl_TransaccionPaices" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -520,6 +520,50 @@
   <xs:element name="FinalizarTransaccionPaisesResponse">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTop5TransactionsByClient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idCorresponsal" type="xs:int" />
+        <xs:element minOccurs="0" name="llave" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTop5TransactionsByClientResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WCFPayPad.Clases" minOccurs="0" name="GetTop5TransactionsByClientResult" nillable="true" type="q16:ArrayOfTransactionByClientData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTransactionByID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="correspondentID" type="xs:int" />
+        <xs:element minOccurs="0" name="transactionID" type="xs:int" />
+        <xs:element minOccurs="0" name="newState" type="xs:int" />
+        <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateTransactionByIDResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarPagador">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/WCFPayPad.EntityModels" minOccurs="0" name="pagador" nillable="true" type="q17:PagadorGeneral" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertarPagadorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertarPagadorResult" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>

@@ -94,9 +94,17 @@
                     Foreground="#000"
                     Name="TxbData1"
                     Text="data 1"/>
+            <Image  x:Name="ImgShow"
+                    gif:ImageBehavior.AnimatedSource="/Images/Gif/flecha-down.gif"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0,0,100,30" 
+                    Height="100"
+                    Grid.ColumnSpan="2"
+                    />
             <TextBlock VerticalAlignment="Center"
                     HorizontalAlignment="Right"
-                    Margin="0,0,120,0"
+                    Margin="0,90,120,0"
                     FontSize="30"                    
                     Grid.ColumnSpan="2"
                     FontWeight="Bold"
@@ -394,7 +402,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="350" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.Background>
@@ -473,7 +481,7 @@
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"                                           
                                            VerticalAlignment="Top"
-                                           Margin="80,0,0,0"
+                                           Margin="50,0,0,0"
                                            Grid.Column="3"
                                            FontWeight="Bold"
                                            Foreground="#FF840000"

@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -35,6 +36,8 @@ namespace WPCamaraComercio.Classes
         public static DispatcherTimer timer;
 
         public static int CorrespondentId = int.Parse(GetConfiguration("IDCorresponsal"));
+
+        public static int CorrespondentId2 = int.Parse(GetConfiguration("IDCorresponsal"));
 
         public static RespuestaConsulta RespuestaConsulta = new RespuestaConsulta();
 
@@ -533,6 +536,50 @@ namespace WPCamaraComercio.Classes
                 }
             }
         }
-        #endregion
+
+        public enum EDenominacion
+        {
+            [Description("100M")]
+            Cien = 1,
+            [Description("200")]
+            Doscientos = 2,
+            [Description("500")]
+            Quinientos = 3,
+            [Description("1")]
+            Mil = 4,
+            [Description("2")]
+            BDosMil = 5,
+            [Description("5")]
+            BCincoMil = 6,
+            [Description("10")]
+            BDiezMil = 7,
+            [Description("20")]
+            BVeinteMil = 8,
+            [Description("50")]
+            BCincuentaMil = 9,
+            [Description("100")]
+            BMil = 11
+        }
+
+        public static int getDescriptionEnum(string value)
+        {
+            int idTypeEnum = 0;
+            Type enumType = typeof(EDenominacion);
+            var values = enumType.GetEnumValues();
+            foreach (EDenominacion item in values)
+            {
+                MemberInfo info = enumType.GetMember(item.ToString()).First();
+                var description = info.GetCustomAttribute<DescriptionAttribute>();
+                if (value == description.Description)
+                {
+                    EDenominacion enumm = (EDenominacion)Enum.Parse(typeof(EDenominacion), item.ToString());
+                    idTypeEnum = (int)enumm;
+                    break;
+                }
+            }
+            return idTypeEnum;
+        }
     }
+    #endregion
 }
+

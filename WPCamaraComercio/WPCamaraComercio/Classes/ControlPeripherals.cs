@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WPCamaraComercio.Service;
 
 namespace WPCamaraComercio.Classes
 {
@@ -67,6 +68,7 @@ namespace WPCamaraComercio.Classes
         #endregion
 
         #region Variables
+        private WCFPayPadService payPadService;
 
         private decimal payValue;//Valor a pagar
 
@@ -97,11 +99,13 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
+
                 _serialPortBills = new SerialPort();
                 _serialPortCoins = new SerialPort();
                 log = new LogDispenser();
                 InitPortBills();
                 InitPortPurses();
+                payPadService = new WCFPayPadService();
             }
             catch (Exception ex)
             {
@@ -395,7 +399,7 @@ namespace WPCamaraComercio.Classes
             {
                 deliveryValue += decimal.Parse(response[2]) * _mil;
                 callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _mil);
-
+                int idDenominacion = Utilities.getDescriptionEnum(response[2].Replace("\r", string.Empty));
                 Utilities.log.Add(new LogTransactional
                 {
                     Fecha = DateTime.Now,
@@ -408,12 +412,22 @@ namespace WPCamaraComercio.Classes
                     CantidadDevolucion = 1,
                     EstadoTransaccion = "En Proceso"
                 });
+
+
+                payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
+
             }
             else if (response[1] == "MD")
             {
+                decimal moneda = decimal.Parse(response[2]);
                 deliveryValue += decimal.Parse(response[2]) * _hundred;
                 callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _hundred);
-
+                string value = response[2].Replace("\r", string.Empty);
+                if (moneda == 100)
+                {
+                    value = response[2].Replace("\r", string.Empty) + "M";
+                }
+                int idDenominacion = Utilities.getDescriptionEnum(value);
                 Utilities.log.Add(new LogTransactional
                 {
                     Fecha = DateTime.Now,
@@ -426,6 +440,10 @@ namespace WPCamaraComercio.Classes
                     CantidadDevolucion = 1,
                     EstadoTransaccion = "En Proceso"
                 });
+
+
+                payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
+
             }
             else
             {
@@ -434,6 +452,7 @@ namespace WPCamaraComercio.Classes
                     enterValue += decimal.Parse(response[2]) * _mil;
                     callbackValueIn?.Invoke(Convert.ToDecimal(response[2]) * _mil);
 
+                    int idDenominacion = Utilities.getDescriptionEnum(response[2].Replace("\r", string.Empty));
                     Utilities.log.Add(new LogTransactional
                     {
                         Fecha = DateTime.Now,
@@ -446,11 +465,21 @@ namespace WPCamaraComercio.Classes
                         CantidadDevolucion = 0,
                         EstadoTransaccion = "En Proceso"
                     });
+
+                    payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 1, int.Parse(response[2]));
+
                 }
                 else if (response[1] == "MA")
                 {
-                    enterValue += decimal.Parse(response[2]);
+                    decimal moneda = decimal.Parse(response[2]);
+                    enterValue += moneda;
                     callbackValueIn?.Invoke(Convert.ToDecimal(response[2]));
+                    string value = response[2].Replace("\r", string.Empty);
+                    if (moneda == 100)
+                    {
+                        value = response[2].Replace("\r", string.Empty) + "M";
+                    }
+                    int idDenominacion = Utilities.getDescriptionEnum(value);
 
                     Utilities.log.Add(new LogTransactional
                     {
@@ -464,6 +493,9 @@ namespace WPCamaraComercio.Classes
                         CantidadDevolucion = 0,
                         EstadoTransaccion = "En Proceso"
                     });
+
+                    payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 1, int.Parse(response[2]));
+
                 }
 
                 ValidateEnterValue();
@@ -645,6 +677,18 @@ namespace WPCamaraComercio.Classes
                     int denominacion = int.Parse(value.Split('-')[0]);
                     int cantidad = int.Parse(value.Split('-')[1]);
                     deliveryVal += denominacion * cantidad;
+                    if (denominacion < 6000)
+                    {
+                        denominacion = int.Parse(denominacion.ToString().Substring(0, 1));
+                    }
+                    else
+                    {
+                        denominacion = int.Parse(denominacion.ToString().Substring(0, 2));
+                    }
+                    int idDenominacion = Utilities.getDescriptionEnum(denominacion.ToString());
+
+                    payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 1, cantidad);
+
                 }
             }
 

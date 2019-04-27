@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WCFPayPad" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCFPayPad" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://200.122.221.193:7997/ServicePayPad.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://200.122.221.209/ServicePayPad.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="CLSTransaction">
     <xs:sequence>
       <xs:element minOccurs="0" name="CedulaPagador" nillable="true" type="xs:string" />
@@ -8,6 +8,7 @@
       <xs:element minOccurs="0" name="FechaCuota" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IDCorresponsal" type="xs:int" />
       <xs:element minOccurs="0" name="IDTramite" type="xs:int" />
+      <xs:element minOccurs="0" name="PersonaID" type="xs:int" />
       <xs:element minOccurs="0" name="Referencia" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Total" type="xs:decimal" />
     </xs:sequence>
