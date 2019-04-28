@@ -31,13 +31,17 @@ namespace WPCamaraComercio.Service
         {
             return WCFPayPad.InsertException(IDCorresponsal, Exception);
         }
-        public  void InsertarControlMonedas(int idDenominacion, int paypadId,int operacion,int cantidad)
+        public void InsertarControlMonedas(int idDenominacion, int paypadId, int operacion, int cantidad)
         {
             WCFPayPad.InsertarControlMonedas(idDenominacion, paypadId, operacion, cantidad);
         }
-        public  void InsertarControlBilletes(int idDenominacion, int paypadId,int operacion,int cantidad)
+        public void InsertarControlDispenser(int idDenominacion, int paypadId, int operacion, int cantidad)
         {
-             var res =WCFPayPad.InsertarControlDispenser(idDenominacion, paypadId, operacion, cantidad);
+            var res = WCFPayPad.InsertarControlDispenser(idDenominacion, paypadId, operacion, cantidad);
+        }
+        public void InsertarControlAceptance(int idDenominacion, int paypadId, int cantidad)
+        {
+            var res = WCFPayPad.InsertarControlBillete(paypadId, idDenominacion, true, false);
         }
     }
 }

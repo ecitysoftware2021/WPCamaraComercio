@@ -413,8 +413,7 @@ namespace WPCamaraComercio.Classes
                     EstadoTransaccion = "En Proceso"
                 });
 
-
-                payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
+                payPadService.InsertarControlDispenser(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
 
             }
             else if (response[1] == "MD")
@@ -442,7 +441,7 @@ namespace WPCamaraComercio.Classes
                 });
 
 
-                payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
+                payPadService.InsertarControlMonedas(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
 
             }
             else
@@ -466,7 +465,7 @@ namespace WPCamaraComercio.Classes
                         EstadoTransaccion = "En Proceso"
                     });
 
-                    payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 1, int.Parse(response[2]));
+                    payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
 
                 }
                 else if (response[1] == "MA")
@@ -494,8 +493,7 @@ namespace WPCamaraComercio.Classes
                         EstadoTransaccion = "En Proceso"
                     });
 
-                    payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 1, int.Parse(response[2]));
-
+                    payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
                 }
 
                 ValidateEnterValue();
@@ -686,9 +684,6 @@ namespace WPCamaraComercio.Classes
                         denominacion = int.Parse(denominacion.ToString().Substring(0, 2));
                     }
                     int idDenominacion = Utilities.getDescriptionEnum(denominacion.ToString());
-
-                    payPadService.InsertarControlBilletes(idDenominacion, Utilities.CorrespondentId2, 1, cantidad);
-
                 }
             }
 
