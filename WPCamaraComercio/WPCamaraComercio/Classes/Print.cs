@@ -44,7 +44,7 @@ namespace WPCamaraComercio.Classes
                 pd.PrintPage += new PrintPageEventHandler(PrintPage);
                 pd.Print();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
