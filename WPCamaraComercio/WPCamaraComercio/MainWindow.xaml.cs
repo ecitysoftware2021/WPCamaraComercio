@@ -51,44 +51,44 @@ namespace WPCamaraComercio
         {
             try
             {
-                state = await api.SecurityToken();
-                if (state)
-                {
-                    var response = await api.GetResponse(new ObjectsApi.RequestApi(), "InitPaypad");
-                    if (response.CodeError == 200)
-                    {
-                        DataPayPad data = JsonConvert.DeserializeObject<DataPayPad>(response.Data.ToString());
-                        //Utilities.ImagesSlider = JsonConvert.DeserializeObject<List<string>>(data.ListImages.ToString());
-                        //Utilities.CountSlider = 1;
+                //state = await api.SecurityToken();
+                //if (state)
+                //{
+                //    var response = await api.GetResponse(new ObjectsApi.RequestApi(), "InitPaypad");
+                //    if (response.CodeError == 200)
+                //    {
+                //        DataPayPad data = JsonConvert.DeserializeObject<DataPayPad>(response.Data.ToString());
+                //        //Utilities.ImagesSlider = JsonConvert.DeserializeObject<List<string>>(data.ListImages.ToString());
+                //        //Utilities.CountSlider = 1;
 
-                        if (data.StateAceptance || data.StateDispenser)
-                        {
-                            Utilities.dataPaypad = data;
-                            //await Task.Run(() =>
-                            //{
-                            //    ConsultImagesSlider();
-                            //});
-                            Utilities util = new Utilities(1);
-                            Utilities.control.callbackToken = isSucces =>
-                            {
+                //        if (data.StateAceptance || data.StateDispenser)
+                //        {
+                //            Utilities.dataPaypad = data;
+                //            //await Task.Run(() =>
+                //            //{
+                //            //    ConsultImagesSlider();
+                //            //});
+                //            Utilities util = new Utilities(1);
+                //            Utilities.control.callbackToken = isSucces =>
+                //            {
                                 Utilities.GoToInicial();
-                            };
-                            Utilities.control.Start();
-                        }
-                        else
-                        {
-                            ShowModalError();
-                        }
-                    }
-                    else
-                    {
-                        ShowModalError();
-                    }
-                }
-                else
-                {
-                    ShowModalError();
-                }
+                //            };
+                //            Utilities.control.Start();
+                //        }
+                //        else
+                //        {
+                //            ShowModalError();
+                //        }
+                //    }
+                //    else
+                //    {
+                //        ShowModalError();
+                //    }
+                //}
+                //else
+                //{
+                //    ShowModalError();
+                //}
             }
             catch (Exception ex)
             {
