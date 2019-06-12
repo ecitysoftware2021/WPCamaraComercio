@@ -78,7 +78,8 @@ namespace WPCamaraComercio.Views
             };
             count = 0;
             tries = 0;
-            Utilities.control.StartValues();
+            FinishPayment();
+            //Utilities.control.StartValues();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -129,23 +130,23 @@ namespace WPCamaraComercio.Views
         {
             Dispatcher.BeginInvoke((Action)delegate
             {
-                Task.Run(() => 
+                Task.Run(() =>
                 {
                     Utilities.control.StopAceptance();
                 });
-                
+
                 this.Opacity = 0.5;
                 FrmModalConfirmation modal = new FrmModalConfirmation("¿Está seguro de cancelar la transacción?");
                 modal.ShowDialog();
                 this.Opacity = 1;
                 if (modal.DialogResult.Value)
                 {
-                    
+
                     if (PaymentViewModel.ValorIngresado > 0)
                     {
                         FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
                         cancel.Show();
-                        this.Close(); 
+                        this.Close();
                     }
                     else
                     {
@@ -190,7 +191,7 @@ namespace WPCamaraComercio.Views
                     }
                     else
                     {
-                        FinishPayment().Wait();
+                        FinishPayment();
                     }
                 };
 
@@ -313,7 +314,7 @@ namespace WPCamaraComercio.Views
                 FinishPayment();
             }
         }
-        
+
 
         /// <summary>
         /// Método que se encarga de llenar un log de error general, esto cuando se produce una excepción
@@ -334,47 +335,47 @@ namespace WPCamaraComercio.Views
         /// <summary>
         /// Método encargado de finalizar el pago y realizar las tareas pertinentes como actualizar la transacción e imprimir los recibos
         /// </summary>
-        private async Task FinishPayment()
+        private void FinishPayment()
         {
             try
             {
                 //ApproveTrans();
                 if (!isCancel)
                 {
-                    Utilities.BuyID = await camaraComercio.ConfirmarCompra();
+                    Utilities.BuyID = camaraComercio.ConfirmarCompra();
                     if (!Utilities.BuyID.Equals("0"))
                     {
-                        await Dispatcher.BeginInvoke((Action)delegate
-                        {
-                            Utilities.Loading(frmLoading, false, this);
-                        });
+                        Dispatcher.BeginInvoke((Action)delegate
+                       {
+                           Utilities.Loading(frmLoading, false, this);
+                       });
                         //navigationService.NavigationTo("FinishPayment");
-                        await Dispatcher.BeginInvoke((Action)delegate
-                        {
-                            FinishPayment frmInformationCompany = new FinishPayment(PaymentViewModel.ValorIngresado, PaymentViewModel.ValorSobrante);
-                            frmInformationCompany.Show();
-                            this.Close();
-                        });
+                        Dispatcher.BeginInvoke((Action)delegate
+                       {
+                           FinishPayment frmInformationCompany = new FinishPayment(PaymentViewModel.ValorIngresado, PaymentViewModel.ValorSobrante);
+                           frmInformationCompany.Show();
+                           this.Close();
+                       });
                     }
                     else
                     {
-                        await Dispatcher.BeginInvoke((Action)delegate
-                        {
-                            Utilities.Loading(frmLoading, false, this);
-                        });
-                        await Dispatcher.BeginInvoke((Action)delegate
-                        {
-                            FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
-                                "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
-                            "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
-                            modal.ShowDialog();
-                            if (modal.DialogResult.Value)
-                            {
-                                FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
-                                cancel.Show();
-                                this.Close();
-                            }
-                        });
+                        Dispatcher.BeginInvoke((Action)delegate
+                       {
+                           Utilities.Loading(frmLoading, false, this);
+                       });
+                        Dispatcher.BeginInvoke((Action)delegate
+                       {
+                           FrmModal modal = new FrmModal(string.Concat("No se pudo imprimir el certificado.", Environment.NewLine,
+                               "Se cancelará la transacción y se le devolverá el dinero.", Environment.NewLine,
+                           "Comuniquese con servicio al cliente o diríjase a las taquillas."), this);
+                           modal.ShowDialog();
+                           if (modal.DialogResult.Value)
+                           {
+                               FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
+                               cancel.Show();
+                               this.Close();
+                           }
+                       });
                     }
                 }
                 else

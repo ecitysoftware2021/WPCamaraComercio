@@ -77,7 +77,7 @@ namespace WPCamaraComercio.Views
                                 modal.ShowDialog();
                                 if (modal.DialogResult.Value)
                                 {
-                                    FrmCancelledPayment cancel = new FrmCancelledPayment(enterValue);
+                                    FrmCancelledPayment cancel = new FrmCancelledPayment(Utilities.ValueToPay);
                                     cancel.Show();
                                     this.Close();
                                 }

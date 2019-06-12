@@ -1,11 +1,13 @@
 ﻿using Ghostscript.NET;
 using Ghostscript.NET.Processor;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Printing;
 using System.Threading.Tasks;
+using System.Windows;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.Views;
@@ -41,10 +43,11 @@ namespace WPCamaraComercio.Classes
         #endregion
 
         #region Methods
-        public async Task<string> ConfirmarCompra()
+        public string ConfirmarCompra()
         {
             try
             {
+
                 string idCompra = string.Empty;
                 datos.AutorizaEnvioEmail = "NO";
                 datos.AutorizaEnvioSMS = "NO";
@@ -69,37 +72,46 @@ namespace WPCamaraComercio.Classes
                 datos.Certificados = Utilities.ListCertificates.ToArray();
 
                 var task = service.SendPayInformation(datos);
-                if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                LlenarLogError(JsonConvert.SerializeObject(task), "Metodo SendPayInformation");
+                //if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                //{
+                //var response = task.Result;
+
+                if (task.Result != null)
                 {
-                    var response = task.Result;
-
-                    if (response.IsSuccess)
+                    int validator = 0;
+                    responseDic = task.Result.ToString();
+                    if (int.TryParse(responseDic, out validator))
                     {
-                        int validator = 0;
-                        responseDic = response.Result.ToString();
-                        if (int.TryParse(responseDic, out validator))
-                        {
-                            idCompra = responseDic;
-                            utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
+                        LlenarLogError(responseDic.ToString(), "Metodo SendPayInformation");
+                        idCompra = responseDic;
+                        utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
 
-                            return idCompra;
-                        }
-                        else
-                        {
-                            FrmModal modal = new FrmModal(message);
-                            modal.ShowDialog();
-                        }
+                        return idCompra;
                     }
                     else
                     {
-                        return string.Empty;
+                        Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+                        {
+                            FrmModal mod4al = new FrmModal(message);
+                            mod4al.ShowDialog();
+                        }));
+
                     }
                 }
                 else
                 {
-                    FrmModal modal = new FrmModal(message);
-                    modal.ShowDialog();
+                    return string.Empty;
                 }
+                //}
+                //else
+                //{
+                //    await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+                //    {
+                //        FrmModal modal = new FrmModal(message);
+                //        modal.ShowDialog();
+                //    }));
+                //}
             }
             catch (Exception ex)
             {
@@ -299,7 +311,7 @@ namespace WPCamaraComercio.Classes
         #endregion
     }
 
-        public class FileName
+    public class FileName
     {
         public string IdCertificado { get; set; }
         public string matricula { get; set; }
