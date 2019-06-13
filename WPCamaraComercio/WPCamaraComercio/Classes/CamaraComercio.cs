@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Printing;
 using System.Threading.Tasks;
+using System.Windows;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.Views;
@@ -86,8 +87,11 @@ namespace WPCamaraComercio.Classes
                         }
                         else
                         {
-                            FrmModal modal = new FrmModal(message);
-                            modal.ShowDialog();
+                            await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+                            {
+                                FrmModal mod4al = new FrmModal(message);
+                                mod4al.ShowDialog();
+                            }));
                         }
                     }
                     else
@@ -97,8 +101,11 @@ namespace WPCamaraComercio.Classes
                 }
                 else
                 {
-                    FrmModal modal = new FrmModal(message);
-                    modal.ShowDialog();
+                    await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+                    {
+                        FrmModal mod4al = new FrmModal(message);
+                        mod4al.ShowDialog();
+                    }));
                 }
             }
             catch (Exception ex)
@@ -174,8 +181,11 @@ namespace WPCamaraComercio.Classes
                         else
                         {
                             printState = false;
-                            FrmModal modal = new FrmModal(message);
-                            modal.ShowDialog();
+                            await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+                            {
+                                FrmModal mod4al = new FrmModal(message);
+                                mod4al.ShowDialog();
+                            }));
                         }
                     }
                 }

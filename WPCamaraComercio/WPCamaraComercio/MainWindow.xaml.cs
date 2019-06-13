@@ -51,7 +51,7 @@ namespace WPCamaraComercio
         {
             try
             {
-                Utilities util = new Utilities(1);
+                //Utilities util = new Utilities(1);
                 //state = await api.SecurityToken();
                 //if (state)
                 //{
@@ -69,12 +69,12 @@ namespace WPCamaraComercio
                 //            //{
                 //            //    ConsultImagesSlider();
                 //            //});
-                //            Utilities util = new Utilities(1);
-                //            Utilities.control.callbackToken = isSucces =>
-                //            {
-                Utilities.GoToInicial();
-                //            };
-                //            Utilities.control.Start();
+                Utilities util = new Utilities(1);
+                Utilities.control.callbackToken = isSucces =>
+                {
+                    Utilities.GoToInicial();
+                };
+                Utilities.control.Start();
                 //        }
                 //        else
                 //        {
