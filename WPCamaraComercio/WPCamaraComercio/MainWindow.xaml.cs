@@ -51,6 +51,7 @@ namespace WPCamaraComercio
         {
             try
             {
+                Utilities util = new Utilities(1);
                 //state = await api.SecurityToken();
                 //if (state)
                 //{
@@ -71,7 +72,7 @@ namespace WPCamaraComercio
                 //            Utilities util = new Utilities(1);
                 //            Utilities.control.callbackToken = isSucces =>
                 //            {
-                                Utilities.GoToInicial();
+                Utilities.GoToInicial();
                 //            };
                 //            Utilities.control.Start();
                 //        }
