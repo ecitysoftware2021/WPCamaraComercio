@@ -284,14 +284,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio1.wsdl" />
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio4.xsd">
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.wsdl" />
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio41.xsd">
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio42.xsd">
+    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\WCFCamaraComercio\WPCamaraComercio.WCFCamaraComercio.RespuestaConsulta.datasource">
@@ -300,23 +300,23 @@
     <None Include="Connected Services\WCFCamaraComercio\WPCamaraComercio.WCFCamaraComercio.RespuestaDetalle.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad1.wsdl" />
-    <None Include="Connected Services\WCFPayPad\ServicePayPad7.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad.wsdl" />
+    <None Include="Connected Services\WCFPayPad\ServicePayPad.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad71.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad72.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad73.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad74.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad75.xsd">
+    <None Include="Connected Services\WCFPayPad\ServicePayPad5.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.CLSDataControlScreen.datasource">
@@ -426,18 +426,6 @@
     <Resource Include="Images\Gif\tocarPantallaGIF.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\WCFCamaraComercio\configuration91.svcinfo" />
-    <None Include="Connected Services\WCFCamaraComercio\configuration.svcinfo" />
-    <None Include="Connected Services\WCFCamaraComercio\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Connected Services\WCFPayPad\configuration91.svcinfo" />
-    <None Include="Connected Services\WCFPayPad\configuration.svcinfo" />
-    <None Include="Connected Services\WCFPayPad\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Resource Include="Images\Others\circulo.png" />
     <Resource Include="Images\Buttons\backspace.png" />
     <Resource Include="Images\Buttons\ok.png" />
@@ -494,9 +482,6 @@
     <Resource Include="Images\Buttons\b-Leyendo-Billete.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio1.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Gif\flecha-down.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -506,7 +491,28 @@
     <Resource Include="LCamaraComercio.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad1.disco" />
+    <None Include="Connected Services\WCFPayPad\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WCFPayPad\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WCFPayPad\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WCFCamaraComercio\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WCFCamaraComercio\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WCFCamaraComercio\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -213,7 +213,7 @@ namespace WPCamaraComercio.Classes
             try
             {
                 FileName = string.Concat(
-                    IDCompra,
+                    Utilities.BuyID,
                     Delimitador,
                     nombreArchivo.IdCertificado,
                     Delimitador,
