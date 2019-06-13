@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.Service
@@ -103,16 +102,14 @@ namespace WPCamaraComercio.Service
             return task;
         }
 
-        public Response SendPayInformation(Datos data)
+        public Task<Response> SendPayInformation(Datos data)
         {
-            //Task<Response> task = null;
+            Task<Response> task = null;
 
-            //task = Task.Run(() =>
-            //{
-            Response response = new Response();
-            try
+            task = Task.Run(() =>
             {
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+                Response response = new Response();
+                try
                 {
                     var r = WCFCamara.SendPayInformation(data);
                     if (r != null)
@@ -124,19 +121,18 @@ namespace WPCamaraComercio.Service
                     {
                         response.IsSuccess = false;
                     }
-                }));
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Result = null;
-                response.Message = ex.Message;
-            }
+                }
+                catch (Exception ex)
+                {
+                    response.IsSuccess = false;
+                    response.Result = null;
+                    response.Message = ex.Message;
+                }
 
-            return response;
-            //});
+                return response;
+            });
 
-            //return task;
+            return task;
         }
 
         public Task<Response> GetCertifiedString(CLSDatosCertificado data)
