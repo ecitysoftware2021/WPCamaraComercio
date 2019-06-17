@@ -58,37 +58,52 @@ namespace WPCamaraComercio.Views
         public FrmPayment()
         {
             InitializeComponent();
-            OrganizeValues();
-            services = new WCFServices();
-            frmLoading = new FrmLoading();
-            payPadService = new WCFPayPadService();
-            recorder = new Record();
-            api = new Api();
-            WCFPayPadInsert = new ServicePayPadClient();
-            transactionDetails = new TransactionDetails();
-            camaraComercio = new CamaraComercio();
-            utilities = new Utilities();
-            navigationService = new NavigationService(this);
-            logError = new LogErrorGeneral
+            
+            try
             {
-                Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
-                IDCorresponsal = Utilities.CorrespondentId,
-                IdTransaction = Utilities.IDTransactionDB,
-                ValuePay = Utilities.ValueToPay,
-            };
-            count = 0;
-            tries = 0;
-            Utilities.control.StartValues();
+                OrganizeValues();
+                services = new WCFServices();
+                frmLoading = new FrmLoading();
+                payPadService = new WCFPayPadService();
+                recorder = new Record();
+                api = new Api();
+                WCFPayPadInsert = new ServicePayPadClient();
+                transactionDetails = new TransactionDetails();
+                camaraComercio = new CamaraComercio();
+                utilities = new Utilities();
+                navigationService = new NavigationService(this);
+                logError = new LogErrorGeneral
+                {
+                    Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
+                    IDCorresponsal = Utilities.CorrespondentId,
+                    IdTransaction = Utilities.IDTransactionDB,
+                    ValuePay = Utilities.ValueToPay,
+                };
+                count = 0;
+                tries = 0;
+                Utilities.control.StartValues();
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("FrmPayment: ", "Error: "+ex.ToString());
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //recorder.Grabar(Utilities.IDTransactionDB);
-            Task.Run(() =>
+            try
             {
-                //Utilities.control.StartValues();
-                ActivateWallet();
-            });
+                //recorder.Grabar(Utilities.IDTransactionDB);
+                Task.Run(() =>
+                {
+                    //Utilities.control.StartValues();
+                    ActivateWallet();
+                });
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("Window_Loaded: ", "Error: " + ex.ToString());
+            }
         }
 
         /// <summary>
@@ -96,11 +111,18 @@ namespace WPCamaraComercio.Views
         /// </summary>
         private void VisibilityImage()
         {
-            PaymentViewModel.ImgCancel = Visibility.Visible;
-            PaymentViewModel.ImgIngreseBillete = Visibility.Visible;
-            PaymentViewModel.ImgEspereCambio = Visibility.Hidden;
-            PaymentViewModel.ImgLeyendoBillete = Visibility.Hidden;
-            PaymentViewModel.ImgRecibo = Visibility.Hidden;
+            try
+            {
+                PaymentViewModel.ImgCancel = Visibility.Visible;
+                PaymentViewModel.ImgIngreseBillete = Visibility.Visible;
+                PaymentViewModel.ImgEspereCambio = Visibility.Hidden;
+                PaymentViewModel.ImgLeyendoBillete = Visibility.Hidden;
+                PaymentViewModel.ImgRecibo = Visibility.Hidden;
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("VisibilityImage: ", "Error: " + ex.ToString());
+            }
         }
 
         /// <summary>
@@ -108,17 +130,24 @@ namespace WPCamaraComercio.Views
         /// </summary>
         private void OrganizeValues()
         {
-            lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
-            PaymentViewModel = new PaymentViewModel
+            try
             {
-                PayValue = Utilities.ValueToPay,
-                ValorFaltante = Utilities.ValueToPay,
-                ValorSobrante = 0,
-                ValorIngresado = 0
-            };
+                lblValorPagar.Content = string.Format("{0:C0}", Utilities.ValueToPay);
+                PaymentViewModel = new PaymentViewModel
+                {
+                    PayValue = Utilities.ValueToPay,
+                    ValorFaltante = Utilities.ValueToPay,
+                    ValorSobrante = 0,
+                    ValorIngresado = 0
+                };
 
-            VisibilityImage();
-            this.DataContext = PaymentViewModel;
+                VisibilityImage();
+                this.DataContext = PaymentViewModel;
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("OrganizeValues: ", "Error: " + ex.ToString());
+            }
         }
 
         #endregion
@@ -127,36 +156,69 @@ namespace WPCamaraComercio.Views
 
         private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)delegate
+            try
             {
-                Task.Run(() => 
+                try
                 {
-                    Utilities.control.StopAceptance();
-                });
-                
-                this.Opacity = 0.5;
-                FrmModalConfirmation modal = new FrmModalConfirmation("¿Está seguro de cancelar la transacción?");
-                modal.ShowDialog();
-                this.Opacity = 1;
-                if (modal.DialogResult.Value)
+                    LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Ingresé");
+                }
+                catch { }
+
+                Dispatcher.BeginInvoke((Action)delegate
                 {
-                    
-                    if (PaymentViewModel.ValorIngresado > 0)
+                    Task.Run(() =>
                     {
-                        FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
-                        cancel.Show();
-                        this.Close(); 
+                        Utilities.control.StopAceptance();
+
+                        LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Apague billetero");
+                    });
+
+                    this.Opacity = 0.5;
+                    FrmModalConfirmation modal = new FrmModalConfirmation("¿Está seguro de cancelar la transacción?");
+                    modal.ShowDialog();
+                    this.Opacity = 1;
+                    
+                    try
+                    {
+                        LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Cerré la modal");
+                    }
+                    catch { }
+
+                    if (modal.DialogResult.Value)
+                    {
+
+                        if (PaymentViewModel.ValorIngresado > 0)
+                        {
+                            LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Abri formulario de cancelación");
+                            FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
+                            cancel.Show();
+                            this.Close();
+                        }
+                        else
+                        {
+                            try
+                            {
+                                LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "GoToInitial");
+                            }
+                            catch { }
+                            Utilities.GoToInicial();
+                        }
                     }
                     else
                     {
-                        Utilities.GoToInicial();
-                    }
-                }
-                else
-                {
-                    Utilities.control.StartAceptance(PaymentViewModel.PayValue);
-                }
-            });
+                        Utilities.control.StartAceptance(PaymentViewModel.PayValue);
+                        try
+                        {
+                            LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Prendi billetero");
+                        }
+                        catch { }
+                   }
+                });
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Error: " + ex.ToString());
+            }
         }
 
         #endregion
@@ -170,26 +232,46 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé");
+                }
+                catch { }
+
                 Utilities.control.callbackValueIn = enterValue =>
                 {
                     if (enterValue > 0)
                     {
                         PaymentViewModel.ValorIngresado += enterValue;
-
                     }
                 };
 
                 Utilities.control.callbackTotalIn = enterTotal =>
                 {
+                    try
+                    {
+                        LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn");
+                    }
+                    catch { }
                     Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, true, this); });
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                     Utilities.EnterTotal = enterTotal;
                     if (enterTotal > 0 && PaymentViewModel.ValorSobrante > 0)
                     {
+                        try
+                        {
+                            LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn ReturnMoney");
+                        }
+                        catch { }
                         ReturnMoney(PaymentViewModel.ValorSobrante);
                     }
                     else
                     {
+                        try
+                        {
+                            LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn FinishPayment");
+                        }
+                        catch { }
                         FinishPayment().Wait();
                     }
                 };
@@ -199,6 +281,7 @@ namespace WPCamaraComercio.Views
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                 };
 
+               
                 Utilities.log.Add(new LogTransactional
                 {
                     Fecha = DateTime.Now,
@@ -212,7 +295,20 @@ namespace WPCamaraComercio.Views
                     EstadoTransaccion = "En Proceso"
                 });
 
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Creé el log Transactional");
+                }
+                catch { }
+
                 Utilities.control.StartAceptance(PaymentViewModel.PayValue);
+
+
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Salí");
+                }
+                catch { }
             }
             catch (Exception ex)
             {
@@ -237,6 +333,11 @@ namespace WPCamaraComercio.Views
         {
             try
             {
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Ingresé");
+                }
+                catch { }
 
                 Utilities.control.callbackTotalOut = totalOut =>
                 {
@@ -253,6 +354,12 @@ namespace WPCamaraComercio.Views
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                 };
 
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Pasé por los callbacks");
+                }
+                catch { }
+
                 Utilities.log.Add(new LogTransactional
                 {
                     Fecha = DateTime.Now,
@@ -266,52 +373,80 @@ namespace WPCamaraComercio.Views
                     EstadoTransaccion = "En Proceso"
                 });
 
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Creé el log transactional");
+                }
+                catch { }
+
                 Utilities.control.StartDispenser(returnValue);
+
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Salí");
+                }
+                catch { }
             }
             catch (Exception ex)
             {
-                throw ex;
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Error: "+ex.ToString());
+                }
+                catch { }
             }
         }
 
         private async void EndDispenserMoney(decimal quiantity, int stateTrans = 2, bool state = true)
         {
-            Utilities.ValueDelivery = (long)quiantity;
-            await Task.Run(() =>
+            try
             {
-                Utilities.SaveLogDispenser(ControlPeripherals.log);
-            });
+                Utilities.ValueDelivery = (long)quiantity;
+                await Task.Run(() =>
+                {
+                    Utilities.SaveLogDispenser(ControlPeripherals.log);
+                });
 
-            transactionDetails.Description = Utilities.control.LogMessage;
-            RequestApi requestApi = new RequestApi
-            {
-                Data = transactionDetails
-            };
-            var response = await api.GetResponse(requestApi, "SaveTransactionDetail");
+                transactionDetails.Description = Utilities.control.LogMessage;
+                RequestApi requestApi = new RequestApi
+                {
+                    Data = transactionDetails
+                };
+                var response = await api.GetResponse(requestApi, "SaveTransactionDetail");
 
-            await Dispatcher.BeginInvoke(new Action(() =>
-            {
-                Utilities.Loading(frmLoading, false, this);
-            }));
-
-            if (state)
-            {
                 await Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    BtnCancel.IsEnabled = false;
+                    Utilities.Loading(frmLoading, false, this);
                 }));
 
-                FinishPayment();
-            }
-            else
-            {
-                await Dispatcher.BeginInvoke(new Action(() =>
+                if (state)
                 {
-                    BtnCancel.IsEnabled = false;
-                }));
+                    await Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        BtnCancel.IsEnabled = false;
+                    }));
 
-                FinishPayment();
+                    FinishPayment();
+                }
+                else
+                {
+                    await Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        BtnCancel.IsEnabled = false;
+                    }));
+
+                    FinishPayment();
+                }
             }
+            catch (Exception ex)
+            {
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("EndDispenserMoney: ", "Error: " + ex.ToString());
+                }
+                catch { }
+            }
+            
         }
         
 
@@ -321,14 +456,25 @@ namespace WPCamaraComercio.Views
         /// <param name="ex">excepción a ser mostrada</param>
         private void ErroUpdateTrans(string message)
         {
-            var json = Utilities.CreateJSON();
-            logError.Description = string.Concat(json, Environment.NewLine, "Ocurrió un error en la transación IdTransaccion:",
-                Utilities.IDTransactionDB,
-                "\n error: ", message,
-                "\n Total Ingresado: " + PaymentViewModel.ValorIngresado);
-            logError.State = "Cancelada";
-            Utilities.SaveLogTransactions(logError, "LogTransacciones\\Canceladas");
-            //recorder.FinalizarGrabacion();
+            try
+            {
+                var json = Utilities.CreateJSON();
+                logError.Description = string.Concat(json, Environment.NewLine, "Ocurrió un error en la transación IdTransaccion:",
+                    Utilities.IDTransactionDB,
+                    "\n error: ", message,
+                    "\n Total Ingresado: " + PaymentViewModel.ValorIngresado);
+                logError.State = "Cancelada";
+                Utilities.SaveLogTransactions(logError, "LogTransacciones\\Canceladas");
+                //recorder.FinalizarGrabacion();
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ErroUpdateTrans: ", "Error: " + ex.ToString());
+                }
+                catch { }
+            }
         }
 
         /// <summary>
