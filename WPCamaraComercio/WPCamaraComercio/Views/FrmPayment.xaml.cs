@@ -516,7 +516,8 @@ namespace WPCamaraComercio.Views
                             modal.ShowDialog();
                             if (modal.DialogResult.Value)
                             {
-                                FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
+                                decimal value = PaymentViewModel.ValorIngresado - PaymentViewModel.ValorSobrante;
+                                FrmCancelledPayment cancel = new FrmCancelledPayment(value);
                                 cancel.Show();
                                 this.Close();
                             }

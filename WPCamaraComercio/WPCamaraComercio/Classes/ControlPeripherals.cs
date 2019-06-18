@@ -109,6 +109,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("ControlPeripherals: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -124,6 +125,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("Start: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -133,10 +135,18 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         public void StartValues()
         {
-            deliveryValue = 0;//valor entregado TEST
-            enterValue = 0;//valor ingresado
-            deliveryVal = 0;//valor entregado
-            LogMessage = string.Empty;//Mensaje del log del dispenser
+            try
+            {
+                deliveryValue = 0;//valor entregado TEST
+                enterValue = 0;//valor ingresado
+                deliveryVal = 0;//valor entregado
+                LogMessage = string.Empty;//Mensaje del log del dispenser
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("StartValues: ", "Error: " + ex.ToString());
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -159,6 +169,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("InitPortBills: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -183,6 +194,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("InitPortPurses: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -208,6 +220,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("SendMessageBills: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -229,6 +242,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("SendMessageCoins: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -255,6 +269,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("_serialPortBillsDataReceived: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -277,6 +292,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("_serialPortCoinsDataReceived: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -291,23 +307,31 @@ namespace WPCamaraComercio.Classes
         /// <param name="message">respuesta del puerto de los billeteros</param>
         private void ProcessResponseBills(string message)
         {
-            string[] response = message.Split(':');
-            switch (response[0])
+            try
             {
-                case "RC":
-                    ProcessRC(response);
-                    break;
-                case "ER":
-                    ProcessER(response);
-                    break;
-                case "UN":
-                    ProcessUN(response);
-                    break;
-                case "TO":
-                    ProcessTO(response);
-                    break;
-                default:
-                    break;
+                string[] response = message.Split(':');
+                switch (response[0])
+                {
+                    case "RC":
+                        ProcessRC(response);
+                        break;
+                    case "ER":
+                        ProcessER(response);
+                        break;
+                    case "UN":
+                        ProcessUN(response);
+                        break;
+                    case "TO":
+                        ProcessTO(response);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessResponseBills: ", "Error: " + ex.ToString());
+                throw ex;
             }
         }
 
@@ -317,23 +341,31 @@ namespace WPCamaraComercio.Classes
         /// <param name="message">respuesta del puerto de los monederos</param>
         private void ProcessResponseCoins(string message)
         {
-            string[] response = message.Split(':');
-            switch (response[0])
+            try
             {
-                case "RC":
-                    ProcessRC(response);
-                    break;
-                case "ER":
-                    ProcessER(response);
-                    break;
-                case "UN":
-                    ProcessUN(response);
-                    break;
-                case "TO":
-                    ProcessTO(response);
-                    break;
-                default:
-                    break;
+                string[] response = message.Split(':');
+                switch (response[0])
+                {
+                    case "RC":
+                        ProcessRC(response);
+                        break;
+                    case "ER":
+                        ProcessER(response);
+                        break;
+                    case "UN":
+                        ProcessUN(response);
+                        break;
+                    case "TO":
+                        ProcessTO(response);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessResponseCoins: ", "Error: " + ex.ToString());
+                throw ex;
             }
         }
 
@@ -347,23 +379,31 @@ namespace WPCamaraComercio.Classes
         /// <param name="response">respuesta</param>
         private void ProcessRC(string[] response)
         {
-            if (response[1] == "OK")
+            try
             {
-                switch (response[2])
+                if (response[1] == "OK")
                 {
-                    case "AP":
+                    switch (response[2])
+                    {
+                        case "AP":
 
-                        break;
-                    case "DP":
-                        if (response[3] == "HD" && !string.IsNullOrEmpty(response[4]))
-                        {
-                            TOKEN = response[4].Replace("\r", string.Empty);
-                            callbackToken?.Invoke(true);
-                        }
-                        break;
-                    default:
-                        break;
+                            break;
+                        case "DP":
+                            if (response[3] == "HD" && !string.IsNullOrEmpty(response[4]))
+                            {
+                                TOKEN = response[4].Replace("\r", string.Empty);
+                                callbackToken?.Invoke(true);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessRC: ", "Error: " + ex.ToString());
+                throw;
             }
         }
 
@@ -373,19 +413,27 @@ namespace WPCamaraComercio.Classes
         /// <param name="response">respuesta</param>
         private void ProcessER(string[] response)
         {
-            if (response[1] == "DP" || response[1] == "MD")
+            try
             {
-                stateError = true;
-                callbackError?.Invoke(string.Concat("Error, se alcanzó a entregar:", deliveryValue));
+                if (response[1] == "DP" || response[1] == "MD")
+                {
+                    stateError = true;
+                    callbackError?.Invoke(string.Concat("Error, se alcanzó a entregar:", deliveryValue));
+                }
+                if (response[1] == "AP")
+                {
+                    stateError = true;
+                    callbackError?.Invoke("Error, en el billetero Aceptance");
+                }
+                else if (response[1] == "FATAL")
+                {
+                    Utilities.GoToInicial();
+                }
             }
-            if (response[1] == "AP")
+            catch (Exception ex)
             {
-                stateError = true;
-                callbackError?.Invoke("Error, en el billetero Aceptance");
-            }
-            else if (response[1] == "FATAL")
-            {
-                Utilities.GoToInicial();
+                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessER: ", "Error: " + ex.ToString());
+                throw;
             }
         }
 
@@ -395,108 +443,116 @@ namespace WPCamaraComercio.Classes
         /// <param name="response">respuesta</param>
         private void ProcessUN(string[] response)
         {
-            if (response[1] == "DP")
+            try
             {
-                deliveryValue += decimal.Parse(response[2]) * _mil;
-                callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _mil);
-                int idDenominacion = Utilities.getDescriptionEnum(response[2].Replace("\r", string.Empty));
-                Utilities.log.Add(new LogTransactional
+                if (response[1] == "DP")
                 {
-                    Fecha = DateTime.Now,
-                    IDTrsansaccion = Utilities.IDTransactionDB,
-                    Operacion = "Devolviendo Billetes",
-                    ValorDevolver = dispenserValue,
-                    ValorDevuelto = (decimal.Parse(response[2]) * _mil).ToString(),
-                    ValorPago = Utilities.ValueToPay,
-                    ValorIngresado = Utilities.EnterTotal,
-                    CantidadDevolucion = 1,
-                    EstadoTransaccion = "En Proceso"
-                });
-
-                payPadService.InsertarControlDispenser(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
-
-            }
-            else if (response[1] == "MD")
-            {
-                decimal moneda = decimal.Parse(response[2]);
-                deliveryValue += decimal.Parse(response[2]) * _hundred;
-                callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _hundred);
-                string value = response[2].Replace("\r", string.Empty);
-                if (moneda == 100)
-                {
-                    value = response[2].Replace("\r", string.Empty) + "M";
-                }
-                int idDenominacion = Utilities.getDescriptionEnum(value);
-                Utilities.log.Add(new LogTransactional
-                {
-                    Fecha = DateTime.Now,
-                    IDTrsansaccion = Utilities.IDTransactionDB,
-                    Operacion = "Devolviendo Monedas",
-                    ValorDevolver = dispenserValue,
-                    ValorDevuelto = (decimal.Parse(response[2]) * _hundred).ToString(),
-                    ValorPago = Utilities.ValueToPay,
-                    ValorIngresado = Utilities.EnterTotal,
-                    CantidadDevolucion = 1,
-                    EstadoTransaccion = "En Proceso"
-                });
-
-
-                payPadService.InsertarControlMonedas(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
-
-            }
-            else
-            {
-                if (response[1] == "AP")
-                {
-                    enterValue += decimal.Parse(response[2]) * _mil;
-                    callbackValueIn?.Invoke(Convert.ToDecimal(response[2]) * _mil);
-
+                    deliveryValue += decimal.Parse(response[2]) * _mil;
+                    callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _mil);
                     int idDenominacion = Utilities.getDescriptionEnum(response[2].Replace("\r", string.Empty));
                     Utilities.log.Add(new LogTransactional
                     {
                         Fecha = DateTime.Now,
                         IDTrsansaccion = Utilities.IDTransactionDB,
-                        Operacion = "Aceptando Billetes",
-                        ValorDevolver = 0,
-                        ValorDevuelto = "0",
+                        Operacion = "Devolviendo Billetes",
+                        ValorDevolver = dispenserValue,
+                        ValorDevuelto = (decimal.Parse(response[2]) * _mil).ToString(),
                         ValorPago = Utilities.ValueToPay,
-                        ValorIngresado = decimal.Parse(response[2]) * _mil,
-                        CantidadDevolucion = 0,
+                        ValorIngresado = Utilities.EnterTotal,
+                        CantidadDevolucion = 1,
                         EstadoTransaccion = "En Proceso"
                     });
 
-                    payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
+                    payPadService.InsertarControlDispenser(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
 
                 }
-                else if (response[1] == "MA")
+                else if (response[1] == "MD")
                 {
                     decimal moneda = decimal.Parse(response[2]);
-                    enterValue += moneda;
-                    callbackValueIn?.Invoke(Convert.ToDecimal(response[2]));
+                    deliveryValue += decimal.Parse(response[2]) * _hundred;
+                    callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _hundred);
                     string value = response[2].Replace("\r", string.Empty);
                     if (moneda == 100)
                     {
                         value = response[2].Replace("\r", string.Empty) + "M";
                     }
                     int idDenominacion = Utilities.getDescriptionEnum(value);
-
                     Utilities.log.Add(new LogTransactional
                     {
                         Fecha = DateTime.Now,
                         IDTrsansaccion = Utilities.IDTransactionDB,
-                        Operacion = "Aceptando Monedas",
-                        ValorDevolver = 0,
-                        ValorDevuelto = "0",
+                        Operacion = "Devolviendo Monedas",
+                        ValorDevolver = dispenserValue,
+                        ValorDevuelto = (decimal.Parse(response[2]) * _hundred).ToString(),
                         ValorPago = Utilities.ValueToPay,
-                        ValorIngresado = decimal.Parse(response[2]),
-                        CantidadDevolucion = 0,
+                        ValorIngresado = Utilities.EnterTotal,
+                        CantidadDevolucion = 1,
                         EstadoTransaccion = "En Proceso"
                     });
 
-                    payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
-                }
 
-                ValidateEnterValue();
+                    payPadService.InsertarControlMonedas(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
+
+                }
+                else
+                {
+                    if (response[1] == "AP")
+                    {
+                        enterValue += decimal.Parse(response[2]) * _mil;
+                        callbackValueIn?.Invoke(Convert.ToDecimal(response[2]) * _mil);
+
+                        int idDenominacion = Utilities.getDescriptionEnum(response[2].Replace("\r", string.Empty));
+                        Utilities.log.Add(new LogTransactional
+                        {
+                            Fecha = DateTime.Now,
+                            IDTrsansaccion = Utilities.IDTransactionDB,
+                            Operacion = "Aceptando Billetes",
+                            ValorDevolver = 0,
+                            ValorDevuelto = "0",
+                            ValorPago = Utilities.ValueToPay,
+                            ValorIngresado = decimal.Parse(response[2]) * _mil,
+                            CantidadDevolucion = 0,
+                            EstadoTransaccion = "En Proceso"
+                        });
+
+                        payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
+
+                    }
+                    else if (response[1] == "MA")
+                    {
+                        decimal moneda = decimal.Parse(response[2]);
+                        enterValue += moneda;
+                        callbackValueIn?.Invoke(Convert.ToDecimal(response[2]));
+                        string value = response[2].Replace("\r", string.Empty);
+                        if (moneda == 100)
+                        {
+                            value = response[2].Replace("\r", string.Empty) + "M";
+                        }
+                        int idDenominacion = Utilities.getDescriptionEnum(value);
+
+                        Utilities.log.Add(new LogTransactional
+                        {
+                            Fecha = DateTime.Now,
+                            IDTrsansaccion = Utilities.IDTransactionDB,
+                            Operacion = "Aceptando Monedas",
+                            ValorDevolver = 0,
+                            ValorDevuelto = "0",
+                            ValorPago = Utilities.ValueToPay,
+                            ValorIngresado = decimal.Parse(response[2]),
+                            CantidadDevolucion = 0,
+                            EstadoTransaccion = "En Proceso"
+                        });
+
+                        payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
+                    }
+
+                    ValidateEnterValue();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Error: " + ex.ToString());
+                throw;
             }
         }
 
@@ -506,27 +562,35 @@ namespace WPCamaraComercio.Classes
         /// <param name="response">respuesta</param>
         private void ProcessTO(string[] response)
         {
-            string responseFull;
-            if (response[1] == "OK")
+            try
             {
-                responseFull = string.Concat(response[2], ":", response[3]);
-                if (response[2] == "DP")
+                string responseFull;
+                if (response[1] == "OK")
                 {
-                    ConfigDataDispenser(responseFull, 1);
-                }
+                    responseFull = string.Concat(response[2], ":", response[3]);
+                    if (response[2] == "DP")
+                    {
+                        ConfigDataDispenser(responseFull, 1);
+                    }
 
-                if (response[2] == "MD")
+                    if (response[2] == "MD")
+                    {
+                        ConfigDataDispenser(responseFull);
+                    }
+                }
+                else
                 {
-                    ConfigDataDispenser(responseFull);
+                    responseFull = string.Concat(response[2], ":", response[3]);
+                    if (response[2] == "DP")
+                    {
+                        ConfigDataDispenser(responseFull, 2);
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                responseFull = string.Concat(response[2], ":", response[3]);
-                if (response[2] == "DP")
-                {
-                    ConfigDataDispenser(responseFull, 2);
-                }
+                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessTO: ", "Error: " + ex.ToString());
+                throw;
             }
         }
 
@@ -547,6 +611,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("StartDispenser: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -586,6 +651,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("ConfigurateDispenser: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -606,6 +672,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("DispenserMoney: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -628,6 +695,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                LogService.CreateLogsPeticionRespuestaDispositivos("StartAceptance: ", "Error: " + ex.ToString());
                 throw ex;
             }
         }
@@ -637,12 +705,20 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         private void ValidateEnterValue()
         {
-            decimal enterVal = enterValue;
-            if (enterValue >= payValue)
+            try
             {
-                StopAceptance();
-                enterValue = 0;
-                callbackTotalIn?.Invoke(enterVal);
+                decimal enterVal = enterValue;
+                if (enterValue >= payValue)
+                {
+                    StopAceptance();
+                    enterValue = 0;
+                    callbackTotalIn?.Invoke(enterVal);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("ValidateEnterValue: ", "Error: " + ex.ToString());
+                throw;
             }
         }
 
@@ -651,8 +727,16 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         public void StopAceptance()
         {
-            SendMessageBills(_AceptanceBillOFF);
-            SendMessageCoins(_AceptanceCoinOff);
+            try
+            {
+                SendMessageBills(_AceptanceBillOFF);
+                SendMessageCoins(_AceptanceCoinOff);
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("StopAceptance: ", "Error: " + ex.ToString());
+                throw;
+            }
         }
 
         #endregion
@@ -667,49 +751,57 @@ namespace WPCamaraComercio.Classes
         /// <param name="isRj">si se fue o no al reject</param>
         private void ConfigDataDispenser(string data, int isBX = 0)
         {
-            string[] values = data.Split(':')[1].Split(';');
-            if (isBX < 2)
+            try
             {
-                foreach (var value in values)
+                string[] values = data.Split(':')[1].Split(';');
+                if (isBX < 2)
                 {
-                    int denominacion = int.Parse(value.Split('-')[0]);
-                    int cantidad = int.Parse(value.Split('-')[1]);
-                    deliveryVal += denominacion * cantidad;
-                    if (denominacion < 6000)
+                    foreach (var value in values)
                     {
-                        denominacion = int.Parse(denominacion.ToString().Substring(0, 1));
-                    }
-                    else
-                    {
-                        denominacion = int.Parse(denominacion.ToString().Substring(0, 2));
-                    }
-                    int idDenominacion = Utilities.getDescriptionEnum(denominacion.ToString());
-                }
-            }
-
-            if (isBX == 0 || isBX == 2)
-            {
-                LogMessage += string.Concat(data.Replace("\r", string.Empty), "!");
-            }
-
-            if (!stateError)
-            {
-                //if (deliveryVal == 50000) { deliveryVal = 2000; }
-
-                if (dispenserValue == deliveryVal)
-                {
-                    if (isBX == 2 || isBX == 0)
-                    {
-                        callbackTotalOut?.Invoke(deliveryVal);
+                        int denominacion = int.Parse(value.Split('-')[0]);
+                        int cantidad = int.Parse(value.Split('-')[1]);
+                        deliveryVal += denominacion * cantidad;
+                        if (denominacion < 6000)
+                        {
+                            denominacion = int.Parse(denominacion.ToString().Substring(0, 1));
+                        }
+                        else
+                        {
+                            denominacion = int.Parse(denominacion.ToString().Substring(0, 2));
+                        }
+                        int idDenominacion = Utilities.getDescriptionEnum(denominacion.ToString());
                     }
                 }
-            }
-            else
-            {
-                if (isBX == 2)
+
+                if (isBX == 0 || isBX == 2)
                 {
-                    callbackOut?.Invoke(deliveryVal);
+                    LogMessage += string.Concat(data.Replace("\r", string.Empty), "!");
                 }
+
+                if (!stateError)
+                {
+                    //if (deliveryVal == 50000) { deliveryVal = 2000; }
+
+                    if (dispenserValue == deliveryVal)
+                    {
+                        if (isBX == 2 || isBX == 0)
+                        {
+                            callbackTotalOut?.Invoke(deliveryVal);
+                        }
+                    }
+                }
+                else
+                {
+                    if (isBX == 2)
+                    {
+                        callbackOut?.Invoke(deliveryVal);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Error: " + ex.ToString());
+                throw;
             }
         }
 
@@ -722,14 +814,22 @@ namespace WPCamaraComercio.Classes
         /// </summary>
         public void ClosePorts()
         {
-            if (_serialPortBills.IsOpen)
+            try
             {
-                _serialPortBills.Close();
-            }
+                if (_serialPortBills.IsOpen)
+                {
+                    _serialPortBills.Close();
+                }
 
-            if (_serialPortCoins.IsOpen)
+                if (_serialPortCoins.IsOpen)
+                {
+                    _serialPortCoins.Close();
+                }
+            }
+            catch (Exception ex)
             {
-                _serialPortCoins.Close();
+                LogService.CreateLogsPeticionRespuestaDispositivos("ClosePorts: ", "Error: " + ex.ToString());
+                throw;
             }
         }
 
