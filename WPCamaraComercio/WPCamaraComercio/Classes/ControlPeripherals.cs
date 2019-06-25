@@ -68,7 +68,7 @@ namespace WPCamaraComercio.Classes
         #endregion
 
         #region Variables
-        private WCFPayPadService payPadService;
+        //private WCFPayPadService payPadService;
 
         private decimal payValue;//Valor a pagar
 
@@ -105,13 +105,12 @@ namespace WPCamaraComercio.Classes
                 log = new LogDispenser();
                 InitPortBills();
                 InitPortPurses();
-                payPadService = new WCFPayPadService();
+                //payPadService = new WCFPayPadService();
                 LogService.CreateLogsPeticionRespuestaDispositivos("ControlPeripherals: ", "Salí");
             }
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ControlPeripherals: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -129,7 +128,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("Start: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -150,7 +148,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("StartValues: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -177,7 +174,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("InitPortBills: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -204,7 +200,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("InitPortPurses: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -232,7 +227,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("SendMessageBills: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -256,7 +250,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("SendMessageCoins: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -285,7 +278,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("_serialPortBillsDataReceived: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -310,7 +302,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("_serialPortCoinsDataReceived: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -350,7 +341,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ProcessResponseBills: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -386,7 +376,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ProcessResponseCoins: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -428,7 +417,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ProcessRC: ", "Error: " + ex.ToString());
-                throw;
             }
         }
 
@@ -463,7 +451,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ProcessER: ", "Error: " + ex.ToString());
-                throw;
             }
         }
 
@@ -495,7 +482,7 @@ namespace WPCamaraComercio.Classes
                         EstadoTransaccion = "En Proceso"
                     });
 
-                    payPadService.InsertarControlDispenser(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
+                    //payPadService.InsertarControlDispenser(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
                     LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Salí del if DP");
 
                 }
@@ -525,7 +512,7 @@ namespace WPCamaraComercio.Classes
                     });
 
 
-                    payPadService.InsertarControlMonedas(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
+                    //payPadService.InsertarControlMonedas(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
                     LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Salí del else if MD");
 
                 }
@@ -551,7 +538,7 @@ namespace WPCamaraComercio.Classes
                             EstadoTransaccion = "En Proceso"
                         });
 
-                        payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
+                        //payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
                         LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Salí del if AP");
 
                     }
@@ -581,7 +568,7 @@ namespace WPCamaraComercio.Classes
                             EstadoTransaccion = "En Proceso"
                         });
 
-                        payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
+                        //payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
                         LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Salí del else if MA");
                     }
 
@@ -592,7 +579,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Error: " + ex.ToString());
-                throw;
             }
         }
 
@@ -637,7 +623,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ProcessTO: ", "Error: " + ex.ToString());
-                throw;
             }
         }
 
@@ -661,7 +646,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("StartDispenser: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -703,7 +687,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ConfigurateDispenser: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -726,7 +709,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("DispenserMoney: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -751,7 +733,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("StartAceptance: ", "Error: " + ex.ToString());
-                throw ex;
             }
         }
 
@@ -775,7 +756,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ValidateEnterValue: ", "Error: " + ex.ToString());
-                throw;
             }
         }
 
@@ -794,7 +774,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("StopAceptance: ", "Error: " + ex.ToString());
-                throw;
             }
         }
 
@@ -873,7 +852,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Error: " + ex.ToString());
-                throw;
             }
         }
 
@@ -903,7 +881,6 @@ namespace WPCamaraComercio.Classes
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("ClosePorts: ", "Error: " + ex.ToString());
-                throw;
             }
         }
 
