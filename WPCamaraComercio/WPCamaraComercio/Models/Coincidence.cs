@@ -23,4 +23,10 @@ namespace WPCamaraComercio.Models
         public string Tpcm { get; set; }
 
     }
+
+    public class NewConsultApi
+    {
+        public string uno { get; set; }
+        public int dos { get; set; }
+    }
 }

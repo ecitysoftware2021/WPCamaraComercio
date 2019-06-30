@@ -90,11 +90,26 @@ namespace WPCamaraComercio.Service
                 var request = JsonConvert.SerializeObject(model);
                 var content = new StringContent(request, Encoding.UTF8, "Application/json");
                 client = new HttpClient();
-                client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress"));
+                client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddressEcity"));
                 var url = Utilities.GetConfiguration(controller);
                 var authentication = Encoding.ASCII.GetBytes(Utilities.TOKEN);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Utilities.TOKEN);
-                var response = await client.PostAsync(url, content);
+                var task = client.PostAsync(url, content);
+
+
+                if(await Task.WhenAny(task, Task.Delay(20000)) == task )
+                {
+                    response = task.Result;
+                }
+                else
+                {
+                    client = new HttpClient();
+                    client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress1Cero1"));
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Utilities.TOKEN);
+                    response = await client.PostAsync(url, content);
+                }
+
+
                 if (!response.IsSuccessStatusCode)
                 {
                     return new ResponseApi

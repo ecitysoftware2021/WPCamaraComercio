@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,6 +12,7 @@ using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.Views;
 using WPCamaraComercio.WCFCamaraComercio;
+using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.ViewModels
 {
@@ -174,58 +176,71 @@ namespace WPCamaraComercio.ViewModels
 
         public async void ConsultConcidences(string value, int type)
         {
-            bool stateConsult = false;
+            //bool stateConsult = false;
             try
             {
-                this.preload = Visibility.Visible;
+                Api api = new Api();
 
-                service = new WCFServices();
-
-                var task = service.ConsultInformation(value, type);
-                if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                NewConsultApi newConsult = new NewConsultApi
                 {
-                    var response = task.Result;
-                    if (response.IsSuccess)
-                    {
-                        Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
+                    uno = value,
+                    dos = type
+                };
 
-                        if (Utilities.RespuestaConsulta.response.resultados.Count() > 0)
-                        {
-                            foreach (var item in Utilities.RespuestaConsulta.response.resultados)
-                            {
-                                _coincidences.Add(new Coincidence
-                                {
-                                    BusinessName = item.nombre,
-                                    Nit = item.nit,
-                                    Municipality = item.municipio.Split(')')[1],
-                                    EstabliCoincide = item.EstablecimientosConCoincidencia,
-                                    State = item.estado,
-                                    Enrollment = item.matricula,
-                                    Tpcm = item.tpcm
-                                });
-                            }
+                var response = await api.GetResponse(new RequestApi
+                {
+                    Data = newConsult
+                }, "GetGeneralInformation");
 
-                            stateConsult = true;
-                        }
-                        else
-                        {
-                            FrmModal modal = new FrmModal(modalMessage);
-                            modal.ShowDialog();
-                        }
-                    }
-                    else
-                    {
-                        FrmModal modal = new FrmModal(modalMessage);
-                        modal.ShowDialog();
-                    }
-                    this.preload = Visibility.Hidden;
-                    callbackSearch?.Invoke(stateConsult);
-                }
+                //    this.preload = Visibility.Visible;
+
+                //    service = new WCFServices();
+
+                //    var task = service.ConsultInformation(value, type);
+                //    if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                //    {
+                //        var response = task.Result;
+                //        if (response.IsSuccess)
+                //        {
+                //            Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
+
+                //            if (Utilities.RespuestaConsulta.response.resultados.Count() > 0)
+                //            {
+                //                foreach (var item in Utilities.RespuestaConsulta.response.resultados)
+                //                {
+                //                    _coincidences.Add(new Coincidence
+                //                    {
+                //                        BusinessName = item.nombre,
+                //                        Nit = item.nit,
+                //                        Municipality = item.municipio.Split(')')[1],
+                //                        EstabliCoincide = item.EstablecimientosConCoincidencia,
+                //                        State = item.estado,
+                //                        Enrollment = item.matricula,
+                //                        Tpcm = item.tpcm
+                //                    });
+                //                }
+
+                //                stateConsult = true;
+                //            }
+                //            else
+                //            {
+                //                FrmModal modal = new FrmModal(modalMessage);
+                //                modal.ShowDialog();
+                //            }
+                //        }
+                //        else
+                //        {
+                //            FrmModal modal = new FrmModal(modalMessage);
+                //            modal.ShowDialog();
+                //        }
+                //        this.preload = Visibility.Hidden;
+                //        callbackSearch?.Invoke(stateConsult);
+                //    }
             }
             catch (Exception ex)
             {
-                this.preload = Visibility.Hidden;
-                callbackSearch?.Invoke(stateConsult);
+                //this.preload = Visibility.Hidden;
+                //callbackSearch?.Invoke(stateConsult);
             }
         }
 
