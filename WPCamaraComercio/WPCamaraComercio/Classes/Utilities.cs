@@ -17,8 +17,7 @@ using WPCamaraComercio.Models;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.Views;
-using WPCamaraComercio.WCFCamaraComercio;
-using WPCamaraComercio.WCFPayPad;
+//using WPCamaraComercio.WCFPayPad;
 using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Classes
@@ -27,7 +26,7 @@ namespace WPCamaraComercio.Classes
     {
         #region References
 
-        ServicePayPadClient PayPadClient = new ServicePayPadClient();
+        //ServicePayPadClient PayPadClient = new ServicePayPadClient();
 
         public static string Duration = GetConfiguration("Duration");
 
@@ -39,21 +38,20 @@ namespace WPCamaraComercio.Classes
 
         public static int CorrespondentId2 = int.Parse(GetConfiguration("IDCorresponsal"));
 
-        public static RespuestaConsulta RespuestaConsulta = new RespuestaConsulta();
-
-        public static Resultado[] Result { get; set; }
+        public static ResponseConsultGeneral RespuestaConsulta = new ResponseConsultGeneral();
+        
 
         public static string search { get; set; }
 
         public static string BuyID { get; set; }
 
-        public static Resultado ConsultResult = new Resultado();
+        public static ResultadoGeneral ConsultResult = new ResultadoGeneral();
 
         public static string Enrollment { get; set; }
 
         public static string Tpcm { get; set; }
 
-        public static RespuestaDetalle DetailResponse { get; set; }
+        public static ResponseDetalleComerciante DetailResponse { get; set; }
 
         public static List<MerchantDetail> ListMerchantDetail = new List<MerchantDetail>();
 

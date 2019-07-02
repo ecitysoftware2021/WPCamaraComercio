@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Service;
-using WPCamaraComercio.WCFPayPad;
+//using WPCamaraComercio.WCFPayPad;
 
 namespace WPCamaraComercio.Views
 {
@@ -15,7 +15,7 @@ namespace WPCamaraComercio.Views
         #region Referencias
         Utilities utilities = new Utilities();
         CamaraComercio camaraComercio = new CamaraComercio();
-        ServicePayPadClient WCFPayPadInsert = new ServicePayPadClient();
+        //ServicePayPadClient WCFPayPadInsert = new ServicePayPadClient();
         NavigationService navigationService;
         private int count = 0;
         private LogErrorGeneral log;
@@ -55,7 +55,7 @@ namespace WPCamaraComercio.Views
                     {
                         if (antecedent.Result)
                         {
-                            WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                            //WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
                             Utilities.CrearLogTransactional(Utilities.log);
                             CreateLog();
                             camaraComercio.ImprimirComprobante("Aprobada");

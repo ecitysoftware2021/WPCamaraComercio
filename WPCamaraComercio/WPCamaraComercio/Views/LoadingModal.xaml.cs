@@ -5,7 +5,7 @@ using System.Windows.Input;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
-using WPCamaraComercio.WCFCamaraComercio;
+using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Views
 {
@@ -16,7 +16,6 @@ namespace WPCamaraComercio.Views
     {
         #region Reference
         private Coincidence coincidence;
-        private WCFServices services;
         private Utilities utilities;
         NavigationService navigationService;
         string message = string.Concat("Lo sentimos, ",
@@ -29,7 +28,6 @@ namespace WPCamaraComercio.Views
         {
             InitializeComponent();
             this.coincidence = coincidence;
-            this.services = new WCFServices();
             navigationService = new NavigationService(this);
 
             ConsultDetail();
@@ -41,20 +39,31 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                Utilities.Enrollment = coincidence.Enrollment;
-                Utilities.Tpcm = coincidence.Tpcm;
 
-                var task = services.ConsultDetailMerchant(coincidence.Enrollment, coincidence.Tpcm);
-                if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                Api api = new Api();
+                PeticionDetalle peticion = new Classes.PeticionDetalle
+                {
+                    Matricula= coincidence.Enrollment,
+                    Tpcm= coincidence.Tpcm
+                };
+
+
+
+                var task = api.GetData(new RequestApi
+                {
+                    Data = peticion
+                }, "GetDetalle");
+
+                if (await Task.WhenAny(task, Task.Delay(30000)) == task)
                 {
                     var response = task.Result;
-                    if (response.IsSuccess)
+                    if (response.CodeError==200)
                     {
-                        Utilities.DetailResponse = (RespuestaDetalle)response.Result;
+                        Utilities.DetailResponse = (ResponseDetalleComerciante)response.Data;
 
-                        if (Utilities.DetailResponse.response.resultados != null)
+                        if (Utilities.DetailResponse.Result.response.resultados != null)
                         {
-                            var datos = Utilities.DetailResponse.response.resultados[0];
+                            var datos = Utilities.DetailResponse.Result.response.resultados[0];
 
                             if (datos.certificados != null)
                             {

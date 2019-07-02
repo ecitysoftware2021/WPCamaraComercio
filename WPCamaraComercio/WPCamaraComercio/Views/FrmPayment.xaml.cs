@@ -6,7 +6,7 @@ using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.ViewModels;
-using WPCamaraComercio.WCFPayPad;
+//using WPCamaraComercio.WCFPayPad;
 using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Views
@@ -50,7 +50,7 @@ namespace WPCamaraComercio.Views
 
         bool isCancel = false;
 
-        ServicePayPadClient WCFPayPadInsert;
+        //ServicePayPadClient WCFPayPadInsert;
         #endregion
 
         #region LoadMethods
@@ -67,7 +67,7 @@ namespace WPCamaraComercio.Views
                 payPadService = new WCFPayPadService();
                 recorder = new Record();
                 api = new Api();
-                WCFPayPadInsert = new ServicePayPadClient();
+                //WCFPayPadInsert = new ServicePayPadClient();
                 transactionDetails = new TransactionDetails();
                 camaraComercio = new CamaraComercio();
                 utilities = new Utilities();
@@ -79,9 +79,11 @@ namespace WPCamaraComercio.Views
                     IdTransaction = Utilities.IDTransactionDB,
                     ValuePay = Utilities.ValueToPay,
                 };
-                count = 0;
-                tries = 0;
-                Utilities.control.StartValues();
+
+                FinishPayment();
+                //count = 0;
+                //tries = 0;
+                //Utilities.control.StartValues();
             }
             catch (Exception ex)
             {
@@ -526,7 +528,7 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
-                    WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                    //WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
                     Utilities.GoToInicial();
                 }
             }

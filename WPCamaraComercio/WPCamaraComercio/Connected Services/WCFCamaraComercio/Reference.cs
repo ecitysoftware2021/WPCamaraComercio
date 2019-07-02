@@ -11,8 +11,8 @@
 namespace WPCamaraComercio.WCFCamaraComercio {
     using System.Runtime.Serialization;
     using System;
-    
-    
+    using WPCamaraComercio.Classes;
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="tipo_busqueda", Namespace="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases")]
     public enum tipo_busqueda : int {
@@ -1419,88 +1419,54 @@ namespace WPCamaraComercio.WCFCamaraComercio {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Datos", Namespace="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases")]
     [System.SerializableAttribute()]
-    public partial class Datos : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Datos {
         
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string AutorizaEnvioEmailField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string AutorizaEnvioSMSField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WPCamaraComercio.WCFCamaraComercio.Certificado[] CertificadosField;
+        private Certificado[] CertificadosField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int CodigoDepartamentoCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int CodigoMunicipioCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int CodigoPaisCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DireccionCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EmailCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IdClienteField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IdentificacionCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MunicipioCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NombreCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PlataformaClienteField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PrimerApellidoCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PrimerNombreCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ReferenciaPagoField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SegundoApellidoCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SegundoNombreCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TelefonoCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TipoCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TipoIdentificacionCompradorField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private decimal ValorCompraField;
         
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string AutorizaEnvioEmail {
             get {
                 return this.AutorizaEnvioEmailField;
@@ -1513,7 +1479,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string AutorizaEnvioSMS {
             get {
                 return this.AutorizaEnvioSMSField;
@@ -1526,20 +1491,7 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public WPCamaraComercio.WCFCamaraComercio.Certificado[] Certificados {
-            get {
-                return this.CertificadosField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CertificadosField, value) != true)) {
-                    this.CertificadosField = value;
-                    this.RaisePropertyChanged("Certificados");
-                }
-            }
-        }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public int CodigoDepartamentoComprador {
             get {
                 return this.CodigoDepartamentoCompradorField;
@@ -1552,7 +1504,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public int CodigoMunicipioComprador {
             get {
                 return this.CodigoMunicipioCompradorField;
@@ -1565,7 +1516,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public int CodigoPaisComprador {
             get {
                 return this.CodigoPaisCompradorField;
@@ -1578,7 +1528,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string DireccionComprador {
             get {
                 return this.DireccionCompradorField;
@@ -1591,7 +1540,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string EmailComprador {
             get {
                 return this.EmailCompradorField;
@@ -1604,7 +1552,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string IdCliente {
             get {
                 return this.IdClienteField;
@@ -1617,7 +1564,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string IdentificacionComprador {
             get {
                 return this.IdentificacionCompradorField;
@@ -1630,7 +1576,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string MunicipioComprador {
             get {
                 return this.MunicipioCompradorField;
@@ -1643,7 +1588,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string NombreComprador {
             get {
                 return this.NombreCompradorField;
@@ -1656,7 +1600,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string PlataformaCliente {
             get {
                 return this.PlataformaClienteField;
@@ -1669,7 +1612,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string PrimerApellidoComprador {
             get {
                 return this.PrimerApellidoCompradorField;
@@ -1682,7 +1624,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string PrimerNombreComprador {
             get {
                 return this.PrimerNombreCompradorField;
@@ -1695,7 +1636,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ReferenciaPago {
             get {
                 return this.ReferenciaPagoField;
@@ -1708,7 +1648,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SegundoApellidoComprador {
             get {
                 return this.SegundoApellidoCompradorField;
@@ -1721,7 +1660,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SegundoNombreComprador {
             get {
                 return this.SegundoNombreCompradorField;
@@ -1734,7 +1672,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string TelefonoComprador {
             get {
                 return this.TelefonoCompradorField;
@@ -1747,7 +1684,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string TipoComprador {
             get {
                 return this.TipoCompradorField;
@@ -1760,7 +1696,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string TipoIdentificacionComprador {
             get {
                 return this.TipoIdentificacionCompradorField;
@@ -1773,7 +1708,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public decimal ValorCompra {
             get {
                 return this.ValorCompraField;
@@ -1782,131 +1716,6 @@ namespace WPCamaraComercio.WCFCamaraComercio {
                 if ((this.ValorCompraField.Equals(value) != true)) {
                     this.ValorCompraField = value;
                     this.RaisePropertyChanged("ValorCompra");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Certificado", Namespace="http://schemas.datacontract.org/2004/07/WCFCamaraComercio.Clases")]
-    [System.SerializableAttribute()]
-    public partial class Certificado : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CodigoGeneracionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdCertificadoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MatriculaEstField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NumeroCertificadosField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string matriculaField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string tpcmField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CodigoGeneracion {
-            get {
-                return this.CodigoGeneracionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CodigoGeneracionField, value) != true)) {
-                    this.CodigoGeneracionField = value;
-                    this.RaisePropertyChanged("CodigoGeneracion");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IdCertificado {
-            get {
-                return this.IdCertificadoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdCertificadoField, value) != true)) {
-                    this.IdCertificadoField = value;
-                    this.RaisePropertyChanged("IdCertificado");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MatriculaEst {
-            get {
-                return this.MatriculaEstField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MatriculaEstField, value) != true)) {
-                    this.MatriculaEstField = value;
-                    this.RaisePropertyChanged("MatriculaEst");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string NumeroCertificados {
-            get {
-                return this.NumeroCertificadosField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NumeroCertificadosField, value) != true)) {
-                    this.NumeroCertificadosField = value;
-                    this.RaisePropertyChanged("NumeroCertificados");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string matricula {
-            get {
-                return this.matriculaField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.matriculaField, value) != true)) {
-                    this.matriculaField = value;
-                    this.RaisePropertyChanged("matricula");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string tpcm {
-            get {
-                return this.tpcmField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.tpcmField, value) != true)) {
-                    this.tpcmField = value;
-                    this.RaisePropertyChanged("tpcm");
                 }
             }
         }

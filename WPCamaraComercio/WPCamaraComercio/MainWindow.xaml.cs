@@ -69,11 +69,11 @@ namespace WPCamaraComercio
                             //{
                             //    ConsultImagesSlider();
                             //});
-                            Utilities.control.callbackToken = isSucces =>
-                            {
-                                Utilities.GoToInicial();
-                            };
-                            Utilities.control.Start();
+                            //Utilities.control.callbackToken = isSucces =>
+                            //{
+                            Utilities.GoToInicial();
+                            //};
+                            //Utilities.control.Start();
                         }
                         else
                         {

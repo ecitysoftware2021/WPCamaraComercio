@@ -7,7 +7,7 @@ using System.Windows.Input;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
-using WPCamaraComercio.WCFPayPad;
+//using WPCamaraComercio.WCFPayPad;
 
 namespace WPCamaraComercio.Views
 {
@@ -17,7 +17,7 @@ namespace WPCamaraComercio.Views
     public partial class FrmPaymentData : Window
     {
         #region References
-        WCFPayPad.CLSTransaction transaction;
+        //WCFPayPad.CLSTransaction transaction;
         WCFPayPadService WCFPayPad;
         NavigationService navigationService;
         Utilities utilities;
@@ -29,7 +29,7 @@ namespace WPCamaraComercio.Views
         public FrmPaymentData()
         {
             InitializeComponent();
-            transaction = new WCFPayPad.CLSTransaction();
+            //transaction = new WCFPayPad.CLSTransaction();
             WCFPayPad = new WCFPayPadService();
             navigationService = new NavigationService(this);
             utilities = new Utilities();
@@ -87,16 +87,16 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                CLSTransaction transaction = new CLSTransaction();
-                transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
-                transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite"));
-                transaction.Referencia = "0";
-                transaction.CedulaPagador = TbxIdentification.Text;
-                transaction.Contrato = string.Empty;
-                //transaction.PersonaID = 1;
-                transaction.FechaCuota = string.Empty;
-                transaction.Total = Utilities.ValueToPay;
-                Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
+                //CLSTransaction transaction = new CLSTransaction();
+                //transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
+                //transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite"));
+                //transaction.Referencia = "0";
+                //transaction.CedulaPagador = TbxIdentification.Text;
+                //transaction.Contrato = string.Empty;
+                ////transaction.PersonaID = 1;
+                //transaction.FechaCuota = string.Empty;
+                //transaction.Total = Utilities.ValueToPay;
+                //Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
                 return true;
             }
             catch (Exception ex)

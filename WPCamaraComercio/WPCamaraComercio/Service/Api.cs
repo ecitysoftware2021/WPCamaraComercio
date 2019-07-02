@@ -30,7 +30,7 @@ namespace WPCamaraComercio.Service
 
         public Api()
         {
-            basseAddress = Utilities.GetConfiguration(nameof(basseAddress));
+            basseAddress = Utilities.GetConfiguration("basseAddress1Cero1");
             client = new HttpClient();
             client.BaseAddress = new Uri(basseAddress);
             ReadKeys();
@@ -45,7 +45,7 @@ namespace WPCamaraComercio.Service
                 var request = JsonConvert.SerializeObject(requestAuth);
                 var content = new StringContent(request, Encoding.UTF8, "Application/json");
                 client = new HttpClient();
-                client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress"));
+                client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress1Cero1"));
                 var url = Utilities.GetConfiguration("GetToken");
                 var authentication = Encoding.ASCII.GetBytes(User4Told + ":" + Password4Told);
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(authentication));
@@ -90,25 +90,12 @@ namespace WPCamaraComercio.Service
                 var request = JsonConvert.SerializeObject(model);
                 var content = new StringContent(request, Encoding.UTF8, "Application/json");
                 client = new HttpClient();
-                client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddressEcity"));
                 var url = Utilities.GetConfiguration(controller);
                 var authentication = Encoding.ASCII.GetBytes(Utilities.TOKEN);
+                client = new HttpClient();
+                client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress1Cero1"));
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Utilities.TOKEN);
-                var task = client.PostAsync(url, content);
-
-
-                if(await Task.WhenAny(task, Task.Delay(20000)) == task )
-                {
-                    response = task.Result;
-                }
-                else
-                {
-                    client = new HttpClient();
-                    client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress1Cero1"));
-                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Utilities.TOKEN);
-                    response = await client.PostAsync(url, content);
-                }
-
+                response = await client.PostAsync(url, content);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -133,10 +120,42 @@ namespace WPCamaraComercio.Service
             }
         }
 
+        public async Task<ResponseApi> GetData(RequestApi requestData, string controller)
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(requestData.Data);
+                var content = new StringContent(request, Encoding.UTF8, "Application/json");
+                client = new HttpClient();
+                client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddressEcity"));
+                var url = Utilities.GetConfiguration(controller);
+                HttpResponseMessage response;
+
+                response = await client.PostAsync(url, content);
+
+                var result = await response.Content.ReadAsStringAsync();
+
+                return new ResponseApi
+                {
+                    CodeError = 200,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseApi
+                {
+                    CodeError = 300,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
         private void ReadKeys()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string[] text = File.ReadAllLines(string.Format(@"{0}\keys.txt", path));
+            string[] text = File.ReadAllLines(string.Format(@"{0}\keys12.txt", path));
             if (text.Length > 0)
             {
                 string[] line1 = text[0].Split(';');

@@ -1,5 +1,6 @@
 ﻿using Ghostscript.NET;
 using Ghostscript.NET.Processor;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,19 +11,18 @@ using System.Windows;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.Views;
-using WPCamaraComercio.WCFCamaraComercio;
+using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Classes
 {
     public class CamaraComercio
     {
         #region References
-        Certificado Certificate = new Certificado();
+        CertificadoComerciante Certificate = new CertificadoComerciante();
         Print print = new Print();
         LocalPrintServer server = new LocalPrintServer();
         Utilities utilities = new Utilities();
         List<DetailCartificate> ListDetailCert = new List<DetailCartificate>();
-        WCFCamaraComercioClient WCFCamara = new WCFCamaraComercioClient();
         WCFServices service = new WCFServices();
         Datos datos = new Datos();
         string responseDic = string.Empty;
@@ -39,6 +39,9 @@ namespace WPCamaraComercio.Classes
         string message = string.Concat("Lo sentimos, ",
                            Environment.NewLine,
                            "En este momento el servicio no se encuentra disponible.");
+
+
+        Api api = new Api();
         #endregion
 
         #region Methods
@@ -46,6 +49,7 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
+
                 string idCompra = string.Empty;
                 datos.AutorizaEnvioEmail = "NO";
                 datos.AutorizaEnvioSMS = "NO";
@@ -68,16 +72,20 @@ namespace WPCamaraComercio.Classes
                 datos.TipoIdentificacionComprador = Utilities.PayerData.TypeIdBuyer;
                 datos.ValorCompra = decimal.Parse(Utilities.ValueToPay.ToString());
                 datos.Certificados = Utilities.ListCertificates.ToArray();
+                var request = JsonConvert.SerializeObject(datos);
+                var task = api.GetData(new RequestApi
+                {
+                    Data = request
+                }, "SendPay");
 
-                var task = service.SendPayInformation(datos);
-                if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                if (await Task.WhenAny(task, Task.Delay(50000)) == task)
                 {
                     var response = task.Result;
 
-                    if (response.IsSuccess)
+                    if (response.CodeError==200)
                     {
                         int validator = 0;
-                        responseDic = response.Result.ToString();
+                        responseDic = response.Data.ToString();
                         if (int.TryParse(responseDic, out validator))
                         {
                             idCompra = responseDic;
@@ -149,15 +157,18 @@ namespace WPCamaraComercio.Classes
                     for (int i = 0; i < int.Parse(item.NumeroCertificados); i++)
                     {
                         datosCertificado.copia = (i + 1).ToString();
-
-                        var task = service.GetCertifiedString(datosCertificado);
-                        if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
+                        var request = JsonConvert.SerializeObject(datosCertificado);
+                        var task = api.GetData(new RequestApi
+                        {
+                            Data = request
+                        }, "SendPay");
+                        if (await Task.WhenAny(task, Task.Delay(50000)) == task)
                         {
                             var response = task.Result;
 
-                            if (response.IsSuccess)
+                            if (response.CodeError==200)
                             {
-                                string urlArchivo = (string)response.Result;
+                                string urlArchivo = (string)response.Data;
                                 if (!string.IsNullOrEmpty(urlArchivo))
                                 {
                                     FileName nombreArchivo = new FileName

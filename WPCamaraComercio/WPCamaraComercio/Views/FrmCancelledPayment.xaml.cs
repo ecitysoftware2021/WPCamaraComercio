@@ -4,7 +4,7 @@ using System.Windows;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
-using WPCamaraComercio.WCFPayPad;
+//using WPCamaraComercio.WCFPayPad;
 using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Views
@@ -19,7 +19,7 @@ namespace WPCamaraComercio.Views
         Api api;
         private TransactionDetails transactionDetails;
         private FrmLoading frmLoading;
-        ServicePayPadClient WCFPayPadInsert;
+        //ServicePayPadClient WCFPayPadInsert;
         private LogErrorGeneral log;
         private Utilities utilities;
         private NavigationService navigationService;
@@ -33,7 +33,7 @@ namespace WPCamaraComercio.Views
             api = new Api();
             transactionDetails = new TransactionDetails();
             frmLoading = new FrmLoading();
-            WCFPayPadInsert = new ServicePayPadClient();
+            //WCFPayPadInsert = new ServicePayPadClient();
             log = new LogErrorGeneral();
             utilities = new Utilities();
             navigationService = new NavigationService(this);
@@ -92,7 +92,7 @@ namespace WPCamaraComercio.Views
                 await Task.Run(() =>
                 {
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
-                    WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
+                    //WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
                 });
 
                 transactionDetails.Description = Utilities.control.LogMessage;

@@ -176,66 +176,65 @@ namespace WPCamaraComercio.ViewModels
 
         public async void ConsultConcidences(string value, int type)
         {
-            //bool stateConsult = false;
+            bool stateConsult = false;
             try
             {
                 Api api = new Api();
 
-                NewConsultApi newConsult = new NewConsultApi
+                GeneralRequest newConsult = new GeneralRequest
                 {
-                    uno = value,
-                    dos = type
+                    paramConsulta = value,
+                    tipo_Busqueda = type
                 };
 
-                var response = await api.GetResponse(new RequestApi
+
+                this.preload = Visibility.Visible;
+
+                service = new WCFServices();
+
+                var task = api.GetData(new RequestApi
                 {
                     Data = newConsult
                 }, "GetGeneralInformation");
+                if (await Task.WhenAny(task, Task.Delay(30000)) == task)
+                {
+                    var response = task.Result;
+                    if (response.CodeError == 200)
+                    {
+                        Utilities.RespuestaConsulta = JsonConvert.DeserializeObject<ResponseConsultGeneral>(response.Data.ToString());
 
-                //    this.preload = Visibility.Visible;
+                        if (Utilities.RespuestaConsulta.Result.response.resultados.Count() > 0)
+                        {
+                            foreach (var item in Utilities.RespuestaConsulta.Result.response.resultados)
+                            {
+                                _coincidences.Add(new Coincidence
+                                {
+                                    BusinessName = item.nombre,
+                                    Nit = item.nit,
+                                    Municipality = item.municipio.Split(')')[1],
+                                    EstabliCoincide = item.EstablecimientosConCoincidencia,
+                                    State = item.estado,
+                                    Enrollment = item.matricula,
+                                    Tpcm = item.tpcm
+                                });
+                            }
 
-                //    service = new WCFServices();
-
-                //    var task = service.ConsultInformation(value, type);
-                //    if (await Task.WhenAny(task, Task.Delay(10000000)) == task)
-                //    {
-                //        var response = task.Result;
-                //        if (response.IsSuccess)
-                //        {
-                //            Utilities.RespuestaConsulta = (RespuestaConsulta)response.Result;
-
-                //            if (Utilities.RespuestaConsulta.response.resultados.Count() > 0)
-                //            {
-                //                foreach (var item in Utilities.RespuestaConsulta.response.resultados)
-                //                {
-                //                    _coincidences.Add(new Coincidence
-                //                    {
-                //                        BusinessName = item.nombre,
-                //                        Nit = item.nit,
-                //                        Municipality = item.municipio.Split(')')[1],
-                //                        EstabliCoincide = item.EstablecimientosConCoincidencia,
-                //                        State = item.estado,
-                //                        Enrollment = item.matricula,
-                //                        Tpcm = item.tpcm
-                //                    });
-                //                }
-
-                //                stateConsult = true;
-                //            }
-                //            else
-                //            {
-                //                FrmModal modal = new FrmModal(modalMessage);
-                //                modal.ShowDialog();
-                //            }
-                //        }
-                //        else
-                //        {
-                //            FrmModal modal = new FrmModal(modalMessage);
-                //            modal.ShowDialog();
-                //        }
-                //        this.preload = Visibility.Hidden;
-                //        callbackSearch?.Invoke(stateConsult);
-                //    }
+                            stateConsult = true;
+                        }
+                        else
+                        {
+                            FrmModal modal = new FrmModal(modalMessage);
+                            modal.ShowDialog();
+                        }
+                    }
+                    else
+                    {
+                        FrmModal modal = new FrmModal(modalMessage);
+                        modal.ShowDialog();
+                    }
+                    this.preload = Visibility.Hidden;
+                    callbackSearch?.Invoke(stateConsult);
+                }
             }
             catch (Exception ex)
             {

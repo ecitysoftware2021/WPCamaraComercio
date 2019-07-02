@@ -110,14 +110,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\CamaraComercio.cs" />
+    <Compile Include="Classes\CLSDatosCertificado.cs" />
     <Compile Include="Classes\ControlPeripherals.cs" />
+    <Compile Include="Classes\Datos.cs" />
     <Compile Include="Classes\Logs.cs" />
+    <Compile Include="Classes\PeticionDetalle.cs" />
+    <Compile Include="Classes\ResponseDetalle.cs" />
+    <Compile Include="Classes\ResponseGeneral.cs" />
     <Compile Include="Connected Services\WCFCamaraComercio\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Connected Services\WCFPayPad\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -300,43 +300,6 @@
     <None Include="Connected Services\WCFCamaraComercio\WPCamaraComercio.WCFCamaraComercio.RespuestaDetalle.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad.wsdl" />
-    <None Include="Connected Services\WCFPayPad\ServicePayPad.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFPayPad\ServicePayPad5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.CLSDataControlScreen.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.ClSMinDenomination.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.QuantityDenom.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.sp_DatosTransaccionCM_Result.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\WCFPayPad\WPCamaraComercio.WCFPayPad.TransactionByClientData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
     <None Include="Properties\Settings.settings">
@@ -457,7 +420,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\WCFCamaraComercio\" />
-    <WCFMetadataStorage Include="Connected Services\WCFPayPad\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Buttons\b-Pagar-Efectivo.png" />
@@ -489,18 +451,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="LCamaraComercio.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WCFPayPad\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WCFPayPad\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WCFPayPad\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\WCFCamaraComercio\configuration91.svcinfo" />

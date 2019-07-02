@@ -9,7 +9,6 @@ using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Objects;
 using WPCamaraComercio.Service;
-using WPCamaraComercio.WCFCamaraComercio;
 
 namespace WPCamaraComercio.Views
 {
@@ -59,10 +58,10 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                if (Utilities.DetailResponse.response.resultados != null)
+                if (Utilities.DetailResponse.Result.response.resultados != null)
                 {
-                    Utilities.ConsultResult = Utilities.RespuestaConsulta.response.resultados[0];
-                    Utilities.ListMerchantDetail.Add(FillMerchantDetail(Utilities.DetailResponse.response.resultados[0]));
+                    Utilities.ConsultResult = Utilities.RespuestaConsulta.Result.response.resultados[0];
+                    Utilities.ListMerchantDetail.Add(FillMerchantDetail(Utilities.DetailResponse.Result.response.resultados[0]));
 
                     GenerateMerchant();
                     GenerateEstablish();
@@ -83,7 +82,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                var datos = Utilities.DetailResponse.response.resultados[0];
+                var datos = Utilities.DetailResponse.Result.response.resultados[0];
                 if (datos.certificados != null)
                 {
                     foreach (var item in datos.certificados)
@@ -116,7 +115,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                var datos = Utilities.DetailResponse.response.resultados[0];
+                var datos = Utilities.DetailResponse.Result.response.resultados[0];
                 if (datos.establecimientos != null)
                 {
                     foreach (var item in datos.establecimientos)

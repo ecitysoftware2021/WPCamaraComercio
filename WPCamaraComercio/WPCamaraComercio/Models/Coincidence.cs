@@ -24,9 +24,9 @@ namespace WPCamaraComercio.Models
 
     }
 
-    public class NewConsultApi
+    public class GeneralRequest
     {
-        public string uno { get; set; }
-        public int dos { get; set; }
+        public string paramConsulta { get; set; }
+        public int tipo_Busqueda { get; set; }
     }
 }

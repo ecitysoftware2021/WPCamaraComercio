@@ -68,6 +68,7 @@ namespace WPCamaraComercio.Service
         {
             Task<Response> task = null;
 
+
             task = Task.Run(() =>
             {
                 Response response = new Response();
