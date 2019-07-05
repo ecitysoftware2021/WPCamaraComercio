@@ -20,7 +20,6 @@ namespace WPCamaraComercio.Views
 
         private PaymentViewModel PaymentViewModel;//Modelo para el pago(Valores e imagenes)
 
-        private WCFServices services;//Instancia para invocar los servicios web
 
         private FrmLoading frmLoading;
 
@@ -61,7 +60,6 @@ namespace WPCamaraComercio.Views
             try
             {
                 OrganizeValues();
-                services = new WCFServices();
                 frmLoading = new FrmLoading();
                 payPadService = new WCFPayPadService();
                 recorder = new Record();

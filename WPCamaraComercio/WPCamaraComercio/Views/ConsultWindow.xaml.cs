@@ -19,7 +19,6 @@ namespace WPCamaraComercio.Views
         private int currentPageIndex = 0;
         private int itemPerPage = 12;
         private int totalPage = 0;
-        WCFServices services;
         private Utilities utilities;
         private ConsultViewModel consultViewModel;
         NavigationService navigationService;
@@ -29,7 +28,6 @@ namespace WPCamaraComercio.Views
         public ConsultWindow()
         {
             InitializeComponent();
-            services = new WCFServices();
             utilities = new Utilities();
             navigationService = new NavigationService(this);
             Init(true);

@@ -120,11 +120,6 @@
     <Compile Include="Classes\ResponseGeneral.cs" />
     <Compile Include="Classes\ResponsePay.cs" />
     <Compile Include="Classes\Transaction.cs" />
-    <Compile Include="Connected Services\WCFCamaraComercio\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Keyboard\TouchScreenKeyboard.cs" />
     <Compile Include="Keyboard\TouchScreenKeyNumeric.cs" />
     <Compile Include="Models\Coincidence.cs" />
@@ -149,7 +144,6 @@
     <Compile Include="Service\NavigationService.cs" />
     <Compile Include="Service\Response.cs" />
     <Compile Include="Service\WCFPayPadService.cs" />
-    <Compile Include="Service\WCFServices.cs" />
     <Compile Include="ViewModels\ConsultViewModel.cs" />
     <Compile Include="ViewModels\PaymentViewModel.cs" />
     <Compile Include="Views\ConsultWindow.xaml.cs">
@@ -287,22 +281,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.wsdl" />
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFCamaraComercio\WCFCamaraComercio2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\WCFCamaraComercio\WPCamaraComercio.WCFCamaraComercio.RespuestaConsulta.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\WCFCamaraComercio\WPCamaraComercio.WCFCamaraComercio.RespuestaDetalle.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
     <None Include="Properties\Settings.settings">
@@ -422,9 +400,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\WCFCamaraComercio\" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Buttons\b-Pagar-Efectivo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -454,18 +429,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="LCamaraComercio.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WCFCamaraComercio\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WCFCamaraComercio\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\WCFCamaraComercio\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

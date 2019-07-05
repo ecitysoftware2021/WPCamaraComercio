@@ -24,14 +24,12 @@ namespace WPCamaraComercio
     /// </summary>
     public partial class MainWindow : Window
     {
-        WCFServices services;
         Api api;
         bool state;
 
         public MainWindow()
         {
             InitializeComponent();
-            services = new WCFServices();
             api = new Api();
         }
 

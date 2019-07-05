@@ -11,14 +11,12 @@ using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
 using WPCamaraComercio.Views;
-using WPCamaraComercio.WCFCamaraComercio;
 using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.ViewModels
 {
     class ConsultViewModel : INotifyPropertyChanged
     {
-        private WCFServices service;
 
         string modalMessage = string.Concat("Lo sentimos, ",
                             Environment.NewLine,
@@ -189,8 +187,6 @@ namespace WPCamaraComercio.ViewModels
 
 
                 this.preload = Visibility.Visible;
-
-                service = new WCFServices();
 
                 var task = api.GetData(new RequestApi
                 {

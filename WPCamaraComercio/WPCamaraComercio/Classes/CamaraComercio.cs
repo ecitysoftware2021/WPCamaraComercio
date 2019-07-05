@@ -23,7 +23,6 @@ namespace WPCamaraComercio.Classes
         LocalPrintServer server = new LocalPrintServer();
         Utilities utilities = new Utilities();
         List<DetailCartificate> ListDetailCert = new List<DetailCartificate>();
-        WCFServices service = new WCFServices();
         Datos datos = new Datos();
         string responseDic = string.Empty;
         private string FileName { get; set; }

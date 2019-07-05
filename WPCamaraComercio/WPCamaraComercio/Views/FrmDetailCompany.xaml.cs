@@ -23,7 +23,6 @@ namespace WPCamaraComercio.Views
         decimal total = 0;
         string message = string.Empty;
         NavigationService navigationService;
-        WCFServices services;
         List<SelectedDetail> selectedDetail;
         List<Certificado> ListCertificates;
         decimal valueToPay = 0;
@@ -35,7 +34,6 @@ namespace WPCamaraComercio.Views
         public FrmDetailCompany()
         {
             InitializeComponent();
-            services = new WCFServices();
             lstDetailMerchant = new ObservableCollection<Models.DetailMerchant>();
             lstDetailEstablish = new ObservableCollection<DetailEstablish>();
             navigationService = new NavigationService(this);
