@@ -92,8 +92,8 @@ namespace WPCamaraComercio.Views
                 await Task.Run(() =>
                 {
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
-                    //WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
                 });
+                var resp = await AdminPaypad.UpdateTransaction(Utilities.IDTransactionDB, Utilities.EnterTotal, 3, Utilities.ValueDelivery);
 
                 transactionDetails.Description = Utilities.control.LogMessage;
                 RequestApi requestApi = new RequestApi

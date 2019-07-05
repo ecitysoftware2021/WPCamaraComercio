@@ -21,7 +21,10 @@ namespace WPCamaraComercio.Views
             this.w = w;
             Dispatcher.BeginInvoke((Action)delegate
             {
-                w.Opacity = 0.6;
+                if (w != null)
+                {
+                    w.Opacity = 0.6;
+                }
             });
         }
 

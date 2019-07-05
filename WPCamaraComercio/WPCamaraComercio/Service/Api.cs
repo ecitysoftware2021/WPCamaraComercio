@@ -155,7 +155,7 @@ namespace WPCamaraComercio.Service
         private void ReadKeys()
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string[] text = File.ReadAllLines(string.Format(@"{0}\keys12.txt", path));
+            string[] text = File.ReadAllLines(string.Format(@"{0}\keys.txt", path));
             if (text.Length > 0)
             {
                 string[] line1 = text[0].Split(';');

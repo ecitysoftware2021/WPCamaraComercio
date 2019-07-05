@@ -55,7 +55,7 @@ namespace WPCamaraComercio.Views
                     {
                         if (antecedent.Result)
                         {
-                            //WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Aprobada);
+                            var state = AdminPaypad.UpdateTransaction(Utilities.IDTransactionDB, this.enterValue, 2, this.returnValue);
                             Utilities.CrearLogTransactional(Utilities.log);
                             CreateLog();
                             camaraComercio.ImprimirComprobante("Aprobada");

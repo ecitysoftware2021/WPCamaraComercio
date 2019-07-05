@@ -16,7 +16,7 @@ namespace WPCamaraComercio.Classes
         /// Método encargado de crear la transacciòn en bd y retornar el id de esta misma   
         /// </summary>
         /// <param name="Amount">Cantdiad a pagaar o retirar</param>
-        public static async Task<bool> CreateTransaction(string identificacion,string nombre,string apellido,decimal telefono)
+        public static async Task<bool> CreateTransaction(string identificacion, string nombre, string apellido, decimal telefono)
         {
             try
             {
@@ -78,6 +78,7 @@ namespace WPCamaraComercio.Classes
                 {
                     if (response.CodeError == 200)
                     {
+                        Utilities.IDTransactionDB = int.Parse(response.Data.ToString());
                         return true;
                     }
                     else
@@ -101,7 +102,7 @@ namespace WPCamaraComercio.Classes
         /// <param name="state">Estaado por el cual se actualizará</param>
         /// <param name="Return">Valor a devolver, por defecto es 0 ya que hay transacciones donde no hay que devolver</param>
         /// <returns>Retorna un verdadero o un falso dependiendo el resultado del update</returns>
-        public async Task<bool> UpdateTransaction(int idTrans, decimal Enter, int state, decimal Return = 0)
+        public static async Task<bool> UpdateTransaction(int idTrans, decimal Enter, int state, decimal Return = 0)
         {
             try
             {
@@ -113,7 +114,9 @@ namespace WPCamaraComercio.Classes
                     DATE_END = DateTime.Now,
                     DATE_BEGIN = DateTime.Now,
                     DESCRIPTION = "Finalizando",
-                    TRANSACTION_ID = idTrans
+                    TRANSACTION_ID = idTrans,
+                    TRANSACTION_REFERENCE = Utilities.BuyID,
+                    TOTAL_AMOUNT = Utilities.ValueToPay,
                 };
 
                 var response = await apilocal.GetResponse(new RequestApi

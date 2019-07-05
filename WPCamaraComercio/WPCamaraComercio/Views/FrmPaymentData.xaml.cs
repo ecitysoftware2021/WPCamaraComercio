@@ -104,7 +104,7 @@ namespace WPCamaraComercio.Views
                     Identificacion = TbxIdentification.Text;
                     Nombre = TbxData1.Text;
                     Apellido = "";
-                    Telefono = Convert.ToDecimal(TbxData3.Text);
+                    Telefono = Convert.ToDecimal(TbxData3dos.Text);
                 }
 
                 return await AdminPaypad.CreateTransaction(Identificacion,Nombre,Apellido,Telefono);
@@ -317,6 +317,7 @@ namespace WPCamaraComercio.Views
 
                 if (CmbTypeBuyer.SelectedIndex == 0)
                 {
+                    Num = 0;
                     data.Data1 = "Primer Nombre";
                     data.Data2 = "Segundo Nombre";
                     data.Data3 = "Primer Apellido";
@@ -334,6 +335,7 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
+                    Num = 1;
                     data.Data1 = "Razón Social";
                     data.Data2 = "Dirección";
                     data.Data3 = "Teléfono";

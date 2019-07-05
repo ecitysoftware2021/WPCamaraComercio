@@ -42,6 +42,8 @@ namespace WPCamaraComercio.Classes
 
 
         Api api = new Api();
+        private int control = 0;
+        private int reIntento = 0;
         #endregion
 
         #region Methods
@@ -50,70 +52,74 @@ namespace WPCamaraComercio.Classes
             try
             {
 
-                string idCompra = string.Empty;
-                datos.AutorizaEnvioEmail = "NO";
-                datos.AutorizaEnvioSMS = "NO";
-                datos.CodigoDepartamentoComprador = Utilities.PayerData.CodeDepartmentBuyer;
-                datos.CodigoMunicipioComprador = Utilities.PayerData.CodeTownBuyer;
-                datos.CodigoPaisComprador = Utilities.PayerData.CodeCountryBuyer;
-                datos.DireccionComprador = Utilities.PayerData.BuyerAddress;
-                datos.EmailComprador = Utilities.PayerData.Email;
-                datos.IdentificacionComprador = Utilities.PayerData.BuyerIdentification;
-                datos.MunicipioComprador = string.Empty;
-                datos.NombreComprador = Utilities.PayerData.FullNameBuyer;
-                datos.PlataformaCliente = Utilities.PayerData.ClientPlataform;
-                datos.PrimerApellidoComprador = Utilities.PayerData.SecondNameBuyer;
-                datos.PrimerNombreComprador = Utilities.PayerData.FirstNameBuyer;
-                datos.ReferenciaPago = Utilities.IDTransactionDB.ToString();
-                datos.SegundoApellidoComprador = string.Empty;
-                datos.SegundoNombreComprador = Utilities.PayerData.SecondNameBuyer;
-                datos.TelefonoComprador = Utilities.PayerData.Phone;
-                datos.TipoComprador = Utilities.PayerData.TypeBuyer;
-                datos.TipoIdentificacionComprador = Utilities.PayerData.TypeIdBuyer;
-                datos.ValorCompra = decimal.Parse(Utilities.ValueToPay.ToString());
-                datos.Certificados = Utilities.ListCertificates.ToArray();
-                var request = JsonConvert.SerializeObject(datos);
-                var task = api.GetData(new RequestApi
+                if (control == 0)
                 {
-                    Data = request
-                }, "SendPay");
+                    control++;
+                    datos.AutorizaEnvioEmail = "NO";
+                    datos.AutorizaEnvioSMS = "NO";
+                    datos.CodigoDepartamentoComprador = Utilities.PayerData.CodeDepartmentBuyer;
+                    datos.CodigoMunicipioComprador = Utilities.PayerData.CodeTownBuyer;
+                    datos.CodigoPaisComprador = Utilities.PayerData.CodeCountryBuyer;
+                    datos.DireccionComprador = Utilities.PayerData.BuyerAddress;
+                    datos.EmailComprador = Utilities.PayerData.Email;
+                    datos.IdentificacionComprador = Utilities.PayerData.BuyerIdentification;
+                    datos.MunicipioComprador = string.Empty;
+                    datos.NombreComprador = Utilities.PayerData.FullNameBuyer;
+                    datos.PlataformaCliente = Utilities.PayerData.ClientPlataform;
+                    datos.PrimerApellidoComprador = Utilities.PayerData.SecondNameBuyer;
+                    datos.PrimerNombreComprador = Utilities.PayerData.FirstNameBuyer;
+                    datos.ReferenciaPago = Utilities.IDTransactionDB.ToString();
+                    datos.SegundoApellidoComprador = string.Empty;
+                    datos.SegundoNombreComprador = Utilities.PayerData.SecondNameBuyer;
+                    datos.TelefonoComprador = Utilities.PayerData.Phone;
+                    datos.TipoComprador = Utilities.PayerData.TypeBuyer;
+                    datos.TipoIdentificacionComprador = Utilities.PayerData.TypeIdBuyer;
+                    datos.ValorCompra = decimal.Parse(Utilities.ValueToPay.ToString());
+                    datos.Certificados = Utilities.ListCertificates.ToArray();
 
-                if (await Task.WhenAny(task, Task.Delay(50000)) == task)
-                {
-                    var response = task.Result;
-
-                    if (response.CodeError==200)
+                    var request = JsonConvert.SerializeObject(datos);
+                    var task = api.GetData(new RequestApi
                     {
-                        int validator = 0;
-                        responseDic = response.Data.ToString();
-                        if (int.TryParse(responseDic, out validator))
-                        {
-                            idCompra = responseDic;
-                            utilities.FillLogError(idCompra, "Resultado al Confirmar la Compra");
+                        Data = request
+                    }, "SendPay");
 
-                            return idCompra;
+                    if (await Task.WhenAny(task, Task.Delay(20000)) == task)
+                    {
+                        var response = task.Result;
+
+                        if (response.CodeError == 200)
+                        {
+                            int validator = 0;
+                            var resp = JsonConvert.DeserializeObject<ResponsePay>(response.Data.ToString());
+                            if (int.TryParse(resp.Result, out validator))
+                            {
+
+                                utilities.FillLogError(resp.Result, "Resultado al Confirmar la Compra");
+
+                                return resp.Result;
+                            }
+                            else
+                            {
+                                await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+                                {
+                                    FrmModal mod4al = new FrmModal(message);
+                                    mod4al.ShowDialog();
+                                }));
+                            }
                         }
                         else
                         {
-                            await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
-                            {
-                                FrmModal mod4al = new FrmModal(message);
-                                mod4al.ShowDialog();
-                            }));
+                            return string.Empty;
                         }
                     }
                     else
                     {
-                        return string.Empty;
+                        await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+                        {
+                            FrmModal mod4al = new FrmModal(message);
+                            mod4al.ShowDialog();
+                        }));
                     }
-                }
-                else
-                {
-                    await Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
-                    {
-                        FrmModal mod4al = new FrmModal(message);
-                        mod4al.ShowDialog();
-                    }));
                 }
             }
             catch (Exception ex)
@@ -161,14 +167,14 @@ namespace WPCamaraComercio.Classes
                         var task = api.GetData(new RequestApi
                         {
                             Data = request
-                        }, "SendPay");
+                        }, "GetCertifiedString");
                         if (await Task.WhenAny(task, Task.Delay(50000)) == task)
                         {
                             var response = task.Result;
-
-                            if (response.CodeError==200)
+                            var resp = JsonConvert.DeserializeObject<ResponsePay>(response.Data.ToString());
+                            if (response.CodeError == 200)
                             {
-                                string urlArchivo = (string)response.Data;
+                                string urlArchivo = resp.Result;
                                 if (!string.IsNullOrEmpty(urlArchivo))
                                 {
                                     FileName nombreArchivo = new FileName
@@ -263,6 +269,11 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
+                if (reIntento < 3)
+                {
+                    reIntento++;
+                    SaveFile(PatchFile, nombreArchivo);
+                }
                 Mensaje(ex.Message);
             }
             return path;
@@ -320,7 +331,7 @@ namespace WPCamaraComercio.Classes
         #endregion
     }
 
-        public class FileName
+    public class FileName
     {
         public string IdCertificado { get; set; }
         public string matricula { get; set; }

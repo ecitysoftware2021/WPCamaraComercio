@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -31,7 +32,7 @@ namespace WPCamaraComercio.Views
             navigationService = new NavigationService(this);
 
             ConsultDetail();
-        } 
+        }
         #endregion
 
         #region Methods
@@ -43,8 +44,8 @@ namespace WPCamaraComercio.Views
                 Api api = new Api();
                 PeticionDetalle peticion = new Classes.PeticionDetalle
                 {
-                    Matricula= coincidence.Enrollment,
-                    Tpcm= coincidence.Tpcm
+                    Matricula = coincidence.Enrollment,
+                    Tpcm = coincidence.Tpcm
                 };
 
 
@@ -57,9 +58,9 @@ namespace WPCamaraComercio.Views
                 if (await Task.WhenAny(task, Task.Delay(30000)) == task)
                 {
                     var response = task.Result;
-                    if (response.CodeError==200)
+                    if (response.CodeError == 200)
                     {
-                        Utilities.DetailResponse = (ResponseDetalleComerciante)response.Data;
+                        Utilities.DetailResponse = JsonConvert.DeserializeObject<ResponseDetalleComerciante>(response.Data.ToString());
 
                         if (Utilities.DetailResponse.Result.response.resultados != null)
                         {
@@ -128,7 +129,7 @@ namespace WPCamaraComercio.Views
             {
                 throw ex;
             }
-        } 
+        }
         #endregion
 
         #region Events
@@ -140,7 +141,7 @@ namespace WPCamaraComercio.Views
         private void BtnCancel_StylusDown(object sender, StylusDownEventArgs e)
         {
             this.DialogResult = false;
-        } 
+        }
         #endregion
     }
 }

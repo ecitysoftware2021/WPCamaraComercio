@@ -50,7 +50,6 @@ namespace WPCamaraComercio.Views
 
         bool isCancel = false;
 
-        //ServicePayPadClient WCFPayPadInsert;
         #endregion
 
         #region LoadMethods
@@ -58,7 +57,7 @@ namespace WPCamaraComercio.Views
         public FrmPayment()
         {
             InitializeComponent();
-            
+
             try
             {
                 OrganizeValues();
@@ -67,7 +66,6 @@ namespace WPCamaraComercio.Views
                 payPadService = new WCFPayPadService();
                 recorder = new Record();
                 api = new Api();
-                //WCFPayPadInsert = new ServicePayPadClient();
                 transactionDetails = new TransactionDetails();
                 camaraComercio = new CamaraComercio();
                 utilities = new Utilities();
@@ -80,14 +78,14 @@ namespace WPCamaraComercio.Views
                     ValuePay = Utilities.ValueToPay,
                 };
 
-                FinishPayment();
-                //count = 0;
-                //tries = 0;
-                //Utilities.control.StartValues();
+                //FinishPayment();
+                count = 0;
+                tries = 0;
+                Utilities.control.StartValues();
             }
             catch (Exception ex)
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("FrmPayment: ", "Error: "+ex.ToString());
+                LogService.CreateLogsPeticionRespuestaDispositivos("FrmPayment: ", "Error: " + ex.ToString());
             }
         }
 
@@ -98,7 +96,7 @@ namespace WPCamaraComercio.Views
                 //recorder.Grabar(Utilities.IDTransactionDB);
                 Task.Run(() =>
                 {
-                    //Utilities.control.StartValues();
+                    Utilities.control.StartValues();
                     ActivateWallet();
                 });
             }
@@ -179,7 +177,7 @@ namespace WPCamaraComercio.Views
                     FrmModalConfirmation modal = new FrmModalConfirmation("¿Está seguro de cancelar la transacción?");
                     modal.ShowDialog();
                     this.Opacity = 1;
-                    
+
                     try
                     {
                         LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Cerré la modal");
@@ -214,7 +212,7 @@ namespace WPCamaraComercio.Views
                             LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Prendi billetero");
                         }
                         catch { }
-                   }
+                    }
                 });
             }
             catch (Exception ex)
@@ -283,7 +281,7 @@ namespace WPCamaraComercio.Views
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                 };
 
-               
+
                 Utilities.log.Add(new LogTransactional
                 {
                     Fecha = DateTime.Now,
@@ -393,7 +391,7 @@ namespace WPCamaraComercio.Views
             {
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Error: "+ex.ToString());
+                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Error: " + ex.ToString());
                 }
                 catch { }
             }
@@ -448,9 +446,9 @@ namespace WPCamaraComercio.Views
                 }
                 catch { }
             }
-            
+
         }
-        
+
 
         /// <summary>
         /// Método que se encarga de llenar un log de error general, esto cuando se produce una excepción
@@ -479,6 +477,42 @@ namespace WPCamaraComercio.Views
             }
         }
 
+        private async void ApproveTrans()
+        {
+            try
+            {
+                if (stateUpdate)
+                {
+                    var state = await AdminPaypad.UpdateTransaction(Utilities.IDTransactionDB, PaymentViewModel.ValorIngresado, 2, PaymentViewModel.ValorSobrante);
+                    if (!state)
+                    {
+                        if (count < 2)
+                        {
+                            count++;
+                            ApproveTrans();
+                        }
+                        else
+                        {
+                            //logTransactions.Description = "\nNo fue posible actualizar esta transacción a aprobada";
+                            //logTransactions.State = "Iniciada";
+                            //Utilities.SaveLogTransactions(logTransactions, "LogTransacciones\\Iniciadas");
+                        }
+                    }
+                    else
+                    {
+                        //logTransactions.Description = "\nTransacción Exitosa";
+                        //logTransactions.State = "Aprobada";
+                        //Utilities.SaveLogTransactions(logTransactions, "LogTransacciones\\Aprobadas");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                stateUpdate = false;
+            }
+        }
+
+
         /// <summary>
         /// Método encargado de finalizar el pago y realizar las tareas pertinentes como actualizar la transacción e imprimir los recibos
         /// </summary>
@@ -486,12 +520,13 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                //ApproveTrans();
                 if (!isCancel)
                 {
                     Utilities.BuyID = await camaraComercio.ConfirmarCompra();
                     if (!Utilities.BuyID.Equals("0"))
                     {
+
+                        //ApproveTrans();
                         await Dispatcher.BeginInvoke((Action)delegate
                         {
                             Utilities.Loading(frmLoading, false, this);
