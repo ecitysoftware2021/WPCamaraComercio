@@ -1,2 +1,2 @@
-usuario:dcordoba;password:1Colombia01$
-usuario:PayDavivienda;password:Davivienda2019*;tipo:1
+usuario:usrapli;password:1Cero12019$/*
+usuario:Pay+ Camara comercio Centro;password:CamaradeComercioMedellin2019!;tipo:1
