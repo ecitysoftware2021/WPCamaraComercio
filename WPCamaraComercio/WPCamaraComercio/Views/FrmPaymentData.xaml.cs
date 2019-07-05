@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,6 +24,7 @@ namespace WPCamaraComercio.Views
         Utilities utilities;
         Api api;
         private LogErrorGeneral log;
+        private int Num = 0;
         #endregion
 
         #region LoadMethods
@@ -48,10 +50,10 @@ namespace WPCamaraComercio.Views
         #endregion
 
         #region Methods
-        private void Redirect()
+        private async void Redirect()
         {
             AssingProperties();
-            if (CreateTransaction())
+            if (await CreateTransaction())
             {
                 CreateLog();
                 Utilities.ResetTimer();
@@ -83,10 +85,29 @@ namespace WPCamaraComercio.Views
             }
         }
 
-        private bool CreateTransaction()
+        private async Task<bool> CreateTransaction()
         {
             try
             {
+                string Nombre,Apellido,Identificacion;
+                decimal Telefono;
+
+                if (Num == 0)
+                {
+                    Identificacion = TbxIdentification.Text;
+                    Nombre = TbxData1.Text;
+                    Apellido = TbxData3.Text;
+                    Telefono = Convert.ToDecimal(TbxData4.Text);
+                }
+                else
+                {
+                    Identificacion = TbxIdentification.Text;
+                    Nombre = TbxData1.Text;
+                    Apellido = "";
+                    Telefono = Convert.ToDecimal(TbxData3.Text);
+                }
+
+                return await AdminPaypad.CreateTransaction(Identificacion,Nombre,Apellido,Telefono);
                 //CLSTransaction transaction = new CLSTransaction();
                 //transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
                 //transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite"));
@@ -97,7 +118,6 @@ namespace WPCamaraComercio.Views
                 //transaction.FechaCuota = string.Empty;
                 //transaction.Total = Utilities.ValueToPay;
                 //Utilities.IDTransactionDB = WCFPayPad.InsertarTransaccion(transaction);
-                return true;
             }
             catch (Exception ex)
             {
@@ -158,7 +178,7 @@ namespace WPCamaraComercio.Views
                 payerData.ClientPlataform = "DISPENSADOR";
 
                 Utilities.PayerData = payerData;
-                utilities.InsertPayerData();
+                //utilities.InsertPayerData();
             }
             catch (Exception ex)
             {

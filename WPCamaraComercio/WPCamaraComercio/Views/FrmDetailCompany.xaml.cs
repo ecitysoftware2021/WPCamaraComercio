@@ -92,6 +92,7 @@ namespace WPCamaraComercio.Views
                         objEstablishCertificate.CertificateId = item.IdCertificado;
                         objEstablishCertificate.EstablishEnrollment = item.MatriculaEstablecimiento;
                         objEstablishCertificate.GenerationCode = item.CodigoGeneracion;
+                        objEstablishCertificate.NombreCertificado = item.NombreCertificado;
 
                         lstDetailMerchant.Add(new DetailMerchant
                         {
@@ -321,6 +322,7 @@ namespace WPCamaraComercio.Views
                         certificate.matricula = Utilities.Enrollment;
                         certificate.MatriculaEst = item.EstablishCertificate.EstablishEnrollment;
                         certificate.tpcm = Utilities.Tpcm;
+                        certificate.EstablishCertificate = item.EstablishCertificate;
                         certificate.CodigoGeneracion = item.EstablishCertificate.GenerationCode;
                         ListCertificates.Add(certificate);
                     }

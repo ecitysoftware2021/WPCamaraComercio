@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPCamaraComercio.Models;
 
 namespace WPCamaraComercio.Classes
 {
@@ -14,6 +15,7 @@ namespace WPCamaraComercio.Classes
         public string IdCertificado { get; set; }
         public string CodigoGeneracion { get; set; }
         public string NumeroCertificados { get; set; }
+        public EstablishCertificate EstablishCertificate { get; set; }
     }
     public class CLSDatosCertificado
     {

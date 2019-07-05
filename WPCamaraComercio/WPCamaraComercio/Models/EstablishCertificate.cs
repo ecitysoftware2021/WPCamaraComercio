@@ -15,5 +15,6 @@ namespace WPCamaraComercio.Models
         public string EstablishEnrollment { get; set; }
 
         public string GenerationCode { get; set; }
+        public string NombreCertificado { get; set; }
     }
 }

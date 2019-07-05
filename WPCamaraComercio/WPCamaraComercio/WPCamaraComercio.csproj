@@ -109,6 +109,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\AdminPaypad.cs" />
     <Compile Include="Classes\CamaraComercio.cs" />
     <Compile Include="Classes\CLSDatosCertificado.cs" />
     <Compile Include="Classes\ControlPeripherals.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Classes\PeticionDetalle.cs" />
     <Compile Include="Classes\ResponseDetalle.cs" />
     <Compile Include="Classes\ResponseGeneral.cs" />
+    <Compile Include="Classes\Transaction.cs" />
     <Compile Include="Connected Services\WCFCamaraComercio\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
