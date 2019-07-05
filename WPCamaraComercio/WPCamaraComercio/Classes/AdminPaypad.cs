@@ -40,7 +40,7 @@ namespace WPCamaraComercio.Classes
 
                 var data = new TRANSACTION
                 {
-                    TYPE_TRANSACTION_ID = 13,
+                    TYPE_TRANSACTION_ID = 19,
                     PAYER_ID = int.Parse(resultPayer.Data.ToString()),
                     STATE_TRANSACTION_ID = 1,
                     TOTAL_AMOUNT = Utilities.ValueToPay,
