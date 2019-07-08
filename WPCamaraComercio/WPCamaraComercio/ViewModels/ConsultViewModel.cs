@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Threading;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
@@ -219,14 +220,21 @@ namespace WPCamaraComercio.ViewModels
                         }
                         else
                         {
-                            FrmModal modal = new FrmModal(modalMessage);
-                            modal.ShowDialog();
+                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                            {
+                                FrmModal modal = new FrmModal(modalMessage);
+                                modal.ShowDialog();
+                            }));
                         }
                     }
                     else
                     {
-                        FrmModal modal = new FrmModal(modalMessage);
-                        modal.ShowDialog();
+                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                        {
+                            FrmModal modal = new FrmModal(modalMessage);
+                            modal.ShowDialog();
+                        }));
+                        
                     }
                     this.preload = Visibility.Hidden;
                     callbackSearch?.Invoke(stateConsult);

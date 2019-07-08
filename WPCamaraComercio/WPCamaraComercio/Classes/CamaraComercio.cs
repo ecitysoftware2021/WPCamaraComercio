@@ -216,7 +216,7 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
-                Mensaje(ex.Message);
+                Mensaje(ex.Message, "ListCertificadosiMPORT");
                 printState = false;
             }
             return true;
@@ -256,13 +256,13 @@ namespace WPCamaraComercio.Classes
                 {
                     if (bytePDF.Length < 1000)
                     {
-                        Mensaje("Tamaño del PDF es:" + bytePDF.Length.ToString());
+                        Mensaje("Tamaño del PDF es:" + bytePDF.Length.ToString(),"Tamaño PDF");
                         printState = false;
                     }
                 }
                 else
                 {
-                    Mensaje("PDF Null");
+                    Mensaje("PDF Null", "bytePDF");
                     printState = false;
                 }
             }
@@ -273,7 +273,7 @@ namespace WPCamaraComercio.Classes
                     reIntento++;
                     SaveFile(PatchFile, nombreArchivo);
                 }
-                Mensaje(ex.Message);
+                Mensaje(ex.Message, "SaveFile");
             }
             return path;
         }
@@ -303,14 +303,14 @@ namespace WPCamaraComercio.Classes
             }
             catch (Exception ex)
             {
-                Mensaje(ex.Message);
+                Mensaje(ex.Message, "Print");
             }
         }
 
 
-        void Mensaje(string mensaje)
+        void Mensaje(string mensaje,string metodo)
         {
-            utilities.FillLogError(mensaje, "Descarga Certificado");
+            utilities.FillLogError(mensaje, metodo);
         }
 
         public void ImprimirComprobante(string Estado)

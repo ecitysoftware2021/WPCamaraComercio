@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using WPCamaraComercio.Classes;
 using WPCamaraComercio.Models;
 using WPCamaraComercio.Service;
@@ -78,15 +79,23 @@ namespace WPCamaraComercio.Views
                         }
                         else
                         {
-                            FrmModal modal = new FrmModal(message);
-                            modal.ShowDialog();
+                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                            {
+                                FrmModal modal = new FrmModal(message);
+                                modal.ShowDialog();
+                            }));
+
                         }
                     }
                 }
                 else
                 {
-                    FrmModal modal = new FrmModal(message);
-                    modal.ShowDialog();
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                    {
+                        FrmModal modal = new FrmModal(message);
+                        modal.ShowDialog();
+
+                    }));
                 }
             }
             catch (Exception ex)

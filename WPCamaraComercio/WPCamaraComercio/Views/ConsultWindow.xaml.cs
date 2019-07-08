@@ -31,6 +31,7 @@ namespace WPCamaraComercio.Views
             utilities = new Utilities();
             navigationService = new NavigationService(this);
             Init(true);
+            ConsulParameter();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -230,7 +231,7 @@ namespace WPCamaraComercio.Views
         {
             if (string.IsNullOrEmpty(TxtIdentificacion.Text) && string.IsNullOrEmpty(TxtName.Text))
             {
-                FrmModal modal = new FrmModal("Debe de ingresar una referencia.",this);
+                FrmModal modal = new FrmModal("Debe de ingresar una referencia.", this);
                 modal.ShowDialog();
             }
             else
@@ -377,7 +378,7 @@ namespace WPCamaraComercio.Views
         }
 
         #endregion
-        
+
         private void TxtIdentificacion_TextChanged_1(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             try
@@ -407,7 +408,7 @@ namespace WPCamaraComercio.Views
                 int length = text.Length;
                 if (length <= 20)
                 {
-                    
+
                 }
                 else
                 {
