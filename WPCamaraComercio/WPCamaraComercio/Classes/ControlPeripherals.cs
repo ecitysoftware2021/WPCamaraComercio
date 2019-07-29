@@ -78,7 +78,7 @@ namespace WPCamaraComercio.Classes
 
         private decimal dispenserValue;//Valor a dispensar
 
-        private bool stateError;//Si sucede algun error en un periférico, se pone en true
+        private bool stateError = false;//Si sucede algun error en un periférico, se pone en true
 
         private static string TOKEN;//Llave que retorna el dispenser
 
@@ -432,13 +432,13 @@ namespace WPCamaraComercio.Classes
                 if (response[1] == "DP" || response[1] == "MD")
                 {
                     LogService.CreateLogsPeticionRespuestaDispositivos("ProcessER: ", "Ingresé al primer if");
-                    stateError = true;
+                    //stateError = true;
                     callbackError?.Invoke(string.Concat("Error, se alcanzó a entregar:", deliveryValue));
                 }
                 if (response[1] == "AP")
                 {
                     LogService.CreateLogsPeticionRespuestaDispositivos("ProcessER: ", "Ingresé al segundo if");
-                    stateError = true;
+                   // stateError = true;
                     callbackError?.Invoke("Error, en el billetero Aceptance");
                 }
                 else if (response[1] == "FATAL")
