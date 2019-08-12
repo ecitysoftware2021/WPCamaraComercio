@@ -119,6 +119,7 @@
     <Compile Include="Classes\ResponseDetalle.cs" />
     <Compile Include="Classes\ResponseGeneral.cs" />
     <Compile Include="Classes\ResponsePay.cs" />
+    <Compile Include="Classes\ResponseTransactionList.cs" />
     <Compile Include="Classes\Transaction.cs" />
     <Compile Include="Keyboard\TouchScreenKeyboard.cs" />
     <Compile Include="Keyboard\TouchScreenKeyNumeric.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Objects\PaymentData.cs" />
     <Compile Include="Objects\Record.cs" />
     <Compile Include="Objects\RequestAuth.cs" />
+    <Compile Include="Objects\RequestTransactions.cs" />
     <Compile Include="Objects\RosponseAuth.cs" />
     <Compile Include="Objects\SelectedDetail.cs" />
     <Compile Include="Objects\Transaction.cs" />
@@ -184,6 +186,9 @@
     </Compile>
     <Compile Include="Views\FrmPayment.xaml.cs">
       <DependentUpon>FrmPayment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmTransactionsList.xaml.cs">
+      <DependentUpon>FrmTransactionsList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadingModal.xaml.cs">
       <DependentUpon>LoadingModal.xaml</DependentUpon>
@@ -255,6 +260,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrmPayment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrmTransactionsList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
