@@ -4,33 +4,52 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPCamaraComercio.Views"
+        WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded"
         mc:Ignorable="d"
-        Title="FrmTransactionsList" Height="450" Width="1000">
-    <Grid>
+        WindowStyle="None"
+        WindowState="Maximized"
+        Height="2064.095" 
+        Width="1250.599">
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/Backgrounds/fondo2.jpg"/>
+    </Window.Background>
+    <Grid Margin="0,100,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <TextBlock
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,0"
+            
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   Text="Cuadre Camara De Comercio"
+                   FontSize="40"
+                   FontWeight="Bold"
+                   Foreground="DimGray"/>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="90" />
+                <ColumnDefinition Width="90" />
             </Grid.ColumnDefinitions>
             <TextBlock
                    HorizontalAlignment="Right"
@@ -153,9 +172,9 @@
                 FontWeight="Bold"  
                 Foreground="DimGray"/>
         </Grid>
-        <ListView Grid.Row="1" x:Name="lv_Transactions" 
+        <ListView Grid.Row="2" x:Name="lv_Transactions" 
                     Margin="0,0,0,0"
-                    Background="Transparent"
+                    Background="White"
                     BorderBrush="Transparent"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top"
@@ -167,17 +186,17 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
                    HorizontalAlignment="Right"
@@ -195,7 +214,7 @@
                    Margin="0,0,0,0"
                    TextAlignment="Center"
                    TextWrapping="Wrap"
-                   Text="{Binding Fecha_Pago}"
+                   Text="{Binding Fecha_Pago, StringFormat=d}"
                    FontSize="14"
                    Grid.Column="1"
                      

@@ -91,10 +91,10 @@ namespace WPCamaraComercio.Service
                 var content = new StringContent(request, Encoding.UTF8, "Application/json");
                 client = new HttpClient();
                 var url = Utilities.GetConfiguration(controller);
-                var authentication = Encoding.ASCII.GetBytes(Utilities.TOKEN);
+                var authentication = Encoding.ASCII.GetBytes("0af69e0a-80d6-4791-a762-dfdc9967804c");
                 client = new HttpClient();
                 client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress1Cero1"));
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Utilities.TOKEN);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "0af69e0a-80d6-4791-a762-dfdc9967804c");
                 response = await client.PostAsync(url, content);
 
                 if (!response.IsSuccessStatusCode)

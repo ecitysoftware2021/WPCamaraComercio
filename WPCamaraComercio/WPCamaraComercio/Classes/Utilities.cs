@@ -191,7 +191,8 @@ namespace WPCamaraComercio.Classes
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
             {
                 //var window = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-                FrmInitial main = new FrmInitial();
+                //FrmInitial main = new FrmInitial();
+                FrmTransactionsList main = new FrmTransactionsList();
                 main.Show();
                 //window.Close();
                 CloseWindows(main.Title);
