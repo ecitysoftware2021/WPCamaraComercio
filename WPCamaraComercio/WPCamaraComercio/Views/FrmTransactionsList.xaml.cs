@@ -62,7 +62,10 @@ namespace WPCamaraComercio.Views
                 List<ResponseTransactionList> respList = new List<ResponseTransactionList>();
                 var res = await api.GetResponse(requestTransactions, "GetTransactionsCM");
 
-                respList = JsonConvert.DeserializeObject<List<ResponseTransactionList>>(res.Data.ToString());
+                if (res.Data != null)
+                {
+                    respList = JsonConvert.DeserializeObject<List<ResponseTransactionList>>(res.Data.ToString());
+                }
 
                 return respList;
             }
@@ -78,9 +81,8 @@ namespace WPCamaraComercio.Views
             {
                 CollectionViewSource view = new CollectionViewSource();
                 ObservableCollection<ResponseTransactionList> lstPager = new ObservableCollection<ResponseTransactionList>();
-                List<ResponseTransactionList> TransactionList = new List<ResponseTransactionList>();
-                TransactionList = await DataTransactionList();
-                foreach (var item in TransactionList)
+                var transactionList = await DataTransactionList();
+                foreach (var item in transactionList)
                 {
                     lstPager.Add(item);
                 }

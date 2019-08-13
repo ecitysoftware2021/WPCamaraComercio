@@ -206,7 +206,7 @@
                 Margin="0,0,0,0"
                 TextAlignment="Center"
                 TextWrapping="Wrap"
-                Text="{Binding Total}"
+                Text="{Binding Total, StringFormat={}{0:C0}}"
                 FontSize="14"
                 Grid.Column="2"
                   
