@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WPCamaraComercio.Objects;
 
 namespace WPCamaraComercio.Classes
 {
@@ -76,30 +77,11 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                PeticionRespuesta peticion = new PeticionRespuesta
+                AdminPaypad.SaveLog(new RequestLog
                 {
-                    Operacion = operacion,
-                    Mensaje = mensaje
-                };
-
-                var json = JsonConvert.SerializeObject(peticion);
-                string fullPath = string.Format(@"C:\\LogsPeticiones\");
-                if (!Directory.Exists(fullPath))
-                {
-                    Directory.CreateDirectory(fullPath);
-                }
-
-                var nameFile = Path.Combine(fullPath, "Peticiones" + DateTime.Now.ToString("yyyyMMdd"));
-                if (!File.Exists(nameFile))
-                {
-                    var archivo = File.CreateText(nameFile);
-                    archivo.Close();
-                }
-
-                using (StreamWriter sw = File.AppendText(nameFile))
-                {
-                    sw.WriteLine(json);
-                }
+                    Description = mensaje,
+                    Reference = Utilities.GetConfiguration("Sucursal") + " - " + operacion
+                }, ELogType.General);
             }
             catch { }
         }

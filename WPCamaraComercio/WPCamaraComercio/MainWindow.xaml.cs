@@ -26,6 +26,7 @@ namespace WPCamaraComercio
     {
         Api api;
         bool state;
+        Utilities util;
 
         public MainWindow()
         {
@@ -49,7 +50,6 @@ namespace WPCamaraComercio
         {
             try
             {
-                Utilities util = new Utilities(1);
                 state = await api.SecurityToken();
                 if (state)
                 {
@@ -57,16 +57,12 @@ namespace WPCamaraComercio
                     if (response.CodeError == 200)
                     {
                         DataPayPad data = JsonConvert.DeserializeObject<DataPayPad>(response.Data.ToString());
-                        //Utilities.ImagesSlider = JsonConvert.DeserializeObject<List<string>>(data.ListImages.ToString());
-                        //Utilities.CountSlider = 1;
+                        util = new Utilities(1);
 
                         if (data.StateAceptance || data.StateDispenser)
                         {
                             Utilities.dataPaypad = data;
-                            //await Task.Run(() =>
-                            //{
-                            //    ConsultImagesSlider();
-                            //});
+                            
                             Utilities.control.callbackToken = isSucces =>
                             {
                                 Utilities.GoToInicial();

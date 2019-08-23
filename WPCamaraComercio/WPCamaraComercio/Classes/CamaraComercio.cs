@@ -84,6 +84,13 @@ namespace WPCamaraComercio.Classes
 
                     if (await Task.WhenAny(task, Task.Delay(20000)) == task)
                     {
+                        try
+                        {
+                            //Se guarda respuesta 
+                            Objects.LogService.CreateLogsPeticionRespuestaDispositivos(DateTime.Now + " :: Respuesta de SendPay: ", task.Result.Data.ToString());
+                        }
+                        catch { }
+
                         var response = task.Result;
 
                         if (response.CodeError == 200)
@@ -147,6 +154,7 @@ namespace WPCamaraComercio.Classes
             try
             {
                 PrinterName = Utilities.GetConfiguration("PrinterName");
+
                 foreach (var item in Utilities.ListCertificates)
                 {
                     CLSDatosCertificado datosCertificado = new CLSDatosCertificado();
@@ -242,6 +250,14 @@ namespace WPCamaraComercio.Classes
                 utilities.FillLogError(PatchFile, "Contenido de PatchFile");
                 WebClient myWebClient = new WebClient();
                 bytePDF = myWebClient.DownloadData(PatchFile);
+
+                try
+                {
+                    //Se guarda respuesta 
+                    Objects.LogService.CreateLogsPeticionRespuestaDispositivos(DateTime.Now + $" :: PDF:{PatchFile}", bytePDF.Length.ToString());
+                }
+                catch { }
+
                 path = Path.Combine(DirectoryFile, FileName + ".pdf");
                 if (!Directory.Exists(DirectoryFile))
                 {

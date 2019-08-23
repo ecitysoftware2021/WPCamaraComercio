@@ -325,6 +325,11 @@ namespace WPCamaraComercio.Classes
                         ProcessRC(response);
                         break;
                     case "ER":
+                        try
+                        {
+                            LogService.CreateLogsPeticionRespuestaDispositivos(DateTime.Now + " :: Respuesta del billetero: ", message);
+                        }
+                        catch { }
                         ProcessER(response);
                         break;
                     case "UN":
@@ -360,6 +365,11 @@ namespace WPCamaraComercio.Classes
                         ProcessRC(response);
                         break;
                     case "ER":
+                        try
+                        {
+                            LogService.CreateLogsPeticionRespuestaDispositivos(DateTime.Now + " :: Respuesta del billetero: ", message);
+                        }
+                        catch { }
                         ProcessER(response);
                         break;
                     case "UN":

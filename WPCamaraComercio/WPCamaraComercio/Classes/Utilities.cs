@@ -68,6 +68,7 @@ namespace WPCamaraComercio.Classes
         public static int Session { get; set; }
 
         public static ControlPeripherals control;
+        public static ControlPeripheralsNotArduino controlNot;
 
         public static decimal EnterTotal;
 
@@ -97,6 +98,7 @@ namespace WPCamaraComercio.Classes
             {
                 api = new Api();
                 control = new ControlPeripherals();
+                controlNot = new ControlPeripheralsNotArduino();
                 control.StopAceptance();
             }
             catch (Exception ex)

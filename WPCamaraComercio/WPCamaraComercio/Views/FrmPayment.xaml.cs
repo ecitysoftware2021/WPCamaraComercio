@@ -27,7 +27,7 @@ namespace WPCamaraComercio.Views
 
         WCFPayPadService payPadService;
 
-        private LogErrorGeneral logError;
+        private Classes.LogErrorGeneral logError;
 
         private Record recorder;//Instancia
 
@@ -68,7 +68,7 @@ namespace WPCamaraComercio.Views
                 camaraComercio = new CamaraComercio();
                 utilities = new Utilities();
                 navigationService = new NavigationService(this);
-                logError = new LogErrorGeneral
+                logError = new Classes.LogErrorGeneral
                 {
                     Date = DateTime.Now.ToString("MM/dd/yyyy HH:mm"),
                     IDCorresponsal = Utilities.CorrespondentId,
@@ -83,7 +83,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("FrmPayment: ", "Error: " + ex.ToString());
+                Classes.LogService.CreateLogsPeticionRespuestaDispositivos("FrmPayment: ", "Error: " + ex.ToString());
             }
         }
 
@@ -100,7 +100,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("Window_Loaded: ", "Error: " + ex.ToString());
+                Classes.LogService.CreateLogsPeticionRespuestaDispositivos("Window_Loaded: ", "Error: " + ex.ToString());
             }
         }
 
@@ -119,7 +119,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("VisibilityImage: ", "Error: " + ex.ToString());
+                Classes.LogService.CreateLogsPeticionRespuestaDispositivos("VisibilityImage: ", "Error: " + ex.ToString());
             }
         }
 
@@ -144,7 +144,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("OrganizeValues: ", "Error: " + ex.ToString());
+                Classes.LogService.CreateLogsPeticionRespuestaDispositivos("OrganizeValues: ", "Error: " + ex.ToString());
             }
         }
 
@@ -158,7 +158,7 @@ namespace WPCamaraComercio.Views
             {
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Ingresé");
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Ingresé");
                 }
                 catch { }
 
@@ -168,7 +168,7 @@ namespace WPCamaraComercio.Views
                     {
                         Utilities.control.StopAceptance();
 
-                        LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Apague billetero");
+                        Classes.LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Apague billetero");
                     });
 
                     this.Opacity = 0.5;
@@ -178,7 +178,7 @@ namespace WPCamaraComercio.Views
 
                     try
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Cerré la modal");
+                        Classes.LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Cerré la modal");
                     }
                     catch { }
 
@@ -187,7 +187,7 @@ namespace WPCamaraComercio.Views
 
                         if (PaymentViewModel.ValorIngresado > 0)
                         {
-                            LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Abri formulario de cancelación");
+                            Classes.LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Abri formulario de cancelación");
                             FrmCancelledPayment cancel = new FrmCancelledPayment(PaymentViewModel.ValorIngresado);
                             cancel.Show();
                             this.Close();
@@ -196,7 +196,7 @@ namespace WPCamaraComercio.Views
                         {
                             try
                             {
-                                LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "GoToInitial");
+                                Classes.LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "GoToInitial");
                             }
                             catch { }
                             Utilities.GoToInicial();
@@ -207,7 +207,7 @@ namespace WPCamaraComercio.Views
                         Utilities.control.StartAceptance(PaymentViewModel.PayValue);
                         try
                         {
-                            LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Prendi billetero");
+                            Classes.LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Prendi billetero");
                         }
                         catch { }
                     }
@@ -215,7 +215,7 @@ namespace WPCamaraComercio.Views
             }
             catch (Exception ex)
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Error: " + ex.ToString());
+                Classes.LogService.CreateLogsPeticionRespuestaDispositivos("BtnCancel_StylusDown: ", "Error: " + ex.ToString());
             }
         }
 
@@ -232,7 +232,7 @@ namespace WPCamaraComercio.Views
             {
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé");
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé");
                 }
                 catch { }
 
@@ -248,7 +248,7 @@ namespace WPCamaraComercio.Views
                 {
                     try
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn");
+                        Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn");
                     }
                     catch { }
                     Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, true, this); });
@@ -258,7 +258,7 @@ namespace WPCamaraComercio.Views
                     {
                         try
                         {
-                            LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn ReturnMoney");
+                            Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn ReturnMoney");
                         }
                         catch { }
                         ReturnMoney(PaymentViewModel.ValorSobrante);
@@ -267,7 +267,7 @@ namespace WPCamaraComercio.Views
                     {
                         try
                         {
-                            LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn FinishPayment");
+                            Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn FinishPayment");
                         }
                         catch { }
                         FinishPayment().Wait();
@@ -295,7 +295,7 @@ namespace WPCamaraComercio.Views
 
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Creé el log Transactional");
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Creé el log Transactional");
                 }
                 catch { }
 
@@ -304,7 +304,7 @@ namespace WPCamaraComercio.Views
 
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Salí");
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Salí");
                 }
                 catch { }
             }
@@ -333,7 +333,7 @@ namespace WPCamaraComercio.Views
             {
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Ingresé");
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Ingresé");
                 }
                 catch { }
 
@@ -354,7 +354,7 @@ namespace WPCamaraComercio.Views
 
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Pasé por los callbacks");
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Pasé por los callbacks");
                 }
                 catch { }
 
@@ -373,7 +373,7 @@ namespace WPCamaraComercio.Views
 
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Creé el log transactional");
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Creé el log transactional");
                 }
                 catch { }
 
@@ -381,7 +381,7 @@ namespace WPCamaraComercio.Views
 
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Salí");
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Salí");
                 }
                 catch { }
             }
@@ -389,7 +389,7 @@ namespace WPCamaraComercio.Views
             {
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Error: " + ex.ToString());
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Error: " + ex.ToString());
                 }
                 catch { }
             }
@@ -440,7 +440,7 @@ namespace WPCamaraComercio.Views
             {
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("EndDispenserMoney: ", "Error: " + ex.ToString());
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("EndDispenserMoney: ", "Error: " + ex.ToString());
                 }
                 catch { }
             }
@@ -469,7 +469,7 @@ namespace WPCamaraComercio.Views
             {
                 try
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ErroUpdateTrans: ", "Error: " + ex.ToString());
+                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ErroUpdateTrans: ", "Error: " + ex.ToString());
                 }
                 catch { }
             }
@@ -489,18 +489,6 @@ namespace WPCamaraComercio.Views
                             count++;
                             ApproveTrans();
                         }
-                        else
-                        {
-                            //logTransactions.Description = "\nNo fue posible actualizar esta transacción a aprobada";
-                            //logTransactions.State = "Iniciada";
-                            //Utilities.SaveLogTransactions(logTransactions, "LogTransacciones\\Iniciadas");
-                        }
-                    }
-                    else
-                    {
-                        //logTransactions.Description = "\nTransacción Exitosa";
-                        //logTransactions.State = "Aprobada";
-                        //Utilities.SaveLogTransactions(logTransactions, "LogTransacciones\\Aprobadas");
                     }
                 }
             }
@@ -521,15 +509,14 @@ namespace WPCamaraComercio.Views
                 if (!isCancel)
                 {
                     Utilities.BuyID = await camaraComercio.ConfirmarCompra();
+
                     if (!Utilities.BuyID.Equals("0"))
                     {
 
-                        //ApproveTrans();
                         await Dispatcher.BeginInvoke((Action)delegate
                         {
                             Utilities.Loading(frmLoading, false, this);
                         });
-                        //navigationService.NavigationTo("FinishPayment");
                         await Dispatcher.BeginInvoke((Action)delegate
                         {
                             FinishPayment frmInformationCompany = new FinishPayment(PaymentViewModel.ValorIngresado, PaymentViewModel.ValorSobrante);
@@ -561,7 +548,6 @@ namespace WPCamaraComercio.Views
                 }
                 else
                 {
-                    //WCFPayPadInsert.ActualizarEstadoTransaccion(Utilities.IDTransactionDB, WCFPayPad.CLSEstadoEstadoTransaction.Cancelada);
                     Utilities.GoToInicial();
                 }
             }

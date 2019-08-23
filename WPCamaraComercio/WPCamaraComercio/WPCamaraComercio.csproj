@@ -39,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,6 +58,9 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\..\..\WPProcinal\WPProcinal\bin\Debug\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -69,14 +73,14 @@
     <Reference Include="GhostscriptSharp, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GhostScriptSharp.1.3.1.4\lib\net40\GhostscriptSharp.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
+    <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -113,13 +117,16 @@
     <Compile Include="Classes\CamaraComercio.cs" />
     <Compile Include="Classes\CLSDatosCertificado.cs" />
     <Compile Include="Classes\ControlPeripherals.cs" />
+    <Compile Include="Classes\ControlPeripheralsNotArduino.cs" />
     <Compile Include="Classes\Datos.cs" />
+    <Compile Include="Classes\ErrorCodes.cs" />
     <Compile Include="Classes\Logs.cs" />
     <Compile Include="Classes\PeticionDetalle.cs" />
     <Compile Include="Classes\ResponseDetalle.cs" />
     <Compile Include="Classes\ResponseGeneral.cs" />
     <Compile Include="Classes\ResponsePay.cs" />
     <Compile Include="Classes\Transaction.cs" />
+    <Compile Include="Impresora\PrintProperties.cs" />
     <Compile Include="Keyboard\TouchScreenKeyboard.cs" />
     <Compile Include="Keyboard\TouchScreenKeyNumeric.cs" />
     <Compile Include="Models\Coincidence.cs" />
@@ -130,7 +137,11 @@
     <Compile Include="Models\MerchantDetail.cs" />
     <Compile Include="Objects\DataPayPad.cs" />
     <Compile Include="Objects\DetailCartificate.cs" />
+    <Compile Include="Objects\DEVICE_LOG.cs" />
+    <Compile Include="Objects\Enumerables.cs" />
+    <Compile Include="Objects\ERROR_LOG.cs" />
     <Compile Include="Objects\InfoUser.cs" />
+    <Compile Include="Objects\Log.cs" />
     <Compile Include="Objects\ObjectsApi.cs" />
     <Compile Include="Objects\PayerData.cs" />
     <Compile Include="Objects\PaymentData.cs" />

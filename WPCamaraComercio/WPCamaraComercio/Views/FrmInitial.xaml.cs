@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WPCamaraComercio.Service;
 using System.Configuration;
+using WPCamaraComercio.Classes;
 
 namespace WPCamaraComercio.Views
 {
@@ -135,7 +136,21 @@ namespace WPCamaraComercio.Views
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            navigationService.NavigationTo("ConsultWindow");
+            ControlPeripheralsNotArduino.callbackStatusPrinter = Status =>
+            {
+                if (Status.STATUS == "OK")
+                {
+                    navigationService.NavigationTo("ConsultWindow");
+                }
+                else
+                {
+                    this.Opacity = 0.7;
+                    FrmModal fModal = new FrmModal(Status.ERROR_MESSAGE, this, true);
+                    fModal.ShowDialog();
+                    this.Opacity = 1;
+                }
+            };
+            Utilities.controlNot.InitPortPrinter();            
         } 
         #endregion
     }

@@ -23,7 +23,7 @@ namespace WPCamaraComercio.Views
         NavigationService navigationService;
         Utilities utilities;
         Api api;
-        private LogErrorGeneral log;
+        private Classes.LogErrorGeneral log;
         private int Num = 0;
         #endregion
 
@@ -36,7 +36,7 @@ namespace WPCamaraComercio.Views
             navigationService = new NavigationService(this);
             utilities = new Utilities();
             api = new Api();
-            log = new LogErrorGeneral();
+            log = new Classes.LogErrorGeneral();
             CmbTypeBuyer.SelectedIndex = 0;
             CmbIdDType.SelectedIndex = 0;
             //CamaraComercio CM = new CamaraComercio();

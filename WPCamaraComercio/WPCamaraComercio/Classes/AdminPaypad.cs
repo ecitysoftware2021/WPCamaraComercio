@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WPCamaraComercio.Service;
+using WPCamaraComercio.Objects;
 using static WPCamaraComercio.Objects.ObjectsApi;
 
 namespace WPCamaraComercio.Classes
@@ -142,5 +143,37 @@ namespace WPCamaraComercio.Classes
             }
         }
 
+        public async static void SaveLog(object log, ELogType type)
+        {
+            try
+            {
+                await Task.Run(async () =>
+                 {
+                    //var data = consults.SaveLog(log, type);
+                    object result = "false";
+
+                     if (log != null)
+                     {
+                         if (type == ELogType.General)
+                         {
+                             result = await apilocal.GetResponse((RequestLog)log, "SaveLog");
+                         }
+                         else if (type == ELogType.Error)
+                         {
+                             result = await apilocal.GetResponse((ERROR_LOG)log, "SaveLogError");
+                         }
+                         else
+                         {
+                             var error = (RequestLogDevice)log;
+                             result = await apilocal.GetResponse(error, "SaveLogDevice");
+                         }
+                     }
+                 });
+            }
+            catch (Exception ex)
+            {
+                //utilities.saveLogError(MethodBase.GetCurrentMethod().Name, "InitPaypad", ex.ToString(), "Ocurrio un error");
+            }
+        } 
     }
 }

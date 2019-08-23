@@ -20,7 +20,7 @@ namespace WPCamaraComercio.Views
         private TransactionDetails transactionDetails;
         private FrmLoading frmLoading;
         //ServicePayPadClient WCFPayPadInsert;
-        private LogErrorGeneral log;
+        private Classes.LogErrorGeneral log;
         private Utilities utilities;
         private NavigationService navigationService;
         #endregion
@@ -34,7 +34,7 @@ namespace WPCamaraComercio.Views
             transactionDetails = new TransactionDetails();
             frmLoading = new FrmLoading();
             //WCFPayPadInsert = new ServicePayPadClient();
-            log = new LogErrorGeneral();
+            log = new Classes.LogErrorGeneral();
             utilities = new Utilities();
             navigationService = new NavigationService(this);
             lblValue.Content = string.Format("{0:C0}", valueReturn);
