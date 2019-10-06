@@ -230,12 +230,6 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                try
-                {
-                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé");
-                }
-                catch { }
-
                 Utilities.control.callbackValueIn = enterValue =>
                 {
                     if (enterValue > 0)
@@ -246,31 +240,16 @@ namespace WPCamaraComercio.Views
 
                 Utilities.control.callbackTotalIn = enterTotal =>
                 {
-                    try
-                    {
-                        Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn");
-                    }
-                    catch { }
-                    Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, true, this); });
+                                 Dispatcher.BeginInvoke((Action)delegate { Utilities.Loading(frmLoading, true, this); });
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                     Utilities.EnterTotal = enterTotal;
                     if (enterTotal > 0 && PaymentViewModel.ValorSobrante > 0)
                     {
-                        try
-                        {
-                            Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn ReturnMoney");
-                        }
-                        catch { }
-                        ReturnMoney(PaymentViewModel.ValorSobrante);
+                                     ReturnMoney(PaymentViewModel.ValorSobrante);
                     }
                     else
                     {
-                        try
-                        {
-                            Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Ingresé al callbackTotalIn FinishPayment");
-                        }
-                        catch { }
-                        FinishPayment().Wait();
+                                     FinishPayment().Wait();
                     }
                 };
 
@@ -293,21 +272,11 @@ namespace WPCamaraComercio.Views
                     EstadoTransaccion = "En Proceso"
                 });
 
-                try
-                {
-                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Creé el log Transactional");
-                }
-                catch { }
-
+             
                 Utilities.control.StartAceptance(PaymentViewModel.PayValue);
 
 
-                try
-                {
-                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ActivateWallet: ", "Salí");
-                }
-                catch { }
-            }
+                            }
             catch (Exception ex)
             {
                 ErroUpdateTrans(ex.Message);
@@ -331,12 +300,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                try
-                {
-                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Ingresé");
-                }
-                catch { }
-
+                
                 Utilities.control.callbackTotalOut = totalOut =>
                 {
                     EndDispenserMoney(totalOut, 2);
@@ -352,12 +316,6 @@ namespace WPCamaraComercio.Views
                     Utilities.SaveLogDispenser(ControlPeripherals.log);
                 };
 
-                try
-                {
-                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Pasé por los callbacks");
-                }
-                catch { }
-
                 Utilities.log.Add(new LogTransactional
                 {
                     Fecha = DateTime.Now,
@@ -371,19 +329,9 @@ namespace WPCamaraComercio.Views
                     EstadoTransaccion = "En Proceso"
                 });
 
-                try
-                {
-                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Creé el log transactional");
-                }
-                catch { }
-
+                
                 Utilities.control.StartDispenser(returnValue);
 
-                try
-                {
-                    Classes.LogService.CreateLogsPeticionRespuestaDispositivos("ReturnMoney: ", "Salí");
-                }
-                catch { }
             }
             catch (Exception ex)
             {
