@@ -30,19 +30,7 @@ namespace WPCamaraComercio
 
         public ControlPeripheralsNotArduino()
         {
-            TimerStatusPeripheral = new System.Timers.Timer();
-            TimerStatusPeripheral.Interval = 10000;
-            TimerStatusPeripheral.Elapsed += new System.Timers.ElapsedEventHandler(CheckStatusTick);
-            TimerStatusPeripheral.Start();
             InitObjects();
-        }
-
-        private void CheckStatusTick(object sender, ElapsedEventArgs e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-            {
-                InitPortPrinter();
-            }));
         }
 
         private void InitObjects()

@@ -34,12 +34,14 @@ namespace WPCamaraComercio.Classes
 
         public static DispatcherTimer timer;
 
+
+
         public static int CorrespondentId = int.Parse(GetConfiguration("IDCorresponsal"));
 
         public static int CorrespondentId2 = int.Parse(GetConfiguration("IDCorresponsal"));
 
         public static ResponseConsultGeneral RespuestaConsulta = new ResponseConsultGeneral();
-        
+
 
         public static string search { get; set; }
 
@@ -432,7 +434,7 @@ namespace WPCamaraComercio.Classes
         //    }
         //}
 
-        
+
 
         public enum EDenominacion
         {
@@ -476,7 +478,101 @@ namespace WPCamaraComercio.Classes
             }
             return idTypeEnum;
         }
+
+
+        public static DataDocument ProccesDocument(string data)
+        {
+            DataDocument documentDataReturn = new DataDocument();
+            try
+            {
+                if (!string.IsNullOrEmpty(data))
+                {
+                    data = data.Remove(0, data.IndexOf("PubDSK_1") + 6);
+
+                    string date = string.Empty;
+                    string documentData = string.Empty;
+                    string gender = string.Empty;
+                    string name = string.Empty;
+                    string document = string.Empty;
+
+                    if (data.IndexOf("0M") > 0)
+                    {
+                        gender = "Masculino";
+                        date = data.Substring(data.IndexOf("0M") + 2, 8);
+                        documentData = data.Substring(0, data.IndexOf("0M"));
+                    }
+                    else
+                    {
+                        documentData = data.Substring(0, data.IndexOf("0F"));
+                        date = data.Substring(data.IndexOf("0F") + 2, 8);
+                        gender = "Femenino";
+                    }
+
+                    char[] cedulaNombreChar = documentData.ToCharArray();
+
+                    foreach (var item in cedulaNombreChar)
+                    {
+
+                        if (char.IsLetter(item) || char.IsWhiteSpace(item) || item.Equals('\0'))
+                        {
+                            name += item;
+                            name = name.Replace("\0", " ");
+                        }
+                        else
+                        {
+                            document += item;
+                        }
+                    }
+                    name = name.TrimStart();
+                    name = name.TrimEnd();
+
+                    var nuevaCedula = document.Replace("\0", string.Empty).Replace(" ", string.Empty);
+                    document = nuevaCedula.Substring(nuevaCedula.Length - 10, 10);
+
+                    documentDataReturn.Date = date;
+                    documentDataReturn.Document = document;
+                    documentDataReturn.Gender = gender;
+                    var fullName = FormatName(name);
+                    documentDataReturn.FirstName = fullName[2];
+                    if (fullName.Count() > 3)
+                    {
+                        documentDataReturn.SecondName = fullName[3];
+                    }
+                    documentDataReturn.LastName = fullName[0];
+                    documentDataReturn.SecondLastName = fullName[1];
+
+                }
+            }
+            catch {}
+            return documentDataReturn;
+        }
+        public static string[] FormatName(string nameClient)
+        {
+            string message = string.Empty;
+            foreach (var item in nameClient.Split(' '))
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    message += string.Concat(item, " ");
+                }
+            }
+
+            return message.Split(' ');
+        }
+
+        #endregion
     }
-    #endregion
+
+    public class DataDocument
+    {
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
+        public string LastName { get; set; }
+        public string SecondLastName { get; set; }
+        public string Date { get; set; }
+        public string Gender { get; set; }
+        public string Document { get; set; }
+
+    }
 }
 

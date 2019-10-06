@@ -200,7 +200,7 @@ namespace WPCamaraComercio.ViewModels
                     {
                         Utilities.RespuestaConsulta = JsonConvert.DeserializeObject<ResponseConsultGeneral>(response.Data.ToString());
 
-                        if (Utilities.RespuestaConsulta.Result.response.resultados.Count() > 0)
+                        if (Utilities.RespuestaConsulta.Result.response.registros > 0)
                         {
                             foreach (var item in Utilities.RespuestaConsulta.Result.response.resultados)
                             {
@@ -218,14 +218,6 @@ namespace WPCamaraComercio.ViewModels
 
                             stateConsult = true;
                         }
-                        else
-                        {
-                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-                            {
-                                FrmModal modal = new FrmModal(modalMessage);
-                                modal.ShowDialog();
-                            }));
-                        }
                     }
                     else
                     {
@@ -234,7 +226,7 @@ namespace WPCamaraComercio.ViewModels
                             FrmModal modal = new FrmModal(modalMessage);
                             modal.ShowDialog();
                         }));
-                        
+
                     }
                     this.preload = Visibility.Hidden;
                     callbackSearch?.Invoke(stateConsult);

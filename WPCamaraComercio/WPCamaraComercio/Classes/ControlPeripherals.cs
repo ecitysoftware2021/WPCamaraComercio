@@ -18,7 +18,7 @@ namespace WPCamaraComercio.Classes
         private SerialPort _serialPortBills;//Puerto billeteros
 
         private SerialPort _serialPortCoins;//Puerto Monederos
-
+        private SerialPort _BarcodeReader;
         #endregion
 
         #region CommandsPorts
@@ -56,7 +56,7 @@ namespace WPCamaraComercio.Classes
         public Action<string> callbackMessage;//Calback de mensaje
 
         public Action<bool> callbackToken;//Calback de mensaje
-
+        public Action<DataDocument> callbackDocument;
 
         #endregion
 
@@ -99,14 +99,17 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ControlPeripherals: ", "Ingresé");
                 _serialPortBills = new SerialPort();
                 _serialPortCoins = new SerialPort();
+                if (_BarcodeReader == null)
+                {
+                    _BarcodeReader = new SerialPort();
+                }
                 log = new LogDispenser();
                 InitPortBills();
                 InitPortPurses();
+                InitializePortBarcode();
                 //payPadService = new WCFPayPadService();
-                LogService.CreateLogsPeticionRespuestaDispositivos("ControlPeripherals: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -121,9 +124,7 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("Start: ", "Ingresé");
                 SendMessageBills(_StartBills);
-                LogService.CreateLogsPeticionRespuestaDispositivos("Start: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -138,12 +139,10 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("StartValues: ", "Ingresé");
                 deliveryValue = 0;//valor entregado TEST
                 enterValue = 0;//valor ingresado
                 deliveryVal = 0;//valor entregado
                 LogMessage = string.Empty;//Mensaje del log del dispenser
-                LogService.CreateLogsPeticionRespuestaDispositivos("StartValues: ", "Ingresé");
             }
             catch (Exception ex)
             {
@@ -158,7 +157,6 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("InitPortBills: ", "Ingresé");
                 if (!_serialPortBills.IsOpen)
                 {
                     _serialPortBills.PortName = Utilities.GetConfiguration("PortBills");
@@ -169,7 +167,6 @@ namespace WPCamaraComercio.Classes
                 }
 
                 _serialPortBills.DataReceived += new SerialDataReceivedEventHandler(_serialPortBillsDataReceived);
-                LogService.CreateLogsPeticionRespuestaDispositivos("InitPortBills: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -184,7 +181,6 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("InitPortPurses: ", "Ingresé");
                 if (!_serialPortCoins.IsOpen)
                 {
                     _serialPortCoins.PortName = Utilities.GetConfiguration("PortCoins");
@@ -195,14 +191,32 @@ namespace WPCamaraComercio.Classes
                 }
 
                 _serialPortCoins.DataReceived += new SerialDataReceivedEventHandler(_serialPortCoinsDataReceived);
-                LogService.CreateLogsPeticionRespuestaDispositivos("InitPortPurses: ", "Salí");
             }
             catch (Exception ex)
             {
                 LogService.CreateLogsPeticionRespuestaDispositivos("InitPortPurses: ", "Error: " + ex.ToString());
             }
         }
-
+        public void InitializePortBarcode()
+        {
+            try
+            {
+                if (!_BarcodeReader.IsOpen)
+                {
+                    _BarcodeReader.PortName = Utilities.GetConfiguration("BarcodePort");
+                    _BarcodeReader.BaudRate = int.Parse(Utilities.GetConfiguration("BarcodeBaudRate"));
+                    _BarcodeReader.Open();
+                    _BarcodeReader.ReadTimeout = 200;
+                    _BarcodeReader.DtrEnable = true;
+                    _BarcodeReader.RtsEnable = true;
+                    _BarcodeReader.DataReceived += new SerialDataReceivedEventHandler(Barcode_DataReceived);
+                }
+            }
+            catch (Exception ex)
+            {
+                callbackError?.Invoke(ex.Message);
+            }
+        }
         #endregion
 
         #region SendMessage
@@ -215,14 +229,12 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("SendMessageBills: ", "Ingresé");
                 if (_serialPortBills.IsOpen)
                 {
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                     _serialPortBills.Write(message);
                     log.SendMessage += string.Format("Billetero: {0}\n", message);
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("SendMessageBills: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -238,14 +250,12 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("SendMessageCoins: ", "Ingresé");
                 if (_serialPortCoins.IsOpen)
                 {
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                     _serialPortCoins.Write(message);
                     log.SendMessage += string.Format("Monedero: {0}\n", message);
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("SendMessageCoins: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -257,6 +267,14 @@ namespace WPCamaraComercio.Classes
 
         #region Listeners
 
+        private void Barcode_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            var data = _BarcodeReader.ReadExisting();
+            var response = Utilities.ProccesDocument(data);
+            callbackDocument?.Invoke(response);
+            _BarcodeReader.DiscardInBuffer();
+            _BarcodeReader.DiscardOutBuffer();
+        }
         /// <summary>
         /// Método que escucha la respuesta del puerto del billetero
         /// </summary>
@@ -266,14 +284,12 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("_serialPortBillsDataReceived: ", "Ingresé");
                 string response = _serialPortBills.ReadLine();
                 if (!string.IsNullOrEmpty(response))
                 {
                     log.ResponseMessage += string.Format("Respuesta Billetero:{0}\n", response);
                     ProcessResponseBills(response);
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("_serialPortBillsDataReceived: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -290,14 +306,12 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("_serialPortCoinsDataReceived: ", "Ingresé");
                 string response = _serialPortCoins.ReadLine();
                 if (!string.IsNullOrEmpty(response))
                 {
                     log.ResponseMessage += string.Format("Respuesta Monedero: {0}\n", response);
                     ProcessResponseCoins(response);
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("_serialPortCoinsDataReceived: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -317,7 +331,6 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessResponseBills: ", "Ingresé");
                 string[] response = message.Split(':');
                 switch (response[0])
                 {
@@ -341,7 +354,6 @@ namespace WPCamaraComercio.Classes
                     default:
                         break;
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessResponseBills: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -357,7 +369,6 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessResponseCoins: ", "Ingresé");
                 string[] response = message.Split(':');
                 switch (response[0])
                 {
@@ -381,7 +392,6 @@ namespace WPCamaraComercio.Classes
                     default:
                         break;
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessResponseCoins: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -401,10 +411,8 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessRC: ", "Ingresé");
                 if (response[1] == "OK")
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessRC: ", "Ingresé al primer if");
                     switch (response[2])
                     {
                         case "AP":
@@ -413,7 +421,6 @@ namespace WPCamaraComercio.Classes
                         case "DP":
                             if (response[3] == "HD" && !string.IsNullOrEmpty(response[4]))
                             {
-                                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessRC: ", "Ingresé al segungo if");
                                 TOKEN = response[4].Replace("\r", string.Empty);
                                 callbackToken?.Invoke(true);
                             }
@@ -422,7 +429,6 @@ namespace WPCamaraComercio.Classes
                             break;
                     }
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessRC: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -438,25 +444,20 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessER: ", "Ingresé");
                 if (response[1] == "DP" || response[1] == "MD")
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessER: ", "Ingresé al primer if");
                     //stateError = true;
                     callbackError?.Invoke(string.Concat("Error, se alcanzó a entregar:", deliveryValue));
                 }
                 if (response[1] == "AP")
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessER: ", "Ingresé al segundo if");
-                   // stateError = true;
+                    // stateError = true;
                     callbackError?.Invoke("Error, en el billetero Aceptance");
                 }
                 else if (response[1] == "FATAL")
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessER: ", "Ingresé al else if");
                     Utilities.GoToInicial();
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessER: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -472,10 +473,8 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Ingresé");
                 if (response[1] == "DP")
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Ingresé al if DP");
                     deliveryValue += decimal.Parse(response[2]) * _mil;
                     callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _mil);
                     int idDenominacion = Utilities.getDescriptionEnum(response[2].Replace("\r", string.Empty));
@@ -493,12 +492,10 @@ namespace WPCamaraComercio.Classes
                     });
 
                     //payPadService.InsertarControlDispenser(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Salí del if DP");
 
                 }
                 else if (response[1] == "MD")
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Ingresé al else if MD");
                     decimal moneda = decimal.Parse(response[2]);
                     deliveryValue += decimal.Parse(response[2]) * _hundred;
                     callbackValueOut?.Invoke(Convert.ToDecimal(response[2]) * _hundred);
@@ -523,14 +520,11 @@ namespace WPCamaraComercio.Classes
 
 
                     //payPadService.InsertarControlMonedas(idDenominacion, Utilities.CorrespondentId2, 0, int.Parse(response[2]));
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Salí del else if MD");
-
                 }
                 else
                 {
                     if (response[1] == "AP")
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Ingresé al if AP");
                         enterValue += decimal.Parse(response[2]) * _mil;
                         callbackValueIn?.Invoke(Convert.ToDecimal(response[2]) * _mil);
 
@@ -549,12 +543,10 @@ namespace WPCamaraComercio.Classes
                         });
 
                         //payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Salí del if AP");
 
                     }
                     else if (response[1] == "MA")
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Ingresé al else if MA");
                         decimal moneda = decimal.Parse(response[2]);
                         enterValue += moneda;
                         callbackValueIn?.Invoke(Convert.ToDecimal(response[2]));
@@ -579,12 +571,10 @@ namespace WPCamaraComercio.Classes
                         });
 
                         //payPadService.InsertarControlAceptance(idDenominacion, Utilities.CorrespondentId2, 1);
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Salí del else if MA");
                     }
 
                     ValidateEnterValue();
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessUN: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -600,35 +590,28 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessTO: ", "Ingresé");
                 string responseFull;
                 if (response[1] == "OK")
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessTO: ", "Ingresé al if OK");
                     responseFull = string.Concat(response[2], ":", response[3]);
                     if (response[2] == "DP")
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ProcessTO: ", "Ingresé al if OK DP");
                         ConfigDataDispenser(responseFull, 1);
                     }
 
                     if (response[2] == "MD")
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ProcessTO: ", "Ingresé al if OK MD");
                         ConfigDataDispenser(responseFull);
                     }
                 }
                 else
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ProcessTO: ", "Ingresé al esle");
                     responseFull = string.Concat(response[2], ":", response[3]);
                     if (response[2] == "DP")
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ProcessTO: ", "Ingresé al if DP del esle");
                         ConfigDataDispenser(responseFull, 2);
                     }
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ProcessTO: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -648,10 +631,8 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("StartDispenser: ", "Ingresé");
                 dispenserValue = valueDispenser;
                 ConfigurateDispenser();
-                LogService.CreateLogsPeticionRespuestaDispositivos("StartDispenser: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -666,7 +647,6 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ConfigurateDispenser: ", "Ingresé");
                 if (dispenserValue > 0)
                 {
                     int amountCoins = Convert.ToInt32(dispenserValue % _mil);
@@ -692,7 +672,6 @@ namespace WPCamaraComercio.Classes
                         SendMessageCoins(_DispenserCoinOn + valuePayCoin.ToString());
                     }
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ConfigurateDispenser: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -708,13 +687,11 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("DispenserMoney: ", "Ingresé");
                 if (!string.IsNullOrEmpty(TOKEN))
                 {
                     string message = string.Format("{0}:{1}:{2}", _DispenserBillOn, TOKEN, valuePay);
                     SendMessageBills(message);
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("DispenserMoney: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -734,11 +711,9 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("StartAceptance: ", "Ingresé");
                 this.payValue = payValue;
                 SendMessageBills(_AceptanceBillOn);
                 SendMessageCoins(_AceptanceCoinOn);
-                LogService.CreateLogsPeticionRespuestaDispositivos("StartAceptance: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -753,7 +728,6 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ValidateEnterValue: ", "Ingresé");
                 decimal enterVal = enterValue;
                 if (enterValue >= payValue)
                 {
@@ -761,7 +735,6 @@ namespace WPCamaraComercio.Classes
                     enterValue = 0;
                     callbackTotalIn?.Invoke(enterVal);
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ValidateEnterValue: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -776,10 +749,8 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("StopAceptance: ", "Ingresé");
                 SendMessageBills(_AceptanceBillOFF);
                 SendMessageCoins(_AceptanceCoinOff);
-                LogService.CreateLogsPeticionRespuestaDispositivos("StopAceptance: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -801,63 +772,49 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Ingresé");
                 string[] values = data.Split(':')[1].Split(';');
                 if (isBX < 2)
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al primer if");
                     foreach (var value in values)
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al foreach");
                         int denominacion = int.Parse(value.Split('-')[0]);
                         int cantidad = int.Parse(value.Split('-')[1]);
                         deliveryVal += denominacion * cantidad;
                         if (denominacion < 6000)
                         {
-                            LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al if en foreach");
                             denominacion = int.Parse(denominacion.ToString().Substring(0, 1));
                         }
                         else
                         {
-                            LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al else en foreach");
                             denominacion = int.Parse(denominacion.ToString().Substring(0, 2));
                         }
                         int idDenominacion = Utilities.getDescriptionEnum(denominacion.ToString());
                     }
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Salí del foreach");
                 }
 
                 if (isBX == 0 || isBX == 2)
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al segundo if");
                     LogMessage += string.Concat(data.Replace("\r", string.Empty), "!");
                 }
 
                 if (!stateError)
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al tercer if");
-                    //if (deliveryVal == 50000) { deliveryVal = 2000; }
 
                     if (dispenserValue == deliveryVal)
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al if del tercer if");
                         if (isBX == 2 || isBX == 0)
                         {
-                            LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al if del if del tercer if");
                             callbackTotalOut?.Invoke(deliveryVal);
                         }
                     }
                 }
                 else
                 {
-                    LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al else del tercer if");
                     if (isBX == 2)
                     {
-                        LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Entré al if del else del tercer if");
                         callbackOut?.Invoke(deliveryVal);
                     }
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ConfigDataDispenser: ", "Salí");
             }
             catch (Exception ex)
             {
@@ -876,7 +833,6 @@ namespace WPCamaraComercio.Classes
         {
             try
             {
-                LogService.CreateLogsPeticionRespuestaDispositivos("ClosePorts: ", "Ingresé");
                 if (_serialPortBills.IsOpen)
                 {
                     _serialPortBills.Close();
@@ -886,7 +842,6 @@ namespace WPCamaraComercio.Classes
                 {
                     _serialPortCoins.Close();
                 }
-                LogService.CreateLogsPeticionRespuestaDispositivos("ClosePorts: ", "Salí");
             }
             catch (Exception ex)
             {

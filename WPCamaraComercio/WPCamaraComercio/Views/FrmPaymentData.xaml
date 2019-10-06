@@ -307,6 +307,14 @@
                 TextWrapping="Wrap"
                 k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="true"
                 />
+            <TextBlock VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,-60"
+                    FontSize="30"
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    Foreground="#FF840000"
+                    Text="Si tienes tu cédula, puedes escanearla para ingresar tus datos."/>
             <Button x:Name="BtnPay"
                 Grid.Row="7"
                 Grid.ColumnSpan="2"

@@ -138,6 +138,7 @@ namespace WPCamaraComercio.Views
         {
             ControlPeripheralsNotArduino.callbackStatusPrinter = Status =>
             {
+                ControlPeripheralsNotArduino.callbackStatusPrinter = null;
                 if (Status.STATUS == "OK")
                 {
                     navigationService.NavigationTo("ConsultWindow");
@@ -150,8 +151,8 @@ namespace WPCamaraComercio.Views
                     this.Opacity = 1;
                 }
             };
-            Utilities.controlNot.InitPortPrinter();            
-        } 
+            Utilities.controlNot.InitPortPrinter();
+        }
         #endregion
     }
 }

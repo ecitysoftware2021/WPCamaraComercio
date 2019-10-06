@@ -46,6 +46,15 @@ namespace WPCamaraComercio.Views
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Utilities.Timer(tbTimer);
+            Utilities.control.callbackDocument = Document =>
+            {
+                Dispatcher.BeginInvoke((Action)delegate
+                {
+                    TbxIdentification.Text = Document.Document;
+                    TbxData3.Text = Document.LastName;
+                    TbxData1.Text = Document.FirstName;
+                });
+            };
         }
         #endregion
 
@@ -89,7 +98,7 @@ namespace WPCamaraComercio.Views
         {
             try
             {
-                string Nombre,Apellido,Identificacion;
+                string Nombre, Apellido, Identificacion;
                 decimal Telefono;
 
                 if (Num == 0)
@@ -107,7 +116,7 @@ namespace WPCamaraComercio.Views
                     Telefono = Convert.ToDecimal(TbxData3dos.Text);
                 }
 
-                return await AdminPaypad.CreateTransaction(Identificacion,Nombre,Apellido,Telefono);
+                return await AdminPaypad.CreateTransaction(Identificacion, Nombre, Apellido, Telefono);
                 //CLSTransaction transaction = new CLSTransaction();
                 //transaction.IDCorresponsal = int.Parse(Utilities.GetConfiguration("IDCorresponsal"));
                 //transaction.IDTramite = int.Parse(Utilities.GetConfiguration("IDTramite"));
