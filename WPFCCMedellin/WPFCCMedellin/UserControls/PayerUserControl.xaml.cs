@@ -164,5 +164,10 @@ namespace WPFCCMedellin.UserControls
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
         }
+
+        private void Btn_exit_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+
+        }
     }
 }

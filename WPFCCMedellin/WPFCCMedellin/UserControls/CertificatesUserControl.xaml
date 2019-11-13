@@ -364,6 +364,7 @@
                                 </Expander>
 
                                 <TextBlock Text="Ver detalle"
+                                           Name="btn_details"
                                            FontSize="20"
                                            Tag="{Binding Data}"
                                            TextWrapping="Wrap"
@@ -373,7 +374,7 @@
                                            Grid.Column="3"
                                            FontWeight="Bold"
                                            Foreground="#FF840000"
-                                           StylusDown="TextBlock_StylusDown" />
+                                           TouchDown="Btn_details_TouchDown" />
                             </Grid>
                         </StackPanel>
                     </DataTemplate>

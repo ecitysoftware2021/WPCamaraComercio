@@ -31,7 +31,7 @@ namespace WPFCCMedellin.Windows
         {
             try
             {
-                if (type == ETypeCertificate.merchant)
+                if (type == ETypeCertificate.Merchant)
                 {
                     var infoMerchant = (ResultadoDetalle)data;
                     viewModel = new DetailViewModel

@@ -277,5 +277,20 @@ namespace WPFCCMedellin.UserControls
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
         }
+
+        private void Btn_exit_TouchDown(object sender, TouchEventArgs e)
+        {
+
+        }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Expander_Collapsed(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

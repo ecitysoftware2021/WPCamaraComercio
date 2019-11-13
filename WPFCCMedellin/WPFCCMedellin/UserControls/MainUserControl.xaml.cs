@@ -178,7 +178,7 @@ namespace WPFCCMedellin.UserControls
                 {
                     _validatePaypad = false;
                     _imageSleader.Stop();
-                    Utilities.navigator.Navigate(UserControlView.Menu, true);
+                    Utilities.navigator.Navigate(UserControlView.Consult, true);
                 }
             }
             catch (Exception ex)
