@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CancelTransaction" xml:space="preserve">
+    <value>¿Está seguro que desea cancelar la transacción?</value>
+  </data>
+  <data name="ConsignAmount" xml:space="preserve">
+    <value>¿Desea consignar el monto ingresado?</value>
+  </data>
+  <data name="EnterField" xml:space="preserve">
+    <value>Debe ingresar {0}.</value>
+  </data>
+  <data name="EnterMonyDispenser" xml:space="preserve">
+    <value>Ingrese los billetes y monedas que se indican contención, en los dispositivos dispensador de billetes y dispensador de monedas</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ha ocurrido un error! Por favor intentelo más tarde</value>
+  </data>
+  <data name="ErrorDates" xml:space="preserve">
+    <value>Usuario y/o contraseña incorrectos</value>
+  </data>
+  <data name="ErrorPayment" xml:space="preserve">
+    <value>No se puede continuar con la transacción. Se consignara el valor ingresado</value>
+  </data>
+  <data name="ErrorServiceLogin" xml:space="preserve">
+    <value>Error con el servicio de Login</value>
+  </data>
+  <data name="ErrorTransaction" xml:space="preserve">
+    <value>Se a producido un error, No se pudo completar la transacción</value>
+  </data>
+  <data name="FinishTransaction" xml:space="preserve">
+    <value>Señor usuario estamos Finalizando la transacción. Espere un momento.</value>
+  </data>
+  <data name="IncompleteMony" xml:space="preserve">
+    <value>No se entrego completamente el dinero \n</value>
+  </data>
+  <data name="InformationError" xml:space="preserve">
+    <value>El error se precento al inicio del cajero</value>
+  </data>
+  <data name="LoadInformation" xml:space="preserve">
+    <value>Se esta validando y almacenando la información, espere un momento</value>
+  </data>
+  <data name="NoContinue" xml:space="preserve">
+    <value>No se pudo continuar entregando el dinero \n</value>
+  </data>
+  <data name="NoContinueTransaction" xml:space="preserve">
+    <value>No se puede continuar con la transacción. Intentelo más tarde</value>
+  </data>
+  <data name="NoGoInitial" xml:space="preserve">
+    <value>No se logro iniciar el paypad</value>
+  </data>
+  <data name="NoInformation" xml:space="preserve">
+    <value>Sin información para mostrar</value>
+  </data>
+  <data name="NoInsertPayment" xml:space="preserve">
+    <value>No se logro incertar el pagador con id</value>
+  </data>
+  <data name="NoInsertTransaction" xml:space="preserve">
+    <value>No se logro insertar la transaccion</value>
+  </data>
+  <data name="NoService" xml:space="preserve">
+    <value>El cajero está fuera de servicio en este momento, por favor intente más tarde</value>
+  </data>
+  <data name="NoveltyTransation" xml:space="preserve">
+    <value>Transaccion finaliso con novedad</value>
+  </data>
+  <data name="OutService" xml:space="preserve">
+    <value>El cajero está fuera de servicio en este momento, por favor intente más tarde</value>
+  </data>
+  <data name="PaypadGoAdmin" xml:space="preserve">
+    <value>Dispositivo entra en modo administrativo</value>
+  </data>
+  <data name="PaypadStarSusses" xml:space="preserve">
+    <value>Dispositivo inicia correctamente</value>
+  </data>
+  <data name="PrinterErrorTiketBlak" xml:space="preserve">
+    <value>Error de etiqueta negra</value>
+  </data>
+  <data name="PrinterExhaustPapper" xml:space="preserve">
+    <value>El papel se agotará</value>
+  </data>
+  <data name="PrinterNoPapper" xml:space="preserve">
+    <value>No hay papel en la impresora</value>
+  </data>
+  <data name="PrinterOverheatingHeader" xml:space="preserve">
+    <value>Sobrecalentamiento de cabezal de impresión</value>
+  </data>
+  <data name="PrintErrorLibrary" xml:space="preserve">
+    <value>La impresora y la biblioteca de llamadas no coinciden</value>
+  </data>
+  <data name="PrintHeaderOpen" xml:space="preserve">
+    <value>Encabezado de impresión abierto</value>
+  </data>
+  <data name="PrintNoConect" xml:space="preserve">
+    <value>La impresora no está conectada o encendida</value>
+  </data>
+  <data name="PrintNormal" xml:space="preserve">
+    <value>La impresora está normal</value>
+  </data>
+  <data name="PrintReset" xml:space="preserve">
+    <value>Cuchillo de corte no RESET</value>
+  </data>
+  <data name="RemoveMonyAceptance" xml:space="preserve">
+    <value>Retire los billetes y monedas que se indican a continuación, en los dispositivos aceptador de billetes y aceptador de monedas</value>
+  </data>
+  <data name="RemoveMonyDispenser" xml:space="preserve">
+    <value>Retire los billetes y monedas que se indican a continuación de los dispositivos dispensador de billetes y dispensador de monedas</value>
+  </data>
+  <data name="StandarError" xml:space="preserve">
+    <value>Ocurrio un error inesperado</value>
+  </data>
+  <data name="SussesTransaction" xml:space="preserve">
+    <value>Transaccion exitosa</value>
+  </data>
+  <data name="TransactionFinish" xml:space="preserve">
+    <value>La Transacción a finalizado correctamente, La aplicación se reiniciara...</value>
+  </data>
+  <data name="TransactionFinishSucces" xml:space="preserve">
+    <value>Transaccion finalizada correctamente</value>
+  </data>
+  <data name="WaitConfigurate" xml:space="preserve">
+    <value>Espere mientras se configura el dispositivo para iniciar</value>
+  </data>
+  <data name="MessageReturnMony" xml:space="preserve">
+    <value>Estamos contando su dinero, espere unos segundos</value>
+  </data>
+  <data name="TransactionCancel" xml:space="preserve">
+    <value>Transacción cancelada</value>
+  </data>
+  <data name="ErrorNoPaper" xml:space="preserve">
+    <value>El dispositivo no puede imprimir el comprobante en este momento, desea con tinuar</value>
+  </data>
+  <data name="EnterId" xml:space="preserve">
+    <value>Ingrese NIT/Cédula sin dígito de verificación</value>
+  </data>
+  <data name="ErrorId" xml:space="preserve">
+    <value>Debe ingresar un nit valido.</value>
+  </data>
+  <data name="ErrorName" xml:space="preserve">
+    <value>Debe ingresar un nombre valido.</value>
+  </data>
+  <data name="ConsultingConinsidences" xml:space="preserve">
+    <value>Señor usuario estamos consultando las coincidencias. Regálenos unos segundos</value>
+  </data>
+  <data name="ErrorCoincidences" xml:space="preserve">
+    <value>Señor usuario, no se encontraron coincidencias, vuelva a intentarlo</value>
+  </data>
+  <data name="ErrorFoundFiles" xml:space="preserve">
+    <value>En el momento no hay certificados para generar, vuelva pronto.</value>
+  </data>
+  <data name="NoInfoShow" xml:space="preserve">
+    <value>No hay datos para mostrar en estos momentos.</value>
+  </data>
+  <data name="EnterName" xml:space="preserve">
+    <value>Ingrese un nombre válido para buscar</value>
+  </data>
+</root>

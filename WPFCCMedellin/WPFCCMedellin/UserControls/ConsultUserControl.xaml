@@ -1,0 +1,354 @@
+﻿<UserControl x:Class="WPFCCMedellin.UserControls.ConsultUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:k="clr-namespace:WPFCCMedellin.Keyboard" 
+             xmlns:local="clr-namespace:WPFCCMedellin.UserControls"
+             mc:Ignorable="d"
+             Height="1920" 
+             Width="1080" >
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/Backgrounds/bg-blanck.jpg"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="700" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="300" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Image Source="/Images/Buttons/btn-exit.png"
+                   Name="btn_exit"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Bottom"
+                   Grid.Column="4"
+                   Width="250"
+                   Margin="0,0,20,20"
+                   TouchDown="Btn_exit_TouchDown" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="Buscar por:" 
+                    Foreground="Black" 
+                    FontSize="55" 
+                    FontWeight="Bold" 
+                    Margin="0,0,0,350"/>
+
+            <Image  x:Name="check_identification"
+                    Source="{Binding SourceCheckId}"
+                    Tag="1"
+                    Width="60"
+                    Height="60"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="120,0,0,150"
+                    TouchDown="Select_TouchDown" />
+
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="Identificación" 
+                    Foreground="Black" 
+                    FontSize="50" 
+                    Margin="230,0,0,100"/>
+
+            <Image  x:Name="check_name"
+                    Source="{Binding SourceCheckName}"
+                    Width="60"
+                    Height="60"
+                    Tag="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0,0,320,150" 
+                    TouchDown="Select_TouchDown"/>
+
+            <TextBlock TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="Nombre" 
+                    Foreground="Black" 
+                    FontSize="50" 
+                    Margin="0,0,100,100"/>
+
+            <TextBlock x:Name="lbl_tittle"
+                    TextWrapping="WrapWithOverflow" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    TextAlignment="Center"
+                    Text="{Binding Message}" 
+                    Foreground="Black" 
+                    FontSize="45" 
+                    FontWeight="Bold" 
+                    Margin="0,280,0,100"
+                    Height="122"
+                    Width="850" />
+
+            <TextBox x:Name="text_name" 
+                     VerticalAlignment="Bottom" 
+                     HorizontalAlignment="Left" 
+                     TextAlignment="Center"
+                     Margin="100,0,0,100" 
+                     Width="500"
+                     Height="120" 
+                     TextWrapping="Wrap"
+                     TabIndex="0"
+                     FontSize="42" 
+                     Foreground="Black"
+                     FontWeight="Bold"
+                     Visibility="{Binding VisibilityName}"
+                     TextChanged="txt_TextChanged" />
+
+            <TextBox x:Name="text_id"
+                     VerticalAlignment="Bottom" 
+                     HorizontalAlignment="Left" 
+                     TextAlignment="Center"
+                     Margin="100,0,0,100" 
+                     Width="500"
+                     Height="100" 
+                     TextWrapping="Wrap"
+                     TabIndex="1"
+                     FontSize="42" 
+                     Foreground="Black"
+                     FontWeight="Bold"
+                     Visibility="{Binding VisibilityId}"
+                     TextChanged="txt_TextChanged" />
+
+
+            <TextBlock Name="txt_error"
+                    FontSize="25"
+                    TextAlignment="Center"
+                    Margin="100,0,0,70"
+                    FontFamily="Arial"
+                    FontWeight="Bold"
+                    Foreground="Red"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"  />
+
+            <Image x:Name="btn_consult"
+                   Source="../Images/Buttons/btn-consult.png"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Bottom" 
+                   Width="350"
+                   Height="100" 
+                   Margin="0,0,100,90" 
+                   TouchDown="BtnConsult_TouchDown" />
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="colum_1"
+                       Text="{Binding Colum1}"
+                       FontSize="35"
+                       TextAlignment="Center"
+                       Grid.Column="0"
+                       FontFamily="Myriad Pro"
+                       FontWeight="Bold"
+                       Foreground="#FF606060"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center" />
+
+            <TextBlock Name="colum_2"
+                       Text="{Binding Colum2}"
+                       FontSize="35"
+                       TextAlignment="Center"
+                       Grid.Column="1"
+                       TextWrapping="Wrap"
+                       FontFamily="Myriad Pro"
+                       FontWeight="Bold"
+                       Foreground="#FF606060"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center" />
+
+            <TextBlock Name="colum_3"
+                       Text="{Binding Colum3}"
+                       FontSize="35"
+                       TextAlignment="Center"
+                       Grid.Column="2"
+                       FontFamily="Myriad Pro"
+                       FontWeight="Bold"
+                       Foreground="#FF606060"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center" />
+
+            <TextBlock Name="colum_4"
+                       Text="{Binding Colum4}"
+                       FontSize="35"
+                       TextAlignment="Center"
+                       Grid.Column="3"
+                       FontFamily="Myriad Pro"
+                       FontWeight="Bold"
+                       Foreground="#FF606060"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center" />
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <ListView x:Name="lv_data_list" 
+                    Margin="0,20,0,0"
+                    Background="Red"
+                    BorderBrush="Transparent"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top"
+                    ItemsSource="{Binding}" 
+                    SelectionChanged="Lv_data_list_SelectionChanged">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1"
+                                 HorizontalAlignment="Center"
+                                     VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Background="Transparent"
+                            Margin="0,0,0,0"
+                            Width="1060"
+                            Height="50" >
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="80" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Item1}"
+                                       FontSize="30"
+                                       FontFamily="Myriad Pro"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,0"
+                                       Foreground="#606060"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Grid.Column="0" />
+
+                            <TextBlock Text="{Binding Item2}"
+                                       FontSize="30"
+                                       FontFamily="Myriad Pro"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,0"
+                                       Foreground="#606060"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Grid.Column="1" />
+
+                            <TextBlock Text="{Binding Item3}"
+                                       FontSize="30"
+                                       FontFamily="Myriad Pro"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,0"
+                                       Foreground="#606060"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontWeight="Bold"
+                                       Grid.Column="2" />
+
+                            <TextBlock Text="{Binding Item4, StringFormat={}{0:C0}}"
+                                       FontSize="32"
+                                       FontFamily="Myriad Pro"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,0"
+                                       Foreground="#606060"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontWeight="Bold"
+                                       Grid.Column="3" />
+
+                            <Image  Source="{Binding ImageSourse}"
+                                        Width="40"
+                                        Height="40"
+                                        Grid.Column="4"
+                                        Margin="0,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="4" Visibility="{Binding VisibilityPagination}">
+            <Image
+                HorizontalAlignment="Center" 
+                Name="btn_previus" 
+                VerticalAlignment="Top"
+                Tag="2"
+                Margin="0,0,30,0"
+                Height="120"
+                Width="120"
+                Visibility="{Binding VisibilityPrevius}"
+                TouchDown="Btn_pagination_TouchDown"
+                Source="/Images/Buttons/btn-left.png" >
+            </Image>
+
+            <Image
+                Margin="0,0,30,0"
+                HorizontalAlignment="Right"
+                Name="btn_next" 
+                Tag="1"
+                VerticalAlignment="Top"
+                Height="120" 
+                Width="120" 
+                Visibility="{Binding VisibilityNext}"
+                TouchDown="Btn_pagination_TouchDown"
+                Source="/Images/Buttons/btn-right.png" >
+            </Image>
+
+            <TextBlock 
+                Height="20" 
+                Margin="400,50,0,0"
+                Name="lbl_currentPage" 
+                VerticalAlignment="Top"
+                FontSize="18"
+                Text="{Binding CurrentPage}"
+                HorizontalAlignment="Center"/>
+
+            <TextBlock 
+                Height="22" 
+                HorizontalAlignment="Center" 
+                Margin="450,50,0,0" 
+                Name="textBlock3" 
+                FontSize="20"
+                VerticalAlignment="Top" 
+                FontWeight="Bold" 
+                Text="/"  />
+
+            <TextBlock 
+                Height="20" 
+                Text="{Binding TotalPage}"
+                HorizontalAlignment="Center" 
+                Visibility="Visible" 
+                Margin="500,50,0,0" 
+                Name="lbl_totalPage" 
+                VerticalAlignment="Top" 
+                FontSize="18"  />
+        </Grid>
+    </Grid>
+</UserControl>

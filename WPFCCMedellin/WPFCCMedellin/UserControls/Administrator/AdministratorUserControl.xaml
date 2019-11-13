@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="WPFCCMedellin.UserControls.Administrator.AdministratorUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFCCMedellin.UserControls.Administrator"
+            mc:Ignorable="d"
+        Height="1920" 
+        Width="1080">
+    <UserControl.Background>
+        <ImageBrush ImageSource="/WPFDavivienda;component/Images/Backgrounds/bg-blanck.jpg"/>
+    </UserControl.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="500" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="500" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <TextBlock x:Name="txtTittle"
+                Text="MODO ADMINISTRADOR"
+                FontSize="50"
+                TextAlignment="Center"
+                Margin="0,60,0,0"
+                FontFamily="Myriad Pro"
+                TextWrapping="WrapWithOverflow"
+                FontWeight="Bold"
+                Foreground="White"
+                VerticalAlignment="Top"
+                HorizontalAlignment="center" />
+
+            <TextBlock x:Name="txtDescription"
+                Text=""
+                FontSize="40"
+                TextAlignment="Center"
+                Margin="0,50,0,0"
+                Width="850"
+                TextWrapping="WrapWithOverflow"
+                FontFamily="Myriad Pro"
+                FontWeight="Bold"
+                Foreground="WhiteSmoke"
+                VerticalAlignment="Center"
+                HorizontalAlignment="center" />
+
+            <TextBlock 
+                Text="Denominación"
+                FontSize="48"
+                TextAlignment="Center"
+                Margin="60,0,0,0"
+                FontFamily="Myriad Pro"
+                FontWeight="Bold"
+                Foreground="#FF606060"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left" />
+
+            <TextBlock 
+                Text="Cantidad"
+                FontSize="48"
+                TextAlignment="Center"
+                Margin="40,0,0,0"
+                FontFamily="Myriad Pro"
+                FontWeight="Bold"
+                Foreground="#FF606060"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center" />
+
+            <TextBlock 
+                Text="Total($)"
+                FontSize="48"
+                TextAlignment="Center"
+                Margin="0,0,100,0"
+                FontFamily="Myriad Pro"
+                FontWeight="Bold"
+                Foreground="#FF606060"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right" />
+        </Grid>
+        <Grid Grid.Row="2">
+            <ListView x:Name="lv_denominations" 
+                    Margin="0,0,0,0"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top"
+                    ItemsSource="{Binding}">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Center"
+                            VerticalAlignment="Top" Background="Transparent"
+                            Margin="0,0,0,0"
+                            Width="1000"
+                            Height="50">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock 
+                                    Text="{Binding VALUE, StringFormat={}{0:C0}}"
+                                    FontSize="35"
+                                    FontFamily="Myriad Pro"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap"
+                                    Margin="0,0,0,0"
+                                    Foreground="White"
+                                    Width="500"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Grid.Column="0" />
+                            <TextBlock 
+                                    Text="{Binding AMOUNT_NEW}"
+                                    FontSize="35"
+                                     FontFamily="Myriad Pro"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap"
+                                    Margin="20,0,0,0"
+                                    Foreground="White"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Grid.Column="1" />
+                            <TextBlock 
+                                    Text="{Binding TOTAL_AMOUNT, StringFormat={}{0:C0}}"
+                                    FontSize="35"
+                                    FontFamily="Myriad Pro"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap"
+                                    Margin="20,0,0,0"
+                                    Foreground="White"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Grid.Column="2" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Row="3">
+
+            <TextBlock VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="130,80,0,0"
+                    FontSize="50"
+                    FontWeight="Bold"
+                    FontFamily="Myriad Pro"
+                    Foreground="White"
+                    Text="Valor Total"/>
+
+            <TextBlock Name="txtValor"
+                    Text="{Binding TOTAL, StringFormat={}{0:C0}}"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    Margin="150,80,0,0"
+                    FontSize="50"
+                    FontWeight="Bold"
+                    FontFamily="Myriad Pro"
+                    Foreground="White" />
+
+            <Image x:Name="btnNext"
+                   Source="/Images/Buttons/b-continue.png"
+                   Stretch="None"
+                   Width="560"
+                   Height="110"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,0,0"
+                   PreviewStylusDown="BtnRetirarDinero_PreviewStylusDown" />
+
+            <Image x:Name="btnCancell"
+                   Source="/Images/Buttons/b-cancelar.png"
+                   Stretch="None"
+                   Width="560"
+                   Height="110"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,0,0"
+                   PreviewStylusDown="BtnExit_PreviewStylusDown" />
+        </Grid>
+    </Grid>
+</UserControl>
