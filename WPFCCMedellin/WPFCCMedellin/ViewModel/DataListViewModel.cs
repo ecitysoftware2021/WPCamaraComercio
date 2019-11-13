@@ -369,7 +369,10 @@ namespace WPFCCMedellin.ViewModel
                     VisibilityPagination = Visibility.Hidden;
                     VisibilityNext = Visibility.Hidden;
                     VisibilityPrevius = Visibility.Hidden;
-                    DataList.Clear();
+                    if (DataList != null && DataList.Count > 0)
+                    {
+                        DataList.Clear();
+                    }
                 }
             }
             catch (Exception ex)

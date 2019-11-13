@@ -202,7 +202,7 @@ namespace WPFCCMedellin.Classes
             {
                 //if (_controlPeripherals == null)
                 //{
-                //    _controlPeripherals = new ControlPeripherals(Utilities.GetConfiguration("PortBills"), 
+                //    _controlPeripherals = new ControlPeripherals(Utilities.GetConfiguration("PortBills"),
                 //        Utilities.GetConfiguration("PortCoins"), Utilities.GetConfiguration("ValuesDispenser"));
                 //}
 
@@ -224,8 +224,8 @@ namespace WPFCCMedellin.Classes
                 //    Finish(isSucces);
                 //};
                 //_controlPeripherals.Start();
-                Finish(true);
 
+                Finish(true);
             }
             catch (Exception ex)
             {
@@ -236,7 +236,7 @@ namespace WPFCCMedellin.Classes
 
         private void Finish(bool isSucces)
         {
-            //_controlPeripherals.callbackToken = null;
+           // _controlPeripherals.callbackToken = null;
             callbackResult?.Invoke(isSucces);
         }
 

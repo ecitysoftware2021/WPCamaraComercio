@@ -289,6 +289,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Keyboard\" />
+    <Folder Include="Images\Publish\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Others\backspace.png" />
@@ -329,6 +330,9 @@
       <DependentUpon>PayPlusLocalADO.edmx</DependentUpon>
       <LastGenOutput>PayPlusLocalADO.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\Backgrounds\bg-alert-blanck.jpg" />
+    <Resource Include="Images\Buttons\btn-cancel-pay.png" />
+    <Resource Include="Images\Buttons\btn-cancel.png" />
     <Resource Include="Images\Buttons\btn-pay.png" />
     <Resource Include="Images\Backgrounds\bg-alert-info.png" />
     <Resource Include="Images\Buttons\btn-details.png" />

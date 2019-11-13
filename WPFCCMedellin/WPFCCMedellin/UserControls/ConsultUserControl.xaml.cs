@@ -286,7 +286,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                var typeConsul = (int)((Image)sender).Tag;
+                var typeConsul = int.Parse(((Image)sender).Tag.ToString());
 
                 if (typeConsul != (int)viewModel.TypeConsult)
                 {

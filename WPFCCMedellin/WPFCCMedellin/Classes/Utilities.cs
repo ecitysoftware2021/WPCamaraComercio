@@ -70,15 +70,15 @@ namespace WPFCCMedellin.Classes
 
                 if (type == EModalType.Error)
                 {
-                    model.ImageModal = ImagesUrlResource.AlertError;
+                    model.ImageModal = ImagesUrlResource.AlertBlanck;
                 }
                 else if (type == EModalType.Information)
                 {
-                    model.ImageModal = ImagesUrlResource.AlertInfo;
+                    model.ImageModal = ImagesUrlResource.AlertBlanck;
                 }
                 else if (type == EModalType.NoPaper)
                 {
-                    model.ImageModal = ImagesUrlResource.AlertInfo;
+                    model.ImageModal = ImagesUrlResource.AlertBlanck;
                 }
 
                 Application.Current.Dispatcher.Invoke(delegate

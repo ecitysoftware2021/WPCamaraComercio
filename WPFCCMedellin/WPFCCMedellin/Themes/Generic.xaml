@@ -296,7 +296,7 @@
                                                 <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top"   >.</TextBlock>
                                             </Button>-->
                                             <Image 
-                                                Source="/Images/keyboard/x.png"
+                                                Source="/Images/Others/x.png"
                                                 Tag="Clear"  
                                                     Width="50" 
                                                     Height="50"
@@ -307,7 +307,7 @@
                                                 <TextBlock    HorizontalAlignment="Stretch" VerticalAlignment="Top"   ></TextBlock>
                                             </Button>
 
-                                            <Image Source="/Images/keyboard/ok.png"
+                                            <Image Source="/Images/Others/ok.png"
                                                 Tag="Enter" 
                                                     Width="50" 
                                                     Height="50"
@@ -405,7 +405,7 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" >
                                             <Image 
-                                                Source="/Images/keyboard/borrar.png"
+                                                Source="/Images/Others/x.png"
                                                 Tag="Backspace"   
                                                 Width="60" 
                                                 Height="60"
@@ -414,7 +414,7 @@
                                             <Button Style="{StaticResource InformButton}" Tag="0" HorizontalAlignment="Stretch" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="60" Margin="5,5,5,0"  Height="60">
                                                 <TextBlock    HorizontalAlignment="Stretch" VerticalAlignment="Top"   >0</TextBlock>
                                             </Button>
-                                            <Image Source="/Images/keyboard/ok.png"
+                                            <Image Source="/Images/Others/ok.png"
                                                 Tag="Enter" 
                                                 Width="60" 
                                                 Height="60"
