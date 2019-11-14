@@ -21,7 +21,7 @@ namespace WPFCCMedellin.Services
 
         public ApiIntegration()
         {
-            basseAddress = Encryptor.Decrypt(Utilities.GetConfiguration("basseAddressIntegration", true));
+            basseAddress = Utilities.GetConfiguration("basseAddressIntegration", true);
         }
 
         public async Task<ResponseApi> GetData(object requestData, string controller)

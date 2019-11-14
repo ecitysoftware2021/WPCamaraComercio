@@ -330,6 +330,7 @@
       <DependentUpon>PayPlusLocalADO.edmx</DependentUpon>
       <LastGenOutput>PayPlusLocalADO.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\Others\img-split.png" />
     <Resource Include="Images\Backgrounds\bg-alert-blanck.jpg" />
     <Resource Include="Images\Buttons\btn-cancel-pay.png" />
     <Resource Include="Images\Buttons\btn-cancel.png" />
