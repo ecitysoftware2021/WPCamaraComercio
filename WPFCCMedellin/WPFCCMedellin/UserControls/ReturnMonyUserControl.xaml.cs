@@ -38,7 +38,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                if (transaction.Payment == null && transaction.Type == ETransactionType.Withdrawal)
+                if (transaction.Payment == null)
                 {
                     this.viewModel = new PaymentViewModel
                     {

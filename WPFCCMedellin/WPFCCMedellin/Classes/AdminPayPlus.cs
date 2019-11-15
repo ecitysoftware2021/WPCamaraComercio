@@ -200,32 +200,31 @@ namespace WPFCCMedellin.Classes
         {
             try
             {
-                //if (_controlPeripherals == null)
-                //{
-                //    _controlPeripherals = new ControlPeripherals(Utilities.GetConfiguration("PortBills"),
-                //        Utilities.GetConfiguration("PortCoins"), Utilities.GetConfiguration("ValuesDispenser"));
-                //}
+                if (_controlPeripherals == null)
+                {
+                    _controlPeripherals = new ControlPeripherals(Utilities.GetConfiguration("PortBills"),
+                        Utilities.GetConfiguration("PortCoins"), Utilities.GetConfiguration("ValuesDispenser"));
+                }
 
-                //_controlPeripherals.callbackError = error =>
-                //{
-                //    SaveLog(new RequestLogDevice
-                //    {
-                //        Code = "",
-                //        Date = DateTime.Now,
-                //        Description = error.Item2,
-                //        Level = ELevelError.Strong
-                //    }, ELogType.Device);
-                //    Finish(false);
-                //};
+                _controlPeripherals.callbackError = error =>
+                {
+                    SaveLog(new RequestLogDevice
+                    {
+                        Code = "",
+                        Date = DateTime.Now,
+                        Description = error.Item2,
+                        Level = ELevelError.Strong
+                    }, ELogType.Device);
+                    Finish(false);
+                };
 
-                //_controlPeripherals.callbackToken = isSucces =>
-                //{
-                //    _controlPeripherals.callbackError = null;
-                //    Finish(isSucces);
-                //};
-                //_controlPeripherals.Start();
+                _controlPeripherals.callbackToken = isSucces =>
+                {
+                    _controlPeripherals.callbackError = null;
+                    Finish(isSucces);
+                };
+                _controlPeripherals.Start();
 
-                Finish(true);
             }
             catch (Exception ex)
             {
@@ -236,7 +235,7 @@ namespace WPFCCMedellin.Classes
 
         private void Finish(bool isSucces)
         {
-           // _controlPeripherals.callbackToken = null;
+            _controlPeripherals.callbackToken = null;
             callbackResult?.Invoke(isSucces);
         }
 
@@ -369,7 +368,7 @@ namespace WPFCCMedellin.Classes
             {
                 if (transaction != null)
                 {
-                    transaction.IsReturn = await ValidateMoney(transaction);
+                 //   transaction.IsReturn = await ValidateMoney(transaction);
 
                     if (getConsecutive)
                     {
@@ -418,7 +417,7 @@ namespace WPFCCMedellin.Classes
                                 AMOUNT = transaction.Amount,
                                 TRANSACTION_ID = data.ID,
                                 REFERENCE = transaction.reference,
-                                OBSERVATION = transaction.consecutive.ToString(),
+                                OBSERVATION = transaction.Enrollment.ToString(),
                                 TRANSACTION_DESCRIPTION_ID = 0,
                                 STATE = true
                             };

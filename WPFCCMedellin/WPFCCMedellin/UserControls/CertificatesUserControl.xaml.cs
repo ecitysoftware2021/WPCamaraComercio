@@ -69,7 +69,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                Utilities.ShowDetailsModal(transaction.Files[0], viewModel.TypeCertificates);
+                    Utilities.ShowDetailsModal(transaction.Files[0], ETypeCertificate.Establishment);
             }
             catch (Exception ex)
             {
@@ -278,6 +278,7 @@ namespace WPFCCMedellin.UserControls
                 if (transaction.Products != null && transaction.Products.Count > 0)
                 {
                     transaction.Files = null;
+                    transaction.Amount = viewModel.Amount;
 
                     Utilities.navigator.Navigate(UserControlView.Payer, true, transaction);
                 }
@@ -301,6 +302,21 @@ namespace WPFCCMedellin.UserControls
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Btn_details2_TouchDown(object sender, TouchEventArgs e)
+        {
+            try
+            {
+                if (((TextBlock)sender).Tag != null)
+                {
+                    Utilities.ShowDetailsModal(((TextBlock)sender).Tag, ETypeCertificate.Merchant);
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
         }
     }
 }

@@ -61,7 +61,7 @@ namespace WPFCCMedellin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Images/Backgrounds/bg-alert-blanck.jpg.
+        ///   Looks up a localized string similar to Images/Backgrounds/bg-alert-blanck.png.
         /// </summary>
         internal static string AlertBlanck {
             get {
@@ -70,7 +70,7 @@ namespace WPFCCMedellin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Images/Backgrounds/bg-alert-error.jpg.
+        ///   Looks up a localized string similar to Images/Backgrounds/bg-alert-error.png.
         /// </summary>
         internal static string AlertError {
             get {
@@ -79,7 +79,7 @@ namespace WPFCCMedellin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Images/Backgrounds/bg-alert-info.jpg.
+        ///   Looks up a localized string similar to Images/Backgrounds/bg-alert-info.png.
         /// </summary>
         internal static string AlertInfo {
             get {

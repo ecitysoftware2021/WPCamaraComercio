@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Windows;
 using System.Windows.Threading;
 using WPFCCMedellin.Classes.Printer;
@@ -70,15 +72,15 @@ namespace WPFCCMedellin.Classes
 
                 if (type == EModalType.Error)
                 {
-                    model.ImageModal = ImagesUrlResource.AlertBlanck;
+                    model.ImageModal = ImagesUrlResource.AlertError;
                 }
                 else if (type == EModalType.Information)
                 {
-                    model.ImageModal = ImagesUrlResource.AlertBlanck;
+                    model.ImageModal = ImagesUrlResource.AlertInfo;
                 }
                 else if (type == EModalType.NoPaper)
                 {
-                    model.ImageModal = ImagesUrlResource.AlertBlanck;
+                    model.ImageModal = ImagesUrlResource.AlertInfo;
                 }
 
                 Application.Current.Dispatcher.Invoke(delegate
@@ -217,15 +219,15 @@ namespace WPFCCMedellin.Classes
             T response = default(T);
             try
             {
-                using (StreamReader file = new StreamReader(path))
+                using (StreamReader file = new StreamReader(path, Encoding.UTF8))
                 {
                     try
                     {
-                        if (string.IsNullOrEmpty(file.ReadToEnd().ToString()))
+                        var json = file.ReadToEnd().ToString();
+                        if (!string.IsNullOrEmpty(json))
                         {
-                            response = JsonConvert.DeserializeObject<T>(file.ReadToEnd().ToString());
+                            response = JsonConvert.DeserializeObject<T>(json);
                         }
-                        
                     }
                     catch (InvalidOperationException ex)
                     {

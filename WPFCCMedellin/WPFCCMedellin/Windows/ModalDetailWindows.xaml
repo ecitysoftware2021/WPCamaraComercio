@@ -23,7 +23,7 @@
 
         <Grid Grid.Row="1" Margin="120,0,120,0">
             <Grid.Background>
-                <ImageBrush ImageSource="/Images/Backgrounds/bg-alert-info.png"/>
+                <ImageBrush ImageSource="/Images/Backgrounds/bg-alert-detail.png"/>
             </Grid.Background>
 
             <TextBlock TextWrapping="Wrap" 

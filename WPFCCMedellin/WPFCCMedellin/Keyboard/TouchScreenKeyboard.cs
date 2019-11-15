@@ -32,7 +32,7 @@ namespace WPFCCMedellin.Keyboard
             set { _positionY = value; }
         }
 
-        private static int _positionX = 0;
+        private static int _positionX = 40;
 
         public static int PositionX
         {
@@ -40,7 +40,7 @@ namespace WPFCCMedellin.Keyboard
             set { _positionX = value; }
         }
 
-        private static double _WidthTouchKeyboard = 630;
+        private static double _WidthTouchKeyboard = 615;
 
         public static double WidthTouchKeyboard
         {

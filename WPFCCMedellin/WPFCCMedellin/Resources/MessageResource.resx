@@ -270,4 +270,7 @@
   <data name="EnterName" xml:space="preserve">
     <value>Ingrese un nombre válido para buscar</value>
   </data>
+  <data name="InfoIncorrect" xml:space="preserve">
+    <value>Se ha ingresado informacion incorrecta, por fabor validar la infomacion y volver a intentarlo</value>
+  </data>
 </root>

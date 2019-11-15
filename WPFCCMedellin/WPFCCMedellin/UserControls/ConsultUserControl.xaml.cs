@@ -313,6 +313,9 @@ namespace WPFCCMedellin.UserControls
                         viewModel.VisibilityId = Visibility.Visible;
                         viewModel.VisibilityName = Visibility.Hidden;
 
+                        text_id.Text = "";
+                        text_name.Text = "";
+
                         viewModel.SourceCheckId = ImagesUrlResource.ImageCheckIn;
                         viewModel.SourceCheckName = ImagesUrlResource.ImageCheckOut;
                         viewModel.Tittle = MessageResource.EnterId;
@@ -322,6 +325,9 @@ namespace WPFCCMedellin.UserControls
                         viewModel.TypeConsult = EtypeConsult.Name;
                         viewModel.VisibilityId = Visibility.Hidden;
                         viewModel.VisibilityName = Visibility.Visible;
+
+                        text_id.Text = "";
+                        text_name.Text = "";
 
                         viewModel.SourceCheckId = ImagesUrlResource.ImageCheckOut;
                         viewModel.SourceCheckName = ImagesUrlResource.ImageCheckIn;
@@ -352,6 +358,13 @@ namespace WPFCCMedellin.UserControls
             try
             {
                 txt_error.Text = "";
+                if (viewModel.TypeConsult == EtypeConsult.Id)
+                {
+                    if (text_id.Text.Length > 12)
+                    {
+                        text_id.Text = text_id.Text.Substring(0, (text_id.Text.Length - 1));
+                    }
+                }
             }
             catch (Exception ex)
             {

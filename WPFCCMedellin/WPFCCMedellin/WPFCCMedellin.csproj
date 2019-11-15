@@ -330,6 +330,10 @@
       <DependentUpon>PayPlusLocalADO.edmx</DependentUpon>
       <LastGenOutput>PayPlusLocalADO.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\Backgrounds\bg-alert-blanck.png" />
+    <Resource Include="Images\Backgrounds\bg-alert-detail.png" />
+    <Resource Include="Images\Backgrounds\bg-alert-error.png" />
+    <Resource Include="Images\Buttons\btn-wait-mony.png" />
     <Resource Include="Images\Others\img-select.png" />
     <Resource Include="Images\Others\img-split.png" />
     <Resource Include="Images\Backgrounds\bg-alert-blanck.jpg" />

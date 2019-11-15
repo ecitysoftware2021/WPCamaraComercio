@@ -69,10 +69,6 @@ namespace WPFCCMedellin.Classes
 
     public enum ETransactionType
     {
-        ConsigSaving = 17,
-        ConsigCurrent = 18,
-        PaymentInvoice = 1,
-        PaymentCredit = 2,
         Withdrawal = 15,
         PaymentFile = 19
     }

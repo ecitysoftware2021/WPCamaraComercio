@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Data;
 using WPFCCMedellin.Classes;
 using WPFCCMedellin.DataModel;
 using WPFCCMedellin.Models;
@@ -19,8 +21,6 @@ namespace WPFCCMedellin.UserControls
 
         private Transaction transaction;
 
-        private ETypePayer typePayer;
-
         public PayerUserControl(Transaction transaction)
         {
             InitializeComponent();
@@ -36,15 +36,20 @@ namespace WPFCCMedellin.UserControls
             {
                 viewModel = new DetailViewModel
                 {
-                    Row1 = "Identificación:",
-                    Row2 = "Primer Nombre",
-                    Row3 = "Primer Apellido",
-                    Row4 = "Teléfono"
+                    Row1 = "(*)Identificación:",
+                    Row2 = "(*)Nombre:",
+                    Row3 = "(*)Apellido:",
+                    Row4 = "(*)Teléfono",
+                    OptionsEntries = new CollectionViewSource(),
+                    OptionsList = new List<TypeDocument>(),
+                    SourceCheckId = ImagesUrlResource.ImageCheckIn,
+                    SourceCheckName = ImagesUrlResource.ImageCheckOut,
                 };
 
-                typePayer = ETypePayer.Person;
+                viewModel.TypePayer = ETypePayer.Person;
 
-                viewModel.LoadList(typePayer);
+                viewModel.LoadList(viewModel.TypePayer);
+                cmb_type_id.SelectedIndex = 0;
 
                 this.DataContext = viewModel;
             }
@@ -58,26 +63,34 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                var type = (int)((Image)sender).Tag;
+                var type = int.Parse(((Image)sender).Tag.ToString());
 
-                if (type != (int)typePayer)
+                if (type != (int)viewModel.TypePayer)
                 {
                     if (type == (int)ETypePayer.Person)
                     {
-                        typePayer = ETypePayer.Person;
-                        
-                        viewModel.Row2 = "Primer Nombre";
-                        viewModel.Row3 = "Primer Apellido";
+                        viewModel.TypePayer = ETypePayer.Person;
+
+
+                        viewModel.SourceCheckId = ImagesUrlResource.ImageCheckIn;
+                        viewModel.SourceCheckName = ImagesUrlResource.ImageCheckOut;
+
+                        viewModel.Row2 = "(*)Nombre";
+                        viewModel.Row3 = "(*)Apellido";
                     }
                     else
                     {
-                        typePayer = ETypePayer.Establishment;
+                        viewModel.TypePayer = ETypePayer.Establishment;
 
-                        viewModel.Row2 = "Razón Social";
-                        viewModel.Row3 = "Dirección";
+
+                        viewModel.SourceCheckId = ImagesUrlResource.ImageCheckOut;
+                        viewModel.SourceCheckName = ImagesUrlResource.ImageCheckIn;
+
+                        viewModel.Row2 = "(*)Razón Social";
+                        viewModel.Row3 = "(*)Dirección";
                     }
 
-                    viewModel.LoadList(typePayer);
+                    viewModel.LoadList(viewModel.TypePayer);
 
                     viewModel.Value1 = string.Empty;
                     viewModel.Value2 = string.Empty;
@@ -97,7 +110,11 @@ namespace WPFCCMedellin.UserControls
             {
                 if (ValidateFields())
                 {
-                    SaveTransaction();
+                    SaveTransaction(((TypeDocument)cmb_type_id.SelectedItem).Key);
+                }
+                else
+                {
+                    Utilities.ShowModal(MessageResource.InfoIncorrect, EModalType.Error);
                 }
             }
             catch (Exception ex)
@@ -110,6 +127,25 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
+                if (viewModel.Value1.Length < 6)
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(viewModel.Value2))
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(viewModel.Value3))
+                {
+                    return false;
+                }
+
+                if (viewModel.Value4.Length < 6)
+                {
+                    return false;
+                }
                 return true;
             }
             catch (Exception ex)
@@ -119,42 +155,50 @@ namespace WPFCCMedellin.UserControls
             }
         }
 
-        private void SaveTransaction()
+        private void SaveTransaction(string typeDocument)
         {
             try
+
             {
                 Task.Run(async () =>
                 {
-                    transaction.payer = new PAYER
+                    try
                     {
-                        IDENTIFICATION = viewModel.Value1,
-                        NAME = viewModel.Value2,
-                        PHONE = decimal.Parse(viewModel.Value4),
-                        TYPE_PAYER = typePayer == ETypePayer.Person ? "Persona" : "Empresa",
-                        TYPE_IDENTIFICATION = ((TypeDocument)cmb_type_id.SelectedItem).Key
-                    };
+                        transaction.payer = new PAYER
+                        {
+                            IDENTIFICATION = viewModel.Value1,
+                            NAME = viewModel.Value2,
+                            PHONE = decimal.Parse(viewModel.Value4),
+                            TYPE_PAYER = viewModel.TypePayer == ETypePayer.Person ? "Persona" : "Empresa",
+                            TYPE_IDENTIFICATION = typeDocument
+                        };
 
-                    if (typePayer == ETypePayer.Person)
-                    {
-                        transaction.payer.LAST_NAME = viewModel.Row3;
+                        if (viewModel.TypePayer == ETypePayer.Person)
+                        {
+                            transaction.payer.LAST_NAME = viewModel.Value3;
+                        }
+                        else
+                        {
+                            transaction.payer.ADDRESS = viewModel.Value3;
+                        }
+
+                        await AdminPayPlus.SaveTransactions(this.transaction, false);
+
+                        Utilities.CloseModal();
+
+                        if (this.transaction.IdTransactionAPi == 0)
+                        {
+                            Utilities.ShowModal(MessageResource.ErrorTransaction, EModalType.Error);
+                            Utilities.navigator.Navigate(UserControlView.Main);
+                        }
+                        else
+                        {
+                            Utilities.navigator.Navigate(UserControlView.Pay, false, transaction);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        transaction.payer.ADDRESS = viewModel.Row3;
-                    }
-
-                    await AdminPayPlus.SaveTransactions(this.transaction, false);
-
-                    Utilities.CloseModal();
-
-                    if (this.transaction.IdTransactionAPi == 0)
-                    {
-                        Utilities.ShowModal(MessageResource.ErrorTransaction, EModalType.Error);
-                        Utilities.navigator.Navigate(UserControlView.Main);
-                    }
-                    else
-                    {
-                        Utilities.navigator.Navigate(UserControlView.Pay, false, transaction);
+                        Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
                     }
                 });
                 Utilities.ShowModal(MessageResource.LoadInformation, EModalType.Preload);

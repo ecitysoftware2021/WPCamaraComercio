@@ -22,8 +22,8 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="670" />
-                <RowDefinition Height="600" />
+                <RowDefinition Height="370" />
+                <RowDefinition Height="800" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -46,8 +46,8 @@
                            Text="{Binding Tittle}"
                            HorizontalAlignment="Center"
                            Margin="0,220,0,0" 
-                           FontSize="42" 
-                           Width="430"
+                           FontSize="55" 
+                           Width="500"
                            FontFamily="Myriad Pro"
                            FontWeight="Bold"
                            Foreground="#FF606060"
@@ -58,9 +58,9 @@
                 <TextBlock x:Name="LblMessage" 
                            Text="{Binding Messaje}"
                            HorizontalAlignment="Center"
-                           Margin="0,350,0,0" 
-                           FontSize="42" 
-                           Width="430"
+                           Margin="0,300,0,0" 
+                           FontSize="50" 
+                           Width="500"
                            FontFamily="Myriad Pro"
                            Foreground="#FF606060"
                            TextWrapping="WrapWithOverflow"

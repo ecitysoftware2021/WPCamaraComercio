@@ -336,6 +336,21 @@ namespace WPFCCMedellin.ViewModel
             }
         }
 
+        private ETypePayer _typePayer;
+        public ETypePayer TypePayer
+        {
+            get
+            {
+                return _typePayer;
+            }
+            set
+            {
+                _typePayer = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TypePayer)));
+            }
+        }
+
+
         private string _sourceCheckName;
 
         public string SourceCheckName
@@ -382,9 +397,11 @@ namespace WPFCCMedellin.ViewModel
         {
             try
             {
+
                 var response = Utilities.ConverJson<List<TypeDocument>>(Utilities.GetConfiguration("PathTypeDocument"));
                 if (response != null && response.Count > 0)
                 {
+                    OptionsList.Clear();
                     OptionsList = response.FindAll(t => t.Type == (int)type);
                     OptionsEntries.Source = OptionsList;
                 }

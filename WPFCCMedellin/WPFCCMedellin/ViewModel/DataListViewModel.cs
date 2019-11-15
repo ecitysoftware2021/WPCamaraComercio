@@ -395,7 +395,7 @@ namespace WPFCCMedellin.ViewModel
                 {
                     var result = JsonConvert.DeserializeObject<ResponseConsultGeneral>(response.Data.ToString());
 
-                    if (result.Result.response.registros > 0)
+                    if (result != null && result.Result != null && result.Result.response != null && result.Result.response.registros > 0)
                     {
                         foreach (var item in result.Result.response.resultados)
                         {
@@ -453,6 +453,8 @@ namespace WPFCCMedellin.ViewModel
                             Type = ETransactionType.PaymentFile,
                             Enrollment = data.matricula,
                             Tpcm = data.tpcm,
+                            reference = data.nit,
+                            State = ETransactionState.Initial,
                             payer = new PAYER
                             {
                                 IDENTIFICATION = data.nit,

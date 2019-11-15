@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AlertBlanck" xml:space="preserve">
-    <value>Images/Backgrounds/bg-alert-blanck.jpg</value>
+    <value>Images/Backgrounds/bg-alert-blanck.png</value>
   </data>
   <data name="AlertError" xml:space="preserve">
-    <value>Images/Backgrounds/bg-alert-error.jpg</value>
+    <value>Images/Backgrounds/bg-alert-error.png</value>
   </data>
   <data name="AlertInfo" xml:space="preserve">
-    <value>Images/Backgrounds/bg-alert-info.jpg</value>
+    <value>Images/Backgrounds/bg-alert-info.png</value>
   </data>
   <data name="BackgroundSubmenuPayment" xml:space="preserve">
     <value>/images/Backgrounds/bg-menu-payment.jpg</value>
