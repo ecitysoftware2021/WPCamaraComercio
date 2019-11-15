@@ -527,7 +527,6 @@ namespace WPFCCMedellin.Classes
 
                     if (tRANSACTION != null)
                     {
-                        tRANSACTION.TRANSACTION_DESCRIPTION = null;
 
                         var responseTransaction = await api.CallApi("UpdateTransaction", tRANSACTION);
                         if (responseTransaction != null)
