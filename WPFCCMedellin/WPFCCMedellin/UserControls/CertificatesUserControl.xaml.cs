@@ -69,7 +69,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                    Utilities.ShowDetailsModal(transaction.Files[0], ETypeCertificate.Establishment);
+                    Utilities.ShowDetailsModal(transaction.Files[0], ETypeCertificate.Merchant);
             }
             catch (Exception ex)
             {
@@ -310,7 +310,7 @@ namespace WPFCCMedellin.UserControls
             {
                 if (((TextBlock)sender).Tag != null)
                 {
-                    Utilities.ShowDetailsModal(((TextBlock)sender).Tag, ETypeCertificate.Merchant);
+                    Utilities.ShowDetailsModal(((TextBlock)sender).Tag, ETypeCertificate.Establishment);
                 }
             }
             catch (Exception ex)

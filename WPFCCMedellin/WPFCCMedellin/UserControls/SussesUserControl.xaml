@@ -9,7 +9,7 @@
         Width="1080" >
     <Grid>
         <Grid.Background>
-            <ImageBrush  ImageSource="/Images/Backgrounds/bg-succes-pay.jpg"
+            <ImageBrush  ImageSource="/Images/Backgrounds/bg-succes-pay.png"
                         Stretch="Fill"/>
         </Grid.Background>
     </Grid>

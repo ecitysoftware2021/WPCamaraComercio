@@ -145,19 +145,67 @@ namespace WPFCCMedellin.Classes
         {
             try
             {
-                var data = new List<DataPrinter>()
+                if (transaction != null)
                 {
-                    new DataPrinter{ image = GetConfiguration("imageBoucher"),  x = 50, y = 20 },
-                    new DataPrinter{ brush = new SolidBrush(Color.Black),
-                                     font = new Font("Arial", 8, System.Drawing.FontStyle.Regular),
-                                     key = "Esteban ", value = GetConfiguration("Est") ?? string.Empty,
-                                     x = 50, y = 20 },
-                    new DataPrinter{ brush = new SolidBrush(Color.Black),
-                                     font = new Font("Arial", 8, System.Drawing.FontStyle.Regular),
-                                     key = "penagos", value = GetConfiguration("Est") ?? string.Empty,
-                                     x = 100, y = 20 },
-                };
-                AdminPayPlus.PrintService.Start(data);
+                    var statePrint = AdminPayPlus.PrintService.StatusPrint();
+
+                    if (statePrint == 0 || statePrint == 8)
+                    {
+                        SolidBrush color = new SolidBrush(Color.Black);
+                        Font fontKey = new Font("Arial", 9, System.Drawing.FontStyle.Bold);
+                        Font fontValue = new Font("Arial", 9, System.Drawing.FontStyle.Regular);
+                        int y = 0;
+                        int sum = 25;
+                        int x = 150;
+                        int xKey = 20;
+
+                        var data = new List<DataPrinter>()
+                        {
+                            new DataPrinter{ image = GetConfiguration("ImageBoucher"),  x = 2, y = 2 },
+                            new DataPrinter{ brush = color, font = fontKey, value = "NIT:", x = xKey, y = y+=120 },
+                            new DataPrinter{ brush = color, font = fontValue,
+                                value = GetConfiguration("NIT") ?? string.Empty, x = x, y = y },
+                            new DataPrinter{ brush = color, font = fontKey, value = "Trámite:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,
+                                value = GetConfiguration("ProductName") ?? string.Empty, x = x, y = y },
+                            new DataPrinter{ brush = color, font = fontKey, value = "Estado:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,
+                                value = (transaction.State == ETransactionState.Success || transaction.State == ETransactionState.ErrorService)
+                                ? "Aprobada" : "Cancelada", x = x, y = y },
+                            new DataPrinter{ brush = color, font = fontKey, value = "Fecha de pago:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,
+                                value = DateTime.Now.ToString(), x = x, y = y },
+                            new DataPrinter{ brush = color, font = fontKey, value = "Referencia:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,
+                                value = transaction.IdTransactionAPi.ToString() ?? string.Empty, x = x, y = y},
+                            new DataPrinter{ brush = color, font = fontKey, value = "ID Compra:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,
+                                value = transaction.consecutive ?? string.Empty, x = x, y = y },
+                            new DataPrinter{ brush = color, font = fontKey, value = "Identificación:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,
+                                value = transaction.payer.IDENTIFICATION ?? string.Empty, x = x, y = y },
+                            new DataPrinter{ brush = color, font = fontKey, value = "Nombre:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,
+                                value = transaction.payer.NAME ?? string.Empty, x = x, y = y },
+                            new DataPrinter{ brush = color, font = fontKey, value = "Teléfono:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,
+                                value = transaction.payer.PHONE.ToString() ?? string.Empty, x = x, y = y },
+                        };
+   
+                        data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total:", x = xKey, y = y += sum });
+                        data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.PayValue), x = x, y = y });
+
+                        data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total Ingresado:", x = xKey, y = y += sum });
+                        data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.ValorIngresado), x = x, y = y });
+                        data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total Devuelto:", x = xKey, y = y += sum });
+                        data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.ValorDispensado), x = x, y = y });
+                       
+                        data.Add(new DataPrinter { brush = color, font = fontValue, value = "Su transacción se ha realizado exitosamente", x = 2, y = y += 50 });
+                        data.Add(new DataPrinter { brush = color, font = fontValue, value = "E-city Software", x = 100, y = y += sum });
+
+                        AdminPayPlus.PrintService.Start(data);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -169,14 +217,45 @@ namespace WPFCCMedellin.Classes
         {
             try
             {
+                SolidBrush color = new SolidBrush(Color.Black);
+                Font fontKey = new Font("Arial", 8, System.Drawing.FontStyle.Bold);
+                Font fontValue = new Font("Arial", 8, System.Drawing.FontStyle.Regular);
+                int y = 0;
+                int sum = 30;
+                int x = 150;
+                int xKey = 10;
+
                 var data = new List<DataPrinter>()
                 {
-                    new DataPrinter{ image = GetConfiguration("imageBoucher"),  x = 50, y = 20 },
-                    new DataPrinter{ brush = new SolidBrush(Color.Black),
-                                     font = new Font("Arial", 8, System.Drawing.FontStyle.Regular),
-                                     key = "Est", value = GetConfiguration("Est") ?? string.Empty,
-                                     x = 50, y = 20 },
+                    new DataPrinter{ image = GetConfiguration("ImageBoucher"),  x = 2, y = 2 },
                 };
+                if (type == ETypeAdministrator.Balancing)
+                {
+                    data.Add(new DataPrinter { brush = color, font = fontKey, value = "DISMINUCIÓN DE EFECTIVO", x = 80, y = y += sum });
+                }
+                else
+                {
+                    data.Add(new DataPrinter { brush = color, font = fontKey, value = "PROVISIÓN DE EFECTIVO", x = 80, y = y += sum });
+                }
+                data.Add(new DataPrinter { brush = color, font = fontKey, value = "USUARIO:", x = xKey, y = y += sum });
+                data.Add(new DataPrinter { brush = color, font = fontValue, value = "PayPlus" ?? string.Empty, x = x, y = y });
+                data.Add(new DataPrinter { brush = color, font = fontKey, value = "OFI", x = 30, y = y += sum });
+                data.Add(new DataPrinter { brush = color, font = fontKey, value = "FECHA", x = 100, y = y });
+                data.Add(new DataPrinter { brush = color, font = fontKey, value = "HORA", x = 170, y = y });
+                data.Add(new DataPrinter { brush = color, font = fontValue, value = GetConfiguration("Terminal") ?? string.Empty, x = 30, y = y += 15 });
+                data.Add(new DataPrinter { brush = color, font = fontValue, value = DateTime.Now.ToString("yyyy/MM/dd"), x = 100, y = y });
+                data.Add(new DataPrinter { brush = color, font = fontValue, value = DateTime.Now.ToString("hh:mm:ss"), x = 170, y = y });
+                data.Add(new DataPrinter { brush = color, font = fontKey, value = "DENOMINACION", x = 10, y = y += 15 });
+                data.Add(new DataPrinter { brush = color, font = fontKey, value = "CANT", x = 130, y = y });
+                data.Add(new DataPrinter { brush = color, font = fontKey, value = "MONTO", x = 230, y = y });
+                foreach (var item in dataControl.DATALIST_FILTER())
+                {
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", item.Denominacion), x = 10, y = y += 18 });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = item.Quantity.ToString(), x = 130, y = y });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", item.Total), x = 230, y = y });
+                }
+                data.Add(new DataPrinter { brush = color, font = fontKey, value = "TOTAL TRANSACCIÓN  : ", x = xKey, y = y += sum });
+                data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", dataControl.TOTAL), x = y, y = y });
                 AdminPayPlus.PrintService.Start(data);
             }
             catch (Exception ex)
