@@ -74,12 +74,12 @@ namespace WPFCCMedellin.Models
 
                 if (initTimer)
                 {
-                    TimerService.CallBackTimerOut = response =>
-                    {
-                        View = new MainUserControl();
-                    };
+                    //TimerService.CallBackTimerOut = response =>
+                    //{
+                    //    View = new MainUserControl();
+                    //};
 
-                    TimerService.Start(int.Parse(Utilities.GetConfiguration("DurationAlert")));
+                    //TimerService.Start(int.Parse(Utilities.GetConfiguration("DurationAlert")));
                 }
             }
             catch (Exception ex)

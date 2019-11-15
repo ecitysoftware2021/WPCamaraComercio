@@ -87,8 +87,8 @@ namespace WPFCCMedellin.Classes
 
     public enum EtypeConsult
     {
-        Id = 1,
-        Name = 2
+        Id = 2,
+        Name = 1
     }
 
     public enum EtypeOperation

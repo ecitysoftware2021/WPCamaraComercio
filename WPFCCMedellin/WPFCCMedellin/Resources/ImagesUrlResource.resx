@@ -153,4 +153,7 @@
   <data name="ImageSelectOption" xml:space="preserve">
     <value>/Images/Others/ok.png</value>
   </data>
+  <data name="ImgSelect" xml:space="preserve">
+    <value>/Images/Others/img-select.png</value>
+  </data>
 </root>

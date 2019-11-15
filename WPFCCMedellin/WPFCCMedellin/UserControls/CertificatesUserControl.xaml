@@ -51,12 +51,12 @@
         <Grid Grid.Row="1">
             <TextBlock VerticalAlignment="Top"
                     HorizontalAlignment="Center"
-                    Margin="0,90,0,0"
+                    Margin="0,60,0,0"
                     FontSize="60"      
                     FontWeight="Bold"
                     Foreground="#000"
                     Name="Lbl"
-                    Text="Certificados" />
+                    Text="Seleccion de certificados" />
             
             <TextBlock VerticalAlignment="Center"
                     HorizontalAlignment="Left"
@@ -65,23 +65,15 @@
                     FontWeight="Bold"
                     Foreground="#000"
                     Name="TxbData1"
-                    Text="data 1"/>
-            
-            <!--<Image  x:Name="ImgShow"
-                    gif:ImageBehavior.AnimatedSource="/Images/Gif/flecha-down.gif"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Margin="0,0,100,30" 
-                    Height="100"
-                    Grid.ColumnSpan="2" />-->
+                    Text="{Binding Message}"/>
 
             <Image Source="/Images/Buttons/btn-details.png"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Right"
-                   Margin="0,60,120,0"                   
+                   Margin="0,0,120,0"                   
                    Grid.ColumnSpan="2"
                    Tag="{Binding Data}"
-                   Width="250"
+                   Width="200"
                    Name="btn_details"
                    TouchDown="Btn_details_TouchDown" />
 
@@ -89,9 +81,10 @@
                    Name="btn_merchant"
                    Margin="50,300,0,0"
                    Width="400"
+                   Tag="1"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
-                   TouchDown="Btn_merchant_TouchDown"/>
+                   TouchDown="Select_TouchDown"/>
 
             <Image Source="/Images/Buttons/btn-establishment.png" 
                    Name="btn_establishment"
@@ -99,18 +92,17 @@
                    Width="450"
                    Grid.Column="1"
                    Opacity="0.4"
+                   Tag="2"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Right"
-                   TouchDown="Btn_establishment_TouchDown" />
+                   TouchDown="Select_TouchDown" />
         </Grid>
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="450" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
             
             <TextBlock Name="colum_1"
@@ -141,17 +133,7 @@
                        FontSize="35"
                        TextAlignment="Center"
                        Grid.Column="2"
-                       FontFamily="Myriad Pro"
-                       FontWeight="Bold"
-                       Foreground="#FF606060"
-                       VerticalAlignment="Bottom"
-                       HorizontalAlignment="Center" />
-
-            <TextBlock Name="colum_4"
-                       Text="{Binding Colum4}"
-                       FontSize="35"
-                       TextAlignment="Center"
-                       Grid.Column="3"
+                       Margin="0,0,60,0"
                        FontFamily="Myriad Pro"
                        FontWeight="Bold"
                        Foreground="#FF606060"
@@ -159,7 +141,7 @@
                        HorizontalAlignment="Center" />
         </Grid>
 
-        <Grid Grid.Row="3" >
+        <Grid Grid.Row="3" Visibility="{Binding VisibilityId}">
             <ListView x:Name="LvMerchant" 
                   HorizontalAlignment="Center" 
                   VerticalAlignment="Top"
@@ -187,12 +169,11 @@
                                   VerticalAlignment="Center"
                                   Margin="0,0,0,0"
                                   Width="1000"
-                                  Height="80">
+                                  Height="100">
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="450" />
+                                    <ColumnDefinition Width="250" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 
@@ -202,24 +183,25 @@
                                            HorizontalAlignment="Left"                                           
                                            VerticalAlignment="Center"
                                            Margin="20,0,90,0"
-                                           Grid.ColumnSpan="2" />
+                                           Grid.Row="0" />
 
                                 <TextBlock Text="{Binding Item5, StringFormat={}{0:C0}}"
                                            FontSize="30"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           Grid.Column="2"
-                                           Margin="20,0,0,0" />
+                                           Grid.Column="1"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,0" />
 
                                 <Image  Source="/Images/Buttons/btn-plas.png"
-                                        Width="40"
-                                        Height="40"
+                                        Width="30"
+                                        Height="30"
                                         Name="btn_plas"
                                         Tag="{Binding Index}"
-                                        Grid.Column="3"
-                                        Margin="0,0,0,0"
-                                        HorizontalAlignment="Left"
+                                        Grid.Column="2"
+                                        Margin="0,0,50,0"
+                                        HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
                                         TouchDown="Btn_plas_TouchDown" />
 
@@ -228,16 +210,16 @@
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
-                                           Grid.Column="3"
+                                           Grid.Column="2"
                                            Margin="20,0,0,0" />
 
                                 <Image  Source="/Images/Buttons/btn-menus.png"
-                                        Width="40"
+                                        Width="30"
                                         Name="btn_menus"
-                                        Height="40"
+                                        Height="30"
                                         Tag="{Binding Index}"
-                                        Grid.Column="3"
-                                        Margin="0,0,0,0"
+                                        Grid.Column="2"
+                                        Margin="50,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         TouchDown="Btn_menus_TouchDown" />
@@ -248,7 +230,7 @@
             </ListView>
         </Grid>
 
-        <Grid Grid.Row="4" x:Name="GrdEstablish">
+        <Grid Grid.Row="3" Visibility="{Binding VisibilityName}">
             <ListView x:Name="LvEstablish" 
                   HorizontalAlignment="Center" 
                   VerticalAlignment="Top"
@@ -281,12 +263,42 @@
                                   Tag="{Binding Tag}">
                                 
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="350" />
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="230" />
                                 </Grid.ColumnDefinitions>
-                                
+
+                                <TextBlock Text="{Binding Item1}"
+                                           FontSize="30"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Left"                                           
+                                           VerticalAlignment="Top"
+                                           Margin="30,0,0,0"
+                                           FontWeight="Bold"
+                                           Grid.Row="0" />
+
+                                <TextBlock Name="row_2"
+                                       Text="VALOR"
+                                       FontSize="30"
+                                       TextAlignment="Center"
+                                       Grid.Column="1"
+                                       TextWrapping="Wrap"
+                                       FontFamily="Myriad Pro"
+                                       Foreground="#FF606060"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Center" />
+
+                                <TextBlock Name="row_3"
+                                       Text="CANTIDAD"
+                                       FontSize="30"
+                                       TextAlignment="Center"
+                                       Grid.Column="2"
+                                       FontFamily="Myriad Pro"
+                                       Foreground="#FF606060"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Center" />
+
                                 <Expander Grid.Column="0" Grid.Row="0"
                                         HorizontalAlignment="Left"
                                         Margin="0,0,0,0"
@@ -301,24 +313,21 @@
                                         Expanded="Expander_Expanded"
                                         Collapsed="Expander_Collapsed">
                                     <Expander.Header >
-                                        <TextBlock FontSize="20"  FontWeight="Bold" >
-                                            <Run Foreground="Black" Text="{Binding Item1}" />
-                                            <Run Foreground="#FF840000" Text="     VER ↧ / OCULTAR ↥" />
-                                            </TextBlock>
+                                        <TextBlock FontSize="20"  FontWeight="Bold" />
                                     </Expander.Header>
-                                    <Grid Margin="0,0,0,0">
+                                    <Grid Margin="50,0,0,0">
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="250" />
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="30" />
                                         </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
+                                        
                                         <TextBlock Text ="{Binding Item3}" 
-                                                   TextAlignment="Center"
+                                                   TextAlignment="Justify"
                                                    TextWrapping="Wrap"
                                                    FontSize="20"
+                                                   Grid.Column="0"
                                                    HorizontalAlignment="Left"
                                                    VerticalAlignment="Center" />
                                         
@@ -327,36 +336,36 @@
                                                    Text="{Binding Item5, StringFormat={}{0:C0}}"
                                                    TextAlignment="Center"
                                                    TextWrapping="Wrap"
-                                                   FontSize="20"
+                                                   FontSize="25"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Top" />
 
                                         <Image  Source="/Images/Buttons/btn-plas.png"
-                                                Width="40"
-                                                Height="40"
+                                                Width="30"
+                                                Height="30"
                                                 Name="btn_plas"
                                                 Tag="{Binding Index}"
-                                                Grid.Column="3"
-                                                Margin="0,0,0,0"
-                                                HorizontalAlignment="Left"
+                                                Grid.Column="2"
+                                                Margin="0,0,20,0"
+                                                HorizontalAlignment="Right"
                                                 VerticalAlignment="Center"
                                                 TouchDown="Btn_plas_TouchDown" />
 
                                         <TextBlock Text="{Binding Item6}"
-                                                   FontSize="30"
+                                                   FontSize="25"
                                                    TextWrapping="Wrap"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
-                                                   Grid.Column="3"
+                                                   Grid.Column="2"
                                                    Margin="20,0,0,0" />
 
                                         <Image  Source="/Images/Buttons/btn-menus.png"
-                                                Width="40"
+                                                Width="30"
                                                 Name="btn_menus"
-                                                Height="40"
+                                                Height="30"
                                                 Tag="{Binding Index}"
-                                                Grid.Column="3"
-                                                Margin="0,0,0,0"
+                                                Grid.Column="2"
+                                                Margin="30,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 TouchDown="Btn_menus_TouchDown" />
@@ -382,53 +391,61 @@
             </ListView>
         </Grid>
 
-        <Grid Grid.Row="4" Visibility="{Binding VisibilityPagination}">
-            <Image Name="btn_previus" 
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Center"
-                Margin="30,0,0,0"
-                Height="100"
-                Width="100"
-                Visibility="{Binding VisibilityPrevius}"
-                TouchDown="Btn_pagination_TouchDown"
-                Source="/Images/Buttons/btn-left.png" />
+        <Grid Grid.Row="4" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <Grid Visibility="{Binding VisibilityPagination}" Grid.Column="0">
+                <Image Name="btn_previus" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Center"
+                    Margin="30,0,0,0"
+                    Height="100"
+                    Width="100"
+                    Visibility="{Binding VisibilityPrevius}"
+                    TouchDown="Btn_pagination_TouchDown"
+                    Source="/Images/Buttons/btn-left.png" />
 
-            <Image Margin="0,0,200,0"
-                HorizontalAlignment="Center"
-                Name="btn_next" 
-                VerticalAlignment="Center"
-                Height="100" 
-                Width="100" 
-                Visibility="{Binding VisibilityNext}"
-                TouchDown="Btn_pagination_TouchDown"
-                Source="/Images/Buttons/btn-right.png" />
+                <Image Margin="0,0,30,0"
+                    HorizontalAlignment="Right"
+                    Name="btn_next" 
+                    VerticalAlignment="Center"
+                    Height="100" 
+                    Width="100" 
+                    Visibility="{Binding VisibilityNext}"
+                    TouchDown="Btn_pagination_TouchDown"
+                    Source="/Images/Buttons/btn-right.png" />
 
-            <TextBlock Name="lbl_currentPage" 
-                Height="20" 
-                Margin="280,0,0,0"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Left"
-                FontSize="18"
-                Text="{Binding CurrentPage}" />
+                <TextBlock Name="lbl_currentPage" 
+                    Height="20" 
+                    Margin="280,0,0,0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    FontSize="18"
+                    Text="{Binding CurrentPage}" />
 
-            <TextBlock Height="22" 
-                HorizontalAlignment="Left" 
-                Margin="240,0,0,0" 
-                FontSize="20"
-                VerticalAlignment="Center" 
-                FontWeight="Bold" 
-                Text="/" />
+                <TextBlock Height="22" 
+                    HorizontalAlignment="Left" 
+                    Margin="240,0,0,0" 
+                    FontSize="20"
+                    VerticalAlignment="Center" 
+                    FontWeight="Bold" 
+                    Text="/" />
 
-            <TextBlock Name="lbl_totalPage"
-                Height="20" 
-                Text="{Binding TotalPage}"
-                HorizontalAlignment="Left" 
-                Visibility="Visible" 
-                Margin="190,0,0,0" 
-                VerticalAlignment="Center" 
-                FontSize="18" />
+                <TextBlock Name="lbl_totalPage"
+                    Height="20" 
+                    Text="{Binding TotalPage}"
+                    HorizontalAlignment="Left" 
+                    Visibility="Visible" 
+                    Margin="190,0,0,0" 
+                    VerticalAlignment="Center" 
+                    FontSize="18" />
+            </Grid>
 
-            <TextBlock Text="Valor Total: " 
+            <Grid Grid.Column="1">
+                <TextBlock Text="Valor Total: " 
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Top" 
                 Margin="0,0,35,0" 
@@ -436,14 +453,16 @@
                 Foreground="#FFCE010A" 
                 FontWeight="Bold" />
 
-            <TextBlock x:Name="lbl_amount"
+                <TextBlock x:Name="lbl_amount"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Margin="0,70,80,0"
                 Text="{Binding Amount, StringFormat={}{0:C0}}"
                 FontSize="60"
                 FontWeight="Bold" />
-        </Grid>
+
+            </Grid>
+         </Grid>
 
         <Grid Grid.Row="5">
             <Image x:Name="btn_acept"

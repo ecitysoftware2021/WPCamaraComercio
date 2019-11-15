@@ -157,6 +157,21 @@ namespace WPFCCMedellin.ViewModel
             }
         }
 
+        private decimal _Amount;
+
+        public decimal Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                _Amount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Amount)));
+            }
+        }
+
         private int _currentPageIndex;
 
         public int CurrentPageIndex
@@ -189,21 +204,6 @@ namespace WPFCCMedellin.ViewModel
                     _totalPage = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalPage)));
                 }
-            }
-        }
-
-        private Visibility _preload;
-
-        public Visibility preload
-        {
-            get
-            {
-                return _preload;
-            }
-            set
-            {
-                _preload = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalPage)));
             }
         }
 
@@ -282,21 +282,6 @@ namespace WPFCCMedellin.ViewModel
             }
         }
 
-        private Visibility _currentPage;
-
-        public Visibility CurrentPage
-        {
-            get
-            {
-                return _currentPage;
-            }
-            set
-            {
-                _currentPage = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentPage)));
-            }
-        }
-
         private EtypeConsult _typeConsult;
 
         public EtypeConsult TypeConsult
@@ -309,6 +294,21 @@ namespace WPFCCMedellin.ViewModel
             {
                 _typeConsult = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TypeConsult)));
+            }
+        }
+
+        private ETypeCertificate _typeCertificates;
+
+        public ETypeCertificate TypeCertificates
+        {
+            get
+            {
+                return _typeCertificates;
+            }
+            set
+            {
+                _typeCertificates = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TypeCertificates)));
             }
         }
 
@@ -402,17 +402,19 @@ namespace WPFCCMedellin.ViewModel
                             _dataList.Add(new ItemList
                             {
                                 Item1 = item.nombre,
-                                Item2 = item.nit,
+                                Item2 = string.Concat("Nit: ", item.nit),
                                 Item3 = item.municipio.Split(')')[1],
                                 Item4 = item.estado,
+                                ImageSourse = ImagesUrlResource.ImgSelect,
                                 Data = item
                             });
                         }
 
-                        _totalPage = (int)Math.Ceiling(((decimal)_dataList.Count / CuantityItems));
+                        TotalPage = (int)Math.Ceiling(((decimal)_dataList.Count / CuantityItems));
+                         
                         if (_dataList.Count % CuantityItems != 0)
                         {
-                            _totalPage += 1;
+                            TotalPage += 1;
                         }
 
                         return true;
@@ -473,14 +475,14 @@ namespace WPFCCMedellin.ViewModel
         {
             try
             {
+                
+                DataList.Clear();
+
                 if (type == ETypeCertificate.Merchant)
                 {
-                    Colum1 = "NOMBRE CERTIFICADO";
+                    Colum1 = "CERTIFICADO";
                     Colum2 = "VALOR";
                     Colum3 = "CANTIDAD";
-
-                    DataList.Clear();
-
                     foreach (var file in transaction.Files[0].certificados)
                     {
                         DataList.Add(new ItemList
@@ -491,17 +493,13 @@ namespace WPFCCMedellin.ViewModel
                             Index = DataList.Count,
                             Data = file
                         });
-
                     }
                 }
                 else
                 {
                     Colum1 = "ESTABLECIMIENTO";
-                    Colum2 = "CANTIDAD";
-                    Colum3 = "DETALLES";
-
-                    DataList.Clear();
-
+                    Colum2 = "";
+                    Colum3 = "";
                     foreach (var establishment in transaction.Files[0].establecimientos)
                     {
                         foreach (var file in establishment.CertificadosEstablecimiento)

@@ -8,6 +8,7 @@ using WPFCCMedellin.Models;
 using WPFCCMedellin.Resources;
 using WPFCCMedellin.ViewModel;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace WPFCCMedellin.UserControls
 {
@@ -20,13 +21,13 @@ namespace WPFCCMedellin.UserControls
 
         private DataListViewModel viewModel;
 
-        private ETypeCertificate typeCertificates;
-
         public CertificatesUserControl(Transaction transaction)
         {
             InitializeComponent();
 
-            typeCertificates = ETypeCertificate.Merchant;
+            this.transaction = transaction;
+
+            ConfigurateView();
         }
 
         private void ConfigurateView()
@@ -37,17 +38,21 @@ namespace WPFCCMedellin.UserControls
                 {
                     viewModel = new DataListViewModel
                     {
+                        DataList = new List<ItemList>(),
+                        TypeCertificates = ETypeCertificate.Merchant,
                         ViewList = new CollectionViewSource(),
                         VisibilityId = Visibility.Visible,
                         VisibilityName = Visibility.Hidden,
                         VisibilityPagination = Visibility.Hidden,
                         VisibilityNext = Visibility.Hidden,
                         VisibilityPrevius = Visibility.Hidden,
+                        Message = transaction.payer.NAME,
+                        Amount = 0
                     };
 
                     viewModel.LoadDataList(transaction, ETypeCertificate.Merchant);
-
                     this.DataContext = viewModel;
+                    ConfigureViewList();
                 }
                 else
                 {
@@ -64,7 +69,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                Utilities.ShowDetailsModal(transaction.Files[0], ETypeCertificate.Establishment);
+                Utilities.ShowDetailsModal(transaction.Files[0], viewModel.TypeCertificates);
             }
             catch (Exception ex)
             {
@@ -84,32 +89,39 @@ namespace WPFCCMedellin.UserControls
             }
         }
 
-        private void Btn_merchant_TouchDown(object sender, TouchEventArgs e)
+        private void Select_TouchDown(object sender, TouchEventArgs e)
         {
             try
             {
-                if (typeCertificates == ETypeCertificate.Establishment)
-                {
-                    viewModel.LoadDataList(transaction, ETypeCertificate.Merchant);
-                    ConfigureViewList();
-                    typeCertificates = ETypeCertificate.Merchant;
-                }
-            }
-            catch (Exception ex)
-            {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
-            }
-        }
+                var typeConsul = int.Parse(((Image)sender).Tag.ToString());
 
-        private void Btn_establishment_TouchDown(object sender, TouchEventArgs e)
-        {
-            try
-            {
-                if (typeCertificates == ETypeCertificate.Merchant)
+                if (typeConsul != (int)viewModel.TypeCertificates)
                 {
-                    viewModel.LoadDataList(transaction, ETypeCertificate.Establishment);
-                    ConfigureViewList();
-                    typeCertificates = ETypeCertificate.Establishment;
+                    viewModel.RefreshView(false);
+                    viewModel.Amount = 0;
+
+                    if (viewModel.TypeCertificates == ETypeCertificate.Establishment)
+                    {
+                        viewModel.TypeCertificates = ETypeCertificate.Merchant;
+                        viewModel.VisibilityId = Visibility.Visible;
+                        viewModel.VisibilityName = Visibility.Hidden;
+                        btn_merchant.Opacity = 1;
+                        btn_establishment.Opacity = 0.4;
+
+                        viewModel.LoadDataList(transaction, ETypeCertificate.Merchant);
+                        ConfigureViewList();
+                    }
+                    else
+                    {
+                        viewModel.TypeCertificates = ETypeCertificate.Establishment;
+                        viewModel.VisibilityId = Visibility.Hidden;
+                        viewModel.VisibilityName = Visibility.Visible;
+                        btn_merchant.Opacity = 0.4;
+                        btn_establishment.Opacity = 1;
+
+                        viewModel.LoadDataList(transaction, ETypeCertificate.Establishment);
+                        ConfigureViewList();
+                    }
                 }
             }
             catch (Exception ex)
@@ -139,7 +151,7 @@ namespace WPFCCMedellin.UserControls
                     viewModel.ViewList.Source = viewModel.DataList;
                     viewModel.ViewList.Filter += new FilterEventHandler(View_List_Filter);
 
-                    if (typeCertificates == ETypeCertificate.Merchant)
+                    if (viewModel.TypeCertificates == ETypeCertificate.Merchant)
                     {
                         LvMerchant.DataContext = viewModel.ViewList;
                         LvMerchant.Items.Refresh();
@@ -184,12 +196,11 @@ namespace WPFCCMedellin.UserControls
             try
             {
                 var index = int.Parse(((Image)sender).Tag.ToString());
-                if (index > 0)
+                
+                if (viewModel.DataList[index].Item6 > 0)
                 {
-                    if (viewModel.DataList[index].Item6 > 0)
-                    {
-                        viewModel.DataList[index].Item6 -= 1;
-                    }
+                    viewModel.DataList[index].Item6 -= 1;
+                    viewModel.Amount -= viewModel.DataList[index].Item5;
                 }
             }
             catch (Exception ex)
@@ -203,12 +214,11 @@ namespace WPFCCMedellin.UserControls
             try
             {
                 var index = int.Parse(((Image)sender).Tag.ToString());
-                if (index < 5)
+                
+                if (viewModel.DataList[index].Item6 < 5)
                 {
-                    if (viewModel.DataList[index].Item6 < 5)
-                    {
-                        viewModel.DataList[index].Item6 += 1;
-                    }
+                    viewModel.DataList[index].Item6 += 1;
+                    viewModel.Amount += viewModel.DataList[index].Item5;
                 }
             }
             catch (Exception ex)
@@ -264,7 +274,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                transaction = viewModel.GetListFiles(typeCertificates, transaction);
+                transaction = viewModel.GetListFiles(viewModel.TypeCertificates, transaction);
                 if (transaction.Products != null && transaction.Products.Count > 0)
                 {
                     transaction.Files = null;

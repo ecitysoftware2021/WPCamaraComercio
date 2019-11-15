@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,13 +35,13 @@ namespace WPFCCMedellin.UserControls
             {
                 viewModel = new DataListViewModel
                 {
-                    Colum1 = "Razón social",
-                    Colum2 = "Nit",
+                    Colum1 = "Empresa",
                     Colum3 = "Municipio",
                     Colum4 = "Estado",
                     SourceCheckId = ImagesUrlResource.ImageCheckIn,
                     SourceCheckName = ImagesUrlResource.ImageCheckOut,
                     ViewList = new CollectionViewSource(),
+                    DataList = new List<ItemList>(),
                     Message = MessageResource.EnterId,
                     VisibilityId = Visibility.Visible,
                     VisibilityName = Visibility.Hidden,
@@ -48,10 +49,13 @@ namespace WPFCCMedellin.UserControls
                     VisibilityNext = Visibility.Hidden,
                     VisibilityPrevius = Visibility.Hidden,
                     TypeConsult = EtypeConsult.Id,
-                    CurrentPageIndex = 0
+                    CurrentPageIndex = 1
                 };
 
                 this.DataContext = viewModel;
+
+                viewModel.ViewList.Filter += new FilterEventHandler(View_List_Filter);
+                lv_data_list.DataContext = viewModel.ViewList;
             }
             catch (Exception ex)
             {
@@ -66,8 +70,7 @@ namespace WPFCCMedellin.UserControls
                 Dispatcher.BeginInvoke((Action)delegate
                 {
                     viewModel.ViewList.Source = viewModel.DataList;
-                    viewModel.ViewList.Filter += new FilterEventHandler(View_List_Filter);
-                    lv_data_list.DataContext = viewModel.ViewList;
+                    viewModel.ViewList.View.Refresh();
                     lv_data_list.Items.Refresh();
                 });
                 GC.Collect();
@@ -84,7 +87,7 @@ namespace WPFCCMedellin.UserControls
             {
                 int index = viewModel.DataList.IndexOf((ItemList)e.Item);
 
-                if (index >= (viewModel.CuantityItems * viewModel.CurrentPageIndex) && index < (viewModel.CuantityItems * (viewModel.CurrentPageIndex + 1)))
+                if (index >= (viewModel.CuantityItems * (viewModel.CurrentPageIndex - 1)) && index < (viewModel.CuantityItems * (viewModel.CurrentPageIndex)))
                 {
                     e.Accepted = true;
                 }
@@ -115,17 +118,17 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                var typePagination = (int)((Image)sender).Tag;
+                var typePagination = int.Parse(((Image)sender).Tag.ToString());
 
                 if (typePagination == 1)
                 {
-                    if (viewModel.CurrentPageIndex < (viewModel.TotalPage - 1))
+                    if (viewModel.CurrentPageIndex < (viewModel.TotalPage))
                     {
                         viewModel.CurrentPageIndex++;
                         viewModel.ViewList.View.Refresh();
                     }
 
-                    if (viewModel.CurrentPageIndex == (viewModel.TotalPage - 1))
+                    if (viewModel.CurrentPageIndex == (viewModel.TotalPage))
                     {
                         viewModel.VisibilityNext = Visibility.Hidden;
                     }
@@ -134,13 +137,13 @@ namespace WPFCCMedellin.UserControls
                 }
                 else
                 {
-                    if (viewModel.CurrentPageIndex > 0)
+                    if (viewModel.CurrentPageIndex > 1)
                     {
                         viewModel.CurrentPageIndex--;
                         viewModel.ViewList.View.Refresh();
                     }
 
-                    if (viewModel.CurrentPageIndex == 0)
+                    if (viewModel.CurrentPageIndex == 1)
                     {
                         viewModel.VisibilityPrevius = Visibility.Hidden;
                     }
@@ -160,7 +163,14 @@ namespace WPFCCMedellin.UserControls
             {
                 if (ValidateDocument())
                 {
-                    SearchData(text_id.Text, 1);
+                    if (viewModel.TypeConsult == EtypeConsult.Id)
+                    {
+                        SearchData(text_id.Text, 1);
+                    }
+                    else
+                    {
+                        SearchData(text_name.Text, 1);
+                    }
                 }
             }
             catch (Exception ex)
@@ -186,6 +196,7 @@ namespace WPFCCMedellin.UserControls
                             if (response)
                             {
                                 viewModel.RefreshView(response);
+                                ConfigureViewList();
                             }
                             else
                             {
@@ -203,7 +214,7 @@ namespace WPFCCMedellin.UserControls
 
                                 Utilities.ShowModal(MessageResource.ErrorCoincidences, EModalType.Error);
 
-                                TimerService.Reset();
+                                //TimerService.Reset();
                             }
                         }
                         else
@@ -219,6 +230,10 @@ namespace WPFCCMedellin.UserControls
                                 if (Utilities.ShowModal(string.Concat("Ha seleccionado ", transaction.payer.NAME, ", ¿desea continuar?"), EModalType.Information, false))
                                 {
                                     Utilities.navigator.Navigate(UserControlView.Certificates, true, transaction);
+                                }
+                                else
+                                {
+                                    lv_data_list.SelectedItem = null;
                                 }
                             }
                             else
@@ -322,12 +337,39 @@ namespace WPFCCMedellin.UserControls
 
         private void Btn_exit_TouchDown(object sender, TouchEventArgs e)
         {
+            try
+            {
 
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
         }
 
         private void txt_TextChanged(object sender, TextChangedEventArgs e)
         {
+            try
+            {
+                txt_error.Text = "";
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
 
+        private void Text_TouchDown(object sender, TouchEventArgs e)
+        {
+            try
+            {
+                viewModel.RefreshView(false);
+                ConfigureViewList();
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
         }
     }
 }

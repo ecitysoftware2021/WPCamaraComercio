@@ -15,7 +15,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
-            <RowDefinition Height="700" />
+            <RowDefinition Height="680" />
             <RowDefinition Height="80" />
             <RowDefinition Height="*" />
             <RowDefinition Height="300" />
@@ -45,7 +45,7 @@
 
             <Image  x:Name="check_identification"
                     Source="{Binding SourceCheckId}"
-                    Tag="1"
+                    Tag="2"
                     Width="60"
                     Height="60"
                     HorizontalAlignment="Left"
@@ -66,7 +66,7 @@
                     Source="{Binding SourceCheckName}"
                     Width="60"
                     Height="60"
-                    Tag="2"
+                    Tag="1"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Margin="0,0,320,100" 
@@ -108,7 +108,8 @@
                      Foreground="Black"
                      FontWeight="Bold"
                      Visibility="{Binding VisibilityName}"
-                     TextChanged="txt_TextChanged" />
+                     TextChanged="txt_TextChanged" 
+                     TouchDown="Text_TouchDown"/>
 
             <TextBox x:Name="text_id"
                      VerticalAlignment="Bottom" 
@@ -118,14 +119,16 @@
                      Width="500"
                      Height="100" 
                      TextWrapping="Wrap"
-                     TabIndex="1"
+                     TabIndex="0"
                      FontSize="42" 
                      k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="True"
                      Foreground="Black"
                      FontWeight="Bold"
                      Visibility="{Binding VisibilityId}"
-                     TextChanged="txt_TextChanged" />
+                     TextChanged="txt_TextChanged"
+                     TouchDown="Text_TouchDown"/>
 
+            <TextBox TabIndex="1" Height="0" Width="0" />
 
             <TextBlock Name="txt_error"
                     FontSize="25"
@@ -150,8 +153,8 @@
 
         <Grid Grid.Row="2" Visibility="{Binding VisibilityPagination}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="500" />
+                <ColumnDefinition Width="0" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="80" />
@@ -226,12 +229,11 @@
                             VerticalAlignment="Top"
                             Background="Transparent"
                             Margin="0,0,0,0"
-                            Width="1060"
-                            Height="50" >
+                            Width="1030"
+                            Height="120" >
                             
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="500" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="80" />
@@ -240,24 +242,26 @@
                             <TextBlock Text="{Binding Item1}"
                                        FontSize="30"
                                        FontFamily="Myriad Pro"
-                                       TextAlignment="Center"
+                                       TextAlignment="Justify"
                                        TextWrapping="Wrap"
-                                       Margin="0,0,0,0"
+                                       Margin="50,0,0,0"
                                        Foreground="#606060"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
+                                       FontWeight="Bold"
+                                       Height="70"
+                                       VerticalAlignment="Top"
+                                       HorizontalAlignment="Left"
                                        Grid.Column="0" />
 
                             <TextBlock Text="{Binding Item2}"
                                        FontSize="30"
                                        FontFamily="Myriad Pro"
-                                       TextAlignment="Center"
+                                       TextAlignment="Justify"
                                        TextWrapping="Wrap"
-                                       Margin="0,0,0,0"
+                                       Margin="50,0,0,20"
                                        Foreground="#606060"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       Grid.Column="1" />
+                                       VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Left"
+                                       Grid.Column="0" />
 
                             <TextBlock Text="{Binding Item3}"
                                        FontSize="30"
@@ -268,10 +272,9 @@
                                        Foreground="#606060"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       FontWeight="Bold"
-                                       Grid.Column="2" />
+                                       Grid.Column="1" />
 
-                            <TextBlock Text="{Binding Item4, StringFormat={}{0:C0}}"
+                            <TextBlock Text="{Binding Item4}"
                                        FontSize="32"
                                        FontFamily="Myriad Pro"
                                        TextAlignment="Center"
@@ -280,16 +283,21 @@
                                        Foreground="#606060"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
-                                       FontWeight="Bold"
-                                       Grid.Column="3" />
+                                       Grid.Column="2" />
 
                             <Image  Source="{Binding ImageSourse}"
-                                        Width="40"
-                                        Height="40"
-                                        Grid.Column="4"
+                                        Width="50"
+                                        Height="50"
+                                        Grid.Column="3"
                                         Margin="0,0,0,0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"/>
+
+                            <Image  Source="/Images/Others/img-split.png"
+                                        Grid.ColumnSpan="4"
+                                        Margin="60,0,60,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Bottom"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -311,7 +319,7 @@
             </Image>
 
             <Image
-                Margin="0,0,30,0"
+                Margin="0,0,50,0"
                 HorizontalAlignment="Right"
                 Name="btn_next" 
                 Tag="1"
@@ -324,33 +332,35 @@
             </Image>
 
             <TextBlock 
-                Height="20" 
-                Margin="400,50,0,0"
+                Height="30" 
+                Margin="280,50,0,0"
                 Name="lbl_currentPage" 
                 VerticalAlignment="Top"
-                FontSize="18"
-                Text="{Binding CurrentPage}"
+                FontSize="25"
+                FontWeight="Bold"
+                Text="{Binding CurrentPageIndex}"
                 HorizontalAlignment="Center"/>
 
             <TextBlock 
-                Height="22" 
+                Height="30" 
                 HorizontalAlignment="Center" 
-                Margin="450,50,0,0" 
+                Margin="420,50,0,0" 
                 Name="textBlock3" 
-                FontSize="20"
+                FontSize="25"
                 VerticalAlignment="Top" 
                 FontWeight="Bold" 
-                Text="/"  />
+                Text="de"  />
 
             <TextBlock 
-                Height="20" 
+                Height="30" 
                 Text="{Binding TotalPage}"
                 HorizontalAlignment="Center" 
                 Visibility="Visible" 
-                Margin="500,50,0,0" 
+                Margin="550,50,0,0"
+                FontWeight="Bold"
                 Name="lbl_totalPage" 
                 VerticalAlignment="Top" 
-                FontSize="18"  />
+                FontSize="25"  />
         </Grid>
     </Grid>
 </UserControl>

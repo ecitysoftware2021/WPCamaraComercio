@@ -17,7 +17,7 @@
     <Grid Background="#7FBFBEBE">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="1000" />
+            <RowDefinition Height="900" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -31,11 +31,11 @@
                        VerticalAlignment="Top" 
                        Text="{Binding Tittle}" 
                        Foreground="White" 
-                       FontSize="55"
+                       FontSize="52"
                        FontWeight="Bold" 
-                       Margin="320,140,0,0" />
+                       Margin="290,120,0,0" />
 
-            <Grid Margin="0,350,0,110">
+            <Grid Margin="0,300,0,110">
                 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -51,7 +51,7 @@
                 <Label Content="{Binding Row1}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="35"
+                           FontSize="32"
                            FontWeight="Bold"
                            Grid.Row="0"
                            Foreground="Black"
@@ -60,9 +60,9 @@
                 <TextBlock x:Name="TxbBusinessName" 
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,80,0"
+                           Margin="0,0,70,0"
                            Grid.Row="0"
-                           FontSize="35" 
+                           FontSize="30" 
                            Text="{Binding Value1}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -70,7 +70,7 @@
                 <Label Content="{Binding Row2}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="35"
+                           FontSize="32"
                            Grid.Row="1"
                            FontWeight="Bold"
                            Foreground="Black"
@@ -79,9 +79,9 @@
                 <TextBlock x:Name="TxbBusinessName1" 
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,80,0" 
+                           Margin="0,0,70,0" 
                            Grid.Row="1"
-                           FontSize="35" 
+                           FontSize="30" 
                            Text="{Binding Value2}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -89,7 +89,7 @@
                 <Label Content="{Binding Row3}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="35"
+                           FontSize="32"
                            Grid.Row="2"
                            FontWeight="Bold"
                            Foreground="Black"
@@ -98,9 +98,9 @@
                 <TextBlock x:Name="TxbAddress" 
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,80,0" 
+                           Margin="0,0,70,0" 
                            Grid.Row="2"
-                           FontSize="35" 
+                           FontSize="30" 
                            Text="{Binding Value3}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -109,7 +109,7 @@
                 <Label Content="{Binding Row4}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="35"
+                           FontSize="30"
                            Grid.Row="3"
                            FontWeight="Bold"
                            Foreground="Black"
@@ -118,9 +118,11 @@
                 <TextBlock x:Name="TxbAddress1" 
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,80,0" 
+                           Margin="0,0,70,0" 
                            Grid.Row="3"
-                           FontSize="35" 
+                           FontSize="25" 
+                           TextAlignment="Right"
+                           Width="500"
                            Text="{Binding Value4}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -128,7 +130,7 @@
                 <Label Content="{Binding Row5}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="35"
+                           FontSize="32"
                            Grid.Row="4"
                            FontWeight="Bold"
                            Foreground="Black"
@@ -137,9 +139,9 @@
                 <TextBlock x:Name="TxbEnrollment" 
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,80,0" 
+                           Margin="0,0,70,0" 
                            Grid.Row="4"
-                           FontSize="35" 
+                           FontSize="30" 
                            Text="{Binding Value5}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -147,7 +149,7 @@
                 <Label Content="{Binding Row6}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="35"
+                           FontSize="32"
                            Grid.Row="5"
                            FontWeight="Bold"
                            Foreground="Black"
@@ -156,9 +158,9 @@
                 <TextBlock x:Name="TxbEnrollment1" 
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,80,0" 
+                           Margin="0,0,70,0" 
                            Grid.Row="5"
-                           FontSize="35" 
+                           FontSize="30" 
                            Text="{Binding Value6}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -166,7 +168,7 @@
                 <Label Content="{Binding Row7}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="35"
+                           FontSize="32"
                            Grid.Row="6"
                            FontWeight="Bold"
                            Foreground="Black"
@@ -176,9 +178,9 @@
                 <TextBlock x:Name="TxbState" 
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,80,0"
+                           Margin="0,0,70,0"
                            Grid.Row="6"
-                           FontSize="35" 
+                           FontSize="30" 
                            Text="{Binding Value7}"
                            TextWrapping="Wrap"
                            Foreground="Black"/>
@@ -186,7 +188,7 @@
                 <Label Content="{Binding Row8}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="35"
+                           FontSize="32"
                            Grid.Row="7"
                            FontWeight="Bold"
                            Foreground="Black"
@@ -196,9 +198,9 @@
                 <TextBlock x:Name="TxbState1" 
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Margin="0,0,80,0"
+                           Margin="0,0,70,0"
                            Grid.Row="7"
-                           FontSize="35" 
+                           FontSize="30" 
                            Text="{Binding Value8}"
                            TextWrapping="Wrap"
                            Foreground="Black"/>
