@@ -67,7 +67,8 @@ namespace WPFCCMedellin.Windows
                         Row3 = "Matrícula:",
                         Value3 = infoEstablishment.MatriculaEst,
                         Row4 = "Estado:",
-                        Value4 = infoEstablishment.EstadoEstablecimiento == "yes" ? "Activo" : "Inactivo"
+                        Value4 = infoEstablishment.EstadoEstablecimiento == "yes" ? "Activo" : "Inactivo",
+                        Tittle = "Detalles Establecimiento",
                     };
                 }
                 this.DataContext = viewModel;

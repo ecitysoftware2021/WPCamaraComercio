@@ -105,7 +105,7 @@
                 Source="/Images/Buttons/b-continue.png" Stretch="Fill"
                 PreviewStylusDown="btnSearch_PreviewStylusDown" />-->
 
-            <Image gif:ImageBehavior.AnimatedSource="/Images/Gifs/gif-load.gif"
+            <Image gif:ImageBehavior.AnimatedSource="/Images/Gif/gif-preload.gif"
                    Name="load_gif"
                    HorizontalAlignment="Center"
                    Height="300" 
@@ -118,23 +118,23 @@
 
         <Grid Grid.Row="3" >
             <Image x:Name="btnConsult"
-                   Source="/Images/Buttons/b-continue.png"
+                   Source="/Images/Buttons/btn-acept.png"
                    Stretch="None"
-                   Width="560"
+                   Width="320"
                    Height="110"
                    HorizontalAlignment="Right"
-                   VerticalAlignment="Bottom"
-                   Margin="0,0,0,0"
+                   VerticalAlignment="Top"
+                   Margin="0,0,100,0"
                    TouchDown="BtnConsult_TouchDown" />
 
             <Image x:Name="btnCancell"
-                   Source="/Images/Buttons/b-cancelar.png"
+                   Source="/Images/Buttons/btn-cancel.png"
                    Stretch="None"
-                   Width="560"
+                   Width="320"
                    Height="110"
                    HorizontalAlignment="Left"
-                   VerticalAlignment="Bottom"
-                   Margin="0,0,0,0"
+                   VerticalAlignment="Top"
+                   Margin="100,0,0,0"
                    TouchDown="BtnCancell_TouchDown" />
         </Grid>
     </Grid>

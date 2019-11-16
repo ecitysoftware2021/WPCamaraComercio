@@ -256,7 +256,7 @@
     <value>Debe ingresar un nombre valido.</value>
   </data>
   <data name="ConsultingConinsidences" xml:space="preserve">
-    <value>Señor usuario estamos consultando las coincidencias. Regálenos unos segundos</value>
+    <value>Estamos consultando las coincidencias. Regálenos unos segundos</value>
   </data>
   <data name="ErrorCoincidences" xml:space="preserve">
     <value>Señor usuario, no se encontraron coincidencias, vuelva a intentarlo</value>

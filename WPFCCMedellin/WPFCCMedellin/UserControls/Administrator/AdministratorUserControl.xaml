@@ -8,7 +8,7 @@
         Height="1920" 
         Width="1080">
     <UserControl.Background>
-        <ImageBrush ImageSource="/WPFDavivienda;component/Images/Backgrounds/bg-blanck.jpg"/>
+        <ImageBrush ImageSource="/Images/Backgrounds/bg-blanck.jpg"/>
     </UserControl.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -170,24 +170,24 @@
                     Foreground="White" />
 
             <Image x:Name="btnNext"
-                   Source="/Images/Buttons/b-continue.png"
+                   Source="/Images/Buttons/btn-acept.png"
                    Stretch="None"
                    Width="560"
                    Height="110"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Bottom"
                    Margin="0,0,0,0"
-                   PreviewStylusDown="BtnRetirarDinero_PreviewStylusDown" />
+                   TouchDown="BtnNext_TouchDown" />
 
             <Image x:Name="btnCancell"
-                   Source="/Images/Buttons/b-cancelar.png"
+                   Source="/Images/Buttons/btn-cancel.png"
                    Stretch="None"
                    Width="560"
                    Height="110"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Bottom"
                    Margin="0,0,0,0"
-                   PreviewStylusDown="BtnExit_PreviewStylusDown" />
+                   TouchDown="BtnCancell_TouchDown" />
         </Grid>
     </Grid>
 </UserControl>

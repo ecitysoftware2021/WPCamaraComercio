@@ -224,7 +224,7 @@
 
                                         <StackPanel Orientation="Horizontal" >
 
-                                            <Button Style="{StaticResource InformButton}" Tag="Z" Margin="60,0,0,0"  VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
+                                            <Button Style="{StaticResource InformButton}" Tag="Z" Margin="5,0,0,0"  VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
                                                 <TextBlock    HorizontalAlignment="Left" VerticalAlignment="Top"   >Z</TextBlock>
                                             </Button>
 
@@ -248,6 +248,14 @@
                                             <Button Style="{StaticResource InformButton}" Tag="M"   VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
                                                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"   >M</TextBlock>
                                             </Button>
+
+                                            <!--<Button Style="{StaticResource InformButton}" Tag="&"   VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"   >&</TextBlock>
+                                            </Button>
+                                            
+                                            <Button Style="{StaticResource InformButton}" Tag="."   VerticalContentAlignment="Top" HorizontalContentAlignment="Left"  Width="50" Height="50">
+                                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top"   >.</TextBlock>--><!--
+                                            </Button>-->
 
                                             <Image Source="/Images/Others/backspace.png"
                                                 Tag="Backspace"   

@@ -79,7 +79,7 @@ namespace WPFCCMedellin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Señor usuario estamos consultando las coincidencias. Regálenos unos segundos.
+        ///   Looks up a localized string similar to Estamos consultando las coincidencias. Regálenos unos segundos.
         /// </summary>
         internal static string ConsultingConinsidences {
             get {

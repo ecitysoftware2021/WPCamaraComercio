@@ -38,39 +38,6 @@ namespace WPFCCMedellin.UserControls.Administrator
         #endregion
 
         #region "Eventos"
-        private void BtnExit_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            try
-            {
-                Utilities.navigator.Navigate(UserControlView.Config);
-            }
-            catch (Exception ex)
-            {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
-            }
-        }
-
-        private async void BtnRetirarDinero_PreviewStylusDown(object sender, StylusDownEventArgs e)
-        {
-            try
-            {
-                if (type == 1 && typeOperation == ETypeAdministrator.Balancing)
-                {
-                    type = 2;
-                    txtDescription.Text = MessageResource.RemoveMonyDispenser;
-                    RefreshList();
-                }
-                else
-                {
-                    UpdateDataControl();
-                }
-            }
-            catch (Exception ex)
-            {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
-            }
-        }
-
         private async void UpdateDataControl()
         {
             try
@@ -157,5 +124,38 @@ namespace WPFCCMedellin.UserControls.Administrator
             }
         }
         #endregion
+
+        private void BtnNext_TouchDown(object sender, TouchEventArgs e)
+        {
+            try
+            {
+                if (type == 1 && typeOperation == ETypeAdministrator.Balancing)
+                {
+                    type = 2;
+                    txtDescription.Text = MessageResource.RemoveMonyDispenser;
+                    RefreshList();
+                }
+                else
+                {
+                    UpdateDataControl();
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
+
+        private void BtnCancell_TouchDown(object sender, TouchEventArgs e)
+        {
+            try
+            {
+                Utilities.navigator.Navigate(UserControlView.Config);
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
     }
 }

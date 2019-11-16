@@ -26,7 +26,7 @@
                        FontWeight="Bold"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Bottom"
-                       Foreground="#FF71AB01" 
+                       Foreground="#FFC00019" 
                        Margin="0,0,0,0" 
                        FontFamily="Myriad Pro"/>
         </Grid>
@@ -59,7 +59,7 @@
                        FontWeight="UltraBlack"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Foreground="#FF01843E" 
+                       Foreground="#FF606060" 
                        Margin="0,150,0,0"
                        FontFamily="Myriad Pro" />
         </Grid>

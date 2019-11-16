@@ -54,6 +54,7 @@ namespace WPFCCMedellin.Classes.Printer
                         switches.Add("-dNumCopies=1");
                         switches.Add(pathFile);
                         processor.Completed += new GhostscriptProcessorEventHandler(OnCompleted);
+                        processor.Error += new GhostscriptProcessorErrorEventHandler(OnErrror);
                         processor.StartProcessing(switches.ToArray(), null);
                     }
                 }
@@ -62,6 +63,11 @@ namespace WPFCCMedellin.Classes.Printer
             {
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
+        }
+
+        private void OnErrror(object sender, GhostscriptProcessorErrorEventArgs e)
+        {
+            callbackError?.Invoke("Error imprimiendo");
         }
 
         private void OnCompleted(object sender, GhostscriptProcessorEventArgs e)
