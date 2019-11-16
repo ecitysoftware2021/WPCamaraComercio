@@ -65,17 +65,15 @@ namespace WPFCCMedellin.Services
             {
                 if (transaction != null)
                 {
-                    var response = await GetData(new RequestApi
-                    {
-                        Data = new RequestPayment
+                    var response = await GetData(new RequestPayment
                         {
                             AutorizaEnvioEmail = "NO",
                             AutorizaEnvioSMS = "NO",
                             CodigoDepartamentoComprador = int.Parse(Utilities.GetConfiguration("CodeDepartmentBuyer")),
                             CodigoMunicipioComprador = int.Parse(Utilities.GetConfiguration("CodeTownBuyer")),
                             CodigoPaisComprador = int.Parse(Utilities.GetConfiguration("CodeCountryBuyer")),
-                            DireccionComprador = transaction.payer.ADDRESS,
-                            EmailComprador = transaction.payer.EMAIL,
+                            DireccionComprador = transaction.payer.ADDRESS ?? string.Empty,
+                            EmailComprador = transaction.payer.EMAIL ?? string.Empty,
                             IdentificacionComprador = transaction.payer.IDENTIFICATION,
                             MunicipioComprador = string.Empty,
                             NombreComprador = string.Concat(transaction.payer.NAME, transaction.payer.LAST_NAME),
@@ -88,16 +86,15 @@ namespace WPFCCMedellin.Services
                             TelefonoComprador = transaction.payer.PHONE.ToString(),
                             TipoComprador = transaction.payer.TYPE_PAYER,
                             TipoIdentificacionComprador = transaction.payer.TYPE_IDENTIFICATION,
-                            ValorCompra = transaction.Amount,
+                            ValorCompra = Decimal.ToInt32(transaction.Amount),
                             Certificados = transaction.Products,
-                        },
                     }, "SendPay");
 
                     if (response.CodeError == 200)
                     {
                         var result = JsonConvert.DeserializeObject<ResponsePay>(response.Data.ToString());
 
-                        if (result.IsSuccess)
+                        if (result.IsSuccess && result.Result != null)
                         {
                             transaction.consecutive = result.Result;
                             transaction.State = ETransactionState.Success;
@@ -138,10 +135,7 @@ namespace WPFCCMedellin.Services
                         countCertificates += 1;
                         certificate.copia = (i + 1).ToString();
 
-                        var response = await GetData(new RequestApi
-                        {
-                            Data = certificate
-                        }, "GetCertifiedString");
+                        var response = await GetData(certificate, "GetCertifiedString");
 
                         if (response.CodeError == 200 && response.Data != null)
                         {
@@ -150,7 +144,7 @@ namespace WPFCCMedellin.Services
                             if (!string.IsNullOrEmpty(result.Result))
                             {
                                 var nameFile = $"{transaction.consecutive}-{certificate.IdCertificado}" +
-                                    $"-{certificate.matricula}-{certificate.matriculaest}-{transaction.Tpcm}-{(i + 1).ToString()}";
+                                    $"-{certificate.matricula}-{certificate.matriculaest ?? "0"}-{transaction.Tpcm}-{(i + 1).ToString()}";
                                 string path = DownloadFile(result.Result, nameFile);
                                 if (!string.IsNullOrEmpty(path))
                                 {
@@ -176,14 +170,37 @@ namespace WPFCCMedellin.Services
         {
             try
             {
-                WebClient myWebClient = new WebClient();
-                var response = myWebClient.DownloadData(patchFile);
-                if (response != null)
+                using (WebClient webClient = new WebClient())
                 {
-                    var path = Utilities.SaveFile(nameFile, Utilities.GetConfiguration("DirectoryFile"), response);
-                    if (!string.IsNullOrEmpty(path))
+                    bool stateDownload = false;
+                    int countIntents = 0;
+                    while (!stateDownload)
                     {
-                        return path;
+                        var response = webClient.DownloadData(patchFile);
+                        var contentType = webClient.ResponseHeaders["Content-Type"];
+
+                        if (response != null && contentType != null &&
+                            contentType.StartsWith("application/pdf", StringComparison.OrdinalIgnoreCase))
+                        {
+                            stateDownload = true;
+                            var path = Utilities.SaveFile(nameFile, Utilities.GetConfiguration("DirectoryFile"), response);
+                            if (!string.IsNullOrEmpty(path))
+                            {
+                                return path;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            countIntents++;
+                            if (countIntents >= int.Parse(Utilities.GetConfiguration("IntentsDownload").ToString()))
+                            {
+                                break;
+                            }
+                        }
                     }
                 }
             }

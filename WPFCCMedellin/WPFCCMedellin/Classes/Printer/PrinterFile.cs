@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Printing;
 using WPFCCMedellin.Resources;
+using System.Windows;
 
 namespace WPFCCMedellin.Classes.Printer
 {
@@ -18,6 +19,7 @@ namespace WPFCCMedellin.Classes.Printer
         private bool dobleFace;
 
         private LocalPrintServer printServer;
+
 
         public PrinterFile(string printerName, bool dobleFace = false)
         {
@@ -53,6 +55,7 @@ namespace WPFCCMedellin.Classes.Printer
                         switches.Add(pathFile);
                         processor.Completed += new GhostscriptProcessorEventHandler(OnCompleted);
                         processor.StartProcessing(switches.ToArray(), null);
+                        return false;
                     }
                 }
             }
@@ -71,25 +74,30 @@ namespace WPFCCMedellin.Classes.Printer
 
         public bool GetStatus()
         {
+            bool status = false;
             try
             {
                 if (!string.IsNullOrEmpty(printerName))
                 {
-                    PrintQueue queue = printServer.GetPrintQueue(printerName, new string[0] { });
-
-                    var status = queue.QueueStatus;
-
-                    if (status == PrintQueueStatus.None)
+                    Application.Current.Dispatcher.Invoke(delegate
                     {
-                        return true;
-                    }
+                        PrintQueue queue = printServer.GetPrintQueue(printerName, new string[0] { });
+
+                        var statusPrinter = queue.QueueStatus;
+
+                        if (statusPrinter == PrintQueueStatus.None)
+                        {
+                            status = true;
+                        }
+                    });
+                    GC.Collect();
                 }
             }
             catch (Exception ex)
             {
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
-            return false;
+            return status;
         }
     }
 }

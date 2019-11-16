@@ -32,6 +32,8 @@ namespace WPFCCMedellin.UserControls
             InitializeComponent();
 
             this.transaction = transaction;
+
+            DownloadCertificates();
         }
 
         public void DownloadCertificates()

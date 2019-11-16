@@ -69,7 +69,7 @@ namespace WPFCCMedellin.Services
 
         public string TipoIdentificacionComprador { get; set; }
 
-        public decimal ValorCompra { get; set; }
+        public int ValorCompra { get; set; }
     }
 
     public class CLSDatosCertificado
