@@ -102,18 +102,6 @@ namespace WPFCCMedellin.UserControls
             }
         }
 
-        private void Btn_back_TouchDown(object sender, TouchEventArgs e)
-        {
-            try
-            {
-                Utilities.navigator.Navigate(UserControlView.Main);
-            }
-            catch (Exception ex)
-            {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
-            }
-        }
-
         private void Btn_pagination_TouchDown(object sender, TouchEventArgs e)
         {
             try
@@ -345,7 +333,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-
+                Utilities.navigator.Navigate(UserControlView.Main);
             }
             catch (Exception ex)
             {

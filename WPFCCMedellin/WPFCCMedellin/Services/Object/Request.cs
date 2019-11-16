@@ -82,4 +82,14 @@ namespace WPFCCMedellin.Services
         public string tpcm { get; set; }
         public string copia { get; set; }
     }
+
+    public class CancelPayment
+    {
+        public int IdCompra { get; set; }
+        public string ReferenciaPago { get; set; }
+        public string PlataformaCliente { get; set; }
+        public string IdCliente { get; set; }
+        public decimal ValorCompra { get; set; }
+        public string Observaciones { get; set; }
+    }
 }

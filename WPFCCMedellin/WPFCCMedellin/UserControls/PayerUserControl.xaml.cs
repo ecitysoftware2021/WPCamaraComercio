@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using WPFCCMedellin.Classes;
+using WPFCCMedellin.Classes.UseFull;
 using WPFCCMedellin.DataModel;
 using WPFCCMedellin.Models;
 using WPFCCMedellin.Resources;
@@ -21,11 +22,18 @@ namespace WPFCCMedellin.UserControls
 
         private Transaction transaction;
 
+        private ReaderBarCode readerBarCode;
+
         public PayerUserControl(Transaction transaction)
         {
             InitializeComponent();
 
             this.transaction = transaction;
+
+            if (readerBarCode == null)
+            {
+                readerBarCode = new ReaderBarCode();
+            }
 
             ConfigView();
         }
@@ -52,6 +60,35 @@ namespace WPFCCMedellin.UserControls
                 cmb_type_id.SelectedIndex = 0;
 
                 this.DataContext = viewModel;
+
+                InicielizeBarcodeReader();
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
+
+        private void InicielizeBarcodeReader()
+        {
+            try
+            {
+                readerBarCode.callbackOut = data =>
+                {
+                    if (data != null)
+                    {
+                        viewModel.Value1 = data.Document;
+                        viewModel.Value2 = data.FirstName;
+                        viewModel.Value3 = data.LastName;
+                    }
+                };
+
+                readerBarCode.callbackError = error =>
+                {
+
+                };
+
+                readerBarCode.Start(Utilities.GetConfiguration("BarcodePort"), int.Parse(Utilities.GetConfiguration("BarcodeBaudRate")));
             }
             catch (Exception ex)
             {
@@ -158,7 +195,6 @@ namespace WPFCCMedellin.UserControls
         private void SaveTransaction(string typeDocument)
         {
             try
-
             {
                 Task.Run(async () =>
                 {
@@ -211,7 +247,14 @@ namespace WPFCCMedellin.UserControls
 
         private void Btn_exit_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-
+            try
+            {
+                Utilities.navigator.Navigate(UserControlView.Main);
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
         }
     }
 }

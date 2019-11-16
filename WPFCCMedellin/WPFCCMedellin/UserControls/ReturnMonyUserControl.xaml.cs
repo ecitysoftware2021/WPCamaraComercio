@@ -154,13 +154,13 @@ namespace WPFCCMedellin.UserControls
                     this.viewModel.StatePay = true;
                     transaction.Payment = viewModel;
 
-                    // AdminPayPlus.ControlPeripherals.ClearValues();
+                     AdminPayPlus.ControlPeripherals.ClearValues();
 
-                    if (transaction.Type == ETransactionType.Withdrawal)
+                    if (transaction.State == ETransactionState.CancelError)
                     {
                         Task.Run(async () =>
                         {
-                            //transaction = await AdminPayPlus.ApiIntegration.NotifycTransaction(transaction);
+                            transaction = await AdminPayPlus.ApiIntegration.NotifycCancelTransaction(transaction);
 
                             Utilities.CloseModal();
                             if (transaction.IdTransactionAPi > 0 && transaction.State == ETransactionState.Success)

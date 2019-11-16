@@ -166,6 +166,35 @@ namespace WPFCCMedellin.Services
             return null;
         }
 
+        internal async Task<Transaction> NotifycCancelTransaction(Transaction transaction)
+        {
+            try
+            {
+                if (transaction != null && !string.IsNullOrEmpty(transaction.consecutive))
+                {
+                    var response = await GetData(new CancelPayment
+                    {
+                        IdCliente = Utilities.GetConfiguration("IdClient"),
+                        IdCompra = int.Parse(transaction.consecutive),
+                        ValorCompra = transaction.Amount,
+                        ReferenciaPago = transaction.IdTransactionAPi.ToString(),
+                        PlataformaCliente = Utilities.GetConfiguration("ClientPlataform"),
+                        Observaciones = string.Empty
+                    }, "BuyCancel");
+
+                    if (response.CodeError == 200)
+                    {
+                        transaction.State = ETransactionState.Cancel;
+                    }
+                }  
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+            return transaction;
+        }
+
         public string DownloadFile(string patchFile, string nameFile)
         {
             try
