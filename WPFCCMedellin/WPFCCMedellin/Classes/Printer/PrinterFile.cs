@@ -2,10 +2,7 @@
 using Ghostscript.NET.Processor;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Printing;
 using WPFCCMedellin.Resources;
 using System.Windows;
@@ -20,6 +17,9 @@ namespace WPFCCMedellin.Classes.Printer
 
         private LocalPrintServer printServer;
 
+        public Action<bool> callbackOut;
+
+        public Action<string> callbackError;
 
         public PrinterFile(string printerName, bool dobleFace = false)
         {
@@ -32,7 +32,7 @@ namespace WPFCCMedellin.Classes.Printer
             }
         }
 
-        public bool Start(string pathFile)
+        public void Start(string pathFile)
         {
             try
             {
@@ -55,7 +55,6 @@ namespace WPFCCMedellin.Classes.Printer
                         switches.Add(pathFile);
                         processor.Completed += new GhostscriptProcessorEventHandler(OnCompleted);
                         processor.StartProcessing(switches.ToArray(), null);
-                        return false;
                     }
                 }
             }
@@ -63,13 +62,18 @@ namespace WPFCCMedellin.Classes.Printer
             {
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
-
-            return false;
         }
 
         private void OnCompleted(object sender, GhostscriptProcessorEventArgs e)
         {
-            
+            try
+            {
+                callbackOut?.Invoke(true);
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
         }
 
         public bool GetStatus()

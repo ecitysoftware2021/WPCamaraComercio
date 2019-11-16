@@ -149,6 +149,7 @@
                   Margin="0,0,0,0"
                   Background="Transparent"
                   BorderBrush="Transparent"
+                  IsEnabled="false"
                   AutomationProperties.AutomationId="ItemGridView"
                   AutomationProperties.Name="Grouped Items">
                 

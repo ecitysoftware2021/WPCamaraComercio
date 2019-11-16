@@ -42,27 +42,80 @@ namespace WPFCCMedellin.UserControls
             {
                 Task.Run(async () => 
                 {
-                    bool statusPrint = true;
                     var pathsCertificates = await AdminPayPlus.ApiIntegration.DownloadCertificates(transaction);
-                    if (pathsCertificates.Count > 0)
+                    if (pathsCertificates != null && pathsCertificates.Count > 0)
                     {
-                        foreach (var path in pathsCertificates)
-                        {
-                            if (!AdminPayPlus.PrinterFile.Start(path))
-                            {
-                                statusPrint = false;
-                                break;
-                            }
-                        }
+                        PrintCertificates(pathsCertificates);
                     }
-
-                    if (!statusPrint)
+                    else
                     {
-                        Utilities.ShowModal("", EModalType.Error);
-                    }
-
-                    Utilities.navigator.Navigate(UserControlView.PaySuccess, false, transaction);
+                        FinishTransaction(false);
+                    }  
                 });
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
+
+        private void PrintCertificates(List<string> paths)
+        {
+            try
+            {
+                int countCertificates = 1;
+
+                if (paths != null && paths.Count > 0)
+                {
+                    AdminPayPlus.PrinterFile.callbackOut = response =>
+                    {
+                        if (response && countCertificates < paths.Count)
+                        {
+                            AdminPayPlus.PrinterFile.Start(paths[countCertificates]);
+                            countCertificates++;
+                        }
+
+                        if (countCertificates == paths.Count)
+                        {
+                            FinishTransaction(true);
+
+                        }
+                    };
+
+                    AdminPayPlus.PrinterFile.callbackError = error =>
+                    {
+                        if (countCertificates > 1)
+                        {
+                            Utilities.ShowModal("", EModalType.Error);
+                            FinishTransaction(true);
+                        }
+                        else
+                        {
+                            FinishTransaction(false);
+                        }
+                    };
+
+                    AdminPayPlus.PrinterFile.Start(paths[0]);
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
+
+        private void FinishTransaction(bool statePrint)
+        {
+            try
+            {
+                if (statePrint)
+                {
+                    Utilities.navigator.Navigate(UserControlView.PaySuccess, false, transaction);
+                }
+                else
+                {
+                    Utilities.navigator.Navigate(UserControlView.ReturnMony, false, transaction);
+                }
             }
             catch (Exception ex)
             {

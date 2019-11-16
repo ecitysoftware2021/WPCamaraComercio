@@ -49,7 +49,7 @@
                            TextAlignment="Center" />
 
             <TextBlock x:Name="LblMessage" 
-                           Text="Estamos generando e imprimiendo los sertificados regalenos unos segundos..."
+                           Text="Estamos generando e imprimiendo los certificados regalenos unos segundos..."
                            HorizontalAlignment="Center"
                            Margin="0,380,0,0" 
                            FontSize="50" 
