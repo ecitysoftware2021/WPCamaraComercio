@@ -453,7 +453,7 @@ namespace WPFCCMedellin.ViewModel
                 {
                     var result = JsonConvert.DeserializeObject<ResponseDetalleComerciante>(response.Data.ToString());
 
-                    if (result.Result.response.resultados != null)
+                    if (result != null && result.Result != null && result.Result.response != null && result.Result.response.resultados != null)
                     {
                         return new Transaction
                         {
