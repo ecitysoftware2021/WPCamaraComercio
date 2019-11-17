@@ -485,47 +485,54 @@ namespace WPFCCMedellin.ViewModel
         {
             try
             {
+                
                 if (type == ETypeCertificate.Merchant)
                 {
-                    Colum1 = "CERTIFICADO";
-                    Colum2 = "VALOR";
-                    Colum3 = "CANTIDAD";
-                    if (DataList != null && DataList.Count == 0)
+                    if (transaction.Files[0] != null && transaction.Files[0].certificados != null)
                     {
-                        foreach (var file in transaction.Files[0].certificados)
+                        Colum1 = "CERTIFICADO";
+                        Colum2 = "VALOR";
+                        Colum3 = "CANTIDAD";
+                        if (DataList != null && DataList.Count == 0)
                         {
-                            DataList.Add(new ItemList
+                            foreach (var file in transaction.Files[0].certificados)
                             {
-                                Item1 = file.NombreCertificado,
-                                Item5 = decimal.Parse(file.ValorCertificado),
-                                Item6 = 0,
-                                Index = DataList.Count,
-                                Data = file
-                            });
+                                DataList.Add(new ItemList
+                                {
+                                    Item1 = file.NombreCertificado,
+                                    Item5 = decimal.Parse(file.ValorCertificado),
+                                    Item6 = 0,
+                                    Index = DataList.Count,
+                                    Data = file
+                                });
+                            }
                         }
                     }
                 }
                 else
                 {
-                    Colum1 = "ESTABLECIMIENTO";
-                    Colum2 = "";
-                    Colum3 = "";
-                    if (DataListAux != null && DataListAux.Count == 0)
+                    if (transaction.Files[0] != null && transaction.Files[0].certificados != null)
                     {
-                        foreach (var establishment in transaction.Files[0].establecimientos)
+                        Colum1 = "ESTABLECIMIENTO";
+                        Colum2 = "";
+                        Colum3 = "";
+                        if (DataListAux != null && DataListAux.Count == 0)
                         {
-                            foreach (var file in establishment.CertificadosEstablecimiento)
+                            foreach (var establishment in transaction.Files[0].establecimientos)
                             {
-                                DataListAux.Add(new ItemList
+                                foreach (var file in establishment.CertificadosEstablecimiento)
                                 {
-                                    Item1 = establishment.NombreEstablecimiento,
-                                    Item5 = decimal.Parse(file.ValorCertificado),
-                                    Item6 = 0,
-                                    Index = DataListAux.Count,
-                                    Item3 = file.NombreCertificado,
-                                    Data = file,
-                                    Detail = establishment
-                                });
+                                    DataListAux.Add(new ItemList
+                                    {
+                                        Item1 = establishment.NombreEstablecimiento,
+                                        Item5 = decimal.Parse(file.ValorCertificado),
+                                        Item6 = 0,
+                                        Index = DataListAux.Count,
+                                        Item3 = file.NombreCertificado,
+                                        Data = file,
+                                        Detail = establishment
+                                    });
+                                }
                             }
                         }
                     }

@@ -262,15 +262,16 @@
                                   Tag="{Binding Tag}">
                                 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="300" />
+                                    <ColumnDefinition Width="350" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="230" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="{Binding Item1}"
-                                           FontSize="30"
+                                           FontSize="28"
                                            TextWrapping="Wrap"
+                                           Height="40"
                                            HorizontalAlignment="Left"                                           
                                            VerticalAlignment="Top"
                                            Margin="30,0,0,0"
@@ -279,7 +280,7 @@
 
                                 <TextBlock Name="row_2"
                                        Text="VALOR"
-                                       FontSize="30"
+                                       FontSize="26"
                                        TextAlignment="Center"
                                        Grid.Column="1"
                                        TextWrapping="Wrap"
@@ -290,7 +291,7 @@
 
                                 <TextBlock Name="row_3"
                                        Text="CANTIDAD"
-                                       FontSize="30"
+                                       FontSize="26"
                                        TextAlignment="Center"
                                        Grid.Column="2"
                                        FontFamily="Myriad Pro"
