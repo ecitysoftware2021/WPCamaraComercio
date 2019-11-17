@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -221,22 +222,41 @@ namespace WPFCCMedellin.UserControls
                                 }
                                 else
                                 {
-                                    lv_data_list.SelectedItem = null;
+                                    ValidateListView(true);
                                 }
                             }
                             else
                             {
                                 Utilities.ShowModal(MessageResource.ErrorFoundFiles, EModalType.Error);
+                                ValidateListView(true);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
+                        Utilities.CloseModal();
                         Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
                     }
                 });
 
                 Utilities.ShowModal(MessageResource.ConsultingConinsidences, EModalType.Preload);
+            }
+            catch (Exception ex)
+            {
+                Utilities.CloseModal();
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
+
+        private void ValidateListView(bool activateList)
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(delegate
+                {
+                    Thread.Sleep(300);
+                    this.IsEnabled = activateList;
+                });
             }
             catch (Exception ex)
             {
@@ -277,8 +297,15 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                SearchData((ItemList)lv_data_list.SelectedItem, 2);
+                var item = (ItemList)lv_data_list.SelectedItem;
+                if (item != null)
+                {
+                    ValidateListView(false);
+                    SearchData(item, 2);
+                    lv_data_list.SelectedItem = null;
+                }
             }
+                
             catch (Exception ex)
             {
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);

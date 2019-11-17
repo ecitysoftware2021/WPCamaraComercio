@@ -338,6 +338,18 @@ namespace WPFCCMedellin.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DataList)));
             }
         }
+
+        private List<ItemList> _dataListAux;
+
+        public List<ItemList> DataListAux
+        {
+            get { return _dataListAux; }
+            set
+            {
+                _dataListAux = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DataListAux)));
+            }
+        }
         #endregion
 
         internal void ConfigurateDataList(object data, ETransactionType type)
@@ -369,10 +381,6 @@ namespace WPFCCMedellin.ViewModel
                     VisibilityPagination = Visibility.Hidden;
                     VisibilityNext = Visibility.Hidden;
                     VisibilityPrevius = Visibility.Hidden;
-                    if (DataList != null && DataList.Count > 0)
-                    {
-                        DataList.Clear();
-                    }
                 }
             }
             catch (Exception ex)
@@ -412,10 +420,10 @@ namespace WPFCCMedellin.ViewModel
 
                         TotalPage = (int)Math.Ceiling(((decimal)_dataList.Count / CuantityItems));
                          
-                        if (_dataList.Count % CuantityItems != 0)
-                        {
-                            TotalPage += 1;
-                        }
+                        //if (_dataList.Count % CuantityItems != 0)
+                        //{
+                        //    TotalPage += 1;
+                        //}
 
                         return true;
                     }
@@ -477,24 +485,24 @@ namespace WPFCCMedellin.ViewModel
         {
             try
             {
-                
-                DataList.Clear();
-
                 if (type == ETypeCertificate.Merchant)
                 {
                     Colum1 = "CERTIFICADO";
                     Colum2 = "VALOR";
                     Colum3 = "CANTIDAD";
-                    foreach (var file in transaction.Files[0].certificados)
+                    if (DataList != null && DataList.Count == 0)
                     {
-                        DataList.Add(new ItemList
+                        foreach (var file in transaction.Files[0].certificados)
                         {
-                            Item1 = file.NombreCertificado,
-                            Item5 = decimal.Parse(file.ValorCertificado),
-                            Item6 = 0,
-                            Index = DataList.Count,
-                            Data = file
-                        });
+                            DataList.Add(new ItemList
+                            {
+                                Item1 = file.NombreCertificado,
+                                Item5 = decimal.Parse(file.ValorCertificado),
+                                Item6 = 0,
+                                Index = DataList.Count,
+                                Data = file
+                            });
+                        }
                     }
                 }
                 else
@@ -502,19 +510,22 @@ namespace WPFCCMedellin.ViewModel
                     Colum1 = "ESTABLECIMIENTO";
                     Colum2 = "";
                     Colum3 = "";
-                    foreach (var establishment in transaction.Files[0].establecimientos)
+                    if (DataListAux != null && DataListAux.Count == 0)
                     {
-                        foreach (var file in establishment.CertificadosEstablecimiento)
+                        foreach (var establishment in transaction.Files[0].establecimientos)
                         {
-                            DataList.Add(new ItemList
+                            foreach (var file in establishment.CertificadosEstablecimiento)
                             {
-                                Item1 = establishment.NombreEstablecimiento,
-                                Item5 = decimal.Parse(file.ValorCertificado),
-                                Item6 = 0,
-                                Index = DataList.Count,
-                                Item3 = file.NombreCertificado,
-                                Data = establishment
-                            });
+                                DataListAux.Add(new ItemList
+                                {
+                                    Item1 = establishment.NombreEstablecimiento,
+                                    Item5 = decimal.Parse(file.ValorCertificado),
+                                    Item6 = 0,
+                                    Index = DataListAux.Count,
+                                    Item3 = file.NombreCertificado,
+                                    Data = file
+                                });
+                            }
                         }
                     }
                 }
@@ -525,7 +536,7 @@ namespace WPFCCMedellin.ViewModel
             }
         }
 
-        public Transaction GetListFiles(ETypeCertificate type, Transaction transaction)
+        public Transaction GetListFiles(Transaction transaction)
         {
             try
             {
@@ -537,28 +548,31 @@ namespace WPFCCMedellin.ViewModel
                     {
                         if (item.Item6 > 0)
                         {
-                            if (type == ETypeCertificate.Merchant)
+                            var certificate = (CertificadoComerciante)item.Data;
+                            products.Add(new Product
                             {
-                                var certificate = (CertificadoComerciante)item.Data;
-                                products.Add(new Product
+                                NumeroCertificados = item.Item6.ToString(),
+                                CodigoGeneracion = certificate.CodigoGeneracion,
+                                IdCertificado = certificate.IdCertificado,
+                                MatriculaEst = certificate.MatriculaEstablecimiento,
+                                matricula = transaction.Enrollment,
+                                tpcm = transaction.Tpcm,
+                                EstablishCertificate = new EstablishCertificate
                                 {
-                                    NumeroCertificados = item.Item6.ToString(),
-                                    CodigoGeneracion = certificate.CodigoGeneracion,
-                                    IdCertificado = certificate.IdCertificado,
-                                    MatriculaEst = certificate.MatriculaEstablecimiento,
-                                    matricula = transaction.Enrollment,
-                                    tpcm = transaction.Tpcm,
-                                    EstablishCertificate = new EstablishCertificate
-                                    {
-                                        CertificateCost = decimal.Parse(certificate.ValorCertificado),
-                                        CertificateId = certificate.IdCertificado,
-                                        EstablishEnrollment = certificate.MatriculaEstablecimiento,
-                                        GenerationCode = certificate.CodigoGeneracion,
-                                        NombreCertificado = certificate.NombreCertificado
-                                    }
-                                });
-                            }
-                            else
+                                    CertificateCost = decimal.Parse(certificate.ValorCertificado),
+                                    CertificateId = certificate.IdCertificado,
+                                    EstablishEnrollment = certificate.MatriculaEstablecimiento,
+                                    GenerationCode = certificate.CodigoGeneracion,
+                                    NombreCertificado = certificate.NombreCertificado
+                                }
+                            });
+                        }
+                    }
+                    if (DataListAux != null && DataListAux.Count > 0)
+                    {
+                        foreach (var item in DataListAux)
+                        {
+                            if (item.Item6 > 0)
                             {
                                 var certificate = (CertificadosEstablecimiento)item.Data;
                                 products.Add(new Product

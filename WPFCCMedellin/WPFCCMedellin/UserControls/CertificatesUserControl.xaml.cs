@@ -39,6 +39,7 @@ namespace WPFCCMedellin.UserControls
                     viewModel = new DataListViewModel
                     {
                         DataList = new List<ItemList>(),
+                        DataListAux = new List<ItemList>(),
                         TypeCertificates = ETypeCertificate.Merchant,
                         ViewList = new CollectionViewSource(),
                         VisibilityId = Visibility.Visible,
@@ -98,7 +99,6 @@ namespace WPFCCMedellin.UserControls
                 if (typeConsul != (int)viewModel.TypeCertificates)
                 {
                     viewModel.RefreshView(false);
-                    viewModel.Amount = 0;
 
                     if (viewModel.TypeCertificates == ETypeCertificate.Establishment)
                     {
@@ -148,16 +148,17 @@ namespace WPFCCMedellin.UserControls
             {
                 Dispatcher.BeginInvoke((Action)delegate
                 {
-                    viewModel.ViewList.Source = viewModel.DataList;
-                    viewModel.ViewList.Filter += new FilterEventHandler(View_List_Filter);
-
                     if (viewModel.TypeCertificates == ETypeCertificate.Merchant)
                     {
+                        viewModel.ViewList.Source = viewModel.DataList;
+                        viewModel.ViewList.Filter += new FilterEventHandler(View_List_Filter);
                         LvMerchant.DataContext = viewModel.ViewList;
                         LvMerchant.Items.Refresh();
                     }
                     else
                     {
+                        viewModel.ViewList.Source = viewModel.DataListAux;
+                        viewModel.ViewList.Filter += new FilterEventHandler(View_List_Filter);
                         LvEstablish.DataContext = viewModel.ViewList;
                         LvEstablish.Items.Refresh();
                     }
@@ -174,8 +175,17 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                int index = viewModel.DataList.IndexOf((ItemList)e.Item);
+                int index = 0;
 
+                if (viewModel.TypeCertificates == ETypeCertificate.Merchant)
+                {
+                    index = viewModel.DataList.IndexOf((ItemList)e.Item);
+                }
+                else
+                {
+                    index = viewModel.DataListAux.IndexOf((ItemList)e.Item);
+                }
+                
                 if (index >= (viewModel.CuantityItems * viewModel.CurrentPageIndex) && index < (viewModel.CuantityItems * (viewModel.CurrentPageIndex + 1)))
                 {
                     e.Accepted = true;
@@ -196,11 +206,23 @@ namespace WPFCCMedellin.UserControls
             try
             {
                 var index = int.Parse(((Image)sender).Tag.ToString());
-                
-                if (viewModel.DataList[index].Item6 > 0)
+
+                if (viewModel.TypeCertificates == ETypeCertificate.Merchant)
                 {
-                    viewModel.DataList[index].Item6 -= 1;
-                    viewModel.Amount -= viewModel.DataList[index].Item5;
+                    if (viewModel.DataList[index].Item6 > 0)
+                    {
+                        viewModel.DataList[index].Item6 -= 1;
+                        viewModel.Amount -= viewModel.DataList[index].Item5;
+                    }
+
+                }
+                else
+                {
+                    if (viewModel.DataListAux[index].Item6 > 0)
+                    {
+                        viewModel.DataListAux[index].Item6 -= 1;
+                        viewModel.Amount -= viewModel.DataListAux[index].Item5;
+                    }
                 }
             }
             catch (Exception ex)
@@ -214,11 +236,22 @@ namespace WPFCCMedellin.UserControls
             try
             {
                 var index = int.Parse(((Image)sender).Tag.ToString());
-                
-                if (viewModel.DataList[index].Item6 < 5)
+
+                if (viewModel.TypeCertificates == ETypeCertificate.Merchant)
                 {
-                    viewModel.DataList[index].Item6 += 1;
-                    viewModel.Amount += viewModel.DataList[index].Item5;
+                    if (viewModel.DataList[index].Item6 < 5)
+                    {
+                        viewModel.DataList[index].Item6 += 1;
+                        viewModel.Amount += viewModel.DataList[index].Item5;
+                    }
+                }
+                else
+                {
+                    if (viewModel.DataListAux[index].Item6 < 5)
+                    {
+                        viewModel.DataListAux[index].Item6 += 1;
+                        viewModel.Amount += viewModel.DataListAux[index].Item5;
+                    }
                 }
             }
             catch (Exception ex)
@@ -274,7 +307,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                transaction = viewModel.GetListFiles(viewModel.TypeCertificates, transaction);
+                transaction = viewModel.GetListFiles(transaction);
                 if (transaction.Products != null && transaction.Products.Count > 0)
                 {
                     transaction.Files = null;
