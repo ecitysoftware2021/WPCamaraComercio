@@ -72,7 +72,6 @@
                            Grid.Column="1"
                            FontSize="30" 
                            Text="{Binding Value1}"
-                           TextWrapping="Wrap"
                            Foreground="Black" />
 
                 <Label Content="{Binding Row2}"

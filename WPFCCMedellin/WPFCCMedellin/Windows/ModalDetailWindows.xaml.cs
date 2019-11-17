@@ -60,7 +60,7 @@ namespace WPFCCMedellin.Windows
                     var infoEstablishment = (Establecimiento)data;
                     viewModel = new DetailViewModel
                     {
-                        Row1 = "Nombre establecimiento:",
+                        Row1 = "Establecimiento:",
                         Value1 = infoEstablishment.NombreEstablecimiento,
                         Row2 = "Dirección:",
                         Value2 = infoEstablishment.DireccionEstablecimiento,

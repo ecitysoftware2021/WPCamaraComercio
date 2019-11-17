@@ -511,7 +511,7 @@ namespace WPFCCMedellin.ViewModel
                 }
                 else
                 {
-                    if (transaction.Files[0] != null && transaction.Files[0].certificados != null)
+                    if (transaction.Files[0] != null && transaction.Files[0].establecimientos != null)
                     {
                         Colum1 = "ESTABLECIMIENTO";
                         Colum2 = "";
@@ -520,18 +520,21 @@ namespace WPFCCMedellin.ViewModel
                         {
                             foreach (var establishment in transaction.Files[0].establecimientos)
                             {
-                                foreach (var file in establishment.CertificadosEstablecimiento)
+                                if (establishment.CertificadosEstablecimiento != null)
                                 {
-                                    DataListAux.Add(new ItemList
+                                    foreach (var file in establishment.CertificadosEstablecimiento)
                                     {
-                                        Item1 = establishment.NombreEstablecimiento,
-                                        Item5 = decimal.Parse(file.ValorCertificado),
-                                        Item6 = 0,
-                                        Index = DataListAux.Count,
-                                        Item3 = file.NombreCertificado,
-                                        Data = file,
-                                        Detail = establishment
-                                    });
+                                        DataListAux.Add(new ItemList
+                                        {
+                                            Item1 = establishment.NombreEstablecimiento,
+                                            Item5 = decimal.Parse(file.ValorCertificado),
+                                            Item6 = 0,
+                                            Index = DataListAux.Count,
+                                            Item3 = file.NombreCertificado,
+                                            Data = file,
+                                            Detail = establishment
+                                        });
+                                    }
                                 }
                             }
                         }
