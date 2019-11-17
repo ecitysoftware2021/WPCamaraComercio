@@ -169,5 +169,23 @@ namespace WPFCCMedellin.Models
                 }
             }
         }
+
+        private object _detail;
+
+        public object Detail
+        {
+            get
+            {
+                return _detail;
+            }
+            set
+            {
+                if (_detail != value)
+                {
+                    _detail = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Detail)));
+                }
+            }
+        }
     }
 }

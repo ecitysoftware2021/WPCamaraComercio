@@ -372,7 +372,7 @@
                                 <TextBlock Text="Ver detalle"
                                            Name="btn_details2"
                                            FontSize="20"
-                                           Tag="{Binding Data}"
+                                           Tag="{Binding Detail}"
                                            TextWrapping="Wrap"
                                            HorizontalAlignment="Center"                                           
                                            VerticalAlignment="Top"

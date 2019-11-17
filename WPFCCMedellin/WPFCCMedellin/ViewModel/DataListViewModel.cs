@@ -523,7 +523,8 @@ namespace WPFCCMedellin.ViewModel
                                     Item6 = 0,
                                     Index = DataListAux.Count,
                                     Item3 = file.NombreCertificado,
-                                    Data = file
+                                    Data = file,
+                                    Detail = establishment
                                 });
                             }
                         }
