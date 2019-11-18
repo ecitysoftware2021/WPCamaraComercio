@@ -389,6 +389,22 @@ namespace WPFCCMedellin.ViewModel
             }
         }
 
+        internal void RefreshViewDetail()
+        {
+            try
+            {
+                VisibilityPagination = Visibility.Visible;
+                if (_dataListAux.Count > CuantityItems)
+                {
+                    VisibilityNext = Visibility.Visible;
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
+
         public async Task<bool> ConsultConcidences(string reference, int type)
         {
             try
@@ -506,6 +522,9 @@ namespace WPFCCMedellin.ViewModel
                                     Data = file
                                 });
                             }
+
+                            TotalPage = (int)Math.Ceiling(((decimal)_dataList.Count / CuantityItems));
+                            RefreshView();
                         }
                     }
                 }
@@ -537,6 +556,9 @@ namespace WPFCCMedellin.ViewModel
                                     }
                                 }
                             }
+
+                            TotalPage = (int)Math.Ceiling(((decimal)DataListAux.Count / CuantityItems));
+                            RefreshViewDetail();
                         }
                     }
                 }

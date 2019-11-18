@@ -17,7 +17,7 @@
     <Grid Background="#7FBFBEBE">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="900" />
+            <RowDefinition Height="980" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -50,14 +50,14 @@
 
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="420"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <Label Content="{Binding Row1}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="32"
+                           FontSize="30"
                            FontWeight="Bold"
                            Grid.Row="0"
                            Grid.Column="0"
@@ -70,14 +70,15 @@
                            Margin="0,0,70,0"
                            Grid.Row="0"
                            Grid.Column="1"
-                           FontSize="30" 
+                           TextWrapping="Wrap"
+                           FontSize="25" 
                            Text="{Binding Value1}"
                            Foreground="Black" />
 
                 <Label Content="{Binding Row2}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="32"
+                           FontSize="30"
                            Grid.Row="1"
                        Grid.Column="0"
                            FontWeight="Bold"
@@ -90,7 +91,7 @@
                            Margin="0,0,70,0" 
                            Grid.Row="1"
                            Grid.Column="1"
-                           FontSize="30" 
+                           FontSize="25" 
                            Text="{Binding Value2}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -98,7 +99,7 @@
                 <Label Content="{Binding Row3}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="32"
+                           FontSize="30"
                            Grid.Row="2"
                        Grid.Column="0"
                            FontWeight="Bold"
@@ -111,7 +112,7 @@
                            Margin="0,0,70,0" 
                            Grid.Row="2"
                            Grid.Column="1"
-                           FontSize="30" 
+                           FontSize="25" 
                            Text="{Binding Value3}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -142,7 +143,7 @@
                 <Label Content="{Binding Row5}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="32"
+                           FontSize="30"
                            Grid.Row="4"
                        Grid.Column="0"
                            FontWeight="Bold"
@@ -155,7 +156,7 @@
                            Margin="0,0,70,0" 
                            Grid.Row="4"
                            Grid.Column="1"
-                           FontSize="30" 
+                           FontSize="25" 
                            Text="{Binding Value5}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -163,7 +164,7 @@
                 <Label Content="{Binding Row6}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="32"
+                           FontSize="30"
                            Grid.Row="5"
                            Grid.Column="0"
                            FontWeight="Bold"
@@ -176,7 +177,7 @@
                            Margin="0,0,70,0" 
                            Grid.Row="5"
                            Grid.Column="1"
-                           FontSize="30" 
+                           FontSize="25" 
                            Text="{Binding Value6}"
                            TextWrapping="Wrap"
                            Foreground="Black" />
@@ -184,7 +185,7 @@
                 <Label Content="{Binding Row7}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="32"
+                           FontSize="30"
                            Grid.Row="6"
                        Grid.Column="0"
                            FontWeight="Bold"
@@ -198,7 +199,7 @@
                            Margin="0,0,70,0"
                            Grid.Row="6"
                            Grid.Column="1"
-                           FontSize="30" 
+                           FontSize="25" 
                            Text="{Binding Value7}"
                            TextWrapping="Wrap"
                            Foreground="Black"/>
@@ -206,7 +207,7 @@
                 <Label Content="{Binding Row8}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
-                           FontSize="32"
+                           FontSize="30"
                            Grid.Row="7"
                        Grid.Column="0"
                            FontWeight="Bold"
@@ -220,7 +221,7 @@
                            Margin="0,0,70,0"
                            Grid.Row="7"
                            Grid.Column="1"
-                           FontSize="30" 
+                           FontSize="25" 
                            Text="{Binding Value8}"
                            TextWrapping="Wrap"
                            Foreground="Black"/>

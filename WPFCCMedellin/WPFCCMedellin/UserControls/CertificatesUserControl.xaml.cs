@@ -48,7 +48,8 @@ namespace WPFCCMedellin.UserControls
                         VisibilityNext = Visibility.Hidden,
                         VisibilityPrevius = Visibility.Hidden,
                         Message = transaction.payer.NAME,
-                        Amount = 0
+                        Amount = 0,
+                        CurrentPageIndex = 1
                     };
 
                     viewModel.LoadDataList(transaction, ETypeCertificate.Merchant);
@@ -99,6 +100,7 @@ namespace WPFCCMedellin.UserControls
                 if (typeConsul != (int)viewModel.TypeCertificates)
                 {
                     viewModel.RefreshView(false);
+                    viewModel.CurrentPageIndex = 1;
 
                     if (viewModel.TypeCertificates == ETypeCertificate.Establishment)
                     {
@@ -268,13 +270,13 @@ namespace WPFCCMedellin.UserControls
 
                 if (typePagination == 1)
                 {
-                    if (viewModel.CurrentPageIndex < (viewModel.TotalPage - 1))
+                    if (viewModel.CurrentPageIndex < (viewModel.TotalPage))
                     {
                         viewModel.CurrentPageIndex++;
                         viewModel.ViewList.View.Refresh();
                     }
 
-                    if (viewModel.CurrentPageIndex == (viewModel.TotalPage - 1))
+                    if (viewModel.CurrentPageIndex == (viewModel.TotalPage))
                     {
                         viewModel.VisibilityNext = Visibility.Hidden;
                     }
@@ -283,13 +285,13 @@ namespace WPFCCMedellin.UserControls
                 }
                 else
                 {
-                    if (viewModel.CurrentPageIndex > 0)
+                    if (viewModel.CurrentPageIndex > 1)
                     {
                         viewModel.CurrentPageIndex--;
                         viewModel.ViewList.View.Refresh();
                     }
 
-                    if (viewModel.CurrentPageIndex == 0)
+                    if (viewModel.CurrentPageIndex == 1)
                     {
                         viewModel.VisibilityPrevius = Visibility.Hidden;
                     }
