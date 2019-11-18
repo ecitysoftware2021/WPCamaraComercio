@@ -420,7 +420,7 @@
                     Source="/Images/Buttons/btn-right.png" />
 
                 <TextBlock Name="lbl_currentPage" 
-                    Height="20" 
+                    Height="30" 
                     Margin="170,0,0,0"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
@@ -436,7 +436,7 @@
                     Text="de" />
 
                 <TextBlock Name="lbl_totalPage"
-                    Height="20" 
+                    Height="30" 
                     Text="{Binding TotalPage}"
                     HorizontalAlignment="Left" 
                     Visibility="Visible" 
