@@ -266,7 +266,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                var typePagination = (int)((Image)sender).Tag;
+                var typePagination = int.Parse(((Image)sender).Tag.ToString());
 
                 if (typePagination == 1)
                 {
