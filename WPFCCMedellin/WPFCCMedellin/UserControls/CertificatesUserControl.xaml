@@ -421,11 +421,11 @@
 
                 <TextBlock Name="lbl_currentPage" 
                     Height="20" 
-                    Margin="180,0,0,0"
+                    Margin="170,0,0,0"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
-                    FontSize="18"
-                    Text="{Binding CurrentPage}" />
+                    FontSize="25"
+                    Text="{Binding CurrentPageIndex}" />
 
                 <TextBlock Height="30" 
                     HorizontalAlignment="Left" 
@@ -440,9 +440,9 @@
                     Text="{Binding TotalPage}"
                     HorizontalAlignment="Left" 
                     Visibility="Visible" 
-                    Margin="310,0,0,0" 
+                    Margin="300,0,0,0" 
                     VerticalAlignment="Center" 
-                    FontSize="18" />
+                    FontSize="25" />
             </Grid>
 
             <Grid Grid.Column="1">
