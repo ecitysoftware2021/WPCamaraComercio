@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Windows;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -114,6 +115,8 @@ namespace WPFCCMedellin.UserControls
 
                         viewModel.Row2 = "(*)Nombre";
                         viewModel.Row3 = "(*)Apellido";
+
+                        TxbData4.Visibility = Visibility.Visible;
                     }
                     else
                     {
@@ -124,7 +127,9 @@ namespace WPFCCMedellin.UserControls
                         viewModel.SourceCheckName = ImagesUrlResource.ImageCheckIn;
 
                         viewModel.Row2 = "(*)Razón Social";
-                        viewModel.Row3 = "(*)Dirección";
+                        viewModel.Row3 = "";
+
+                        TxbData4.Visibility = Visibility.Hidden;
                     }
 
                     viewModel.LoadList(viewModel.TypePayer);
@@ -173,10 +178,12 @@ namespace WPFCCMedellin.UserControls
                 {
                     return false;
                 }
-
-                if (string.IsNullOrEmpty(viewModel.Value3))
+                if (viewModel.TypePayer == ETypePayer.Person)
                 {
-                    return false;
+                    if (string.IsNullOrEmpty(viewModel.Value3))
+                    {
+                        return false;
+                    }
                 }
 
                 if (viewModel.Value4.Length < 6)
@@ -212,10 +219,6 @@ namespace WPFCCMedellin.UserControls
                         if (viewModel.TypePayer == ETypePayer.Person)
                         {
                             transaction.payer.LAST_NAME = viewModel.Value3;
-                        }
-                        else
-                        {
-                            transaction.payer.ADDRESS = viewModel.Value3;
                         }
 
                         await AdminPayPlus.SaveTransactions(this.transaction, false);

@@ -524,7 +524,7 @@ namespace WPFCCMedellin.ViewModel
                             }
 
                             TotalPage = (int)Math.Ceiling(((decimal)_dataList.Count / CuantityItems));
-                            RefreshView();
+                            RefreshView(true);
                         }
                     }
                 }
