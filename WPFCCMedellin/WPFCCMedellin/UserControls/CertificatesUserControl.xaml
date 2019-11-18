@@ -403,6 +403,7 @@
                     Margin="30,0,0,0"
                     Height="100"
                     Width="100"
+                    Tag="2"
                     Visibility="{Binding VisibilityPrevius}"
                     TouchDown="Btn_pagination_TouchDown"
                     Source="/Images/Buttons/btn-left.png" />
@@ -412,6 +413,7 @@
                     Name="btn_next" 
                     VerticalAlignment="Center"
                     Height="100" 
+                    Tag="1"
                     Width="100" 
                     Visibility="{Binding VisibilityNext}"
                     TouchDown="Btn_pagination_TouchDown"
