@@ -602,30 +602,30 @@ namespace WPFCCMedellin.ViewModel
                             });
                         }
                     }
-                    if (DataListAux != null && DataListAux.Count > 0)
+                }
+                if (DataListAux != null && DataListAux.Count > 0)
+                {
+                    foreach (var item in DataListAux)
                     {
-                        foreach (var item in DataListAux)
+                        if (item.Item6 > 0)
                         {
-                            if (item.Item6 > 0)
+                            var certificate = (CertificadosEstablecimiento)item.Data;
+                            products.Add(new Product
                             {
-                                var certificate = (CertificadosEstablecimiento)item.Data;
-                                products.Add(new Product
+                                NumeroCertificados = item.Item6.ToString(),
+                                CodigoGeneracion = certificate.CodigoGeneracion,
+                                IdCertificado = certificate.IdCertificado,
+                                MatriculaEst = certificate.MatriculaEstablecimiento,
+                                matricula = transaction.Enrollment,
+                                tpcm = transaction.Tpcm,
+                                EstablishCertificate = new EstablishCertificate
                                 {
-                                    NumeroCertificados = item.Item6.ToString(),
-                                    CodigoGeneracion = certificate.CodigoGeneracion,
-                                    IdCertificado = certificate.IdCertificado,
-                                    MatriculaEst = certificate.MatriculaEstablecimiento,
-                                    matricula = transaction.Enrollment,
-                                    tpcm = transaction.Tpcm,
-                                    EstablishCertificate = new EstablishCertificate
-                                    {
-                                        CertificateCost = decimal.Parse(certificate.ValorCertificado),
-                                        CertificateId = certificate.IdCertificado,
-                                        EstablishEnrollment = certificate.MatriculaEstablecimiento,
-                                        GenerationCode = certificate.CodigoGeneracion
-                                    }
-                                });
-                            }
+                                    CertificateCost = decimal.Parse(certificate.ValorCertificado),
+                                    CertificateId = certificate.IdCertificado,
+                                    EstablishEnrollment = certificate.MatriculaEstablecimiento,
+                                    GenerationCode = certificate.CodigoGeneracion
+                                }
+                            });
                         }
                     }
                 }

@@ -133,6 +133,15 @@ namespace WPFCCMedellin.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Por favor seleccione los certificados que desea comprar.
+        /// </summary>
+        internal static string ErrorCertificate {
+            get {
+                return ResourceManager.GetString("ErrorCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Señor usuario, no se encontraron coincidencias, vuelva a intentarlo.
         /// </summary>
         internal static string ErrorCoincidences {

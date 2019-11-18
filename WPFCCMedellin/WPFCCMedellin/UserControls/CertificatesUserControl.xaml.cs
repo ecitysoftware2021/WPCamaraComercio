@@ -317,6 +317,10 @@ namespace WPFCCMedellin.UserControls
 
                     Utilities.navigator.Navigate(UserControlView.Payer, true, transaction);
                 }
+                else
+                {
+                    Utilities.ShowModal(MessageResource.ErrorCertificate, EModalType.Error);
+                }
             }
             catch (Exception ex)
             {

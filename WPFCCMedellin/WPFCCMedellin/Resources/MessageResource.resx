@@ -273,4 +273,7 @@
   <data name="InfoIncorrect" xml:space="preserve">
     <value>Se ha ingresado información incorrecta, por favor validar la información y volver a intentarlo</value>
   </data>
+  <data name="ErrorCertificate" xml:space="preserve">
+    <value>Por favor seleccione los certificados que desea comprar</value>
+  </data>
 </root>
