@@ -409,6 +409,11 @@ namespace WPFCCMedellin.ViewModel
         {
             try
             {
+                if (DataList != null && DataList.Count > 0)
+                {
+                    DataList.Clear();
+                }
+
                 var response = await AdminPayPlus.ApiIntegration.GetData(new RequestConsult
                 {
                     paramConsulta = reference,

@@ -392,6 +392,7 @@ namespace WPFCCMedellin.UserControls
             try
             {
                 viewModel.RefreshView(false);
+                viewModel.DataList.Clear();
                 ConfigureViewList();
             }
             catch (Exception ex)
