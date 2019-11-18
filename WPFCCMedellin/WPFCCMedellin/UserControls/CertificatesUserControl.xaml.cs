@@ -187,8 +187,8 @@ namespace WPFCCMedellin.UserControls
                 {
                     index = viewModel.DataListAux.IndexOf((ItemList)e.Item);
                 }
-                
-                if (index >= (viewModel.CuantityItems * viewModel.CurrentPageIndex) && index < (viewModel.CuantityItems * (viewModel.CurrentPageIndex + 1)))
+
+                if (index >= (viewModel.CuantityItems * (viewModel.CurrentPageIndex - 1)) && index < (viewModel.CuantityItems * (viewModel.CurrentPageIndex)))
                 {
                     e.Accepted = true;
                 }

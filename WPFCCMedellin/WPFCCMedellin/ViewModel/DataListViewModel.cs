@@ -524,8 +524,8 @@ namespace WPFCCMedellin.ViewModel
                             }
 
                             TotalPage = (int)Math.Ceiling(((decimal)_dataList.Count / CuantityItems));
-                            RefreshView(true);
                         }
+                        RefreshView(true);
                     }
                 }
                 else
@@ -558,8 +558,9 @@ namespace WPFCCMedellin.ViewModel
                             }
 
                             TotalPage = (int)Math.Ceiling(((decimal)DataListAux.Count / CuantityItems));
-                            RefreshViewDetail();
+                            
                         }
+                        RefreshViewDetail();
                     }
                 }
             }

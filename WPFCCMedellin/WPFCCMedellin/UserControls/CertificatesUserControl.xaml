@@ -408,7 +408,7 @@
                     TouchDown="Btn_pagination_TouchDown"
                     Source="/Images/Buttons/btn-left.png" />
 
-                <Image Margin="0,0,30,0"
+                <Image Margin="0,0,80,0"
                     HorizontalAlignment="Right"
                     Name="btn_next" 
                     VerticalAlignment="Center"
@@ -421,26 +421,26 @@
 
                 <TextBlock Name="lbl_currentPage" 
                     Height="20" 
-                    Margin="280,0,0,0"
+                    Margin="180,0,0,0"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     FontSize="18"
                     Text="{Binding CurrentPage}" />
 
-                <TextBlock Height="22" 
+                <TextBlock Height="30" 
                     HorizontalAlignment="Left" 
-                    Margin="240,0,0,0" 
-                    FontSize="20"
+                    Margin="230,0,0,0" 
+                    FontSize="25"
                     VerticalAlignment="Center" 
                     FontWeight="Bold" 
-                    Text="/" />
+                    Text="de" />
 
                 <TextBlock Name="lbl_totalPage"
                     Height="20" 
                     Text="{Binding TotalPage}"
                     HorizontalAlignment="Left" 
                     Visibility="Visible" 
-                    Margin="190,0,0,0" 
+                    Margin="310,0,0,0" 
                     VerticalAlignment="Center" 
                     FontSize="18" />
             </Grid>
