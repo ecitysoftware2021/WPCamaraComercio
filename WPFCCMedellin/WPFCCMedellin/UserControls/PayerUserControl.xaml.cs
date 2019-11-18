@@ -116,7 +116,7 @@ namespace WPFCCMedellin.UserControls
                         viewModel.Row2 = "(*)Nombre";
                         viewModel.Row3 = "(*)Apellido";
 
-                        TxbData4.Visibility = Visibility.Visible;
+                        TbxData3.Visibility = Visibility.Visible;
                     }
                     else
                     {
@@ -129,7 +129,7 @@ namespace WPFCCMedellin.UserControls
                         viewModel.Row2 = "(*)Razón Social";
                         viewModel.Row3 = "";
 
-                        TxbData4.Visibility = Visibility.Hidden;
+                        TbxData3.Visibility = Visibility.Hidden;
                     }
 
                     viewModel.LoadList(viewModel.TypePayer);
