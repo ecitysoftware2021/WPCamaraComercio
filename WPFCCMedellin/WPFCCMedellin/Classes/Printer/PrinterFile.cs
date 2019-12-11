@@ -46,6 +46,11 @@ namespace WPFCCMedellin.Classes.Printer
                         switches.Add("-dBATCH");
                         switches.Add("-dPDFFitPage");
                         switches.Add("-dNOPAUSE");
+                        if (dobleFace)
+                        {
+                            switches.Add("-dDuplex");
+                            switches.Add("-dTumble");
+                        }
                         switches.Add("-dNOSAFER");
                         switches.Add("-dNOPROMPT");
                         switches.Add("-dQUIET");
@@ -93,8 +98,14 @@ namespace WPFCCMedellin.Classes.Printer
                     {
                         PrintQueue queue = printServer.GetPrintQueue(printerName, new string[0] { });
 
+                        queue.re
+
                         var statusPrinter = queue.QueueStatus;
 
+                        if (queue.is)
+                        {
+
+                        }
                         if (statusPrinter == PrintQueueStatus.None)
                         {
                             status = true;

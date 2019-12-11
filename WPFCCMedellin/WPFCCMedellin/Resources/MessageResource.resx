@@ -276,4 +276,7 @@
   <data name="ErrorCertificate" xml:space="preserve">
     <value>Por favor seleccione los certificados que desea comprar</value>
   </data>
+  <data name="ErrorPrintCertificate" xml:space="preserve">
+    <value>No se pudo completar la impresión de todos los certificatos. Por favor diríjase a las taquillas.</value>
+  </data>
 </root>

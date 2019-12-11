@@ -86,7 +86,7 @@ namespace WPFCCMedellin.UserControls
                     {
                         if (countCertificates > 1)
                         {
-                            Utilities.ShowModal("", EModalType.Error);
+                            Utilities.ShowModal(MessageResource.ErrorPrintCertificate, EModalType.Error);
                             FinishTransaction(true);
                         }
                         else

@@ -205,6 +205,15 @@ namespace WPFCCMedellin.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se pudo completar la impresión de todos los certificatos. Por favor diríjase a las taquillas..
+        /// </summary>
+        internal static string ErrorPrintCertificate {
+            get {
+                return ResourceManager.GetString("ErrorPrintCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Error con el servicio de Login.
         /// </summary>
         internal static string ErrorServiceLogin {
