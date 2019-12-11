@@ -38,7 +38,11 @@ namespace WPFCCMedellin.Services
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return null;
+                    return new ResponseApi
+                    {
+                        CodeError = 300,
+                        Message = response.RequestMessage.ToString()
+                    };
                 }
 
                 var result = await response.Content.ReadAsStringAsync();
@@ -66,28 +70,28 @@ namespace WPFCCMedellin.Services
                 if (transaction != null)
                 {
                     var response = await GetData(new RequestPayment
-                        {
-                            AutorizaEnvioEmail = "NO",
-                            AutorizaEnvioSMS = "NO",
-                            CodigoDepartamentoComprador = int.Parse(Utilities.GetConfiguration("CodeDepartmentBuyer")),
-                            CodigoMunicipioComprador = int.Parse(Utilities.GetConfiguration("CodeTownBuyer")),
-                            CodigoPaisComprador = int.Parse(Utilities.GetConfiguration("CodeCountryBuyer")),
-                            DireccionComprador = transaction.payer.ADDRESS ?? string.Empty,
-                            EmailComprador = transaction.payer.EMAIL ?? string.Empty,
-                            IdentificacionComprador = transaction.payer.IDENTIFICATION,
-                            MunicipioComprador = string.Empty,
-                            NombreComprador = string.Concat(transaction.payer.NAME, transaction.payer.LAST_NAME),
-                            PlataformaCliente = Utilities.GetConfiguration("ClientPlataform"),
-                            PrimerApellidoComprador = transaction.payer.LAST_NAME,
-                            PrimerNombreComprador = transaction.payer.NAME,
-                            ReferenciaPago = transaction.IdTransactionAPi.ToString(),
-                            SegundoApellidoComprador = string.Empty,
-                            SegundoNombreComprador = string.Empty,
-                            TelefonoComprador = transaction.payer.PHONE.ToString(),
-                            TipoComprador = transaction.payer.TYPE_PAYER,
-                            TipoIdentificacionComprador = transaction.payer.TYPE_IDENTIFICATION,
-                            ValorCompra = Decimal.ToInt32(transaction.Amount),
-                            Certificados = transaction.Products,
+                    {
+                        AutorizaEnvioEmail = "NO",
+                        AutorizaEnvioSMS = "NO",
+                        CodigoDepartamentoComprador = int.Parse(Utilities.GetConfiguration("CodeDepartmentBuyer")),
+                        CodigoMunicipioComprador = int.Parse(Utilities.GetConfiguration("CodeTownBuyer")),
+                        CodigoPaisComprador = int.Parse(Utilities.GetConfiguration("CodeCountryBuyer")),
+                        DireccionComprador = transaction.payer.ADDRESS ?? string.Empty,
+                        EmailComprador = transaction.payer.EMAIL ?? string.Empty,
+                        IdentificacionComprador = transaction.payer.IDENTIFICATION,
+                        MunicipioComprador = string.Empty,
+                        NombreComprador = string.Concat(transaction.payer.NAME, transaction.payer.LAST_NAME),
+                        PlataformaCliente = Utilities.GetConfiguration("ClientPlataform"),
+                        PrimerApellidoComprador = transaction.payer.LAST_NAME,
+                        PrimerNombreComprador = transaction.payer.NAME,
+                        ReferenciaPago = transaction.IdTransactionAPi.ToString(),
+                        SegundoApellidoComprador = string.Empty,
+                        SegundoNombreComprador = string.Empty,
+                        TelefonoComprador = transaction.payer.PHONE.ToString(),
+                        TipoComprador = transaction.payer.TYPE_PAYER,
+                        TipoIdentificacionComprador = transaction.payer.TYPE_IDENTIFICATION,
+                        ValorCompra = Decimal.ToInt32(transaction.Amount),
+                        Certificados = transaction.Products,
                     }, "SendPay");
 
                     if (response.CodeError == 200)
@@ -97,9 +101,13 @@ namespace WPFCCMedellin.Services
                         if (result.IsSuccess && result.Result != null)
                         {
                             transaction.consecutive = result.Result;
-                            transaction.State = ETransactionState.Success;
+
                             return transaction;
                         }
+                    }
+                    else
+                    {
+                        AdminPayPlus.SaveErrorControl("SendPay : " + transaction.IdTransactionAPi.ToString(), "Error consumiendo servicio response : " + response, EError.Customer, ELevelError.Medium);
                     }
                 }
             }
@@ -150,7 +158,15 @@ namespace WPFCCMedellin.Services
                                 {
                                     pathCertificates.Add(path);
                                 }
+                                else
+                                {
+                                    AdminPayPlus.SaveErrorControl("name  Certificado: " + nameFile, "Error descargando certificado : " + path, EError.Customer, ELevelError.Medium);
+                                }
                             }
+                        }
+                        else
+                        {
+                            AdminPayPlus.SaveErrorControl("GetCertifiedString : " + transaction.IdTransactionAPi.ToString(), "Error consumiendo servicio response : " + response, EError.Customer, ELevelError.Medium);
                         }
                     }
                 }
@@ -186,7 +202,7 @@ namespace WPFCCMedellin.Services
                     {
                         transaction.State = ETransactionState.Cancel;
                     }
-                }  
+                }
             }
             catch (Exception ex)
             {
@@ -235,7 +251,7 @@ namespace WPFCCMedellin.Services
             }
             catch (Exception ex)
             {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+                //  Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
             return string.Empty;
         }

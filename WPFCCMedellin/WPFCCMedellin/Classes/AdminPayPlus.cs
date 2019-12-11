@@ -9,7 +9,7 @@ using WPFCCMedellin.Models;
 using WPFCCMedellin.Resources;
 using WPFCCMedellin.Services;
 using WPFCCMedellin.Services.Object;
-
+    
 namespace WPFCCMedellin.Classes
 {
     public class AdminPayPlus
@@ -368,7 +368,7 @@ namespace WPFCCMedellin.Classes
             {
                 if (transaction != null)
                 {
-                 //   transaction.IsReturn = await ValidateMoney(transaction);
+                    //   transaction.IsReturn = await ValidateMoney(transaction);
 
                     if (getConsecutive)
                     {

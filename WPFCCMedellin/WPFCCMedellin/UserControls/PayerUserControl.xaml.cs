@@ -139,6 +139,8 @@ namespace WPFCCMedellin.UserControls
                     viewModel.Value3 = string.Empty;
                     viewModel.Value4 = string.Empty;
                 }
+
+                cmb_type_id.SelectedIndex = 0;
             }
             catch (Exception ex)
             {

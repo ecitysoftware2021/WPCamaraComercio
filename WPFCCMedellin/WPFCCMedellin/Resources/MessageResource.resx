@@ -279,4 +279,13 @@
   <data name="ErrorPrintCertificate" xml:space="preserve">
     <value>No se pudo completar la impresión de todos los certificatos. Por favor diríjase a las taquillas.</value>
   </data>
+  <data name="ErrorPrinter" xml:space="preserve">
+    <value>En este momento no se pueden imprimir certificados.</value>
+  </data>
+  <data name="ErrorCertificatesPrint" xml:space="preserve">
+    <value>Error imprimiendo los certificados. se cancelara la transacción y devolverá el dinero ingresado</value>
+  </data>
+  <data name="ErrorDownloadCertificate" xml:space="preserve">
+    <value>Error descargando los certificados. se cancelara la transacción y devolverá el dinero ingresado</value>
+  </data>
 </root>

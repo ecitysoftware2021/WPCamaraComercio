@@ -71,7 +71,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                    Utilities.ShowDetailsModal(transaction.Files[0], ETypeCertificate.Merchant);
+                Utilities.ShowDetailsModal(transaction.Files[0], ETypeCertificate.Merchant);
             }
             catch (Exception ex)
             {
@@ -309,17 +309,24 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                transaction = viewModel.GetListFiles(transaction);
-                if (transaction.Products != null && transaction.Products.Count > 0)
+                if (AdminPayPlus.PrinterFile.GetStatus())
                 {
-                    transaction.Files = null;
-                    transaction.Amount = viewModel.Amount;
+                    transaction = viewModel.GetListFiles(transaction);
+                    if (transaction.Products != null && transaction.Products.Count > 0)
+                    {
+                        transaction.Files = null;
+                        transaction.Amount = viewModel.Amount;
 
-                    Utilities.navigator.Navigate(UserControlView.Payer, true, transaction);
+                        Utilities.navigator.Navigate(UserControlView.Payer, true, transaction);
+                    }
+                    else
+                    {
+                        Utilities.ShowModal(MessageResource.ErrorCertificate, EModalType.Error);
+                    }
                 }
                 else
                 {
-                    Utilities.ShowModal(MessageResource.ErrorCertificate, EModalType.Error);
+                    Utilities.ShowModal(MessageResource.ErrorPrinter, EModalType.Error);
                 }
             }
             catch (Exception ex)

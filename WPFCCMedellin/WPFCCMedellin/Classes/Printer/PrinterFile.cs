@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Printing;
 using WPFCCMedellin.Resources;
 using System.Windows;
+using System.Management;
 
 namespace WPFCCMedellin.Classes.Printer
 {
@@ -46,12 +47,12 @@ namespace WPFCCMedellin.Classes.Printer
                         switches.Add("-dBATCH");
                         switches.Add("-dPDFFitPage");
                         switches.Add("-dNOPAUSE");
+                        switches.Add("-dNOSAFER");
                         if (dobleFace)
                         {
                             switches.Add("-dDuplex");
                             switches.Add("-dTumble");
                         }
-                        switches.Add("-dNOSAFER");
                         switches.Add("-dNOPROMPT");
                         switches.Add("-dQUIET");
                         switches.Add("-sDEVICE=mswinpr2");
@@ -62,6 +63,10 @@ namespace WPFCCMedellin.Classes.Printer
                         processor.Error += new GhostscriptProcessorErrorEventHandler(OnErrror);
                         processor.StartProcessing(switches.ToArray(), null);
                     }
+                }
+                else
+                {
+                    callbackError?.Invoke("Error imprimiendo");
                 }
             }
             catch (Exception ex)
@@ -87,6 +92,7 @@ namespace WPFCCMedellin.Classes.Printer
             }
         }
 
+
         public bool GetStatus()
         {
             bool status = false;
@@ -96,19 +102,51 @@ namespace WPFCCMedellin.Classes.Printer
                 {
                     Application.Current.Dispatcher.Invoke(delegate
                     {
-                        PrintQueue queue = printServer.GetPrintQueue(printerName, new string[0] { });
+                        ManagementScope scope = new ManagementScope(@"\root\cimv2");
+                        scope.Connect();
 
-                        queue.re
+                        // Select Printers from WMI Object Collections
+                        ManagementObjectSearcher searcher = new
+                        ManagementObjectSearcher("SELECT * FROM Win32_Printer");
 
-                        var statusPrinter = queue.QueueStatus;
-
-                        if (queue.is)
+                        string printerN = "";
+                        foreach (ManagementObject printer in searcher.Get())
                         {
+                            printerN = printer["Name"].ToString();
+                            if (printerN.Equals(printerName))
+                            {
+                                if (printer["WorkOffline"].ToString().ToLower().Equals("true"))
+                                {
+                                    status = false;
+                                }
+                                else
+                                {
+                                    PrintQueue queue = printServer.GetPrintQueue(printerName, new string[0] { });
 
-                        }
-                        if (statusPrinter == PrintQueueStatus.None)
-                        {
-                            status = true;
+                                    var statusPrinter = queue.QueueStatus;
+
+                                    if (statusPrinter == PrintQueueStatus.DoorOpen ||
+                                        statusPrinter == PrintQueueStatus.Error ||
+                                        statusPrinter == PrintQueueStatus.NotAvailable ||
+                                        statusPrinter == PrintQueueStatus.NoToner ||
+                                        statusPrinter == PrintQueueStatus.Offline ||
+                                        statusPrinter == PrintQueueStatus.OutOfMemory ||
+                                        statusPrinter == PrintQueueStatus.OutputBinFull ||
+                                        statusPrinter == PrintQueueStatus.PagePunt ||
+                                        statusPrinter == PrintQueueStatus.PaperJam ||
+                                        statusPrinter == PrintQueueStatus.PaperOut ||
+                                        statusPrinter == PrintQueueStatus.PaperProblem ||
+                                        statusPrinter == PrintQueueStatus.ServerUnknown ||
+                                        statusPrinter == PrintQueueStatus.UserIntervention)
+                                    {
+                                        status = false;
+                                    }
+                                    else
+                                    {
+                                        status = true;    // return true even if the printer is "out of paper"
+                                    }
+                                }
+                            }
                         }
                     });
                     GC.Collect();

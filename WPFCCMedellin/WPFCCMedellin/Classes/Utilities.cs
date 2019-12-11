@@ -170,7 +170,7 @@ namespace WPFCCMedellin.Classes
                                 value = GetConfiguration("ProductName") ?? string.Empty, x = x, y = y },
                             new DataPrinter{ brush = color, font = fontKey, value = "Estado:", x = xKey, y = y+=sum },
                             new DataPrinter{ brush = color, font = fontValue,
-                                value = (transaction.State == ETransactionState.Success || transaction.State == ETransactionState.ErrorService)
+                                value = (transaction.State == ETransactionState.Success || transaction.State == ETransactionState.ErrorService || transaction.State == ETransactionState.Error)
                                 ? "Aprobada" : "Cancelada", x = x, y = y },
                             new DataPrinter{ brush = color, font = fontKey, value = "Fecha de pago:", x = xKey, y = y+=sum },
                             new DataPrinter{ brush = color, font = fontValue,
@@ -191,7 +191,7 @@ namespace WPFCCMedellin.Classes
                             new DataPrinter{ brush = color, font = fontValue,
                                 value = transaction.payer.PHONE.ToString() ?? string.Empty, x = x, y = y },
                         };
-   
+
                         data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total:", x = xKey, y = y += sum });
                         data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.PayValue), x = x, y = y });
 
@@ -199,8 +199,15 @@ namespace WPFCCMedellin.Classes
                         data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.ValorIngresado), x = x, y = y });
                         data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total Devuelto:", x = xKey, y = y += sum });
                         data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.ValorDispensado), x = x, y = y });
-                       
-                        data.Add(new DataPrinter { brush = color, font = fontValue, value = "Su transacción se ha realizado exitosamente", x = 2, y = y += 50 });
+                        if (transaction.State == ETransactionState.Success)
+                        {
+                            data.Add(new DataPrinter { brush = color, font = fontValue, value = "Su transacción se ha realizado exitosamente", x = 0, y = y += 50 });
+                        }
+                        else
+                        {
+                            data.Add(new DataPrinter { brush = color, font = fontValue, value = transaction.Observation ?? string.Empty, x = 0, y = y += 50 });
+                        }
+
                         data.Add(new DataPrinter { brush = color, font = fontValue, value = "E-city Software", x = 100, y = y += sum });
 
                         AdminPayPlus.PrintService.Start(data);

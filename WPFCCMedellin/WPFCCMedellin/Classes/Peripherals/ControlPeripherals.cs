@@ -81,6 +81,8 @@ namespace WPFCCMedellin.Classes
 
         private bool stateError;
 
+        private bool statePay = false;
+
         private int typeDispend;
 
         private static string TOKEN;//Llabe que retorna el dispenser
@@ -155,6 +157,8 @@ namespace WPFCCMedellin.Classes
             this.dispenserValue = 0;//Valor a dispensar
 
             this.stateError = false;
+
+            statePay = false;
         }
 
         /// <summary>
@@ -433,17 +437,20 @@ namespace WPFCCMedellin.Classes
             }
             else
             {
-                if (response[1] == "AP")
+                if (statePay)
                 {
-                    enterValue += decimal.Parse(response[2]) * _dividerBills;
-                    callbackValueIn?.Invoke(Tuple.Create(decimal.Parse(response[2]) * _dividerBills, response[1]));
+                    if (response[1] == "AP")
+                    {
+                        enterValue += decimal.Parse(response[2]) * _dividerBills;
+                        callbackValueIn?.Invoke(Tuple.Create(decimal.Parse(response[2]) * _dividerBills, response[1]));
+                    }
+                    else if (response[1] == "MA")
+                    {
+                        enterValue += decimal.Parse(response[2]);
+                        callbackValueIn?.Invoke(Tuple.Create(decimal.Parse(response[2]), response[1]));
+                    }
+                    ValidateEnterValue();
                 }
-                else if (response[1] == "MA")
-                {
-                    enterValue += decimal.Parse(response[2]);
-                    callbackValueIn?.Invoke(Tuple.Create(decimal.Parse(response[2]), response[1]));
-                }
-                ValidateEnterValue();
             }
         }
 
@@ -623,6 +630,8 @@ namespace WPFCCMedellin.Classes
             try
             {
                 this.payValue = payValue;
+
+                statePay = true;
                 SendMessageBills(_AceptanceBillOn);
                 SendMessageCoins(_AceptanceCoinOn);
             }
@@ -642,6 +651,7 @@ namespace WPFCCMedellin.Classes
             {
                 //StopAceptance();
                 enterValue = 0;
+                statePay = false;
                 callbackTotalIn?.Invoke(enterVal);
             }
         }

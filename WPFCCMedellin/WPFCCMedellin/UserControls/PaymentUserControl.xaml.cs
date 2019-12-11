@@ -40,12 +40,12 @@ namespace WPFCCMedellin.UserControls
                 this.paymentViewModel = new PaymentViewModel
                 {
                     PayValue = transaction.Amount,
-                    ValorFaltante = 0,
+                    ValorFaltante = transaction.Amount,
                     ImgContinue = Visibility.Hidden,
                     ImgCancel = Visibility.Visible,
                     ImgCambio = Visibility.Hidden,
                     ValorSobrante = 0,
-                    ValorIngresado = transaction.Amount,
+                    ValorIngresado = 0,
                     viewList = new CollectionViewSource(),
                     Denominations = new List<DenominationMoney>(),
                     ValorDispensado = 0
@@ -53,9 +53,7 @@ namespace WPFCCMedellin.UserControls
 
                 this.DataContext = this.paymentViewModel;
 
-                //ActivateWallet();
-
-                SavePay();
+                ActivateWallet();
             }
             catch (Exception ex)
             {
@@ -257,8 +255,13 @@ namespace WPFCCMedellin.UserControls
                             transaction = await AdminPayPlus.ApiIntegration.NotifycTransaction(transaction);
                             Utilities.CloseModal();
 
-                            if (transaction.State == ETransactionState.Success)
+                            if (!string.IsNullOrEmpty(transaction.consecutive))
                             {
+                                if (transaction.State == ETransactionState.Initial)
+                                {
+                                    transaction.State = ETransactionState.Success;
+                                }
+
                                 Utilities.navigator.Navigate(UserControlView.PrintFile, false, this.transaction);
                             }
                             else

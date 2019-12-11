@@ -61,6 +61,8 @@ namespace WPFCCMedellin.UserControls
                 Task.Run(() =>
                 {
                     AdminPayPlus.UpdateTransaction(this.transaction);
+
+                    Thread.Sleep(1000);
                     Utilities.PrintVoucher(this.transaction);
 
                     Thread.Sleep(6000);

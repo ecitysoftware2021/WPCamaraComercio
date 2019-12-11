@@ -305,7 +305,7 @@ namespace WPFCCMedellin.UserControls
                     lv_data_list.SelectedItem = null;
                 }
             }
-                
+
             catch (Exception ex)
             {
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);

@@ -40,7 +40,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                Task.Run(async () => 
+                Task.Run(async () =>
                 {
                     var pathsCertificates = await AdminPayPlus.ApiIntegration.DownloadCertificates(transaction);
                     if (pathsCertificates != null && pathsCertificates.Count > 0)
@@ -49,8 +49,9 @@ namespace WPFCCMedellin.UserControls
                     }
                     else
                     {
+                        Utilities.ShowModal(MessageResource.ErrorDownloadCertificate, EModalType.Error);
                         FinishTransaction(false);
-                    }  
+                    }
                 });
             }
             catch (Exception ex)
@@ -63,27 +64,27 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                int countCertificates = 1;
+                int countCertificates = 0;
 
                 if (paths != null && paths.Count > 0)
                 {
                     AdminPayPlus.PrinterFile.callbackOut = response =>
                     {
-                        if (response && countCertificates < paths.Count)
+                        countCertificates++;
+                        if (response && countCertificates < (paths.Count))
                         {
                             AdminPayPlus.PrinterFile.Start(paths[countCertificates]);
-                            countCertificates++;
                         }
 
                         if (countCertificates == paths.Count)
                         {
                             FinishTransaction(true);
-
                         }
                     };
 
                     AdminPayPlus.PrinterFile.callbackError = error =>
                     {
+
                         if (countCertificates > 1)
                         {
                             Utilities.ShowModal(MessageResource.ErrorPrintCertificate, EModalType.Error);
@@ -91,11 +92,12 @@ namespace WPFCCMedellin.UserControls
                         }
                         else
                         {
+                            Utilities.ShowModal(MessageResource.ErrorCertificatesPrint, EModalType.Error);
                             FinishTransaction(false);
                         }
                     };
 
-                    AdminPayPlus.PrinterFile.Start(paths[0]);
+                    AdminPayPlus.PrinterFile.Start(paths[countCertificates]);
                 }
             }
             catch (Exception ex)
@@ -114,6 +116,7 @@ namespace WPFCCMedellin.UserControls
                 }
                 else
                 {
+
                     Utilities.navigator.Navigate(UserControlView.ReturnMony, false, transaction);
                 }
             }

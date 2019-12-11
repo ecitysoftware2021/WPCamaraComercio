@@ -64,8 +64,7 @@ namespace WPFCCMedellin.UserControls
 
                 this.DataContext = this.viewModel;
 
-                FinishCancelPay();
-                //ReturnMoney();
+                ReturnMoney();
             }
             catch (Exception ex)
             {
@@ -83,7 +82,7 @@ namespace WPFCCMedellin.UserControls
                     {
                         if (!this.viewModel.StatePay)
                         {
-                            transaction.Payment.ValorDispensado = totalOut;
+                            transaction.Payment.ValorDispensado += totalOut;
 
                             if (transaction.Type != ETransactionType.Withdrawal)
                             {
@@ -112,20 +111,18 @@ namespace WPFCCMedellin.UserControls
                         AdminPayPlus.ControlPeripherals.callbackOut = null;
                         if (!this.viewModel.StatePay)
                         {
-                            transaction.Payment.ValorDispensado = valueOut;
+                            transaction.Payment.ValorDispensado += valueOut;
 
-                            if (transaction.Payment.ValorDispensado != transaction.Payment.ValorSobrante)
+                            if (transaction.Payment.ValorDispensado != transaction.Payment.ValorIngresado)
                             {
-                                if (transaction.Type != ETransactionType.Withdrawal)
-                                {
-                                    transaction.State = ETransactionState.CancelError;
-                                }
-                                else
-                                {
-                                    transaction.State = ETransactionState.Error;
-                                }
+
+                                transaction.State = ETransactionState.CancelError;
 
                                 transaction.Observation += MessageResource.IncompleteMony;
+                            }
+                            else
+                            {
+                                transaction.State = ETransactionState.Cancel;
                             }
                             FinishCancelPay();
                         }
@@ -154,26 +151,26 @@ namespace WPFCCMedellin.UserControls
                     this.viewModel.StatePay = true;
                     transaction.Payment = viewModel;
 
-                     AdminPayPlus.ControlPeripherals.ClearValues();
+                    AdminPayPlus.ControlPeripherals.ClearValues();
 
                     if (transaction.State == ETransactionState.CancelError)
                     {
                         Task.Run(async () =>
                         {
-                            transaction = await AdminPayPlus.ApiIntegration.NotifycCancelTransaction(transaction);
+                             transaction = await AdminPayPlus.ApiIntegration.NotifycCancelTransaction(transaction);
 
                             Utilities.CloseModal();
-                            if (transaction.IdTransactionAPi > 0 && transaction.State == ETransactionState.Success)
-                            {
-                                Utilities.navigator.Navigate(UserControlView.PaySuccess, false, this.transaction);
-                            }
+                             if (transaction.IdTransactionAPi > 0 && transaction.State == ETransactionState.Success)
+                             {
+                            Utilities.navigator.Navigate(UserControlView.PaySuccess, false, this.transaction);
+                             }
                             else
                             {
                                 AdminPayPlus.SaveErrorControl(MessageResource.NoInsertTransaction, this.transaction.TransactionId.ToString(), EError.Api, ELevelError.Strong);
                                 Utilities.ShowModal(MessageResource.NoInsertTransaction, EModalType.Error);
 
                                 Utilities.navigator.Navigate(UserControlView.PaySuccess, false, this.transaction);
-                            }
+                             }
                         });
 
                         Utilities.ShowModal(MessageResource.FinishTransaction, EModalType.Preload);

@@ -142,6 +142,15 @@ namespace WPFCCMedellin.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Error imprimiendo los certificados. se cancelara la transacción y devolverá el dinero ingresado.
+        /// </summary>
+        internal static string ErrorCertificatesPrint {
+            get {
+                return ResourceManager.GetString("ErrorCertificatesPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Señor usuario, no se encontraron coincidencias, vuelva a intentarlo.
         /// </summary>
         internal static string ErrorCoincidences {
@@ -156,6 +165,15 @@ namespace WPFCCMedellin.Resources {
         internal static string ErrorDates {
             get {
                 return ResourceManager.GetString("ErrorDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error descargando los certificados. se cancelara la transacción y devolverá el dinero ingresado.
+        /// </summary>
+        internal static string ErrorDownloadCertificate {
+            get {
+                return ResourceManager.GetString("ErrorDownloadCertificate", resourceCulture);
             }
         }
         
@@ -210,6 +228,15 @@ namespace WPFCCMedellin.Resources {
         internal static string ErrorPrintCertificate {
             get {
                 return ResourceManager.GetString("ErrorPrintCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a En este momento no se pueden imprimir certificados..
+        /// </summary>
+        internal static string ErrorPrinter {
+            get {
+                return ResourceManager.GetString("ErrorPrinter", resourceCulture);
             }
         }
         
