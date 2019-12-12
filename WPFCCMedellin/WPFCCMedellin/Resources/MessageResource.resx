@@ -136,7 +136,7 @@
     <value>Usuario y/o contraseña incorrectos</value>
   </data>
   <data name="ErrorPayment" xml:space="preserve">
-    <value>No se puede continuar con la transacción. Se consignara el valor ingresado</value>
+    <value>No se puede continuar con la transacción. Se devolvera el dinero ingresado</value>
   </data>
   <data name="ErrorServiceLogin" xml:space="preserve">
     <value>Error con el servicio de Login</value>
