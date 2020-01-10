@@ -174,6 +174,8 @@ namespace WPFCCMedellin.Classes
                         data.DESCRIPTION = MessageResource.TransactionFinishSucces;
                         data.STATE_TRANSACTION_ID = (int)transaction.State;
                         data.DATE_END = DateTime.Now;
+                        data.TRANSACTION_REFERENCE = transaction.consecutive;
+                        data.STATE_NOTIFICATION = transaction.StateNotification;
                     }
 
                     connection.SaveChanges();
@@ -227,6 +229,23 @@ namespace WPFCCMedellin.Classes
                 {
                     connection.Configuration.LazyLoadingEnabled = false;
                     return connection.TRANSACTION.Where(t => t.STATE_NOTIFICATION == 0).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, "DBManagment", ex, MessageResource.StandarError);
+                return null;
+            }
+        }
+
+        internal static List<TRANSACTION> GetTransactionPending()
+        {
+            try
+            {
+                using (var connection = new PayPlusLocalBDEntities())
+                {
+                    connection.Configuration.LazyLoadingEnabled = false;
+                    return connection.TRANSACTION.Where(t => t.STATE == false && t.STATE_TRANSACTION_ID != (int)ETransactionState.Initial).ToList();
                 }
             }
             catch (Exception ex)

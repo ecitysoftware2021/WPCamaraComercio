@@ -34,6 +34,7 @@ namespace WPFCCMedellin.DataModel
         public Nullable<int> STATE_TRANSACTION_ID { get; set; }
         public Nullable<int> STATE_NOTIFICATION { get; set; }
         public Nullable<bool> STATE { get; set; }
+        public string TRANSACTION_REFERENCE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRANSACTION_DESCRIPTION> TRANSACTION_DESCRIPTION { get; set; }

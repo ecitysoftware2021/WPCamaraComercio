@@ -100,6 +100,7 @@
           <Property Name="STATE_TRANSACTION_ID" Type="int" />
           <Property Name="STATE_NOTIFICATION" Type="int" />
           <Property Name="STATE" Type="bit" />
+          <Property Name="TRANSACTION_REFERENCE" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TRANSACTION_DESCRIPTION">
           <Key>
@@ -174,15 +175,15 @@
           <EntitySet Name="ERROR_LOG" EntityType="PayPlusLocalBDModel.ERROR_LOG" />
           <EntitySet Name="PAYPAD_CONSOLE_ERROR" EntityType="PayPlusLocalBDModel.PAYPAD_CONSOLE_ERROR" />
           <EntitySet Name="PAYPAD_LOG" EntityType="PayPlusLocalBDModel.PAYPAD_LOG" />
-          <EntitySet Name="TRANSACTION" EntityType="PayPlusLocalBDModel.TRANSACTION" />
-          <EntitySet Name="TRANSACTION_DESCRIPTION" EntityType="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION" />
           <EntitySet Name="TRANSACTION_DETAIL" EntityType="PayPlusLocalBDModel.TRANSACTION_DETAIL" />
           <EntitySet Name="TRANSACTION_ERROR_SERVICE" EntityType="PayPlusLocalBDModel.TRANSACTION_ERROR_SERVICE" />
+          <EntitySet Name="PAYER" EntityType="PayPlusLocalBDModel.PAYER" />
+          <EntitySet Name="TRANSACTION" EntityType="PayPlusLocalBDModel.TRANSACTION" />
+          <EntitySet Name="TRANSACTION_DESCRIPTION" EntityType="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION" />
           <AssociationSet Name="FK_TRANSACTION_DESCRIPTION_TRANSACTION" Association="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION">
             <End Role="TRANSACTION" EntitySet="TRANSACTION" />
             <End Role="TRANSACTION_DESCRIPTION" EntitySet="TRANSACTION_DESCRIPTION" />
           </AssociationSet>
-          <EntitySet Name="PAYER" EntityType="PayPlusLocalBDModel.PAYER" />
         </EntityContainer>
         <EntityType Name="CONFIGURATION_PAYDAD">
           <Key>
@@ -246,38 +247,6 @@
           <Property Name="DATE" Type="DateTime" Precision="3" />
           <Property Name="STATE" Type="Int32" />
         </EntityType>
-        <EntityType Name="TRANSACTION">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TRANSACTION_ID" Type="Int32" />
-          <Property Name="PAYPAD_ID" Type="Int32" />
-          <Property Name="TYPE_TRANSACTION_ID" Type="Int32" />
-          <Property Name="DATE_BEGIN" Type="DateTime" Precision="3" />
-          <Property Name="DATE_END" Type="DateTime" Precision="3" />
-          <Property Name="TOTAL_AMOUNT" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="INCOME_AMOUNT" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="RETURN_AMOUNT" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PAYER_ID" Type="Int32" />
-          <Property Name="STATE_TRANSACTION_ID" Type="Int32" />
-          <Property Name="STATE_NOTIFICATION" Type="Int32" />
-          <Property Name="STATE" Type="Boolean" />
-          <NavigationProperty Name="TRANSACTION_DESCRIPTION" Relationship="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION" FromRole="TRANSACTION" ToRole="TRANSACTION_DESCRIPTION" />
-        </EntityType>
-        <EntityType Name="TRANSACTION_DESCRIPTION">
-          <Key>
-            <PropertyRef Name="TRANSACTION_DESCRIPTION_ID" />
-          </Key>
-          <Property Name="TRANSACTION_DESCRIPTION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TRANSACTION_ID" Type="Int32" />
-          <Property Name="REFERENCE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AMOUNT" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="OBSERVATION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="STATE" Type="Boolean" />
-          <NavigationProperty Name="TRANSACTION" Relationship="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION" FromRole="TRANSACTION_DESCRIPTION" ToRole="TRANSACTION" />
-        </EntityType>
         <EntityType Name="TRANSACTION_DETAIL">
           <Key>
             <PropertyRef Name="TRANSACTION_DETAIL_ID" />
@@ -302,18 +271,6 @@
           <Property Name="STATE" Type="Int32" Nullable="false" />
           <Property Name="NOTIFICATION_INTENT" Type="Int32" />
         </EntityType>
-        <Association Name="FK_TRANSACTION_DESCRIPTION_TRANSACTION">
-          <End Type="PayPlusLocalBDModel.TRANSACTION" Role="TRANSACTION" Multiplicity="0..1" />
-          <End Type="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION" Role="TRANSACTION_DESCRIPTION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TRANSACTION">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TRANSACTION_DESCRIPTION">
-              <PropertyRef Name="TRANSACTION_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="PAYER">
           <Key>
             <PropertyRef Name="PAYER_ID" />
@@ -329,6 +286,51 @@
           <Property Name="TYPE_PAYER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TYPE_IDENTIFICATION" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
+        <EntityType Name="TRANSACTION">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TRANSACTION_ID" Type="Int32" />
+          <Property Name="PAYPAD_ID" Type="Int32" />
+          <Property Name="TYPE_TRANSACTION_ID" Type="Int32" />
+          <Property Name="DATE_BEGIN" Type="DateTime" Precision="3" />
+          <Property Name="DATE_END" Type="DateTime" Precision="3" />
+          <Property Name="TOTAL_AMOUNT" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="INCOME_AMOUNT" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RETURN_AMOUNT" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PAYER_ID" Type="Int32" />
+          <Property Name="STATE_TRANSACTION_ID" Type="Int32" />
+          <Property Name="STATE_NOTIFICATION" Type="Int32" />
+          <Property Name="STATE" Type="Boolean" />
+          <Property Name="TRANSACTION_REFERENCE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TRANSACTION_DESCRIPTION" Relationship="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION" FromRole="TRANSACTION" ToRole="TRANSACTION_DESCRIPTION" />
+        </EntityType>
+        <EntityType Name="TRANSACTION_DESCRIPTION">
+          <Key>
+            <PropertyRef Name="TRANSACTION_DESCRIPTION_ID" />
+          </Key>
+          <Property Name="TRANSACTION_DESCRIPTION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TRANSACTION_ID" Type="Int32" />
+          <Property Name="REFERENCE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AMOUNT" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="OBSERVATION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="STATE" Type="Boolean" />
+          <NavigationProperty Name="TRANSACTION" Relationship="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION" FromRole="TRANSACTION_DESCRIPTION" ToRole="TRANSACTION" />
+        </EntityType>
+        <Association Name="FK_TRANSACTION_DESCRIPTION_TRANSACTION">
+          <End Type="PayPlusLocalBDModel.TRANSACTION" Role="TRANSACTION" Multiplicity="0..1" />
+          <End Type="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION" Role="TRANSACTION_DESCRIPTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTION">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TRANSACTION_DESCRIPTION">
+              <PropertyRef Name="TRANSACTION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -402,38 +404,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TRANSACTION">
-            <EntityTypeMapping TypeName="PayPlusLocalBDModel.TRANSACTION">
-              <MappingFragment StoreEntitySet="TRANSACTION">
-                <ScalarProperty Name="STATE" ColumnName="STATE" />
-                <ScalarProperty Name="STATE_NOTIFICATION" ColumnName="STATE_NOTIFICATION" />
-                <ScalarProperty Name="STATE_TRANSACTION_ID" ColumnName="STATE_TRANSACTION_ID" />
-                <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
-                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
-                <ScalarProperty Name="RETURN_AMOUNT" ColumnName="RETURN_AMOUNT" />
-                <ScalarProperty Name="INCOME_AMOUNT" ColumnName="INCOME_AMOUNT" />
-                <ScalarProperty Name="TOTAL_AMOUNT" ColumnName="TOTAL_AMOUNT" />
-                <ScalarProperty Name="DATE_END" ColumnName="DATE_END" />
-                <ScalarProperty Name="DATE_BEGIN" ColumnName="DATE_BEGIN" />
-                <ScalarProperty Name="TYPE_TRANSACTION_ID" ColumnName="TYPE_TRANSACTION_ID" />
-                <ScalarProperty Name="PAYPAD_ID" ColumnName="PAYPAD_ID" />
-                <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TRANSACTION_DESCRIPTION">
-            <EntityTypeMapping TypeName="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION">
-              <MappingFragment StoreEntitySet="TRANSACTION_DESCRIPTION">
-                <ScalarProperty Name="STATE" ColumnName="STATE" />
-                <ScalarProperty Name="OBSERVATION" ColumnName="OBSERVATION" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="REFERENCE" ColumnName="REFERENCE" />
-                <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
-                <ScalarProperty Name="TRANSACTION_DESCRIPTION_ID" ColumnName="TRANSACTION_DESCRIPTION_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TRANSACTION_DETAIL">
             <EntityTypeMapping TypeName="PayPlusLocalBDModel.TRANSACTION_DETAIL">
               <MappingFragment StoreEntitySet="TRANSACTION_DETAIL">
@@ -473,6 +443,39 @@
                 <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
                 <ScalarProperty Name="IDENTIFICATION" ColumnName="IDENTIFICATION" />
                 <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTION">
+            <EntityTypeMapping TypeName="PayPlusLocalBDModel.TRANSACTION">
+              <MappingFragment StoreEntitySet="TRANSACTION">
+                <ScalarProperty Name="TRANSACTION_REFERENCE" ColumnName="TRANSACTION_REFERENCE" />
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="STATE_NOTIFICATION" ColumnName="STATE_NOTIFICATION" />
+                <ScalarProperty Name="STATE_TRANSACTION_ID" ColumnName="STATE_TRANSACTION_ID" />
+                <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="RETURN_AMOUNT" ColumnName="RETURN_AMOUNT" />
+                <ScalarProperty Name="INCOME_AMOUNT" ColumnName="INCOME_AMOUNT" />
+                <ScalarProperty Name="TOTAL_AMOUNT" ColumnName="TOTAL_AMOUNT" />
+                <ScalarProperty Name="DATE_END" ColumnName="DATE_END" />
+                <ScalarProperty Name="DATE_BEGIN" ColumnName="DATE_BEGIN" />
+                <ScalarProperty Name="TYPE_TRANSACTION_ID" ColumnName="TYPE_TRANSACTION_ID" />
+                <ScalarProperty Name="PAYPAD_ID" ColumnName="PAYPAD_ID" />
+                <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTION_DESCRIPTION">
+            <EntityTypeMapping TypeName="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION">
+              <MappingFragment StoreEntitySet="TRANSACTION_DESCRIPTION">
+                <ScalarProperty Name="STATE" ColumnName="STATE" />
+                <ScalarProperty Name="OBSERVATION" ColumnName="OBSERVATION" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="REFERENCE" ColumnName="REFERENCE" />
+                <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
+                <ScalarProperty Name="TRANSACTION_DESCRIPTION_ID" ColumnName="TRANSACTION_DESCRIPTION_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

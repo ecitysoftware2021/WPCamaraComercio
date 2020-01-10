@@ -23,18 +23,12 @@ namespace WPFCCMedellin.UserControls
 
         private Transaction transaction;
 
-        private ReaderBarCode readerBarCode;
 
         public PayerUserControl(Transaction transaction)
         {
             InitializeComponent();
 
             this.transaction = transaction;
-
-            if (readerBarCode == null)
-            {
-                readerBarCode = new ReaderBarCode();
-            }
 
             ConfigView();
         }
@@ -74,22 +68,23 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                readerBarCode.callbackOut = data =>
+                AdminPayPlus.ReaderBarCode.callbackOut = data =>
                 {
-                    if (data != null)
+                    if (data != null && viewModel.TypePayer == ETypePayer.Person)
                     {
                         viewModel.Value1 = data.Document;
                         viewModel.Value2 = data.FirstName;
                         viewModel.Value3 = data.LastName;
+                        viewModel.Value4 = string.Empty;
                     }
                 };
 
-                readerBarCode.callbackError = error =>
+                AdminPayPlus.ReaderBarCode.callbackError = error =>
                 {
 
                 };
 
-                readerBarCode.Start(Utilities.GetConfiguration("BarcodePort"), int.Parse(Utilities.GetConfiguration("BarcodeBaudRate")));
+                AdminPayPlus.ReaderBarCode.Start(Utilities.GetConfiguration("BarcodePort"), int.Parse(Utilities.GetConfiguration("BarcodeBaudRate")));
             }
             catch (Exception ex)
             {
@@ -109,7 +104,6 @@ namespace WPFCCMedellin.UserControls
                     {
                         viewModel.TypePayer = ETypePayer.Person;
 
-
                         viewModel.SourceCheckId = ImagesUrlResource.ImageCheckIn;
                         viewModel.SourceCheckName = ImagesUrlResource.ImageCheckOut;
 
@@ -121,7 +115,6 @@ namespace WPFCCMedellin.UserControls
                     else
                     {
                         viewModel.TypePayer = ETypePayer.Establishment;
-
 
                         viewModel.SourceCheckId = ImagesUrlResource.ImageCheckOut;
                         viewModel.SourceCheckName = ImagesUrlResource.ImageCheckIn;
@@ -234,6 +227,8 @@ namespace WPFCCMedellin.UserControls
                         }
                         else
                         {
+                            AdminPayPlus.ReaderBarCode.callbackOut = null;
+                            AdminPayPlus.ReaderBarCode.callbackError = null;
                             Utilities.navigator.Navigate(UserControlView.Pay, false, transaction);
                         }
                     }
@@ -254,6 +249,8 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
+                AdminPayPlus.ReaderBarCode.callbackOut = null;
+                AdminPayPlus.ReaderBarCode.callbackError = null;
                 Utilities.navigator.Navigate(UserControlView.Main);
             }
             catch (Exception ex)

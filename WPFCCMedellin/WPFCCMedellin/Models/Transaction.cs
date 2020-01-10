@@ -33,6 +33,8 @@ namespace WPFCCMedellin.Models
 
         public ETransactionState State { get; set; }
 
+        public int StateNotification { get; set; }
+
         public string Observation { get; set; }
 
         public ETransactionType Type { get; set; }

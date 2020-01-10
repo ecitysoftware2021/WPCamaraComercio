@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using WPFCCMedellin.Classes;
@@ -153,38 +150,26 @@ namespace WPFCCMedellin.UserControls
 
                     AdminPayPlus.ControlPeripherals.ClearValues();
 
-                    if (transaction.State == ETransactionState.CancelError)
+                    Task.Run(async () =>
                     {
-                        Task.Run(async () =>
-                        {
-                             transaction = await AdminPayPlus.ApiIntegration.NotifycCancelTransaction(transaction);
+                       // transaction = await AdminPayPlus.ApiIntegration.NotifycCancelTransaction(transaction);
 
-                            Utilities.CloseModal();
-                             if (transaction.IdTransactionAPi > 0 && transaction.State == ETransactionState.Success)
-                             {
+                        Utilities.CloseModal();
+
+                        //if (transaction.IdTransactionAPi > 0 && transaction.State == ETransactionState.Cancel)
+                        //{
+                        //    Utilities.navigator.Navigate(UserControlView.PaySuccess, false, this.transaction);
+                        //}
+                        //else
+                        //{
+                        //    AdminPayPlus.SaveErrorControl(MessageResource.NoInsertTransaction, this.transaction.TransactionId.ToString(), EError.Api, ELevelError.Strong);
+                        //    Utilities.ShowModal(MessageResource.NoInsertTransaction, EModalType.Error);
+
                             Utilities.navigator.Navigate(UserControlView.PaySuccess, false, this.transaction);
-                             }
-                            else
-                            {
-                                AdminPayPlus.SaveErrorControl(MessageResource.NoInsertTransaction, this.transaction.TransactionId.ToString(), EError.Api, ELevelError.Strong);
-                                Utilities.ShowModal(MessageResource.NoInsertTransaction, EModalType.Error);
+                        //}
+                    });
 
-                                Utilities.navigator.Navigate(UserControlView.PaySuccess, false, this.transaction);
-                             }
-                        });
-
-                        Utilities.ShowModal(MessageResource.FinishTransaction, EModalType.Preload);
-                    }
-                    else
-                    {
-                        AdminPayPlus.UpdateTransaction(transaction);
-
-                        Utilities.PrintVoucher(this.transaction);
-
-                        Thread.Sleep(6000);
-
-                        Utilities.navigator.Navigate(UserControlView.Main);
-                    }
+                    Utilities.ShowModal(MessageResource.FinishTransaction, EModalType.Preload);
                 }
             }
             catch (Exception ex)

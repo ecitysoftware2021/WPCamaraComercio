@@ -70,29 +70,29 @@
 
             <Grid Grid.Row ="2">
                 <Image x:Name="BtnOk" 
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Width="400"
                         Height="120"
-                        Margin="0,100,0,0"
+                        Margin="0,200,0,0"
                         TouchDown="BtnOk_TouchDown"
                         Source="../Images/Buttons/btn-acept.png" Stretch="Fill" />
 
                 <Image x:Name="BtnNo" 
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Left"
                         Width="400"
                         Height="120"
-                        Margin="50,100,0,0"
+                        Margin="50,200,0,0"
                         TouchDown="BtnNo_TouchDown"
                         Source="../Images/Buttons/btn-cancel.png" Stretch="Fill" />
 
                 <Image x:Name="BtnYes" 
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Right"
                         Width="400"
                         Height="120"
-                        Margin="0,100,50,0"
+                        Margin="0,200,50,0"
                         TouchDown="BtnYes_TouchDown"
                         Source="../Images/Buttons/btn-acept.png" Stretch="Fill" />
             </Grid>

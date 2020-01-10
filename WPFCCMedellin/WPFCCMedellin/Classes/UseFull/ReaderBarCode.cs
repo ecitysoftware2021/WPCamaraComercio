@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WPFCCMedellin.Classes.UseFull
 {
-    class ReaderBarCode
+   public class ReaderBarCode
     {
         public Action<DataDocument> callbackOut;//Calback para cuando sale cieerta cantidad del dinero
 
@@ -64,6 +65,7 @@ namespace WPFCCMedellin.Classes.UseFull
         {
             try
             {
+                Thread.Sleep(1000);
                 string response = _serialBarCodeReader.ReadExisting();
                 if (!string.IsNullOrEmpty(response))
                 {
@@ -134,7 +136,7 @@ namespace WPFCCMedellin.Classes.UseFull
                     dataReader.LastName = dataReader.FullName.Split(' ')[0] ?? string.Empty;
                     dataReader.SecondLastName = dataReader.FullName.Split(' ')[1] ?? string.Empty;
 
-                    if (string.IsNullOrEmpty(dataReader.Document) && string.IsNullOrEmpty(dataReader.FullName))
+                    if (!string.IsNullOrEmpty(dataReader.Document) && !string.IsNullOrEmpty(dataReader.FullName))
                     {
                         callbackOut?.Invoke(dataReader);
                     }

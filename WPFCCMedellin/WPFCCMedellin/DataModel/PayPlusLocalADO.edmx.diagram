@@ -10,12 +10,12 @@
         <EntityTypeShape EntityType="PayPlusLocalBDModel.ERROR_LOG" Width="1.5" PointX="2.75" PointY="5.75" />
         <EntityTypeShape EntityType="PayPlusLocalBDModel.PAYPAD_CONSOLE_ERROR" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="PayPlusLocalBDModel.PAYPAD_LOG" Width="1.5" PointX="7.75" PointY="4.75" />
-        <EntityTypeShape EntityType="PayPlusLocalBDModel.TRANSACTION" Width="1.5" PointX="0.75" PointY="1" />
-        <EntityTypeShape EntityType="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION" Width="1.5" PointX="2.75" PointY="1.375" />
         <EntityTypeShape EntityType="PayPlusLocalBDModel.TRANSACTION_DETAIL" Width="1.5" PointX="7.75" PointY="7.75" />
         <EntityTypeShape EntityType="PayPlusLocalBDModel.TRANSACTION_ERROR_SERVICE" Width="1.5" PointX="4.5" PointY="5.75" />
-        <AssociationConnector Association="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION" />
         <EntityTypeShape EntityType="PayPlusLocalBDModel.PAYER" Width="1.5" PointX="0.75" PointY="8.375" />
+        <EntityTypeShape EntityType="PayPlusLocalBDModel.TRANSACTION" Width="2.125" PointX="10.375" PointY="1" />
+        <EntityTypeShape EntityType="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION" Width="2.125" PointX="12.625" PointY="1.875" />
+        <AssociationConnector Association="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

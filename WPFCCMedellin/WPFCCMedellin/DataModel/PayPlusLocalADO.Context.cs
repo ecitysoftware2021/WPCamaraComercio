@@ -30,10 +30,10 @@ namespace WPFCCMedellin.DataModel
         public virtual DbSet<ERROR_LOG> ERROR_LOG { get; set; }
         public virtual DbSet<PAYPAD_CONSOLE_ERROR> PAYPAD_CONSOLE_ERROR { get; set; }
         public virtual DbSet<PAYPAD_LOG> PAYPAD_LOG { get; set; }
-        public virtual DbSet<TRANSACTION> TRANSACTION { get; set; }
-        public virtual DbSet<TRANSACTION_DESCRIPTION> TRANSACTION_DESCRIPTION { get; set; }
         public virtual DbSet<TRANSACTION_DETAIL> TRANSACTION_DETAIL { get; set; }
         public virtual DbSet<TRANSACTION_ERROR_SERVICE> TRANSACTION_ERROR_SERVICE { get; set; }
         public virtual DbSet<PAYER> PAYER { get; set; }
+        public virtual DbSet<TRANSACTION> TRANSACTION { get; set; }
+        public virtual DbSet<TRANSACTION_DESCRIPTION> TRANSACTION_DESCRIPTION { get; set; }
     }
 }

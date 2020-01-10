@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using WPFCCMedellin.Classes.Printer;
+using WPFCCMedellin.Classes.UseFull;
 using WPFCCMedellin.DataModel;
 using WPFCCMedellin.Models;
 using WPFCCMedellin.Resources;
@@ -46,6 +47,13 @@ namespace WPFCCMedellin.Classes
         public static PrinterFile PrinterFile
         {
             get { return _printerFile; }
+        }
+
+        private static ReaderBarCode _readerBarCode;
+
+        public static ReaderBarCode ReaderBarCode
+        {
+            get { return _readerBarCode; }
         }
 
         private static ControlPeripherals _controlPeripherals;
@@ -91,6 +99,11 @@ namespace WPFCCMedellin.Classes
             if (_printerFile == null)
             {
                 _printerFile = new PrinterFile(Utilities.GetConfiguration("PrinterName").Trim(), true);
+            }
+
+            if (_readerBarCode == null)
+            {
+                _readerBarCode = new ReaderBarCode();
             }
         }
         #endregion
@@ -362,13 +375,44 @@ namespace WPFCCMedellin.Classes
             }
         }
 
+        public static async Task<int> SavePayer(PAYER payer)
+        {
+            try
+            {
+                if (payer == null)
+                {
+
+                    payer = new PAYER
+                    {
+                        IDENTIFICATION = _dataConfiguration.ID_PAYPAD.ToString(),
+                        NAME = Utilities.GetConfiguration("NAME_PAYPAD"),
+                        LAST_NAME = Utilities.GetConfiguration("LAST_NAME_PAYPAD")
+                    };
+                }
+
+                payer.STATE = true;
+
+                var resultPayer = await api.CallApi("SavePayer", payer);
+
+                if (resultPayer != null)
+                {
+                   return JsonConvert.DeserializeObject<int>(resultPayer.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, "InitPaypad", ex, MessageResource.StandarError);
+            }
+            return 0;
+        }
+
         public static async Task SaveTransactions(Transaction transaction, bool getConsecutive)
         {
             try
             {
                 if (transaction != null)
                 {
-                    //   transaction.IsReturn = await ValidateMoney(transaction);
+                     transaction.IsReturn = await ValidateMoney(transaction);
 
                     if (getConsecutive)
                     {
@@ -377,22 +421,7 @@ namespace WPFCCMedellin.Classes
 
                     if ((getConsecutive && int.Parse(transaction.consecutive) > 0) || !getConsecutive)
                     {
-                        if (transaction.payer == null)
-                        {
-                            transaction.payer.IDENTIFICATION = _dataConfiguration.ID_PAYPAD.ToString();
-                            transaction.payer.NAME = Utilities.GetConfiguration("NAME_PAYPAD");
-                            transaction.payer.LAST_NAME = Utilities.GetConfiguration("LAST_NAME_PAYPAD");
-                        }
-
-                        transaction.payer.STATE = true;
-
-                        var resultPayer = await api.CallApi("SavePayer", transaction.payer);
-
-                        if (resultPayer != null)
-                        {
-                            transaction.payer.PAYER_ID = JsonConvert.DeserializeObject<int>(resultPayer.ToString());
-                        }
-
+                        transaction.payer.PAYER_ID = await SavePayer(transaction.payer);
                         if (transaction.payer.PAYER_ID > 0)
                         {
                             var data = new TRANSACTION
@@ -412,17 +441,15 @@ namespace WPFCCMedellin.Classes
                                 DESCRIPTION = "Transaccion iniciada"
                             };
 
-                            var details = new TRANSACTION_DESCRIPTION
+                            data.TRANSACTION_DESCRIPTION.Add(new TRANSACTION_DESCRIPTION
                             {
                                 AMOUNT = transaction.Amount,
                                 TRANSACTION_ID = data.ID,
-                                REFERENCE = transaction.reference,
+                                REFERENCE = string.Concat("Matricula: ", transaction.Products[0].matricula ?? string.Empty),
                                 OBSERVATION = transaction.Enrollment.ToString(),
                                 TRANSACTION_DESCRIPTION_ID = 0,
                                 STATE = true
-                            };
-
-                            data.TRANSACTION_DESCRIPTION.Add(details);
+                            });
 
                             if (data != null)
                             {
@@ -434,7 +461,6 @@ namespace WPFCCMedellin.Classes
                                     if (transaction.IdTransactionAPi > 0)
                                     {
                                         data.TRANSACTION_ID = transaction.IdTransactionAPi;
-                                        data.STATE = true;
                                     }
                                 }
                                 else
@@ -453,7 +479,6 @@ namespace WPFCCMedellin.Classes
                                         if (transaction.IdTransactionAPi > 0)
                                         {
                                             data.TRANSACTION_ID = transaction.IdTransactionAPi;
-                                            data.STATE = true;
                                         }
                                     }
                                     else
@@ -465,7 +490,6 @@ namespace WPFCCMedellin.Classes
                                         }, ELogType.General);
                                     }
                                 }
-
                                 transaction.TransactionId = DBManagment.SaveTransaction(data);
                             }
                         }
@@ -527,7 +551,6 @@ namespace WPFCCMedellin.Classes
 
                     if (tRANSACTION != null)
                     {
-
                         var responseTransaction = await api.CallApi("UpdateTransaction", tRANSACTION);
                         if (responseTransaction != null)
                         {
@@ -663,7 +686,7 @@ namespace WPFCCMedellin.Classes
             {
                 Task.Run(async () =>
                 {
-                    var transactions = DBManagment.GetTransactionNotific();
+                    var transactions = DBManagment.GetTransactionPending();
                     if (transactions.Count > 0)
                     {
                         foreach (var transaction in transactions)
@@ -735,24 +758,5 @@ namespace WPFCCMedellin.Classes
             }
             return 0;
         }
-
-        //public static void VerifyTransaction()
-        //{
-        //    try
-        //    {
-        //        Task.Run(() =>
-        //        {
-        //            var transactions = DBManagment.GetTransactionErrror();
-        //            if (transactions != null && transactions.Count > 0)
-        //            {
-        //                ApiIntegration.Verify(transactions);
-        //            }
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Error.SaveLogError(MethodBase.GetCurrentMethod().Name, "InitPaypad", ex, MessageResource.StandarError);
-        //    }
-        //}
     }
 }

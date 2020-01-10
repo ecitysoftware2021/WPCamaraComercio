@@ -119,6 +119,10 @@ namespace WPFCCMedellin.Services
 
                 if (responseApi.CodeError == 200)
                 {
+                    if (responseApi.Data == null)
+                    {
+                        return responseApi.Message;
+                    }
                     return responseApi.Data;
                 }
             }
