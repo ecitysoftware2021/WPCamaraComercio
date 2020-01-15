@@ -121,7 +121,7 @@ namespace WPFCCMedellin.Services
                 {
                     if (responseApi.Data == null)
                     {
-                        return responseApi.Message;
+                        return "OK";
                     }
                     return responseApi.Data;
                 }

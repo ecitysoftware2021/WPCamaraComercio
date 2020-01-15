@@ -113,35 +113,35 @@ namespace WPFCCMedellin.UserControls
                 }
                 else if (AdminPayPlus.DataPayPlus.State && AdminPayPlus.DataPayPlus.StateAceptance && AdminPayPlus.DataPayPlus.StateDispenser)
                 {
-                    int response = AdminPayPlus.PrintService.StatusPrint();
+                   // int response = AdminPayPlus.PrintService.StatusPrint();
 
-                    if (response != 0)
-                    {
-                        if (response == 7 || response == 8)
-                        {
-                            AdminPayPlus.SaveErrorControl(AdminPayPlus.PrintService.MessageStatus(response), MessageResource.InformationError, EError.Nopapper, ELevelError.Medium);
-                        }
-                        else
-                        {
-                            AdminPayPlus.SaveErrorControl(AdminPayPlus.PrintService.MessageStatus(response), MessageResource.InformationError, EError.Printer, ELevelError.Medium);
-                        }
+                    //if (response != 0)
+                    //{
+                    //    if (response == 7 || response == 8)
+                    //    {
+                    //        AdminPayPlus.SaveErrorControl(AdminPayPlus.PrintService.MessageStatus(response), MessageResource.InformationError, EError.Nopapper, ELevelError.Medium);
+                    //    }
+                    //    else
+                    //    {
+                    //        AdminPayPlus.SaveErrorControl(AdminPayPlus.PrintService.MessageStatus(response), MessageResource.InformationError, EError.Printer, ELevelError.Medium);
+                    //    }
 
-                        if (response != 8)
-                        {
-                            if (Utilities.ShowModal(MessageResource.ErrorNoPaper, EModalType.Information, false))
-                            {
-                                Redirect(true);
-                            }
-                        }
-                        else
-                        {
-                            Redirect(true);
-                        }
-                    }
-                    else
-                    {
+                    //    if (response != 8)
+                    //    {
+                    //        if (Utilities.ShowModal(MessageResource.ErrorNoPaper, EModalType.Information, false))
+                    //        {
+                    //            Redirect(true);
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        Redirect(true);
+                    //    }
+                    //}
+                    //else
+                    //{
                         Redirect(true);
-                    }
+                    //}
                 }
                 else
                 {
