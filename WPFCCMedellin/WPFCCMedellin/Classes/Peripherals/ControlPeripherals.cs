@@ -81,8 +81,6 @@ namespace WPFCCMedellin.Classes
 
         private bool stateError;
 
-        private bool statePay = false;
-
         private int typeDispend;
 
         private static string TOKEN;//Llabe que retorna el dispenser
@@ -152,13 +150,19 @@ namespace WPFCCMedellin.Classes
 
             this.deliveryValue = 0;//Valor entregado
 
-            this.deliveryVal = 0;
-
             this.dispenserValue = 0;//Valor a dispensar
 
             this.stateError = false;
 
-            statePay = false;
+            this.callbackTotalIn = null;
+
+            this.callbackTotalOut = null;
+
+            this.callbackValueIn = null;
+
+            this.callbackValueOut = null;
+
+            this.callbackOut = null;
         }
 
         /// <summary>
@@ -228,6 +232,7 @@ namespace WPFCCMedellin.Classes
                 if (_serialPortBills.IsOpen)
                 {
                     Thread.Sleep(2000);
+                    callbackError?.Invoke(Tuple.Create("", string.Concat("Info, Se envio mensaje al billetero:  ", message)));
                     _serialPortBills.Write(message);
                     return true;
                 }
@@ -251,6 +256,7 @@ namespace WPFCCMedellin.Classes
                 if (_serialPortCoins.IsOpen)
                 {
                     Thread.Sleep(2000);
+                    callbackError?.Invoke(Tuple.Create("", string.Concat("Info, Se envio mensaje al monedero:  ", message)));
                     _serialPortCoins.Write(message);
                 }
             }
@@ -276,6 +282,7 @@ namespace WPFCCMedellin.Classes
                 string response = _serialPortBills.ReadLine();
                 if (!string.IsNullOrEmpty(response))
                 {
+                    callbackError?.Invoke(Tuple.Create("", string.Concat("Info, Respondio el billetero:  ", response)));
                     ProcessResponseBills(response.Replace("\r", string.Empty));
                 }
             }
@@ -297,6 +304,7 @@ namespace WPFCCMedellin.Classes
                 string response = _serialPortCoins.ReadLine();
                 if (!string.IsNullOrEmpty(response))
                 {
+                    callbackError?.Invoke(Tuple.Create("", string.Concat("Info, Respondio el monedero:  ", response)));
                     ProcessResponseCoins(response.Replace("\r", string.Empty));
                 }
             }
@@ -401,7 +409,7 @@ namespace WPFCCMedellin.Classes
             if (response[1] == "DP" || response[1] == "MD")
             {
                 stateError = true;
-                callbackError?.Invoke(Tuple.Create(response[1], string.Concat("Error, se alcanzó a entregar:", deliveryVal, " Error: ", response[2])));
+                callbackError?.Invoke(Tuple.Create(response[1], string.Concat("Error, se alcanzó a entregar: ", deliveryValue, " Error: ", response[2])));
 
                 //if (response[1] == "MD")
                 //{
@@ -437,34 +445,18 @@ namespace WPFCCMedellin.Classes
             }
             else
             {
-                if (statePay)
+                if (response[1] == "AP")
                 {
-                    if (response[1] == "AP")
-                    {
-                        enterValue += decimal.Parse(response[2]) * _dividerBills;
-                        callbackValueIn?.Invoke(Tuple.Create(decimal.Parse(response[2]) * _dividerBills, response[1]));
-                    }
-                    else if (response[1] == "MA")
-                    {
-                        enterValue += decimal.Parse(response[2]);
-                        callbackValueIn?.Invoke(Tuple.Create(decimal.Parse(response[2]), response[1]));
-                    }
-                    ValidateEnterValue();
+                    enterValue += decimal.Parse(response[2]) * _dividerBills;
+                    callbackValueIn?.Invoke(Tuple.Create(decimal.Parse(response[2]) * _dividerBills, response[1]));
                 }
+                else if (response[1] == "MA")
+                {
+                    enterValue += decimal.Parse(response[2]);
+                    callbackValueIn?.Invoke(Tuple.Create(decimal.Parse(response[2]), response[1]));
+                }
+                ValidateEnterValue();
             }
-        }
-
-        public void ClearValues()
-        {
-            deliveryValue = 0;
-            enterValue = 0;
-            deliveryVal = 0;
-
-            this.callbackTotalIn = null;
-            this.callbackTotalOut = null;
-            this.callbackValueIn = null;
-            this.callbackValueOut = null;
-            this.callbackOut = null;
         }
 
         /// <summary>
@@ -630,8 +622,6 @@ namespace WPFCCMedellin.Classes
             try
             {
                 this.payValue = payValue;
-
-                statePay = true;
                 SendMessageBills(_AceptanceBillOn);
                 SendMessageCoins(_AceptanceCoinOn);
             }
@@ -651,7 +641,6 @@ namespace WPFCCMedellin.Classes
             {
                 //StopAceptance();
                 enterValue = 0;
-                statePay = false;
                 callbackTotalIn?.Invoke(enterVal);
             }
         }
@@ -669,7 +658,6 @@ namespace WPFCCMedellin.Classes
 
         #region Responses
 
-        public decimal deliveryVal;
         /// <summary>
         /// Procesa la respuesta de los dispenser M y B
         /// </summary>
@@ -686,7 +674,7 @@ namespace WPFCCMedellin.Classes
                     {
                         int denominacion = int.Parse(value.Split('-')[0]);
                         int cantidad = int.Parse(value.Split('-')[1]);
-                        deliveryVal += denominacion * cantidad;
+                        deliveryValue += denominacion * cantidad;
                     }
                 }
 
@@ -698,11 +686,11 @@ namespace WPFCCMedellin.Classes
 
                 if (!stateError)
                 {
-                    if (dispenserValue == deliveryVal)
+                    if (dispenserValue == deliveryValue)
                     {
                         if (typeDispend == 0)
                         {
-                            callbackTotalOut?.Invoke(deliveryVal);
+                            callbackTotalOut?.Invoke(deliveryValue);
                         }
                     }
                 }
@@ -710,7 +698,7 @@ namespace WPFCCMedellin.Classes
                 {
                     if (typeDispend == 0)
                     {
-                        callbackOut?.Invoke(deliveryVal);
+                        callbackOut?.Invoke(deliveryValue);
                     }
                 }
             }

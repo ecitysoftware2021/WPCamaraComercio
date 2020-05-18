@@ -247,7 +247,7 @@ namespace WPFCCMedellin.UserControls
                     transaction.Payment = paymentViewModel;
                     transaction.State = statePay;
 
-                    AdminPayPlus.ControlPeripherals.ClearValues();
+                    AdminPayPlus.ControlPeripherals.ResetValues();
                     Task.Run(async () =>
                     {
                         if (transaction.IdTransactionAPi > 0)

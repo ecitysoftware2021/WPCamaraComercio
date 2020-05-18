@@ -84,19 +84,16 @@ namespace WPFCCMedellin.Classes
                     model.ImageModal = ImagesUrlResource.AlertInfo;
                 }
 
+                TimerService.Close();
+
                 if (timer)
                 {
-                    TimerService.Close();
-
-                    if (timer)
+                    TimerService.CallBackTimerOut = result =>
                     {
-                        TimerService.CallBackTimerOut = result =>
-                        {
-                            CloseModal();
-                        };
+                        CloseModal();
+                    };
 
-                        TimerService.Start(int.Parse(Utilities.GetConfiguration("DurationView")));
-                    }
+                    TimerService.Start(int.Parse(Utilities.GetConfiguration("DurationAlert")));
                 }
 
                 Application.Current.Dispatcher.Invoke(delegate
