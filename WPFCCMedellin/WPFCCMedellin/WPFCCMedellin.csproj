@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>WPFCCMedellin</RootNamespace>
     <AssemblyName>WPFCCMedellin</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -30,6 +30,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,6 +54,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -73,6 +78,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.2\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Management.Instrumentation" />
@@ -94,6 +102,10 @@
     <Reference Include="WpfAnimatedGif, Version=1.4.18.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
     </Reference>
+    <Reference Include="WPKeyboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\WPFMultired\WPFMultired\bin\Debug\WPKeyboard.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -101,8 +113,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\AdminPayPlus.cs" />
+    <Compile Include="Classes\DB\SqliteDataAccess.cs" />
     <Compile Include="Classes\Peripherals\ControlPeripherals.cs" />
-    <Compile Include="Classes\DB\DBManagment.cs" />
     <Compile Include="Classes\Printer\PrinterFile.cs" />
     <Compile Include="Classes\UseFull\ReaderBarCode.cs" />
     <Compile Include="Classes\UseFull\TimerService.cs" />
@@ -114,53 +126,17 @@
     <Compile Include="Classes\Printer\PrintProperties.cs" />
     <Compile Include="Classes\Printer\PrintService.cs" />
     <Compile Include="Classes\Utilities.cs" />
-    <Compile Include="DataModel\CONFIGURATION_PAYDAD.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\DEVICE_LOG.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\ERROR_LOG.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\PAYER.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\PAYPAD_CONSOLE_ERROR.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\PAYPAD_LOG.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\PayPlusLocalADO.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PayPlusLocalADO.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\PayPlusLocalADO.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\PayPlusLocalADO.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PayPlusLocalADO.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TRANSACTION.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TRANSACTION_DESCRIPTION.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TRANSACTION_DETAIL.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\TRANSACTION_ERROR_SERVICE.cs">
-      <DependentUpon>PayPlusLocalADO.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Keyboard\TouchScreenKeyboard.cs" />
-    <Compile Include="Keyboard\TouchScreenKeyNumeric.cs" />
+    <Compile Include="DataModel\CONFIGURATION_PAYDADs.cs" />
+    <Compile Include="DataModel\DEVICE_LOGs.cs" />
+    <Compile Include="DataModel\ERROR_LOGs.cs" />
+    <Compile Include="DataModel\PAYERs.cs" />
+    <Compile Include="DataModel\PAYPAD_ACTION_LOGs.cs" />
+    <Compile Include="DataModel\PAYPAD_CONSOLE_ERRORs.cs" />
+    <Compile Include="DataModel\PAYPAD_LOGs.cs" />
+    <Compile Include="DataModel\TRANSACTIONs.cs" />
+    <Compile Include="DataModel\TRANSACTION_DESCRIPTIONs.cs" />
+    <Compile Include="DataModel\TRANSACTION_DETAILs.cs" />
+    <Compile Include="DataModel\TRANSACTION_ERROR_SERVICE.cs" />
     <Compile Include="Models\DenominationMoney.cs" />
     <Compile Include="Models\ItemList.cs" />
     <Compile Include="Models\ModalModel.cs" />
@@ -264,6 +240,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ConstantsResource.resx" />
     <EmbeddedResource Include="Resources\ImagesUrlResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ImagesUrlResource.Designer.cs</LastGenOutput>
@@ -272,13 +249,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MessageResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="DataModel\PayPlusLocalADO.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PayPlusLocalADO.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DataModel\PayPlusLocalADO.edmx.diagram">
-      <DependentUpon>PayPlusLocalADO.edmx</DependentUpon>
-    </None>
+    <None Include="DataContext\DB_Local.db" />
     <None Include="Mokups\Mockup_Type_Documents.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -292,7 +263,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\Keyboard\" />
     <Folder Include="Images\Publish\" />
   </ItemGroup>
   <ItemGroup>
@@ -317,23 +287,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataContext\PayPlusLocalBD.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DataContext\PayPlusLocalBD_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>PayPlusLocalBD.mdf</DependentUpon>
-    </Content>
-    <Content Include="DataModel\PayPlusLocalADO.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PayPlusLocalADO.Context.cs</LastGenOutput>
-      <DependentUpon>PayPlusLocalADO.edmx</DependentUpon>
-    </Content>
-    <Content Include="DataModel\PayPlusLocalADO.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PayPlusLocalADO.edmx</DependentUpon>
-      <LastGenOutput>PayPlusLocalADO.cs</LastGenOutput>
-    </Content>
     <Resource Include="Images\Backgrounds\bg-succes-pay.png" />
     <Resource Include="Images\Backgrounds\bg-alert-blanck.png" />
     <Resource Include="Images\Backgrounds\bg-alert-detail.png" />
@@ -366,10 +319,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\Administrator\AdministratorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -427,5 +376,23 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Keyboard\Amarillo.png" />
+    <Resource Include="Images\Keyboard\Azul.png" />
+    <Resource Include="Images\Keyboard\BACKSPACE.png" />
+    <Resource Include="Images\Keyboard\DELETE.png" />
+    <Resource Include="Images\Keyboard\Gris.png" />
+    <Resource Include="Images\Keyboard\Gris2.png" />
+    <Resource Include="Images\Keyboard\OK.png" />
+    <Resource Include="Images\Keyboard\Rojo.png" />
+    <Resource Include="Images\Keyboard\Verde.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets'))" />
+  </Target>
 </Project>

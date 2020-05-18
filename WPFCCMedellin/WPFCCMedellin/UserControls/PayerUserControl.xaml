@@ -4,7 +4,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:WPFCCMedellin.UserControls"
-        xmlns:k="clr-namespace:WPFCCMedellin.Keyboard"
         mc:Ignorable="d"
         Height="1920" 
         Width="1080" >
@@ -178,7 +177,7 @@
                    FontSize="40"
                    Foreground="#FF606060"
                    TabIndex="1"
-                   k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="True"
+                   TouchDown="KeyboardNum_TouchDown"
                    TextWrapping="Wrap"
                    Text="{Binding Value1}" />
 
@@ -206,7 +205,7 @@
                    MaxLength="20"
                    Foreground="#FF606060"
                    TabIndex="2"
-                   k:TouchScreenKeyboard.TouchScreenKeyboard="True"
+                   TouchDown="Keyboard_TouchDown"
                    TextWrapping="Wrap" 
                    Text="{Binding Value2}" />
 
@@ -233,7 +232,7 @@
                     Grid.Row="5"
                     TabIndex="3"
                     Foreground="#FF606060"
-                    k:TouchScreenKeyboard.TouchScreenKeyboard="True"
+                    TouchDown="Keyboard_TouchDown"
                     TextWrapping="Wrap"
                     Text="{Binding Value3}" />
 
@@ -259,7 +258,7 @@
                 Grid.Row="6"
                 Width="500"
                 TabIndex="4"
-                k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="True"
+                TouchDown="KeyboardNum_TouchDown"
                 Foreground="#FF606060"
                 TextWrapping="Wrap"
                 Text="{Binding Value4}" />

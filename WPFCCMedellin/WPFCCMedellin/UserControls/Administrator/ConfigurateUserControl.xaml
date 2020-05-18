@@ -58,6 +58,18 @@
                     HorizontalAlignment="Center" 
                     Width="400" 
                     Height="400"/>
+
+            <TextBlock x:Name="txt_description"
+                Text="{Binding DescriptionStatusPayPlus}"
+                FontFamily="Arial"
+                FontSize="40"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,200"
+                Foreground="#FF222222"
+                TextWrapping="Wrap"
+                TextAlignment="Center"
+                FontWeight="Bold"  />
         </Grid>
     </Grid>
 </UserControl>

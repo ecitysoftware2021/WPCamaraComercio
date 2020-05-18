@@ -66,6 +66,19 @@
                            TextWrapping="WrapWithOverflow"
                            VerticalAlignment="Center"
                            TextAlignment="Center" />
+
+
+                <TextBlock x:Name="LblMessageTouch" 
+                           Text="¡Toca la pantalla para continuar!"
+                           HorizontalAlignment="Center"
+                           Margin="0,320,0,0" 
+                           FontSize="30" 
+                           Width="500"
+                           FontFamily="Myriad Pro"
+                           Foreground="#FF606060"
+                           TextWrapping="WrapWithOverflow"
+                           VerticalAlignment="Bottom"
+                           TextAlignment="Center" />
             </Grid>
 
             <Grid Grid.Row ="2">

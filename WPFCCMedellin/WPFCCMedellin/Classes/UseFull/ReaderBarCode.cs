@@ -125,7 +125,7 @@ namespace WPFCCMedellin.Classes.UseFull
 
                     foreach (var item in fullName.Split(' '))
                     {
-                        if (!string.IsNullOrEmpty(item))
+                        if (!string.IsNullOrEmpty(item) && item.Length > 1)
                         {
                             dataReader.FullName += string.Concat(item, " ");
                         }

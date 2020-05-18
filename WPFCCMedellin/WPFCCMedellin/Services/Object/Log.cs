@@ -15,6 +15,10 @@ namespace WPFCCMedellin.Services.Object
         public string Reference { get; set; }
 
         public string Description { get; set; }
+
+        public int State { get; set; }
+
+        public DateTime Date { get; set; }
     }
 
     public class RequestLogDevice

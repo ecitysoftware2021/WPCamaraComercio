@@ -416,8 +416,8 @@ namespace WPFCCMedellin.ViewModel
 
                 var response = await AdminPayPlus.ApiIntegration.GetData(new RequestConsult
                 {
-                    paramConsulta = reference,
-                    tipo_Busqueda = type
+                    busqueda = reference,
+                    tipo_busqueda = type
                 }, "GetGeneralInformation");
 
                 if (response.CodeError == 200)

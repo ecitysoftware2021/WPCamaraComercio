@@ -70,7 +70,7 @@ namespace WPFCCMedellin.Classes
     public enum ETransactionType
     {
         Withdrawal = 15,
-        PaymentFile = 19
+        PaymentFile = 3
     }
 
     public enum ETypeAdministrator
@@ -103,5 +103,11 @@ namespace WPFCCMedellin.Classes
     {
         Person = 1,
         Establishment = 2
+    }
+
+    public enum ETypeProduct
+    {
+        Existence = 11,
+        commercialRegister = 12,
     }
 }

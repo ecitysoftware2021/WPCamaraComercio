@@ -14,12 +14,6 @@ namespace WPFCCMedellin.Classes.Printer
 
         private Graphics graphics;
 
-        private int y = 0;
-
-        private int sum = 30;
-
-        private int x = 200;
-
         private List<DataPrinter> dataPrinter;
 
         private bool StatePrint;

@@ -18,6 +18,8 @@ namespace WPFCCMedellin.Services.Object
 
         public bool StateBalanece { get; set; }
 
+        public bool StateUpdate { get; set; }
+
         public bool StateUpload { get; set; }
 
         public object ListImages { get; set; }

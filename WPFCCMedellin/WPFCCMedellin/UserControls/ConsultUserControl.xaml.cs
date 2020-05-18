@@ -387,13 +387,29 @@ namespace WPFCCMedellin.UserControls
             }
         }
 
-        private void Text_TouchDown(object sender, TouchEventArgs e)
+        private void Text_name_TouchDown(object sender, TouchEventArgs e)
         {
             try
             {
                 viewModel.RefreshView(false);
                 viewModel.DataList.Clear();
                 ConfigureViewList();
+                Utilities.OpenKeyboard(false, sender as TextBox, this);
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
+
+        private void Text_id_TouchDown(object sender, TouchEventArgs e)
+        {
+            try
+            {
+                viewModel.RefreshView(false);
+                viewModel.DataList.Clear();
+                ConfigureViewList();
+                Utilities.OpenKeyboard(false, sender as TextBox, this);
             }
             catch (Exception ex)
             {

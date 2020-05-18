@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -15,12 +16,18 @@ namespace WPFCCMedellin.Services
 {
     public class ApiIntegration
     {
-        private HttpClient client;
+        private HttpWebRequest client;
 
         private string basseAddress;
 
+        private ASCIIEncoding encoding;
+
+        private Stream newStream;
+
         public ApiIntegration()
         {
+            encoding = new ASCIIEncoding();
+
             basseAddress = Utilities.GetConfiguration("basseAddressIntegration", true);
         }
 
@@ -28,29 +35,22 @@ namespace WPFCCMedellin.Services
         {
             try
             {
-                client = new HttpClient();
+                client = (HttpWebRequest)WebRequest.Create(new Uri(string.Concat(basseAddress, Utilities.GetConfiguration(controller))));
                 var request = JsonConvert.SerializeObject(requestData);
-                var content = new StringContent(request, Encoding.UTF8, "Application/json");
-                client.BaseAddress = new Uri(basseAddress);
-                var url = Utilities.GetConfiguration(controller);
+                client.Accept = "application/json";
+                client.ContentType = "application/json";
+                client.Method = "POST";
 
-                var response = await client.PostAsync(url, content);
+                newStream = client.GetRequestStream();
+                newStream.Write(encoding.GetBytes(request), 0, encoding.GetBytes(request).Length);
+                newStream.Close();
 
-                if (!response.IsSuccessStatusCode)
-                {
-                    return new ResponseApi
-                    {
-                        CodeError = 300,
-                        Message = response.RequestMessage.ToString()
-                    };
-                }
-
-                var result = await response.Content.ReadAsStringAsync();
+                var response = (new StreamReader(client.GetResponse().GetResponseStream())).ReadToEnd();
 
                 return new ResponseApi
                 {
                     CodeError = 200,
-                    Data = result
+                    Data = response
                 };
             }
             catch (Exception ex)
@@ -251,7 +251,7 @@ namespace WPFCCMedellin.Services
             }
             catch (Exception ex)
             {
-                //  Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+              Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
             return string.Empty;
         }

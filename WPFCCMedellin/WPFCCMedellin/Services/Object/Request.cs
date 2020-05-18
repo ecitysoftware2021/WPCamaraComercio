@@ -13,9 +13,8 @@ namespace WPFCCMedellin.Services
 
     public class RequestConsult
     {
-        public string paramConsulta { get; set; }
-
-        public int tipo_Busqueda { get; set; }
+        public int tipo_busqueda { get; set; }
+        public string busqueda { get; set; }
     }
 
     public class RequestDetail

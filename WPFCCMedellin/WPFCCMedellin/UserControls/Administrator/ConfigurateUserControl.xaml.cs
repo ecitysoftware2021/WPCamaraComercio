@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using WPFCCMedellin.Classes;
 using WPFCCMedellin.Resources;
@@ -14,14 +17,23 @@ namespace WPFCCMedellin.UserControls.Administrator
 
         public ConfigurateUserControl()
         {
-            InitializeComponent();
-
-            if (init == null)
+            try
             {
-                init = new AdminPayPlus();
-            }
+                InitializeComponent();
 
-            Initial();
+                if (init == null)
+                {
+                    init = new AdminPayPlus();
+                }
+
+                txt_description.DataContext = init;
+
+                Initial();
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
         }
 
         private async void Initial()
@@ -37,6 +49,7 @@ namespace WPFCCMedellin.UserControls.Administrator
             }
             catch (Exception ex)
             {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
         }
 
@@ -44,35 +57,47 @@ namespace WPFCCMedellin.UserControls.Administrator
         {
             try
             {
-                if (AdminPayPlus.DataPayPlus.StateBalanece)
+                if (AdminPayPlus.DataPayPlus.StateUpdate)
                 {
-                    Utilities.navigator.Navigate(UserControlView.Login, false, 1);
+                    Utilities.ShowModal(MessageResource.UpdateAplication, EModalType.Error, false);
+                    Utilities.UpdateApp();
+                }
+                else if (AdminPayPlus.DataPayPlus.StateBalanece)
+                {
+                    Utilities.navigator.Navigate(UserControlView.Login, false, ETypeAdministrator.Balancing);
                 }
                 else if (AdminPayPlus.DataPayPlus.StateUpload)
                 {
-                    Utilities.navigator.Navigate(UserControlView.Login, false, 2);
+                    Utilities.navigator.Navigate(UserControlView.Login, false, ETypeAdministrator.Upload);
                 }
                 else
                 {
-                    if (result)
-                    {
-                        if (!AdminPayPlus.DataPayPlus.StateBalanece && !AdminPayPlus.DataPayPlus.StateUpload)
-                        {
-                            Utilities.navigator.Navigate(UserControlView.Main);
-                        }
-                    }
-                    else
-                    {
-                        Utilities.ShowModal(MessageResource.NoService, EModalType.Error, false);
-                        Initial();
-                    }
+                    //Utilities.navigator.Navigate(UserControlView.Main);
+                    Finish(result);
                 }
             }
             catch (Exception ex)
             {
-                Utilities.ShowModal(MessageResource.NoService, EModalType.Error, false);
+                Utilities.ShowModal(string.Concat(init.DescriptionStatusPayPlus, " ", MessageResource.NoService), EModalType.Error, false);
                 Initial();
             }
+        }
+
+        private void Finish(bool state)
+        {
+            Task.Run(() =>
+            {
+                Thread.Sleep(5000);
+                if (state)
+                {
+                    Utilities.navigator.Navigate(UserControlView.Main);
+                }
+                else
+                {
+                    Utilities.ShowModal(string.Concat(init.DescriptionStatusPayPlus, " ", MessageResource.NoService), EModalType.Error, false);
+                    Initial();
+                }
+            });
         }
     }
 }

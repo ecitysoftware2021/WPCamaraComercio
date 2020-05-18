@@ -288,4 +288,25 @@
   <data name="ErrorDownloadCertificate" xml:space="preserve">
     <value>Error descargando los certificados. se cancelara la transacción y devolverá el dinero ingresado</value>
   </data>
+  <data name="ComunicationServer" xml:space="preserve">
+    <value>Estableciendo comunicación...</value>
+  </data>
+  <data name="ComunicationServerFail" xml:space="preserve">
+    <value>¡No se pudo establecer comunicación con el servidor!</value>
+  </data>
+  <data name="StatePayPlus" xml:space="preserve">
+    <value>Comprobando estado del PayPlus...</value>
+  </data>
+  <data name="StatePayPlusFail" xml:space="preserve">
+    <value>¡El dispositivo no cuenta con suficiente dinero!.</value>
+  </data>
+  <data name="UpdateAplication" xml:space="preserve">
+    <value>Tiene una actualizacion pendiente por favor no manipule ni apague el PayPlus mientras termina la instalacion.</value>
+  </data>
+  <data name="ValidatePeripherals" xml:space="preserve">
+    <value>¡No se lograrón iniciar los dispositivos!</value>
+  </data>
+  <data name="ValidatePeripheralsFail" xml:space="preserve">
+    <value>¡No se lograrón iniciar los dispositivos!</value>
+  </data>
 </root>

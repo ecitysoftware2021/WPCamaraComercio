@@ -23,6 +23,7 @@ namespace WPFCCMedellin.Windows
         {
             try
             {
+                WPKeyboard.Keyboard.ConsttrucKeyyboard(WPKeyboard.Keyboard.EStyle.style_1);
                 if (Utilities.navigator == null)
                 {
                     Utilities.navigator = new Navigation();

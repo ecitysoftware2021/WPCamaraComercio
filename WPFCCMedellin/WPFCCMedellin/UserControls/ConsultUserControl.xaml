@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:k="clr-namespace:WPFCCMedellin.Keyboard" 
              xmlns:local="clr-namespace:WPFCCMedellin.UserControls"
              mc:Ignorable="d"
              Height="1920" 
@@ -104,12 +103,11 @@
                      TextWrapping="Wrap"
                      TabIndex="0"
                      FontSize="42"
-                     k:TouchScreenKeyboard.TouchScreenKeyboard="True"
                      Foreground="Black"
                      FontWeight="Bold"
                      Visibility="{Binding VisibilityName}"
                      TextChanged="txt_TextChanged" 
-                     TouchDown="Text_TouchDown"/>
+                     TouchDown="Text_name_TouchDown"/>
 
             <TextBox x:Name="text_id"
                      VerticalAlignment="Bottom" 
@@ -121,12 +119,11 @@
                      TextWrapping="Wrap"
                      TabIndex="0"
                      FontSize="42" 
-                     k:TouchScreenKeyNumeric.TouchScreenKeyNumeric="True"
                      Foreground="Black"
                      FontWeight="Bold"
                      Visibility="{Binding VisibilityId}"
                      TextChanged="txt_TextChanged"
-                     TouchDown="Text_TouchDown"/>
+                     TouchDown="Text_id_TouchDown"/>
 
             <TextBox TabIndex="1" Height="0" Width="0" />
 

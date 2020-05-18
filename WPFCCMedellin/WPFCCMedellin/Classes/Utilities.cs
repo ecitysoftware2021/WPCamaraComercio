@@ -9,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 using WPFCCMedellin.Classes.Printer;
 using WPFCCMedellin.Models;
@@ -27,7 +28,6 @@ namespace WPFCCMedellin.Classes
         private static ModalWindow modal { get; set; }
 
         #endregion
-
         public static string GetConfiguration(string key, bool decodeString = false)
         {
             try
@@ -141,6 +141,22 @@ namespace WPFCCMedellin.Classes
             }
         }
 
+        public static string[] ReadFile(string path)
+        {
+            try
+            {
+                if (File.Exists(path))
+                {
+                    return File.ReadAllLines(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, "Utilities", ex, MessageResource.StandarError);
+            }
+            return null;
+        }
+
         public static void PrintVoucher(Transaction transaction)
         {
             try
@@ -204,8 +220,9 @@ namespace WPFCCMedellin.Classes
                         {
                             data.Add(new DataPrinter { brush = color, font = fontValue, value = transaction.Observation ?? string.Empty, x = 0, y = y += 50 });
                         }
-
-                        data.Add(new DataPrinter { brush = color, font = fontValue, value = "E-city Software", x = 100, y = y += sum });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "Recuerde siempre esperar la tirilla de soporte de su", x = 10, y = y += sum });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "transacción, es el único documento que lo respalda.", x = 10, y = y += 20 });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "E-city Software", x = 100, y = y += sum });
 
                         AdminPayPlus.PrintService.Start(data);
                     }
@@ -348,6 +365,48 @@ namespace WPFCCMedellin.Classes
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, "Utilities", ex, MessageResource.StandarError);
             }
             return string.Empty;
+        }
+
+        public static void UpdateApp()
+        {
+            try
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    Process pc = new Process();
+                    Process pn = new Process();
+                    ProcessStartInfo si = new ProcessStartInfo();
+                    si.FileName = GetConfiguration("APLICATION_UPDATE");
+                    pn.StartInfo = si;
+                    pn.Start();
+                    pc = Process.GetCurrentProcess();
+                    pc.Kill();
+                }));
+                GC.Collect();
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, "Utilities", ex, MessageResource.StandarError);
+            }
+        }
+
+        public static void OpenKeyboard(bool keyBoard_Numeric, TextBox textBox, object thisView, int x = 0, int y = 0)
+        {
+            try
+            {
+                WPKeyboard.Keyboard.InitKeyboard(new WPKeyboard.Keyboard.DataKey
+                {
+                    control = textBox,
+                    userControl = thisView is UserControl ? thisView as UserControl : null,
+                    eType = (keyBoard_Numeric == true) ? WPKeyboard.Keyboard.EType.Numeric : WPKeyboard.Keyboard.EType.Standar,
+                    window = thisView is Window ? thisView as Window : null,
+                    X = x,
+                    Y = y,
+                });
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

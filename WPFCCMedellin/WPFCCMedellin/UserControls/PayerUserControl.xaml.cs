@@ -258,5 +258,15 @@ namespace WPFCCMedellin.UserControls
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
         }
+
+        private void KeyboardNum_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            Utilities.OpenKeyboard(true, sender as TextBox, this);
+        }
+
+        private void Keyboard_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            Utilities.OpenKeyboard(false, sender as TextBox, this);
+        }
     }
 }

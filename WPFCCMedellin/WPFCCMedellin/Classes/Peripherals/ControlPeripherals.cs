@@ -401,7 +401,7 @@ namespace WPFCCMedellin.Classes
             if (response[1] == "DP" || response[1] == "MD")
             {
                 stateError = true;
-                callbackError?.Invoke(Tuple.Create(response[1], string.Concat("Error, se alcanzó a entregar:", deliveryValue)));
+                callbackError?.Invoke(Tuple.Create(response[1], string.Concat("Error, se alcanzó a entregar:", deliveryVal, " Error: ", response[2])));
 
                 //if (response[1] == "MD")
                 //{

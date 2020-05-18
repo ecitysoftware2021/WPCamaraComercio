@@ -64,9 +64,10 @@ namespace WPFCCMedellin.UserControls
                         {
                             AdminPayPlus.PrinterFile.Start(paths[countCertificates]);
                         }
-
-                        if (countCertificates == paths.Count)
+                        else if (countCertificates == paths.Count)
                         {
+                            AdminPayPlus.PrinterFile.callbackOut = null;
+                            AdminPayPlus.PrinterFile.callbackError = null;
                             FinishTransaction(true);
                         }
                     };
@@ -76,6 +77,8 @@ namespace WPFCCMedellin.UserControls
 
                         if (countCertificates > 1)
                         {
+                            AdminPayPlus.PrinterFile.callbackOut = null;
+                            AdminPayPlus.PrinterFile.callbackError = null;
                             Utilities.ShowModal(MessageResource.ErrorPrintCertificate, EModalType.Error);
                             if (countCertificates == paths.Count)
                             {
@@ -84,6 +87,8 @@ namespace WPFCCMedellin.UserControls
                         }
                         else
                         {
+                            AdminPayPlus.PrinterFile.callbackOut = null;
+                            AdminPayPlus.PrinterFile.callbackError = null;
                             Utilities.ShowModal(MessageResource.ErrorCertificatesPrint, EModalType.Error);
                             FinishTransaction(false);
                         }
