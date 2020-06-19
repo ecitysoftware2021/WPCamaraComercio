@@ -232,7 +232,7 @@ namespace WPFCCMedellin.Classes
                 if (_serialPortBills.IsOpen)
                 {
                     Thread.Sleep(2000);
-                    callbackError?.Invoke(Tuple.Create("", string.Concat("Info, Se envio mensaje al billetero:  ", message)));
+                    callbackError?.Invoke(Tuple.Create("Info", string.Concat("Info, Se envio mensaje al billetero:  ", message)));
                     _serialPortBills.Write(message);
                     return true;
                 }
@@ -256,7 +256,7 @@ namespace WPFCCMedellin.Classes
                 if (_serialPortCoins.IsOpen)
                 {
                     Thread.Sleep(2000);
-                    callbackError?.Invoke(Tuple.Create("", string.Concat("Info, Se envio mensaje al monedero:  ", message)));
+                    callbackError?.Invoke(Tuple.Create("Info", string.Concat("Info, Se envio mensaje al monedero:  ", message)));
                     _serialPortCoins.Write(message);
                 }
             }
@@ -282,7 +282,7 @@ namespace WPFCCMedellin.Classes
                 string response = _serialPortBills.ReadLine();
                 if (!string.IsNullOrEmpty(response))
                 {
-                    callbackError?.Invoke(Tuple.Create("", string.Concat("Info, Respondio el billetero:  ", response)));
+                    callbackError?.Invoke(Tuple.Create("Info", string.Concat("Info, Respondio el billetero:  ", response)));
                     ProcessResponseBills(response.Replace("\r", string.Empty));
                 }
             }
@@ -304,7 +304,7 @@ namespace WPFCCMedellin.Classes
                 string response = _serialPortCoins.ReadLine();
                 if (!string.IsNullOrEmpty(response))
                 {
-                    callbackError?.Invoke(Tuple.Create("", string.Concat("Info, Respondio el monedero:  ", response)));
+                    callbackError?.Invoke(Tuple.Create("Info", string.Concat("Info, Respondio el monedero:  ", response)));
                     ProcessResponseCoins(response.Replace("\r", string.Empty));
                 }
             }
@@ -406,7 +406,12 @@ namespace WPFCCMedellin.Classes
         /// <param name="response">respuesta</param>
         private void ProcessER(string[] response)
         {
-            if (response[1] == "DP" || response[1] == "MD")
+            if (response[2] == "FATAL")
+            {
+                stateError = true;
+                callbackError?.Invoke(Tuple.Create(response[1], "Error, FATAL" + response[3]));
+            }
+            else if (response[1] == "DP" || response[1] == "MD")
             {
                 stateError = true;
                 callbackError?.Invoke(Tuple.Create(response[1], string.Concat("Error, se alcanzó a entregar: ", deliveryValue, " Error: ", response[2])));
@@ -416,14 +421,9 @@ namespace WPFCCMedellin.Classes
                 //    ConfigDataDispenser(string.Concat(response[1], ":", response[2]));
                 //}
             }
-            if (response[1] == "AP")
+            else if (response[1] == "AP")
             {
-                stateError = true;
                 callbackError?.Invoke(Tuple.Create("AP", "Error, en el billetero Aceptador: " + response[2]));
-            }
-            else if (response[1] == "FATAL")
-            {
-                callbackError?.Invoke(Tuple.Create("FATAL", "Error, FATAL" + response[2]));
             }
         }
 

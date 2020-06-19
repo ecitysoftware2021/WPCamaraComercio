@@ -93,14 +93,25 @@ namespace WPFCCMedellin.UserControls
 
                     AdminPayPlus.ControlPeripherals.callbackError = error =>
                     {
-                        AdminPayPlus.SaveLog(new RequestLogDevice
+                        var log = new RequestLogDevice
                         {
                             Code = error.Item1,
                             Date = DateTime.Now,
                             Description = error.Item2,
                             Level = ELevelError.Medium,
                             TransactionId = transaction.IdTransactionAPi
-                        }, ELogType.Device);
+                        };
+
+                        if (error.Item1.Equals("Info"))
+                        {
+                            log.Level = ELevelError.Mild;
+                            log.Code = "";
+                            AdminPayPlus.SaveLog(log, ELogType.Device);
+                        }
+                        else
+                        {
+                            AdminPayPlus.SaveLog(log, ELogType.Device);
+                        };
                     };
 
                     AdminPayPlus.ControlPeripherals.callbackOut = valueOut =>

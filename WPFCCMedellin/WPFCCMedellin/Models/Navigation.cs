@@ -73,12 +73,17 @@ namespace WPFCCMedellin.Models
                 }
 
                 TimerService.Close();
+                WPKeyboard.Keyboard.CloseKeyboard(View);
 
                 if (initTimer)
                 {
                     TimerService.CallBackTimerOut = response =>
                     {
-                        View = new MainUserControl();
+                        Application.Current.Dispatcher.Invoke((Action)delegate
+                        {
+                            View = new MainUserControl();
+                        });
+                        GC.Collect();
                     };
 
                     TimerService.Start(int.Parse(Utilities.GetConfiguration("DurationView")));
