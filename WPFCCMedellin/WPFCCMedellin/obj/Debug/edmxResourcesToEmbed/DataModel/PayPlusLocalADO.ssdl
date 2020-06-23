@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PayPlusLocalBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CONFIGURATION_PAYDAD">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USER_API" Type="nvarchar(max)" />
+    <Property Name="PASSWORD_API" Type="nvarchar(max)" />
+    <Property Name="USER" Type="nvarchar(max)" />
+    <Property Name="PASSWORD" Type="nvarchar(max)" />
+    <Property Name="ID_SESSION" Type="int" />
+    <Property Name="ID_PAYPAD" Type="int" />
+    <Property Name="ID_SITE" Type="int" />
+    <Property Name="TOKEN_API" Type="nvarchar(max)" />
+    <Property Name="TYPE" Type="int" />
+  </EntityType>
+  <EntityType Name="DEVICE_LOG">
+    <Key>
+      <PropertyRef Name="DEVICE_LOG_ID" />
+    </Key>
+    <Property Name="DEVICE_LOG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TRANSACTION_ID" Type="int" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="DATETIME" Type="datetime" />
+    <Property Name="CODE" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ERROR_LOG">
+    <Key>
+      <PropertyRef Name="ERROR_LOG_ID" />
+    </Key>
+    <Property Name="ERROR_LOG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME_CLASS" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="NAME_FUNCTION" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MESSAGE_ERROR" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DATE" Type="datetime" Nullable="false" />
+    <Property Name="TYPE" Type="int" Nullable="false" />
+    <Property Name="STATE" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PAYER">
+    <Key>
+      <PropertyRef Name="PAYER_ID" />
+    </Key>
+    <Property Name="PAYER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDENTIFICATION" Type="nvarchar(max)" />
+    <Property Name="LAST_NAME" Type="nvarchar(max)" />
+    <Property Name="PHONE" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="EMAIL" Type="nvarchar(max)" />
+    <Property Name="ADDRESS" Type="nvarchar(max)" />
+    <Property Name="STATE" Type="bit" />
+    <Property Name="NAME" Type="nvarchar(max)" />
+    <Property Name="TYPE_PAYER" Type="nvarchar(max)" />
+    <Property Name="TYPE_IDENTIFICATION" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="PAYPAD_CONSOLE_ERROR">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PAYPAD_ID" Type="int" Nullable="false" />
+    <Property Name="ERROR_ID" Type="int" Nullable="false" />
+    <Property Name="ERROR_LEVEL_ID" Type="int" Nullable="false" />
+    <Property Name="DEVICE_PAYPAD_ID" Type="int" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DATE" Type="datetime" Nullable="false" />
+    <Property Name="OBSERVATION" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="STATE" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PAYPAD_LOG">
+    <Key>
+      <PropertyRef Name="PAYPAD_LOG_ID" />
+    </Key>
+    <Property Name="PAYPAD_LOG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="REFERENCE" Type="nvarchar(max)" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="DATE" Type="datetime" />
+    <Property Name="STATE" Type="int" />
+  </EntityType>
+  <EntityType Name="TRANSACTION">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TRANSACTION_ID" Type="int" />
+    <Property Name="PAYPAD_ID" Type="int" />
+    <Property Name="TYPE_TRANSACTION_ID" Type="int" />
+    <Property Name="DATE_BEGIN" Type="datetime" />
+    <Property Name="DATE_END" Type="datetime" />
+    <Property Name="TOTAL_AMOUNT" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="INCOME_AMOUNT" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="RETURN_AMOUNT" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="PAYER_ID" Type="int" />
+    <Property Name="STATE_TRANSACTION_ID" Type="int" />
+    <Property Name="STATE_NOTIFICATION" Type="int" />
+    <Property Name="STATE" Type="bit" />
+    <Property Name="TRANSACTION_REFERENCE" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="TRANSACTION_DESCRIPTION">
+    <Key>
+      <PropertyRef Name="TRANSACTION_DESCRIPTION_ID" />
+    </Key>
+    <Property Name="TRANSACTION_DESCRIPTION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TRANSACTION_ID" Type="int" />
+    <Property Name="REFERENCE" Type="nvarchar(max)" />
+    <Property Name="AMOUNT" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="OBSERVATION" Type="nvarchar(max)" />
+    <Property Name="STATE" Type="bit" />
+  </EntityType>
+  <EntityType Name="TRANSACTION_DETAIL">
+    <Key>
+      <PropertyRef Name="TRANSACTION_DETAIL_ID" />
+    </Key>
+    <Property Name="TRANSACTION_DETAIL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TRANSACTION_ID" Type="int" />
+    <Property Name="CODE" Type="nvarchar(max)" />
+    <Property Name="DENOMINATION" Type="int" />
+    <Property Name="OPERATION" Type="int" />
+    <Property Name="QUANTITY" Type="int" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+    <Property Name="STATE" Type="bit" />
+  </EntityType>
+  <EntityType Name="TRANSACTION_ERROR_SERVICE">
+    <Key>
+      <PropertyRef Name="TRANSACTION_ERROR_SERVICE_ID" />
+    </Key>
+    <Property Name="TRANSACTION_ERROR_SERVICE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JSON" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TRANSACTION_ID" Type="int" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="STATE" Type="int" Nullable="false" />
+    <Property Name="NOTIFICATION_INTENT" Type="int" />
+  </EntityType>
+  <Association Name="FK_TRANSACTION_DESCRIPTION_TRANSACTION">
+    <End Role="TRANSACTION" Type="Self.TRANSACTION" Multiplicity="0..1" />
+    <End Role="TRANSACTION_DESCRIPTION" Type="Self.TRANSACTION_DESCRIPTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TRANSACTION">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TRANSACTION_DESCRIPTION">
+        <PropertyRef Name="TRANSACTION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PayPlusLocalBDModelStoreContainer">
+    <EntitySet Name="CONFIGURATION_PAYDAD" EntityType="Self.CONFIGURATION_PAYDAD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DEVICE_LOG" EntityType="Self.DEVICE_LOG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ERROR_LOG" EntityType="Self.ERROR_LOG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PAYER" EntityType="Self.PAYER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PAYPAD_CONSOLE_ERROR" EntityType="Self.PAYPAD_CONSOLE_ERROR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PAYPAD_LOG" EntityType="Self.PAYPAD_LOG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TRANSACTION" EntityType="Self.TRANSACTION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TRANSACTION_DESCRIPTION" EntityType="Self.TRANSACTION_DESCRIPTION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TRANSACTION_DETAIL" EntityType="Self.TRANSACTION_DETAIL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TRANSACTION_ERROR_SERVICE" EntityType="Self.TRANSACTION_ERROR_SERVICE" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TRANSACTION_DESCRIPTION_TRANSACTION" Association="Self.FK_TRANSACTION_DESCRIPTION_TRANSACTION">
+      <End Role="TRANSACTION" EntitySet="TRANSACTION" />
+      <End Role="TRANSACTION_DESCRIPTION" EntitySet="TRANSACTION_DESCRIPTION" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

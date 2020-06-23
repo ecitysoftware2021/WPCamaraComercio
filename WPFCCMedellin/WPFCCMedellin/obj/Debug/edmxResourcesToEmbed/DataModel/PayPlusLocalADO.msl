@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PayPlusLocalBDModelStoreContainer" CdmEntityContainer="PayPlusLocalBDEntities">
+    <EntitySetMapping Name="CONFIGURATION_PAYDAD">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.CONFIGURATION_PAYDAD">
+        <MappingFragment StoreEntitySet="CONFIGURATION_PAYDAD">
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="TOKEN_API" ColumnName="TOKEN_API" />
+          <ScalarProperty Name="ID_SITE" ColumnName="ID_SITE" />
+          <ScalarProperty Name="ID_PAYPAD" ColumnName="ID_PAYPAD" />
+          <ScalarProperty Name="ID_SESSION" ColumnName="ID_SESSION" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="USER" ColumnName="USER" />
+          <ScalarProperty Name="PASSWORD_API" ColumnName="PASSWORD_API" />
+          <ScalarProperty Name="USER_API" ColumnName="USER_API" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DEVICE_LOG">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.DEVICE_LOG">
+        <MappingFragment StoreEntitySet="DEVICE_LOG">
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="DATETIME" ColumnName="DATETIME" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
+          <ScalarProperty Name="DEVICE_LOG_ID" ColumnName="DEVICE_LOG_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ERROR_LOG">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.ERROR_LOG">
+        <MappingFragment StoreEntitySet="ERROR_LOG">
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="MESSAGE_ERROR" ColumnName="MESSAGE_ERROR" />
+          <ScalarProperty Name="NAME_FUNCTION" ColumnName="NAME_FUNCTION" />
+          <ScalarProperty Name="NAME_CLASS" ColumnName="NAME_CLASS" />
+          <ScalarProperty Name="ERROR_LOG_ID" ColumnName="ERROR_LOG_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAYPAD_CONSOLE_ERROR">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.PAYPAD_CONSOLE_ERROR">
+        <MappingFragment StoreEntitySet="PAYPAD_CONSOLE_ERROR">
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="OBSERVATION" ColumnName="OBSERVATION" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="DEVICE_PAYPAD_ID" ColumnName="DEVICE_PAYPAD_ID" />
+          <ScalarProperty Name="ERROR_LEVEL_ID" ColumnName="ERROR_LEVEL_ID" />
+          <ScalarProperty Name="ERROR_ID" ColumnName="ERROR_ID" />
+          <ScalarProperty Name="PAYPAD_ID" ColumnName="PAYPAD_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAYPAD_LOG">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.PAYPAD_LOG">
+        <MappingFragment StoreEntitySet="PAYPAD_LOG">
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="REFERENCE" ColumnName="REFERENCE" />
+          <ScalarProperty Name="PAYPAD_LOG_ID" ColumnName="PAYPAD_LOG_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TRANSACTION_DETAIL">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.TRANSACTION_DETAIL">
+        <MappingFragment StoreEntitySet="TRANSACTION_DETAIL">
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+          <ScalarProperty Name="OPERATION" ColumnName="OPERATION" />
+          <ScalarProperty Name="DENOMINATION" ColumnName="DENOMINATION" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
+          <ScalarProperty Name="TRANSACTION_DETAIL_ID" ColumnName="TRANSACTION_DETAIL_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TRANSACTION_ERROR_SERVICE">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.TRANSACTION_ERROR_SERVICE">
+        <MappingFragment StoreEntitySet="TRANSACTION_ERROR_SERVICE">
+          <ScalarProperty Name="NOTIFICATION_INTENT" ColumnName="NOTIFICATION_INTENT" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
+          <ScalarProperty Name="JSON" ColumnName="JSON" />
+          <ScalarProperty Name="TRANSACTION_ERROR_SERVICE_ID" ColumnName="TRANSACTION_ERROR_SERVICE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAYER">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.PAYER">
+        <MappingFragment StoreEntitySet="PAYER">
+          <ScalarProperty Name="TYPE_IDENTIFICATION" ColumnName="TYPE_IDENTIFICATION" />
+          <ScalarProperty Name="TYPE_PAYER" ColumnName="TYPE_PAYER" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+          <ScalarProperty Name="IDENTIFICATION" ColumnName="IDENTIFICATION" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TRANSACTION">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.TRANSACTION">
+        <MappingFragment StoreEntitySet="TRANSACTION">
+          <ScalarProperty Name="TRANSACTION_REFERENCE" ColumnName="TRANSACTION_REFERENCE" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="STATE_NOTIFICATION" ColumnName="STATE_NOTIFICATION" />
+          <ScalarProperty Name="STATE_TRANSACTION_ID" ColumnName="STATE_TRANSACTION_ID" />
+          <ScalarProperty Name="PAYER_ID" ColumnName="PAYER_ID" />
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="RETURN_AMOUNT" ColumnName="RETURN_AMOUNT" />
+          <ScalarProperty Name="INCOME_AMOUNT" ColumnName="INCOME_AMOUNT" />
+          <ScalarProperty Name="TOTAL_AMOUNT" ColumnName="TOTAL_AMOUNT" />
+          <ScalarProperty Name="DATE_END" ColumnName="DATE_END" />
+          <ScalarProperty Name="DATE_BEGIN" ColumnName="DATE_BEGIN" />
+          <ScalarProperty Name="TYPE_TRANSACTION_ID" ColumnName="TYPE_TRANSACTION_ID" />
+          <ScalarProperty Name="PAYPAD_ID" ColumnName="PAYPAD_ID" />
+          <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TRANSACTION_DESCRIPTION">
+      <EntityTypeMapping TypeName="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION">
+        <MappingFragment StoreEntitySet="TRANSACTION_DESCRIPTION">
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="OBSERVATION" ColumnName="OBSERVATION" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="REFERENCE" ColumnName="REFERENCE" />
+          <ScalarProperty Name="TRANSACTION_ID" ColumnName="TRANSACTION_ID" />
+          <ScalarProperty Name="TRANSACTION_DESCRIPTION_ID" ColumnName="TRANSACTION_DESCRIPTION_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PayPlusLocalBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="PayPlusLocalBDEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CONFIGURATION_PAYDAD" EntityType="PayPlusLocalBDModel.CONFIGURATION_PAYDAD" />
+    <EntitySet Name="DEVICE_LOG" EntityType="PayPlusLocalBDModel.DEVICE_LOG" />
+    <EntitySet Name="ERROR_LOG" EntityType="PayPlusLocalBDModel.ERROR_LOG" />
+    <EntitySet Name="PAYPAD_CONSOLE_ERROR" EntityType="PayPlusLocalBDModel.PAYPAD_CONSOLE_ERROR" />
+    <EntitySet Name="PAYPAD_LOG" EntityType="PayPlusLocalBDModel.PAYPAD_LOG" />
+    <EntitySet Name="TRANSACTION_DETAIL" EntityType="PayPlusLocalBDModel.TRANSACTION_DETAIL" />
+    <EntitySet Name="TRANSACTION_ERROR_SERVICE" EntityType="PayPlusLocalBDModel.TRANSACTION_ERROR_SERVICE" />
+    <EntitySet Name="PAYER" EntityType="PayPlusLocalBDModel.PAYER" />
+    <EntitySet Name="TRANSACTION" EntityType="PayPlusLocalBDModel.TRANSACTION" />
+    <EntitySet Name="TRANSACTION_DESCRIPTION" EntityType="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION" />
+    <AssociationSet Name="FK_TRANSACTION_DESCRIPTION_TRANSACTION" Association="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION">
+      <End Role="TRANSACTION" EntitySet="TRANSACTION" />
+      <End Role="TRANSACTION_DESCRIPTION" EntitySet="TRANSACTION_DESCRIPTION" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CONFIGURATION_PAYDAD">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="USER_API" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PASSWORD_API" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="USER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PASSWORD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ID_SESSION" Type="Int32" />
+    <Property Name="ID_PAYPAD" Type="Int32" />
+    <Property Name="ID_SITE" Type="Int32" />
+    <Property Name="TOKEN_API" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TYPE" Type="Int32" />
+  </EntityType>
+  <EntityType Name="DEVICE_LOG">
+    <Key>
+      <PropertyRef Name="DEVICE_LOG_ID" />
+    </Key>
+    <Property Name="DEVICE_LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TRANSACTION_ID" Type="Int32" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DATETIME" Type="DateTime" Precision="3" />
+    <Property Name="CODE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ERROR_LOG">
+    <Key>
+      <PropertyRef Name="ERROR_LOG_ID" />
+    </Key>
+    <Property Name="ERROR_LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME_CLASS" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NAME_FUNCTION" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MESSAGE_ERROR" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DESCRIPTION" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="TYPE" Type="Int32" Nullable="false" />
+    <Property Name="STATE" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PAYPAD_CONSOLE_ERROR">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PAYPAD_ID" Type="Int32" Nullable="false" />
+    <Property Name="ERROR_ID" Type="Int32" Nullable="false" />
+    <Property Name="ERROR_LEVEL_ID" Type="Int32" Nullable="false" />
+    <Property Name="DEVICE_PAYPAD_ID" Type="Int32" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="OBSERVATION" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="STATE" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PAYPAD_LOG">
+    <Key>
+      <PropertyRef Name="PAYPAD_LOG_ID" />
+    </Key>
+    <Property Name="PAYPAD_LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="REFERENCE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DATE" Type="DateTime" Precision="3" />
+    <Property Name="STATE" Type="Int32" />
+  </EntityType>
+  <EntityType Name="TRANSACTION_DETAIL">
+    <Key>
+      <PropertyRef Name="TRANSACTION_DETAIL_ID" />
+    </Key>
+    <Property Name="TRANSACTION_DETAIL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TRANSACTION_ID" Type="Int32" />
+    <Property Name="CODE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DENOMINATION" Type="Int32" />
+    <Property Name="OPERATION" Type="Int32" />
+    <Property Name="QUANTITY" Type="Int32" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="STATE" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="TRANSACTION_ERROR_SERVICE">
+    <Key>
+      <PropertyRef Name="TRANSACTION_ERROR_SERVICE_ID" />
+    </Key>
+    <Property Name="TRANSACTION_ERROR_SERVICE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JSON" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TRANSACTION_ID" Type="Int32" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="STATE" Type="Int32" Nullable="false" />
+    <Property Name="NOTIFICATION_INTENT" Type="Int32" />
+  </EntityType>
+  <EntityType Name="PAYER">
+    <Key>
+      <PropertyRef Name="PAYER_ID" />
+    </Key>
+    <Property Name="PAYER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDENTIFICATION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LAST_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PHONE" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="STATE" Type="Boolean" />
+    <Property Name="NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TYPE_PAYER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TYPE_IDENTIFICATION" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TRANSACTION">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TRANSACTION_ID" Type="Int32" />
+    <Property Name="PAYPAD_ID" Type="Int32" />
+    <Property Name="TYPE_TRANSACTION_ID" Type="Int32" />
+    <Property Name="DATE_BEGIN" Type="DateTime" Precision="3" />
+    <Property Name="DATE_END" Type="DateTime" Precision="3" />
+    <Property Name="TOTAL_AMOUNT" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="INCOME_AMOUNT" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="RETURN_AMOUNT" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PAYER_ID" Type="Int32" />
+    <Property Name="STATE_TRANSACTION_ID" Type="Int32" />
+    <Property Name="STATE_NOTIFICATION" Type="Int32" />
+    <Property Name="STATE" Type="Boolean" />
+    <Property Name="TRANSACTION_REFERENCE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TRANSACTION_DESCRIPTION" Relationship="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION" FromRole="TRANSACTION" ToRole="TRANSACTION_DESCRIPTION" />
+  </EntityType>
+  <EntityType Name="TRANSACTION_DESCRIPTION">
+    <Key>
+      <PropertyRef Name="TRANSACTION_DESCRIPTION_ID" />
+    </Key>
+    <Property Name="TRANSACTION_DESCRIPTION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TRANSACTION_ID" Type="Int32" />
+    <Property Name="REFERENCE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AMOUNT" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="OBSERVATION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="STATE" Type="Boolean" />
+    <NavigationProperty Name="TRANSACTION" Relationship="PayPlusLocalBDModel.FK_TRANSACTION_DESCRIPTION_TRANSACTION" FromRole="TRANSACTION_DESCRIPTION" ToRole="TRANSACTION" />
+  </EntityType>
+  <Association Name="FK_TRANSACTION_DESCRIPTION_TRANSACTION">
+    <End Type="PayPlusLocalBDModel.TRANSACTION" Role="TRANSACTION" Multiplicity="0..1" />
+    <End Type="PayPlusLocalBDModel.TRANSACTION_DESCRIPTION" Role="TRANSACTION_DESCRIPTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TRANSACTION">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TRANSACTION_DESCRIPTION">
+        <PropertyRef Name="TRANSACTION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

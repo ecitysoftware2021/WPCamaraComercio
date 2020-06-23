@@ -1,0 +1,27 @@
+[
+  {
+    "Type": 1,
+    "Key": "C",
+    "Value": "Cedula de ciudadania"
+  },
+  {
+    "Type": 1,
+    "Key": "E",
+    "Value": "Cedula de extranjeria"
+  },
+  {
+    "Type": 1,
+    "Key": "P",
+    "Value": "Pasaporte"
+  },
+  {
+    "Type": 1,
+    "Key": "I",
+    "Value": "Tarjeta de identidad"
+  },
+  {
+    "Type": 2,
+    "Key": "N",
+    "Value": "NIT"
+  }
+]
