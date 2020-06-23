@@ -422,11 +422,11 @@ namespace WPFCCMedellin.ViewModel
 
                 if (response.CodeError == 200)
                 {
-                    var result = JsonConvert.DeserializeObject<ResponseConsultGeneral>(response.Data.ToString());
+                    var result = JsonConvert.DeserializeObject<ResultGeneral>(response.Data.ToString());
 
-                    if (result != null && result.Result != null && result.Result.response != null && result.Result.response.registros > 0)
+                    if (result != null && int.Parse(result.response.registros) > 0)
                     {
-                        foreach (var item in result.Result.response.resultados)
+                        foreach (var item in result.response.resultados)
                         {
                             _dataList.Add(new ItemList
                             {

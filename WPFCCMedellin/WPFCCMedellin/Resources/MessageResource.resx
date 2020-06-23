@@ -304,7 +304,7 @@
     <value>Tiene una actualizacion pendiente por favor no manipule ni apague el PayPlus mientras termina la instalacion.</value>
   </data>
   <data name="ValidatePeripherals" xml:space="preserve">
-    <value>¡No se lograrón iniciar los dispositivos!</value>
+    <value>Validando periféricos ...</value>
   </data>
   <data name="ValidatePeripheralsFail" xml:space="preserve">
     <value>¡No se lograrón iniciar los dispositivos!</value>

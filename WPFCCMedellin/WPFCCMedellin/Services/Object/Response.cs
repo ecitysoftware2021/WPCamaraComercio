@@ -34,7 +34,7 @@ namespace WPFCCMedellin.Services.Object
     {
         public string codigo { get; set; }
         public string mensaje { get; set; }
-        public int registros { get; set; }
+        public string registros { get; set; }
         public string frid { get; set; }
         public string lrid { get; set; }
         public List<ResultadoGeneral> resultados { get; set; }
@@ -42,8 +42,6 @@ namespace WPFCCMedellin.Services.Object
 
     public class ResultGeneral
     {
-        public object estado { get; set; }
-        public object error { get; set; }
         public ResponseGeneral response { get; set; }
     }
 

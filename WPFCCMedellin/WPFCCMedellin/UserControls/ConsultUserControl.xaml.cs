@@ -409,7 +409,7 @@ namespace WPFCCMedellin.UserControls
                 viewModel.RefreshView(false);
                 viewModel.DataList.Clear();
                 ConfigureViewList();
-                Utilities.OpenKeyboard(false, sender as TextBox, this);
+                Utilities.OpenKeyboard(true, sender as TextBox, this);
             }
             catch (Exception ex)
             {
