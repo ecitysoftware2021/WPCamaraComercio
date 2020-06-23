@@ -307,7 +307,7 @@ namespace WPFCCMedellin.Classes
         {
             try
             {
-                string[] keys = Utilities.ReadFile(@"" + "");
+                string[] keys = Utilities.ReadFile(@".\keys.txt");
 
                 if (keys.Length > 0)
                 {
