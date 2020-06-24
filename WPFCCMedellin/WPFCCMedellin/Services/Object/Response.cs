@@ -129,10 +129,15 @@ namespace WPFCCMedellin.Services.Object
 
     class ResponsePay
     {
-        public bool IsSuccess { get; set; }
+        public ResultPay response { get; set; }
+    }
 
-        public object Message { get; set; }
+    class ResultPay
+    {
+        public string codigo { get; set; }
 
-        public string Result { get; set; }
+        public string mensaje { get; set; }
+
+        public string IdCompra { get; set; }
     }
 }

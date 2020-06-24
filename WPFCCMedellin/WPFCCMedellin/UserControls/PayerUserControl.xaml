@@ -179,7 +179,7 @@
                    TabIndex="1"
                    TouchDown="KeyboardNum_TouchDown"
                    TextWrapping="Wrap"
-                   Text="{Binding Value1}" />
+                   Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock Name="TxbData1"
                    HorizontalAlignment="Left"
@@ -207,7 +207,7 @@
                    TabIndex="2"
                    TouchDown="Keyboard_TouchDown"
                    TextWrapping="Wrap" 
-                   Text="{Binding Value2}" />
+                   Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock Name="TxbData3"
                    HorizontalAlignment="Left"
@@ -234,7 +234,7 @@
                     Foreground="#FF606060"
                     TouchDown="Keyboard_TouchDown"
                     TextWrapping="Wrap"
-                    Text="{Binding Value3}" />
+                    Text="{Binding Value3, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock Name="TxbData4"
                    HorizontalAlignment="Left"
@@ -261,7 +261,7 @@
                 TouchDown="KeyboardNum_TouchDown"
                 Foreground="#FF606060"
                 TextWrapping="Wrap"
-                Text="{Binding Value4}" />
+                Text="{Binding Value4, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox TabIndex="5" Height="0" Width="0" />
         </Grid>
 

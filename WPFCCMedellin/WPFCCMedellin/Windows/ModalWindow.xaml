@@ -87,7 +87,7 @@
                         HorizontalAlignment="Center"
                         Width="400"
                         Height="120"
-                        Margin="0,200,0,0"
+                        Margin="0,0,0,0"
                         TouchDown="BtnOk_TouchDown"
                         Source="../Images/Buttons/btn-acept.png" Stretch="Fill" />
 
@@ -96,7 +96,7 @@
                         HorizontalAlignment="Left"
                         Width="400"
                         Height="120"
-                        Margin="50,200,0,0"
+                        Margin="50,0,0,0"
                         TouchDown="BtnNo_TouchDown"
                         Source="../Images/Buttons/btn-cancel.png" Stretch="Fill" />
 
@@ -105,7 +105,7 @@
                         HorizontalAlignment="Right"
                         Width="400"
                         Height="120"
-                        Margin="0,200,50,0"
+                        Margin="0,0,50,0"
                         TouchDown="BtnYes_TouchDown"
                         Source="../Images/Buttons/btn-acept.png" Stretch="Fill" />
             </Grid>

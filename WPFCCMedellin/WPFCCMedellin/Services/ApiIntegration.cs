@@ -98,9 +98,9 @@ namespace WPFCCMedellin.Services
                     {
                         var result = JsonConvert.DeserializeObject<ResponsePay>(response.Data.ToString());
 
-                        if (result.IsSuccess && result.Result != null)
+                        if (result.response != null)
                         {
-                            transaction.consecutive = result.Result;
+                            transaction.consecutive = result.response.IdCompra;
 
                             return transaction;
                         }
@@ -149,11 +149,11 @@ namespace WPFCCMedellin.Services
                         {
                             var result = JsonConvert.DeserializeObject<ResponsePay>(response.Data.ToString());
 
-                            if (!string.IsNullOrEmpty(result.Result))
+                            if (!string.IsNullOrEmpty(result.response.IdCompra))
                             {
                                 var nameFile = $"{transaction.consecutive}-{certificate.IdCertificado}" +
                                     $"-{certificate.matricula}-{certificate.matriculaest ?? "0"}-{transaction.Tpcm}-{(i + 1).ToString()}";
-                                string path = DownloadFile(result.Result, nameFile);
+                                string path = DownloadFile(result.response.IdCompra, nameFile);
                                 if (!string.IsNullOrEmpty(path))
                                 {
                                     pathCertificates.Add(path);

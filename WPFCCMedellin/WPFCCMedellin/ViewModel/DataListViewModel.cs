@@ -472,13 +472,13 @@ namespace WPFCCMedellin.ViewModel
 
                 if (response.CodeError == 200)
                 {
-                    var result = JsonConvert.DeserializeObject<ResponseDetalleComerciante>(response.Data.ToString());
+                    var result = JsonConvert.DeserializeObject<ResultDetalle>(response.Data.ToString());
 
-                    if (result != null && result.Result != null && result.Result.response != null && result.Result.response.resultados != null)
+                    if (result != null && result.response != null && result.response.resultados != null)
                     {
                         return new Transaction
                         {
-                            Files = result.Result.response.resultados,
+                            Files = result.response.resultados,
                             Type = ETransactionType.PaymentFile,
                             Enrollment = data.matricula,
                             Tpcm = data.tpcm,
