@@ -28,7 +28,7 @@ namespace WPFCCMedellin.Services
         {
             encoding = new ASCIIEncoding();
 
-            basseAddress = Utilities.GetConfiguration("basseAddressIntegration", true);
+            basseAddress = Utilities.GetConfiguration("basseAddressIntegration");
         }
 
         public async Task<ResponseApi> GetData(object requestData, string controller)
