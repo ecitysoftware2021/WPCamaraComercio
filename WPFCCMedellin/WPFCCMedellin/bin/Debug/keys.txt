@@ -1,2 +1,2 @@
-usuario:JinebJupOXmIRhZsS/zFvg==;password:85jBgWaFSpMJoDugxYwlJg==
-usuario:2BfxD1USQ/0dw7WJFBCS1Q==;password:KDNtAmoYXpgl1V3fjZ0Irk1DTTM5o1NAd1ocOaaGbrY=;tipo:1
+u:JinebJupOXmIRhZsS/zFvg==;p:85jBgWaFSpMJoDugxYwlJg==
+u:BcAZrkmP7dnOC+kREiT5680X/+ZAXpbBP15rgfbrf6c=;p:XROlZgynJmMgawpffVlGKe2gIe4Urwq2VbOLOAa70fM=;tipo:1

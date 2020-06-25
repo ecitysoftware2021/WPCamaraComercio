@@ -73,7 +73,7 @@ namespace WPFCCMedellin.Models
                 }
 
                 TimerService.Close();
-                WPKeyboard.Keyboard.CloseKeyboard(View);
+
 
                 if (initTimer)
                 {
@@ -81,6 +81,7 @@ namespace WPFCCMedellin.Models
                     {
                         Application.Current.Dispatcher.Invoke((Action)delegate
                         {
+                            WPKeyboard.Keyboard.CloseKeyboard(View);
                             View = new MainUserControl();
                         });
                         GC.Collect();

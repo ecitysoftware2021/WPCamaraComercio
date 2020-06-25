@@ -92,6 +92,7 @@ namespace WPFCCMedellin.Services
                         TipoIdentificacionComprador = transaction.payer.TYPE_IDENTIFICATION,
                         ValorCompra = Decimal.ToInt32(transaction.Amount),
                         Certificados = transaction.Products,
+                        IdCliente = Utilities.GetConfiguration("IdClient")
                     }, "SendPay");
 
                     if (response.CodeError == 200)
