@@ -8,17 +8,17 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         gif:ImageBehavior.AnimateInDesignMode="True"
         mc:Ignorable="d"
-        Height="1920" 
-        Width="1080">
+             Height="1920" 
+             Width="1080" >
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/Images/Backgrounds/bg-blanck.jpg" Stretch="Uniform"/>
+            <ImageBrush ImageSource="/Images/Backgrounds/bg-blanck.jpg" />
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition Height="350" />
             <RowDefinition Height="1200" />
-            <RowDefinition Height="350"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="1">

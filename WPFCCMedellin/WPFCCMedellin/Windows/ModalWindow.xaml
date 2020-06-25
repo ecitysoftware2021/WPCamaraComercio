@@ -59,7 +59,7 @@
                            Text="{Binding Messaje}"
                            HorizontalAlignment="Center"
                            Margin="0,320,0,0" 
-                           FontSize="50" 
+                           FontSize="45" 
                            Width="500"
                            FontFamily="Myriad Pro"
                            Foreground="#FF606060"

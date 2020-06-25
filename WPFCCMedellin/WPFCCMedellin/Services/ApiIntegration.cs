@@ -130,42 +130,47 @@ namespace WPFCCMedellin.Services
 
                 foreach (var product in transaction.Products)
                 {
-
                     for (int i = 0; i < int.Parse(product.NumeroCertificados); i++)
                     {
                         countCertificates += 1;
 
-                        StringBuilder sb;
-                        using (SHA1Managed sha1 = new SHA1Managed())
+                        if (!string.IsNullOrEmpty(transaction.consecutive))
                         {
-                            var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(transaction.consecutive, "_", transaction.IdTransactionAPi.ToString())));
-                            sb = new StringBuilder(hash.Length * 2);
-                            foreach (byte b in hash)
+
+                            StringBuilder sb;
+                            using (SHA1Managed sha1 = new SHA1Managed())
                             {
-                                sb.Append(b.ToString("x2"));
+                                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(transaction.consecutive, "_", transaction.IdTransactionAPi.ToString())));
+                                sb = new StringBuilder(hash.Length * 2);
+                                foreach (byte b in hash)
+                                {
+                                    sb.Append(b.ToString("x2"));
+                                }
+                            }
+
+                        var nameFile = $"{transaction.consecutive}-{transaction.consecutive}" +
+                            $"-{transaction.Enrollment}-{product.MatriculaEst ?? "0"}-{transaction.Tpcm}-{(i + 1).ToString()}";
+
+                        var patchFile = string.Concat(basseAddress,
+                            Utilities.GetConfiguration("GetCertifiedString"),
+                            "?idcompra=", transaction.consecutive,
+                            "&IdCertificado=", product.IdCertificado,
+                            "&matricula=", transaction.Enrollment,
+                            "&matriculaest=", product.MatriculaEst ?? "0",
+                            "&tpcm=", transaction.Tpcm,
+                            "&copia=", (i + 1),
+                            "&hs=", sb.ToString());
+
+                            string path = DownloadFile(patchFile, nameFile);
+                            if (!string.IsNullOrEmpty(path))
+                            {
+                                pathCertificates.Add(path);
+                            }
+                            else
+                            {
+                                AdminPayPlus.SaveErrorControl("name  Certificado: " + nameFile, "Error descargando certificado : " + path, EError.Customer, ELevelError.Medium);
                             }
                         }
-
-                        if (!string.IsNullOrEmpty(transaction.consecutive))
-                            {
-                                var nameFile = string.Concat(Utilities.GetConfiguration("GetCertifiedString"),
-                                    "?idcompra=", transaction.consecutive, 
-                                    "&IdCertificado=", product.IdCertificado,
-                                    "&matricula=", transaction.Enrollment, 
-                                    "&matriculaest=", product.MatriculaEst ?? "0", 
-                                    "&tpcm=", transaction.Tpcm, 
-                                    "&copia=", (i + 1), 
-                                    "&hs=", sb.ToString());
-                                string path = DownloadFile(transaction.consecutive, nameFile);
-                                if (!string.IsNullOrEmpty(path))
-                                {
-                                    pathCertificates.Add(path);
-                                }
-                                else
-                                {
-                                    AdminPayPlus.SaveErrorControl("name  Certificado: " + nameFile, "Error descargando certificado : " + path, EError.Customer, ELevelError.Medium);
-                                }
-                            }
                     }
                 }
                 if (pathCertificates.Count == countCertificates)

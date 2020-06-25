@@ -244,7 +244,7 @@
 
             <Image Source="../Images/Buttons/btn-wait-mony.png" 
                    Stretch="Fill"
-                   Width="400"
+                   Width="450"
                    Height="100"
                    Visibility="{Binding ImgCambio}"
                    HorizontalAlignment="Right"
