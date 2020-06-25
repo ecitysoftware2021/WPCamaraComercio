@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using WPFCCMedellin.Classes;
@@ -129,32 +130,33 @@ namespace WPFCCMedellin.Services
 
                 foreach (var product in transaction.Products)
                 {
-                    var certificate = new CLSDatosCertificado
-                    {
-                        IdCertificado = product.IdCertificado,
-                        idcompra = transaction.consecutive,
-                        matricula = transaction.Enrollment,
-                        matriculaest = product.MatriculaEst,
-                        referenciaPago = transaction.IdTransactionAPi.ToString(),
-                        tpcm = transaction.Tpcm
-                    };
 
                     for (int i = 0; i < int.Parse(product.NumeroCertificados); i++)
                     {
                         countCertificates += 1;
-                        certificate.copia = (i + 1).ToString();
 
-                        var response = await GetData(certificate, "GetCertifiedString");
-
-                        if (response.CodeError == 200 && response.Data != null)
+                        StringBuilder sb;
+                        using (SHA1Managed sha1 = new SHA1Managed())
                         {
-                            var result = JsonConvert.DeserializeObject<ResponsePay>(response.Data.ToString());
-
-                            if (!string.IsNullOrEmpty(result.response.IdCompra))
+                            var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(transaction.consecutive, "_", transaction.IdTransactionAPi.ToString())));
+                            sb = new StringBuilder(hash.Length * 2);
+                            foreach (byte b in hash)
                             {
-                                var nameFile = $"{transaction.consecutive}-{certificate.IdCertificado}" +
-                                    $"-{certificate.matricula}-{certificate.matriculaest ?? "0"}-{transaction.Tpcm}-{(i + 1).ToString()}";
-                                string path = DownloadFile(result.response.IdCompra, nameFile);
+                                sb.Append(b.ToString("x2"));
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(transaction.consecutive))
+                            {
+                                var nameFile = string.Concat(Utilities.GetConfiguration("GetCertifiedString"),
+                                    "?idcompra=", transaction.consecutive, 
+                                    "&IdCertificado=", product.IdCertificado,
+                                    "&matricula=", transaction.Enrollment, 
+                                    "&matriculaest=", product.MatriculaEst ?? "0", 
+                                    "&tpcm=", transaction.Tpcm, 
+                                    "&copia=", (i + 1), 
+                                    "&hs=", sb.ToString());
+                                string path = DownloadFile(transaction.consecutive, nameFile);
                                 if (!string.IsNullOrEmpty(path))
                                 {
                                     pathCertificates.Add(path);
@@ -164,11 +166,6 @@ namespace WPFCCMedellin.Services
                                     AdminPayPlus.SaveErrorControl("name  Certificado: " + nameFile, "Error descargando certificado : " + path, EError.Customer, ELevelError.Medium);
                                 }
                             }
-                        }
-                        else
-                        {
-                            AdminPayPlus.SaveErrorControl("GetCertifiedString : " + transaction.IdTransactionAPi.ToString(), "Error consumiendo servicio response : " + response, EError.Customer, ELevelError.Medium);
-                        }
                     }
                 }
                 if (pathCertificates.Count == countCertificates)
