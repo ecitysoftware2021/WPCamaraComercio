@@ -96,11 +96,11 @@ namespace WPFCCMedellin.Services
                         IdCliente = Utilities.GetConfiguration("IdClient")
                     }, "SendPay");
 
-                    if (response.CodeError == 200)
+                    if (response.CodeError == 200 && response.Data != null)
                     {
                         var result = JsonConvert.DeserializeObject<ResponsePay>(response.Data.ToString());
 
-                        if (result.response != null)
+                        if (result.response != null && int.Parse(result.response.IdCompra) > 0)
                         {
                             transaction.consecutive = result.response.IdCompra;
 
@@ -127,52 +127,55 @@ namespace WPFCCMedellin.Services
             {
                 List<string> pathCertificates = new List<string>();
                 int countCertificates = 0;
-
-                foreach (var product in transaction.Products)
+                if (int.Parse(transaction.consecutive) > 0 && transaction.Products.Count > 0)
                 {
-                    for (int i = 0; i < int.Parse(product.NumeroCertificados); i++)
+                    foreach (var product in transaction.Products)
                     {
-                        countCertificates += 1;
-
-                        if (!string.IsNullOrEmpty(transaction.consecutive))
+                        for (int i = 0; i < int.Parse(product.NumeroCertificados); i++)
                         {
+                            countCertificates += 1;
 
-                            StringBuilder sb;
-                            using (SHA1Managed sha1 = new SHA1Managed())
+                            if (!string.IsNullOrEmpty(transaction.consecutive))
                             {
-                                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(transaction.consecutive, "_", transaction.IdTransactionAPi.ToString())));
-                                sb = new StringBuilder(hash.Length * 2);
-                                foreach (byte b in hash)
+
+                                StringBuilder sb;
+                                using (SHA1Managed sha1 = new SHA1Managed())
                                 {
-                                    sb.Append(b.ToString("x2"));
+                                    var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(string.Concat(transaction.consecutive, "_", transaction.IdTransactionAPi.ToString())));
+                                    sb = new StringBuilder(hash.Length * 2);
+                                    foreach (byte b in hash)
+                                    {
+                                        sb.Append(b.ToString("x2"));
+                                    }
                                 }
-                            }
 
-                        var nameFile = $"{transaction.consecutive}-{transaction.consecutive}" +
-                            $"-{transaction.Enrollment}-{product.MatriculaEst ?? "0"}-{transaction.Tpcm}-{(i + 1).ToString()}";
+                                var nameFile = $"{transaction.consecutive}-{transaction.consecutive}" +
+                                    $"-{transaction.Enrollment}-{product.MatriculaEst ?? "0"}-{transaction.Tpcm}-{(i + 1).ToString()}";
 
-                        var patchFile = string.Concat(basseAddress,
-                            Utilities.GetConfiguration("GetCertifiedString"),
-                            "?idcompra=", transaction.consecutive,
-                            "&IdCertificado=", product.IdCertificado,
-                            "&matricula=", transaction.Enrollment,
-                            "&matriculaest=", product.MatriculaEst ?? "0",
-                            "&tpcm=", transaction.Tpcm,
-                            "&copia=", (i + 1),
-                            "&hs=", sb.ToString());
+                                var patchFile = string.Concat(basseAddress,
+                                    Utilities.GetConfiguration("GetCertifiedString"),
+                                    "?idcompra=", transaction.consecutive,
+                                    "&IdCertificado=", product.IdCertificado,
+                                    "&matricula=", transaction.Enrollment,
+                                    "&matriculaest=", product.MatriculaEst ?? "0",
+                                    "&tpcm=", transaction.Tpcm,
+                                    "&copia=", (i + 1),
+                                    "&hs=", sb.ToString());
 
-                            string path = DownloadFile(patchFile, nameFile);
-                            if (!string.IsNullOrEmpty(path))
-                            {
-                                pathCertificates.Add(path);
-                            }
-                            else
-                            {
-                                AdminPayPlus.SaveErrorControl("name  Certificado: " + nameFile, "Error descargando certificado : " + path, EError.Customer, ELevelError.Medium);
+                                string path = DownloadFile(patchFile, nameFile);
+                                if (!string.IsNullOrEmpty(path))
+                                {
+                                    pathCertificates.Add(path);
+                                }
+                                else
+                                {
+                                    AdminPayPlus.SaveErrorControl("name  Certificado: " + nameFile, "Error descargando certificado : " + path, EError.Customer, ELevelError.Medium);
+                                }
                             }
                         }
                     }
                 }
+                
                 if (pathCertificates.Count == countCertificates)
                 {
                     return pathCertificates;
@@ -218,35 +221,38 @@ namespace WPFCCMedellin.Services
         {
             try
             {
-                using (WebClient webClient = new WebClient())
+                if (!string.IsNullOrEmpty(patchFile) && !string.IsNullOrEmpty(nameFile))
                 {
-                    bool stateDownload = false;
-                    int countIntents = 0;
-                    while (!stateDownload)
+                    using (WebClient webClient = new WebClient())
                     {
-                        var response = webClient.DownloadData(patchFile);
-                        var contentType = webClient.ResponseHeaders["Content-Type"];
-
-                        if (response != null && contentType != null &&
-                            contentType.StartsWith("application/pdf", StringComparison.OrdinalIgnoreCase))
+                        bool stateDownload = false;
+                        int countIntents = 0;
+                        while (!stateDownload)
                         {
-                            stateDownload = true;
-                            var path = Utilities.SaveFile(nameFile, Utilities.GetConfiguration("DirectoryFile"), response);
-                            if (!string.IsNullOrEmpty(path))
+                            var response = webClient.DownloadData(patchFile);
+                            var contentType = webClient.ResponseHeaders["Content-Type"];
+
+                            if (response != null && contentType != null &&
+                                contentType.StartsWith("application/pdf", StringComparison.OrdinalIgnoreCase))
                             {
-                                return path;
+                                stateDownload = true;
+                                var path = Utilities.SaveFile(nameFile, Utilities.GetConfiguration("DirectoryFile"), response);
+                                if (!string.IsNullOrEmpty(path))
+                                {
+                                    return path;
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
                             else
                             {
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            countIntents++;
-                            if (countIntents >= int.Parse(Utilities.GetConfiguration("IntentsDownload").ToString()))
-                            {
-                                break;
+                                countIntents++;
+                                if (countIntents >= int.Parse(Utilities.GetConfiguration("IntentsDownload").ToString()))
+                                {
+                                    break;
+                                }
                             }
                         }
                     }

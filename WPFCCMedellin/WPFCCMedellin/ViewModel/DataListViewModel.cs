@@ -420,7 +420,7 @@ namespace WPFCCMedellin.ViewModel
                     tipo_busqueda = type
                 }, "GetGeneralInformation");
 
-                if (response.CodeError == 200)
+                if (response.CodeError == 200 && response.Data != null)
                 {
                     var result = JsonConvert.DeserializeObject<ResultGeneral>(response.Data.ToString());
 
@@ -470,7 +470,7 @@ namespace WPFCCMedellin.ViewModel
                     Tpcm = data.tpcm
                 }, "GetDetalle");
 
-                if (response.CodeError == 200)
+                if (response.CodeError == 200 && response.Data != null)
                 {
                     var result = JsonConvert.DeserializeObject<ResultDetalle>(response.Data.ToString());
 

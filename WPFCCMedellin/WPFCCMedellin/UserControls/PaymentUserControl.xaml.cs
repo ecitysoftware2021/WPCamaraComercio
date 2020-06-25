@@ -267,7 +267,7 @@ namespace WPFCCMedellin.UserControls
                             transaction = await AdminPayPlus.ApiIntegration.NotifycTransaction(transaction);
                             Utilities.CloseModal();
 
-                            if (!string.IsNullOrEmpty(transaction.consecutive))
+                            if (!string.IsNullOrEmpty(transaction.consecutive) && int.Parse(transaction.consecutive) > 0)
                             {
                                 if (transaction.State == ETransactionState.Initial)
                                 {
