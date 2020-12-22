@@ -239,7 +239,7 @@ namespace WPFCCMedellin.Classes.DB
         {
             try
             {
-                Execute<TRANSACTION_DETAIL>(string.Concat("UPDATE 'TRANSACTION_DETAIL' SET STATE = ", transactionDetail.STATE, " WHERE TRANSACTION_DETAIL_ID = ", transactionDetail.TRANSACTION_ID), null);
+                Execute<TRANSACTION_DETAIL>(string.Concat("UPDATE 'TRANSACTION_DETAIL' SET STATE = ", transactionDetail.STATE, " WHERE TRANSACTION_DETAIL_ID = ", transactionDetail.TRANSACTION_DETAIL_ID), null);
             }
             catch (Exception ex)
             {
