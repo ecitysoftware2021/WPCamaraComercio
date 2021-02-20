@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Jhon.Zapata.LJHPCECITY\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\
+C:\Users\David.Cordoba\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\
 WPFCCMedellin
 none
 false
 DEBUG;TRACE
-C:\Users\Jhon.Zapata.LJHPCECITY\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\App.xaml
+C:\Users\David.Cordoba\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\App.xaml
 14-2025483615
 
-65-800743578
-301933535983
+66167183483
+30-1436117550
 UserControls\Administrator\AdministratorUserControl.xaml;UserControls\Administrator\ConfigurateUserControl.xaml;UserControls\Administrator\LoginAdministratorUserControl.xaml;UserControls\CertificatesUserControl.xaml;UserControls\PayerUserControl.xaml;UserControls\PrintFileUserControl.xaml;UserControls\ReturnMonyUserControl.xaml;UserControls\ConsultUserControl.xaml;UserControls\MainUserControl.xaml;UserControls\PaymentUserControl.xaml;UserControls\SussesUserControl.xaml;Windows\MasterWindow.xaml;Windows\ModalDetailWindows.xaml;Windows\ModalWindow.xaml;
 
-False
+True
 

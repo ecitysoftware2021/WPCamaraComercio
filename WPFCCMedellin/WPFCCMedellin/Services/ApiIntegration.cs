@@ -81,7 +81,7 @@ namespace WPFCCMedellin.Services
                         EmailComprador = transaction.payer.EMAIL ?? string.Empty,
                         IdentificacionComprador = transaction.payer.IDENTIFICATION,
                         MunicipioComprador = string.Empty,
-                        NombreComprador = string.Concat(transaction.payer.NAME, transaction.payer.LAST_NAME),
+                        NombreComprador = string.Concat(transaction.payer.NAME," ", transaction.payer.LAST_NAME),
                         PlataformaCliente = Utilities.GetConfiguration("ClientPlataform"),
                         PrimerApellidoComprador = transaction.payer.LAST_NAME,
                         PrimerNombreComprador = transaction.payer.NAME,
