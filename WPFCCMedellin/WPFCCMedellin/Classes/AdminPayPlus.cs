@@ -140,7 +140,9 @@ namespace WPFCCMedellin.Classes
 
                     DescriptionStatusPayPlus = MessageResource.ValidatePeripherals;
 
-                    ValidatePeripherals();
+                    //ValidatePeripherals();
+                    callbackResult?.Invoke(true);
+
                 }
                 else
                 {
@@ -712,7 +714,7 @@ namespace WPFCCMedellin.Classes
                 Task.Run(async () =>
                 {
                     var transactions = SqliteDataAccess.GetTransactionNotific();
-                    if (transactions.Count > 0)
+                    if (transactions != null && transactions.Count > 0)
                     {
                         foreach (var transaction in transactions)
                         {

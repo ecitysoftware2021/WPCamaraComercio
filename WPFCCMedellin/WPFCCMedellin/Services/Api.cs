@@ -36,7 +36,7 @@ namespace WPFCCMedellin.Services
                 requestApi = new RequestApi();
             }
 
-            basseAddress = Encryptor.Decrypt(Utilities.GetConfiguration("basseAddress"));
+            basseAddress = Utilities.GetConfiguration("basseAddress");
         }
 
         public async Task<ResponseAuth> GetSecurityToken(CONFIGURATION_PAYDAD config)

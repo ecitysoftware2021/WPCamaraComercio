@@ -21,7 +21,6 @@ C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\bin\
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\bin\Debug\System.Data.SQLite.xml
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\bin\Debug\System.Data.SQLite.dll.config
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\bin\Debug\WpfAnimatedGif.xml
-C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.csprojAssemblyReference.cache
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\AdministratorUserControl.g.cs
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\ConfigurateUserControl.g.cs
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\LoginAdministratorUserControl.g.cs
@@ -337,3 +336,5 @@ E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.c
 E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.csproj.CopyComplete
 E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.exe
 E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.pdb
+C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\bin\Debug\RestSharp.dll
+C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\bin\Debug\RestSharp.xml
