@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,11 @@ namespace WPFCCMedellin.Services
 
         private Stream newStream;
 
+        static string fecha = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        static string CID = "1CERO1";
+        static string CLAVE = "1C3R0120Z1";
+        static string cadena = string.Concat(CLAVE, fecha, CID);
+
         public ApiIntegration()
         {
             encoding = new ASCIIEncoding();
@@ -32,26 +38,58 @@ namespace WPFCCMedellin.Services
             basseAddress = Utilities.GetConfiguration("basseAddressIntegration");
         }
 
-        public async Task<ResponseApi> GetData(object requestData, string controller)
+        private string GenerateMD5()
+        {
+            string cadena = string.Concat(CLAVE, fecha, CID);
+
+
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(cadena);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }
+
+        public async Task<ResponseApi> GetData(object data, string controlador)
         {
             try
             {
-                client = (HttpWebRequest)WebRequest.Create(new Uri(string.Concat(basseAddress, Utilities.GetConfiguration(controller))));
-                var request = JsonConvert.SerializeObject(requestData);
-                client.Accept = "application/json";
-                client.ContentType = "application/json";
-                client.Method = "POST";
-
-                newStream = client.GetRequestStream();
-                newStream.Write(encoding.GetBytes(request), 0, encoding.GetBytes(request).Length);
-                newStream.Close();
-
-                var response = (new StreamReader(client.GetResponse().GetResponseStream())).ReadToEnd();
-
+                RequestCCM requestCCM = new RequestCCM
+                {
+                    security = new Security
+                    {
+                        CID = CID,
+                        fecha = fecha,
+                        token = GenerateMD5()
+                    },
+                    request = data
+                };
+                var client = new RestClient(string.Concat(basseAddress, Utilities.GetConfiguration(controlador)));
+                client.Timeout = -1;
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("Content-Type", "application/json");
+                request.AddParameter("application/json", JsonConvert.SerializeObject(requestCCM), ParameterType.RequestBody);
+                IRestResponse response = client.Execute(request);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return new ResponseApi
+                    {
+                        CodeError = 300,
+                        Message = response.ErrorMessage
+                    };
+                }
                 return new ResponseApi
                 {
                     CodeError = 200,
-                    Data = response
+                    Data = response.Content
                 };
             }
             catch (Exception ex)
@@ -81,7 +119,7 @@ namespace WPFCCMedellin.Services
                         EmailComprador = transaction.payer.EMAIL ?? string.Empty,
                         IdentificacionComprador = transaction.payer.IDENTIFICATION,
                         MunicipioComprador = string.Empty,
-                        NombreComprador = string.Concat(transaction.payer.NAME," ", transaction.payer.LAST_NAME),
+                        NombreComprador = string.Concat(transaction.payer.NAME, " ", transaction.payer.LAST_NAME),
                         PlataformaCliente = Utilities.GetConfiguration("ClientPlataform"),
                         PrimerApellidoComprador = transaction.payer.LAST_NAME,
                         PrimerNombreComprador = transaction.payer.NAME,
@@ -175,7 +213,7 @@ namespace WPFCCMedellin.Services
                         }
                     }
                 }
-                
+
                 if (pathCertificates.Count == countCertificates)
                 {
                     return pathCertificates;
@@ -260,7 +298,7 @@ namespace WPFCCMedellin.Services
             }
             catch (Exception ex)
             {
-              Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
             return string.Empty;
         }

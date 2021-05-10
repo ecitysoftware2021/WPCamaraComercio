@@ -13,6 +13,18 @@ namespace WPFCCMedellin.Services.Object
         public object Data { get; set; }
     }
 
+    public class RequestCCM
+    {
+        public Security security { get; set; }
+        public object request { get; set; }
+    }
+    public class Security
+    {
+        public string fecha { get; set; }
+        public string token { get; set; }
+        public string CID { get; set; }
+    }
+
     public class ResponseAuth
     {
         public int CodeError { get; set; }
