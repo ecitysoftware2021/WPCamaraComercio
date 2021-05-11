@@ -179,6 +179,7 @@
                    TabIndex="1"
                    TouchDown="KeyboardNum_TouchDown"
                    TextWrapping="Wrap"
+                     LostFocus="TbxIdentification_LostFocus"
                    Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock Name="TxbData1"

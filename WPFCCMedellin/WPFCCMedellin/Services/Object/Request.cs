@@ -7,8 +7,10 @@ using WPFCCMedellin.Models;
 
 namespace WPFCCMedellin.Services
 {
-    class Request
+    public class RequestIdentificacionComprador
     {
+        public string TipoIdentificacionComprador { get; set; }
+        public string IdentificacionComprador { get; set; }
     }
 
     public class RequestConsult

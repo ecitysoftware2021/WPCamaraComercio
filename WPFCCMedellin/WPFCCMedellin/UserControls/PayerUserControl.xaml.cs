@@ -268,5 +268,10 @@ namespace WPFCCMedellin.UserControls
         {
             Utilities.OpenKeyboard(false, sender as TextBox, this);
         }
+
+        private void TbxIdentification_LostFocus(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Perdió el foco");
+        }
     }
 }

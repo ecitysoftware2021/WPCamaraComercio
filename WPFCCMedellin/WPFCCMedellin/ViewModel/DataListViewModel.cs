@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -356,7 +357,7 @@ namespace WPFCCMedellin.ViewModel
         {
             try
             {
-                
+
             }
             catch (Exception ex)
             {
@@ -440,7 +441,7 @@ namespace WPFCCMedellin.ViewModel
                         }
 
                         TotalPage = (int)Math.Ceiling(((decimal)_dataList.Count / CuantityItems));
-                         
+
                         //if (_dataList.Count % CuantityItems != 0)
                         //{
                         //    TotalPage += 1;
@@ -502,11 +503,41 @@ namespace WPFCCMedellin.ViewModel
             return null;
         }
 
+        public async Task<DataPayer> GetDataPayer(string tipoIdentificacion, string identificacion)
+        {
+            try
+            {
+                DataPayer payer = new DataPayer();
+                var response = await AdminPayPlus.ApiIntegration.GetData(new RequestIdentificacionComprador
+                {
+                    TipoIdentificacionComprador = tipoIdentificacion,
+                    IdentificacionComprador = identificacion
+                }, "GetPayer");
+
+                if (response.CodeError == 200 && response.Data != null)
+                {
+                    var result = JsonConvert.DeserializeObject<ResponsePayer>(response.Data.ToString());
+
+                    if (result != null && result.response != null && string.IsNullOrEmpty(result.response.codigo))
+                    {
+                        payer = result.response.resultados.FirstOrDefault();
+                        return payer;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+
+            return null;
+        }
+
         public void LoadDataList(Transaction transaction, ETypeCertificate type)
         {
             try
             {
-                
+
                 if (type == ETypeCertificate.Merchant)
                 {
                     if (transaction.Files[0] != null && transaction.Files[0].certificados != null)
@@ -563,7 +594,7 @@ namespace WPFCCMedellin.ViewModel
                             }
 
                             TotalPage = (int)Math.Ceiling(((decimal)DataListAux.Count / CuantityItems));
-                            
+
                         }
                         RefreshViewDetail();
                     }

@@ -161,6 +161,7 @@
     <Compile Include="Services\Object\Response.cs" />
     <Compile Include="Services\Object\ResponseApi.cs" />
     <Compile Include="Services\Object\Request.cs" />
+    <Compile Include="Services\Object\ResponsePayer.cs" />
     <Compile Include="UserControls\Administrator\AdministratorUserControl.xaml.cs">
       <DependentUpon>AdministratorUserControl.xaml</DependentUpon>
     </Compile>

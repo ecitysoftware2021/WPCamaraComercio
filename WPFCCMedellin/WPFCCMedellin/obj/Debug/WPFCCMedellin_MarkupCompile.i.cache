@@ -12,9 +12,9 @@ DEBUG;TRACE
 E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\App.xaml
 14-2025483615
 
-66167183483
+67168659908
 32615821298
 UserControls\Administrator\AdministratorUserControl.xaml;UserControls\Administrator\ConfigurateUserControl.xaml;UserControls\Administrator\LoginAdministratorUserControl.xaml;UserControls\CertificatesUserControl.xaml;UserControls\PayerUserControl.xaml;UserControls\PrintFileUserControl.xaml;UserControls\ReturnMonyUserControl.xaml;UserControls\ConsultUserControl.xaml;UserControls\MainUserControl.xaml;UserControls\PaymentUserControl.xaml;UserControls\SussesUserControl.xaml;Windows\MasterWindow.xaml;Windows\ModalDetailWindows.xaml;Windows\ModalWindow.xaml;
 
-True
+False
 

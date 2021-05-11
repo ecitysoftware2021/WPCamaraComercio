@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace WPFCCMedellin.Services.Object
 {
-    class Response
-    {
-    }
-
     public class ResultadoGeneral
     {
         public string id { get; set; }
