@@ -35,7 +35,7 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
-                InitTimer();
+                //InitTimer();
 
                 this.paymentViewModel = new PaymentViewModel
                 {
@@ -52,8 +52,9 @@ namespace WPFCCMedellin.UserControls
                 };
 
                 this.DataContext = this.paymentViewModel;
-
-                ActivateWallet();
+                //AdminPayPlus.ControlPeripherals.ResetValues();
+                //ActivateWallet();
+                SavePay();
             }
             catch (Exception ex)
             {
@@ -259,7 +260,7 @@ namespace WPFCCMedellin.UserControls
                     transaction.Payment = paymentViewModel;
                     transaction.State = statePay;
 
-                    AdminPayPlus.ControlPeripherals.ResetValues();
+                    
                     Task.Run(async () =>
                     {
                         if (transaction.IdTransactionAPi > 0)
@@ -307,34 +308,34 @@ namespace WPFCCMedellin.UserControls
             }
         }
 
-        private void BtnConsult_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
-        {
-            try
-            {
-                this.paymentViewModel.ImgContinue = Visibility.Hidden;
+        //private void BtnConsult_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
+        //{
+        //    try
+        //    {
+        //        this.paymentViewModel.ImgContinue = Visibility.Hidden;
 
-                this.paymentViewModel.ImgCancel = Visibility.Hidden;
+        //        this.paymentViewModel.ImgCancel = Visibility.Hidden;
 
-                if (Utilities.ShowModal(MessageResource.ConsignAmount, EModalType.Information))
-                {
-                    this.paymentViewModel.PayValue = this.paymentViewModel.ValorIngresado;
+        //        if (Utilities.ShowModal(MessageResource.ConsignAmount, EModalType.Information))
+        //        {
+        //            this.paymentViewModel.PayValue = this.paymentViewModel.ValorIngresado;
 
-                    AdminPayPlus.ControlPeripherals.StopAceptance();
+        //            AdminPayPlus.ControlPeripherals.StopAceptance();
 
-                    SavePay(ETransactionState.Success);
-                }
-                else
-                {
-                    this.paymentViewModel.ImgContinue = Visibility.Visible;
+        //            SavePay(ETransactionState.Success);
+        //        }
+        //        else
+        //        {
+        //            this.paymentViewModel.ImgContinue = Visibility.Visible;
 
-                    this.paymentViewModel.ImgCancel = Visibility.Hidden;
-                }
-            }
-            catch (Exception ex)
-            {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
-            }
-        }
+        //            this.paymentViewModel.ImgCancel = Visibility.Hidden;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+        //    }
+        //}
 
         private void BtnCancell_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {

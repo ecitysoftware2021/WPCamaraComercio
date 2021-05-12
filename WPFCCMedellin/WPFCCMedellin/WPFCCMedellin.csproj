@@ -393,6 +393,9 @@
     <Resource Include="Images\Keyboard\Rojo.png" />
     <Resource Include="Images\Keyboard\Verde.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Others\search.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.2\build\net40\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

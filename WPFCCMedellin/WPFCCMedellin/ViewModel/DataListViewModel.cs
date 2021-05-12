@@ -503,36 +503,7 @@ namespace WPFCCMedellin.ViewModel
             return null;
         }
 
-        public async Task<DataPayer> GetDataPayer(string tipoIdentificacion, string identificacion)
-        {
-            try
-            {
-                DataPayer payer = new DataPayer();
-                var response = await AdminPayPlus.ApiIntegration.GetData(new RequestIdentificacionComprador
-                {
-                    TipoIdentificacionComprador = tipoIdentificacion,
-                    IdentificacionComprador = identificacion
-                }, "GetPayer");
-
-                if (response.CodeError == 200 && response.Data != null)
-                {
-                    var result = JsonConvert.DeserializeObject<ResponsePayer>(response.Data.ToString());
-
-                    if (result != null && result.response != null && string.IsNullOrEmpty(result.response.codigo))
-                    {
-                        payer = result.response.resultados.FirstOrDefault();
-                        return payer;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
-            }
-
-            return null;
-        }
-
+       
         public void LoadDataList(Transaction transaction, ETypeCertificate type)
         {
             try

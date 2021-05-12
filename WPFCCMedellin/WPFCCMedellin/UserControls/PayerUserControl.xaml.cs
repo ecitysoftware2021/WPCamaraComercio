@@ -11,6 +11,9 @@ using WPFCCMedellin.DataModel;
 using WPFCCMedellin.Models;
 using WPFCCMedellin.Resources;
 using WPFCCMedellin.ViewModel;
+using WPFCCMedellin.Services;
+using WPFCCMedellin.Services.Object;
+using Newtonsoft.Json;
 
 namespace WPFCCMedellin.UserControls
 {
@@ -43,6 +46,8 @@ namespace WPFCCMedellin.UserControls
                     Row2 = "(*)Nombre:",
                     Row3 = "(*)Apellido:",
                     Row4 = "(*)Teléfono",
+                    Row9 = "(*)Correo",
+                    Row10 = "(*)Dirección",
                     OptionsEntries = new CollectionViewSource(),
                     OptionsList = new List<TypeDocument>(),
                     SourceCheckId = ImagesUrlResource.ImageCheckIn,
@@ -131,6 +136,8 @@ namespace WPFCCMedellin.UserControls
                     viewModel.Value2 = string.Empty;
                     viewModel.Value3 = string.Empty;
                     viewModel.Value4 = string.Empty;
+                    viewModel.Value9 = string.Empty;
+                    viewModel.Value10 = string.Empty;
                 }
 
                 cmb_type_id.SelectedIndex = 0;
@@ -180,8 +187,16 @@ namespace WPFCCMedellin.UserControls
                         return false;
                     }
                 }
+                if (!Utilities.IsValidEmailAddress(viewModel.Value9))
+                {
+                    return false;
+                }
 
                 if (viewModel.Value4.Length < 6)
+                {
+                    return false;
+                }
+                if (viewModel.Value10.Length < 5)
                 {
                     return false;
                 }
@@ -208,7 +223,9 @@ namespace WPFCCMedellin.UserControls
                             NAME = viewModel.Value2,
                             PHONE = decimal.Parse(viewModel.Value4),
                             TYPE_PAYER = viewModel.TypePayer == ETypePayer.Person ? "Persona" : "Empresa",
-                            TYPE_IDENTIFICATION = typeDocument
+                            TYPE_IDENTIFICATION = typeDocument,
+                            EMAIL = viewModel.Value9,
+                            ADDRESS = viewModel.Value10
                         };
 
                         if (viewModel.TypePayer == ETypePayer.Person)
@@ -269,9 +286,69 @@ namespace WPFCCMedellin.UserControls
             Utilities.OpenKeyboard(false, sender as TextBox, this);
         }
 
-        private void TbxIdentification_LostFocus(object sender, RoutedEventArgs e)
+        private void btSearchPayer_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            MessageBox.Show("Perdió el foco");
+            if (TbxIdentification.Text.Length > 5)
+            {
+
+                GetDataPayer();
+            }
         }
+
+        public void GetDataPayer()
+        {
+            try
+            {
+                Utilities.ShowModal("Consultando datos del pagador...", EModalType.Preload, openDialog: false);
+                Task.Run(async () =>
+                {
+                    string tipoDoc = string.Empty;
+                    string doc = string.Empty;
+                    await Dispatcher.BeginInvoke((Action)delegate
+                     {
+                         tipoDoc = ((TypeDocument)cmb_type_id.SelectedItem).Key;
+                         doc = TbxIdentification.Text;
+                     });
+
+
+                    var response = AdminPayPlus.ApiIntegration.GetData(new RequestIdentificacionComprador
+                    {
+                        TipoIdentificacionComprador = tipoDoc,
+                        IdentificacionComprador = doc
+                    }, "GetPayer").Result;
+
+                    Utilities.CloseModal();
+                    if (response.CodeError == 200 && response.Data != null)
+                    {
+                        var result = JsonConvert.DeserializeObject<ResponsePayer>(response.Data.ToString());
+
+                        if (result != null && result.response != null && string.IsNullOrEmpty(result.response.codigo))
+                        {
+                            foreach (var item in result.response.resultados)
+                            {
+                                viewModel.Value9 = item.EmailComprador;
+                                viewModel.Value4 = item.TelefonoComprador;
+                                viewModel.Value10 = item.DireccionComprador;
+                                if (viewModel.TypePayer == ETypePayer.Person)
+                                {
+                                    viewModel.Value2 = item.PrimerNombreComprador;
+                                    viewModel.Value3 = item.PrimerApellidoComprador;
+                                }
+                                else
+                                {
+                                    viewModel.Value2 = item.NombreComprador;
+                                }
+                            }
+                        }
+                    }
+                });
+
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
+
     }
 }

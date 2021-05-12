@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -57,7 +58,7 @@ namespace WPFCCMedellin.Classes
             });
         }
 
-        public static bool ShowModal(string message, EModalType type, bool timer = false)
+        public static bool ShowModal(string message, EModalType type, bool timer = false, bool openDialog = true)
         {
             bool response = false;
             try
@@ -99,7 +100,14 @@ namespace WPFCCMedellin.Classes
                 Application.Current.Dispatcher.Invoke(delegate
                 {
                     modal = new ModalWindow(model);
-                    modal.ShowDialog();
+                    if (openDialog)
+                    {
+                        modal.ShowDialog();
+                    }
+                    else
+                    {
+                        modal.Show();
+                    }
 
                     if (modal.DialogResult.HasValue && modal.DialogResult.Value)
                     {
@@ -177,15 +185,15 @@ namespace WPFCCMedellin.Classes
                 if (transaction != null)
                 {
                     var statePrint = AdminPayPlus.PrintService.StatusPrint();
-                        SolidBrush color = new SolidBrush(Color.Black);
-                        Font fontKey = new Font("Arial", 9, System.Drawing.FontStyle.Bold);
-                        Font fontValue = new Font("Arial", 9, System.Drawing.FontStyle.Regular);
-                        int y = 0;
-                        int sum = 25;
-                        int x = 150;
-                        int xKey = 20;
+                    SolidBrush color = new SolidBrush(Color.Black);
+                    Font fontKey = new Font("Arial", 9, System.Drawing.FontStyle.Bold);
+                    Font fontValue = new Font("Arial", 9, System.Drawing.FontStyle.Regular);
+                    int y = 0;
+                    int sum = 25;
+                    int x = 150;
+                    int xKey = 20;
 
-                        var data = new List<DataPrinter>()
+                    var data = new List<DataPrinter>()
                         {
                             new DataPrinter{ image = GetConfiguration("ImageBoucher"),  x = 2, y = 2 },
                             new DataPrinter{ brush = color, font = fontKey, value = "NIT:", x = xKey, y = y+=120 },
@@ -218,27 +226,27 @@ namespace WPFCCMedellin.Classes
                                 value = transaction.payer.PHONE.ToString() ?? string.Empty, x = x, y = y },
                         };
 
-                        data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total:", x = xKey, y = y += sum });
-                        data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.PayValue), x = x, y = y });
+                    data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total:", x = xKey, y = y += sum });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.PayValue), x = x, y = y });
 
-                        data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total Ingresado:", x = xKey, y = y += sum });
-                        data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.ValorIngresado), x = x, y = y });
-                        data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total Devuelto:", x = xKey, y = y += sum });
-                        data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.ValorDispensado), x = x, y = y });
-                        if (transaction.State == ETransactionState.Success)
-                        {
-                            data.Add(new DataPrinter { brush = color, font = fontValue, value = "Su transacción se ha realizado exitosamente", x = 0, y = y += 50 });
-                        }
-                        else
-                        {
-                            data.Add(new DataPrinter { brush = color, font = fontValue, value = transaction.Observation ?? string.Empty, x = 0, y = y += 50 });
-                        }
+                    data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total Ingresado:", x = xKey, y = y += sum });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.ValorIngresado), x = x, y = y });
+                    data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total Devuelto:", x = xKey, y = y += sum });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = string.Format("{0:C0}", transaction.Payment.ValorDispensado), x = x, y = y });
+                    if (transaction.State == ETransactionState.Success)
+                    {
+                        data.Add(new DataPrinter { brush = color, font = fontValue, value = "Su transacción se ha realizado exitosamente", x = 0, y = y += 50 });
+                    }
+                    else
+                    {
+                        data.Add(new DataPrinter { brush = color, font = fontValue, value = transaction.Observation ?? string.Empty, x = 0, y = y += 50 });
+                    }
                     data.Add(new DataPrinter { brush = color, font = fontValue, value = "Recuerde siempre esperar la tirilla de soporte de su", x = 10, y = y += sum });
                     data.Add(new DataPrinter { brush = color, font = fontValue, value = "transacción, es el único documento que lo respalda.", x = 10, y = y += 20 });
                     data.Add(new DataPrinter { brush = color, font = fontValue, value = "E-city Software", x = 100, y = y += sum });
 
-                        AdminPayPlus.PrintService.Start(data);
-                    }
+                    AdminPayPlus.PrintService.Start(data);
+                }
             }
             catch (Exception ex)
             {
@@ -325,6 +333,22 @@ namespace WPFCCMedellin.Classes
                 return false;
             }
         }
+
+
+        public static bool IsValidEmailAddress(string email)
+        {
+            try
+            {
+                Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,8}$");
+                return regex.IsMatch(email);
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, "Utilities", ex, ex.ToString());
+                return false;
+            }
+        }
+
 
         public static T ConverJson<T>(string path)
         {

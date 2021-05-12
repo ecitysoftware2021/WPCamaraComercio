@@ -338,3 +338,4 @@ E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.e
 E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.pdb
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\bin\Debug\RestSharp.dll
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\bin\Debug\RestSharp.xml
+C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.csprojAssemblyReference.cache

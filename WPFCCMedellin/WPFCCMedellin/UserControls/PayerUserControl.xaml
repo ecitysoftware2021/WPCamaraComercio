@@ -13,54 +13,40 @@
         </Grid.Background>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="150" />
-            <RowDefinition Height="400" />
-            <RowDefinition Height="800" />
-            <RowDefinition Height="560" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="0" VerticalAlignment="Center" Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <Image Source="/Images/Buttons/btn-exit.png"
                    Name="btn_exit"
                    HorizontalAlignment="Right"
-                   VerticalAlignment="Bottom"
+                   VerticalAlignment="Top"
                    Grid.Column="4"
                    Width="250"
-                   Margin="0,0,20,20"
+                   Margin="0,0,0,0"
+                   Grid.Row="0"
                    TouchDown="Btn_exit_TouchDown" />
-        </Grid>
-
-        <Grid Grid.Row="1" Name="gd_payer">
-            <TextBlock VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Margin="0,0,0,100"
-                    FontSize="65"
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    FontWeight="Bold"
-                    Foreground="#000"
-                    Text="DATOS PAGADOR"/>
-
+            
             <TextBlock VerticalAlignment="Bottom"
                     HorizontalAlignment="Center"
-                    Margin="0,0,0,80"
-                    FontSize="30"
-                    Grid.Row="6"
-                    Foreground="#FF840000"
-                    FontWeight="Bold"
-                    Text="- Si tienes tu cédula, puedes escanearla para ingresar tus datos."/>
-
-            <TextBlock VerticalAlignment="Bottom"
-                    HorizontalAlignment="Center"
-                    Margin="0,0,0,40"
-                    FontSize="30"
+                    Margin="0,0,0,0"        
                     Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    Foreground="#FF840000"
-                    Text="- Todos los campos marcados con * son de caracter obligatorio"/>
+                    TextAlignment="Center"
+                    FontWeight="Bold"
+                    >
+                <Run FontSize="65" Foreground="#000" Text="DATOS PAGADOR" /><LineBreak/>
+                <Run FontSize="30" Foreground="#FF840000" Text="- Si tienes tu cédula, puedes escanearla para ingresar tus datos." /><LineBreak/>
+                <Run FontSize="30" Foreground="#FF840000" Text="- Todos los campos marcados con * son de caracter obligatorio" />
+            </TextBlock>
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -70,14 +56,15 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="500" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             
             <TextBlock HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
+                   VerticalAlignment="Top"
                    Grid.ColumnSpan="2"
                    TextAlignment="Center"
                    TextWrapping="Wrap"
@@ -93,19 +80,19 @@
                     Width="60"
                     Height="60"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Margin="150,0,0,30"
+                    VerticalAlignment="Top"
+                    Margin="150,0,0,0"
                     TouchDown="Select_TouchDown" />
 
             <TextBlock TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center" 
+                    VerticalAlignment="Top" 
                     TextAlignment="Center"
                     Grid.Row="1"
                     Text="Persona" 
                     Foreground="Black" 
                     FontSize="40" 
-                    Margin="120,0,0,30"/>
+                    Margin="50,0,0,30"/>
 
             <Image  x:Name="check_person"
                     Source="{Binding SourceCheckName}"
@@ -115,13 +102,13 @@
                     Grid.Row="1"
                     Tag="2"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Top"
                     Margin="150,0,0,30" 
                     TouchDown="Select_TouchDown"/>
 
             <TextBlock TextWrapping="WrapWithOverflow" 
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Center" 
+                    VerticalAlignment="Top" 
                     TextAlignment="Center"
                     Text="Empresa" 
                     Foreground="Black" 
@@ -130,11 +117,10 @@
                     Grid.Row="1"
                     Margin="50,0,0,30"/>
 
-            <TextBlock  HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Margin="100,0,0,0"
+            <TextBlock  HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
                    TextAlignment="Center"
-                   TextWrapping="Wrap"
                    FontSize="40"
                    Grid.Row="2"
                    FontWeight="Bold"   
@@ -142,9 +128,9 @@
                    Text="(*)Tipo de Identificación:" />
 
             <ComboBox Name="cmb_type_id"
-                    Grid.Column="1" 
+                    Grid.Column="0" 
                     Grid.Row="2"
-                    Margin="0,0,80,0"
+                    Margin="0,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     HorizontalContentAlignment="Center"
@@ -155,23 +141,24 @@
                     SelectedValuePath="Key"
                     DisplayMemberPath="Value" />
 
-            <TextBlock HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Margin="100,0,0,0"
+            <TextBlock HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0,0,0,0"
                     TextAlignment="Center"
                     TextWrapping="Wrap"
                     FontSize="40"
                     FontWeight="Bold"   
                     Foreground="Black"
-                    Grid.Row="3"
+                    Grid.Row="2"
+                       Grid.Column="1"
                     Text="{Binding Row1}" />
 
             <TextBox Name="TbxIdentification"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Margin="0,0,80,0"
+                   Margin="0,0,0,0"
                    Width="500"
-                   Grid.Row="3"
+                   Grid.Row="2"
                    Grid.Column="1"
                    TextAlignment="Center"
                    FontSize="40"
@@ -179,29 +166,37 @@
                    TabIndex="1"
                    TouchDown="KeyboardNum_TouchDown"
                    TextWrapping="Wrap"
-                     LostFocus="TbxIdentification_LostFocus"
                    Text="{Binding Value1, UpdateSourceTrigger=PropertyChanged}" />
+            <Image Source="/Images/Others/search.png" 
+                   Name="btSearchPayer"
+                   Grid.Row="2"
+                   Grid.Column="1"
+                   Width="100"
+                   Margin="0,0,0,0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   TouchDown="btSearchPayer_TouchDown"/>
 
             <TextBlock Name="TxbData1"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Margin="100,0,0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
                    TextAlignment="Center"
                    TextWrapping="Wrap"
                    FontSize="40"
-                   Grid.Row="4"
+                   Grid.Row="3"
                    Foreground="Black"
                    FontWeight="Bold"
                    Text="{Binding Row2}" />
 
             <TextBox Name="TbxData1"
-                   HorizontalAlignment="Left"
+                   HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Margin="0,0,80,0"
+                   Margin="0,0,0,0"
                    TextAlignment="Center"
                    FontSize="40"
-                   Grid.Column="1"
-                   Grid.Row="4"
+                   Grid.Column="0"
+                   Grid.Row="3"
                    Width="500"
                    MaxLength="20"
                    Foreground="#FF606060"
@@ -211,13 +206,14 @@
                    Text="{Binding Value2, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock Name="TxbData3"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Margin="100,0,0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
                    TextAlignment="Center"
                    TextWrapping="Wrap"
                    FontSize="40"
-                   Grid.Row="5"
+                   Grid.Row="3"
+                   Grid.Column="1"
                    FontWeight="Bold"   
                    Foreground="Black"
                    Text="{Binding Row3}"/>
@@ -225,12 +221,12 @@
             <TextBox Name="TbxData3"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Margin="0,0,80,0"
                     TextAlignment="Center"
                     FontSize="40"
                     Width="500"
                     Grid.Column="1"
-                    Grid.Row="5"
+                    Grid.Row="3"
+                     Margin="0,0,0,0"
                     TabIndex="3"
                     Foreground="#FF606060"
                     TouchDown="Keyboard_TouchDown"
@@ -238,25 +234,25 @@
                     Text="{Binding Value3, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock Name="TxbData4"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Margin="100,0,0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
                    TextAlignment="Center"
                    TextWrapping="Wrap"
                    FontSize="40"
-                   Grid.Row="6"
+                   Grid.Row="4"
                    FontWeight="Bold"   
                    Foreground="Black"
                    Text="{Binding Row4}" />
 
             <TextBox Name="TbxData4"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,0,80,0"
+                Margin="0,0,0,0"
                 TextAlignment="Center"
                 FontSize="40"
-                Grid.Column="1"
-                Grid.Row="6"
+                Grid.Column="0"
+                Grid.Row="4"
                 Width="500"
                 TabIndex="4"
                 TouchDown="KeyboardNum_TouchDown"
@@ -264,16 +260,69 @@
                 TextWrapping="Wrap"
                 Text="{Binding Value4, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox TabIndex="5" Height="0" Width="0" />
-        </Grid>
+            <TextBlock Name="TxbData9"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   FontSize="40"
+                   Grid.Row="4"
+                   Grid.Column="4"
+                   FontWeight="Bold"   
+                   Foreground="Black"
+                   Text="{Binding Row9}" />
 
-        <Grid Grid.Row="3">
+            <TextBox Name="TbxData9"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                FontSize="40"
+                Grid.Column="1"
+                Grid.Row="4"
+                Width="500"
+                TabIndex="4"
+                TouchDown="Keyboard_TouchDown"
+                Foreground="#FF606060"
+                TextWrapping="Wrap"
+                Text="{Binding Value9, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Name="TxbData10"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   FontSize="40"
+                   Grid.Row="5"
+                   FontWeight="Bold"   
+                   Foreground="Black"
+                   Text="{Binding Row10}" />
+
+            <TextBox Name="TbxData10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,0,0,0"
+                TextAlignment="Center"
+                FontSize="40"
+                Grid.Column="0"
+                Grid.Row="5"
+                Width="500"
+                TabIndex="4"
+                TouchDown="Keyboard_TouchDown"
+                Foreground="#FF606060"
+                TextWrapping="Wrap"
+                Text="{Binding Value10, UpdateSourceTrigger=PropertyChanged}" />
             <Image Source="/Images/Buttons/btn-pay.png"
                 x:Name="btn_payment"
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Center" 
-                Margin="0,0,80,100"                  
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"              
                 Width="500"
+                Grid.Row="6"
+                   Grid.ColumnSpan="2"
                 TouchDown="Btn_payment_TouchDown"/>
         </Grid>
+
     </Grid>
 </UserControl>

@@ -159,6 +159,42 @@ namespace WPFCCMedellin.ViewModel
             }
         }
 
+        private string _row9;
+
+        public string Row9
+        {
+            get
+            {
+                return _row9;
+            }
+            set
+            {
+                if (_row9 != value)
+                {
+                    _row9 = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Row9)));
+                }
+            }
+        }
+
+        private string _row10;
+
+        public string Row10
+        {
+            get
+            {
+                return _row10;
+            }
+            set
+            {
+                if (_row10 != value)
+                {
+                    _row10 = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Row10)));
+                }
+            }
+        }
+
         private string _value1;
 
         public string Value1
@@ -299,6 +335,42 @@ namespace WPFCCMedellin.ViewModel
                 {
                     _value8 = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value8)));
+                }
+            }
+        }
+
+        private string _value9;
+
+        public string Value9
+        {
+            get
+            {
+                return _value9;
+            }
+            set
+            {
+                if (_value9 != value)
+                {
+                    _value9 = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value9)));
+                }
+            }
+        }
+
+        private string _value10;
+
+        public string Value10
+        {
+            get
+            {
+                return _value10;
+            }
+            set
+            {
+                if (_value10 != value)
+                {
+                    _value10 = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value10)));
                 }
             }
         }

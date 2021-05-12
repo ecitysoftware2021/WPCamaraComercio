@@ -86,6 +86,7 @@ namespace WPFCCMedellin.Services
                         Message = response.ErrorMessage
                     };
                 }
+                string sdds = JsonConvert.SerializeObject(requestCCM);
                 return new ResponseApi
                 {
                     CodeError = 200,
