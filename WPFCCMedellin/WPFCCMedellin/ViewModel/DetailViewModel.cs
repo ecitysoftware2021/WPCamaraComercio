@@ -88,7 +88,7 @@ namespace WPFCCMedellin.ViewModel
         }
 
         private string _row5;
-    
+
         public string Row5
         {
             get
@@ -133,7 +133,7 @@ namespace WPFCCMedellin.ViewModel
             }
             set
             {
-                if (_row7!= value)
+                if (_row7 != value)
                 {
                     _row7 = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Row7)));
@@ -438,15 +438,69 @@ namespace WPFCCMedellin.ViewModel
             }
         }
 
-        private List<TypeDocument> _optionsList;
+        private List<MockupsModel> _optionsList;
 
-        public List<TypeDocument> OptionsList
+        public List<MockupsModel> OptionsList
         {
             get { return _optionsList; }
             set
             {
                 _optionsList = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OptionsList)));
+            }
+        }
+
+        private List<MockupsModel> _departmentList;
+
+        public List<MockupsModel> DepartmentList
+        {
+            get { return _departmentList; }
+            set
+            {
+                _departmentList = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DepartmentList)));
+            }
+        }
+
+        private CollectionViewSource _departmenEntries;
+
+        public CollectionViewSource DepartmenEntries
+        {
+            get
+            {
+                return _departmenEntries;
+            }
+            set
+            {
+                _departmenEntries = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DepartmenEntries)));
+            }
+        }
+
+        private List<MockupsModel> _cityList;
+
+        public List<MockupsModel> CityList
+        {
+            get { return _cityList; }
+            set
+            {
+                _cityList = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CityList)));
+            }
+        }
+
+        private CollectionViewSource _cityEntries;
+
+        public CollectionViewSource CityEntries
+        {
+            get
+            {
+                return _cityEntries;
+            }
+            set
+            {
+                _cityEntries = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CityEntries)));
             }
         }
 
@@ -465,17 +519,50 @@ namespace WPFCCMedellin.ViewModel
             }
         }
 
+
         public void LoadList(ETypePayer type)
         {
             try
             {
 
-                var response = Utilities.ConverJson<List<TypeDocument>>(Utilities.GetConfiguration("PathTypeDocument"));
+                var response = Utilities.ConverJson<List<MockupsModel>>(Utilities.GetConfiguration("PathTypeDocument"));
                 if (response != null && response.Count > 0)
                 {
                     OptionsList.Clear();
                     OptionsList = response.FindAll(t => t.Type == (int)type);
                     OptionsEntries.Source = OptionsList;
+                }
+                var responseDepartmentList = Utilities.ConverJson<List<MockupsModel>>(Utilities.GetConfiguration("PathDepartmentList"));
+                if (responseDepartmentList != null && responseDepartmentList.Count > 0)
+                {
+                    DepartmentList.Clear();
+                    DepartmentList = responseDepartmentList;
+                    DepartmenEntries.Source = DepartmentList;
+                }
+
+                var responseCityList = Utilities.ConverJson<List<MockupsModel>>(Utilities.GetConfiguration("PathCityList"));
+                if (responseCityList != null && responseCityList.Count > 0)
+                {
+                    CityList.Clear();
+                    CityList = responseCityList;
+                    CityEntries.Source = CityList;
+                }
+            }
+            catch (Exception ex)
+            {
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+            }
+        }
+
+        public void LoadListCity(List<MockupsModel> responseCityList)
+        {
+            try
+            {
+                if (responseCityList != null && responseCityList.Count > 0)
+                {
+                    CityList.Clear();
+                    CityList = responseCityList;
+                    CityEntries.Source = CityList;
                 }
             }
             catch (Exception ex)

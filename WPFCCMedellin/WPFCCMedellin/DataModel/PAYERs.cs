@@ -18,5 +18,8 @@ namespace WPFCCMedellin.DataModel
         public bool STATE { get; set; }
         public string TYPE_PAYER { get; set; }
         public string TYPE_IDENTIFICATION { get; set; }
+        public int codDepartamento { get; set; }
+        public int codMunicipio { get; set; }
+        public string municipio { get; set; }
     }
 }

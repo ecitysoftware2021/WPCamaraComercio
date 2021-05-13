@@ -13,6 +13,12 @@ namespace WPFCCMedellin.Services
         public string IdentificacionComprador { get; set; }
     }
 
+    public class RequestMunicipios
+    {
+        public int pais { get; set; }
+        public int dpto { get; set; }
+    }
+
     public class RequestConsult
     {
         public int tipo_busqueda { get; set; }
@@ -44,7 +50,7 @@ namespace WPFCCMedellin.Services
 
         public string EmailComprador { get; set; }
 
-        public string IdCliente { get; set; }
+        public int IdCliente { get; set; }
 
         public string IdentificacionComprador { get; set; }
 

@@ -149,7 +149,7 @@
     <Compile Include="Models\Payer.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Transaction.cs" />
-    <Compile Include="Models\TypeDocument.cs" />
+    <Compile Include="Models\MockupsModel.cs" />
     <Compile Include="Resources\ImagesUrlResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,6 +161,7 @@
     <Compile Include="Services\Object\Response.cs" />
     <Compile Include="Services\Object\ResponseApi.cs" />
     <Compile Include="Services\Object\Request.cs" />
+    <Compile Include="Services\Object\ResponseCity.cs" />
     <Compile Include="Services\Object\ResponsePayer.cs" />
     <Compile Include="UserControls\Administrator\AdministratorUserControl.xaml.cs">
       <DependentUpon>AdministratorUserControl.xaml</DependentUpon>

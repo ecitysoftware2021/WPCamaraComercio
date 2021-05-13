@@ -49,7 +49,9 @@ namespace WPFCCMedellin.UserControls
                     Row9 = "(*)Correo",
                     Row10 = "(*)Dirección",
                     OptionsEntries = new CollectionViewSource(),
-                    OptionsList = new List<TypeDocument>(),
+                    OptionsList = new List<MockupsModel>(),
+                    DepartmentList = new List<MockupsModel>(),
+                    CityList = new List<MockupsModel>(),
                     SourceCheckId = ImagesUrlResource.ImageCheckIn,
                     SourceCheckName = ImagesUrlResource.ImageCheckOut,
                 };
@@ -58,6 +60,8 @@ namespace WPFCCMedellin.UserControls
 
                 viewModel.LoadList(viewModel.TypePayer);
                 cmb_type_id.SelectedIndex = 0;
+                cmb_department_id.SelectedIndex = 0;
+                cmb_city_id.SelectedIndex = 0;
 
                 this.DataContext = viewModel;
 
@@ -154,7 +158,7 @@ namespace WPFCCMedellin.UserControls
             {
                 if (ValidateFields())
                 {
-                    SaveTransaction(((TypeDocument)cmb_type_id.SelectedItem).Key);
+                    SaveTransaction(((MockupsModel)cmb_type_id.SelectedItem).Key);
                 }
                 else
                 {
@@ -217,6 +221,7 @@ namespace WPFCCMedellin.UserControls
                 {
                     try
                     {
+                        string codDepartamento = ((MockupsModel)cmb_department_id.SelectedItem).Key;
                         transaction.payer = new PAYER
                         {
                             IDENTIFICATION = viewModel.Value1,
@@ -225,7 +230,10 @@ namespace WPFCCMedellin.UserControls
                             TYPE_PAYER = viewModel.TypePayer == ETypePayer.Person ? "Persona" : "Empresa",
                             TYPE_IDENTIFICATION = typeDocument,
                             EMAIL = viewModel.Value9,
-                            ADDRESS = viewModel.Value10
+                            ADDRESS = viewModel.Value10,
+                            codDepartamento = int.Parse(codDepartamento.Substring(codDepartamento.Length - 2, 2)),
+                            codMunicipio = int.Parse(((MockupsModel)cmb_city_id.SelectedItem).Key),
+                            municipio = ((MockupsModel)cmb_city_id.SelectedItem).Value
                         };
 
                         if (viewModel.TypePayer == ETypePayer.Person)
@@ -306,7 +314,7 @@ namespace WPFCCMedellin.UserControls
                     string doc = string.Empty;
                     await Dispatcher.BeginInvoke((Action)delegate
                      {
-                         tipoDoc = ((TypeDocument)cmb_type_id.SelectedItem).Key;
+                         tipoDoc = ((MockupsModel)cmb_type_id.SelectedItem).Key;
                          doc = TbxIdentification.Text;
                      });
 
@@ -350,5 +358,41 @@ namespace WPFCCMedellin.UserControls
             }
         }
 
+        private void cmb_department_id_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string codDepartamento = ((MockupsModel)(sender as ComboBox).SelectedItem).Key;
+            GetCityByDepartment(codDepartamento.Substring(codDepartamento.Length - 2, 2));
+        }
+
+
+        public void GetCityByDepartment(string codDepartamento)
+        {
+            List<MockupsModel> models = new List<MockupsModel>();
+            var response = AdminPayPlus.ApiIntegration.GetData(new RequestMunicipios
+            {
+                pais = 169,
+                dpto = int.Parse(codDepartamento)
+            }, "ConsultarMunicipios").Result;
+
+            if (response.CodeError == 200 && response.Data != null)
+            {
+                var result = JsonConvert.DeserializeObject<City>(response.Data.ToString());
+
+                if (result != null && result.response != null && string.IsNullOrEmpty(result.response.codigo))
+                {
+                    foreach (var item in result.response.resultados)
+                    {
+                        models.Add(new MockupsModel
+                        {
+                            Value = item.nombre,
+                            Key = item.codigo
+                        });
+                    }
+                }
+            }
+
+
+            viewModel.LoadListCity(models);
+        }
     }
 }

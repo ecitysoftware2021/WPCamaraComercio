@@ -113,13 +113,13 @@ namespace WPFCCMedellin.Services
                     {
                         AutorizaEnvioEmail = "NO",
                         AutorizaEnvioSMS = "NO",
-                        CodigoDepartamentoComprador = int.Parse(Utilities.GetConfiguration("CodeDepartmentBuyer")),
-                        CodigoMunicipioComprador = int.Parse(Utilities.GetConfiguration("CodeTownBuyer")),
+                        CodigoDepartamentoComprador = transaction.payer.codDepartamento,
+                        CodigoMunicipioComprador = transaction.payer.codMunicipio,
                         CodigoPaisComprador = int.Parse(Utilities.GetConfiguration("CodeCountryBuyer")),
                         DireccionComprador = transaction.payer.ADDRESS ?? string.Empty,
                         EmailComprador = transaction.payer.EMAIL ?? string.Empty,
                         IdentificacionComprador = transaction.payer.IDENTIFICATION,
-                        MunicipioComprador = string.Empty,
+                        MunicipioComprador = transaction.payer.municipio,
                         NombreComprador = string.Concat(transaction.payer.NAME, " ", transaction.payer.LAST_NAME),
                         PlataformaCliente = Utilities.GetConfiguration("ClientPlataform"),
                         PrimerApellidoComprador = transaction.payer.LAST_NAME,
@@ -132,7 +132,7 @@ namespace WPFCCMedellin.Services
                         TipoIdentificacionComprador = transaction.payer.TYPE_IDENTIFICATION,
                         ValorCompra = Decimal.ToInt32(transaction.Amount),
                         Certificados = transaction.Products,
-                        IdCliente = Utilities.GetConfiguration("IdClient")
+                        IdCliente = AdminPayPlus.DataConfiguration.ID_PAYPAD.Value
                     }, "SendPay");
 
                     if (response.CodeError == 200 && response.Data != null)

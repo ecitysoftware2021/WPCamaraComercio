@@ -314,12 +314,64 @@
                 Foreground="#FF606060"
                 TextWrapping="Wrap"
                 Text="{Binding Value10, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock  HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
+                   TextAlignment="Center"
+                   FontSize="40"
+                   Grid.Row="5"
+                   Grid.Column="1"
+                   FontWeight="Bold"   
+                   Foreground="Black"
+                   Text="(*)Departamento:" />
+
+            <ComboBox Name="cmb_department_id"
+                    Grid.Column="1" 
+                    Grid.Row="5"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Width="500"
+                    Foreground="#FF606060"
+                    FontSize="40"
+                    ItemsSource="{Binding DepartmentList}"
+                    SelectedValuePath="Key"
+                    DisplayMemberPath="Value"
+                      SelectionChanged="cmb_department_id_SelectionChanged"/>
+
+            <TextBlock  HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0"
+                   TextAlignment="Center"
+                   FontSize="40"
+                   Grid.Row="6"
+                   Grid.Column="0"
+                   FontWeight="Bold"   
+                   Foreground="Black"
+                   Text="(*)Ciudad:" />
+
+            <ComboBox Name="cmb_city_id"
+                    Grid.Column="0" 
+                    Grid.Row="6"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Width="500"
+                    Foreground="#FF606060"
+                    FontSize="40"
+                    ItemsSource="{Binding CityList}"
+                    SelectedValuePath="Key"
+                    DisplayMemberPath="Value" />
+
             <Image Source="/Images/Buttons/btn-pay.png"
                 x:Name="btn_payment"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"              
                 Width="500"
-                Grid.Row="6"
+                Grid.Row="7"
                    Grid.ColumnSpan="2"
                 TouchDown="Btn_payment_TouchDown"/>
         </Grid>
