@@ -539,14 +539,6 @@ namespace WPFCCMedellin.ViewModel
                     DepartmentList = responseDepartmentList;
                     DepartmenEntries.Source = DepartmentList;
                 }
-
-                var responseCityList = Utilities.ConverJson<List<MockupsModel>>(Utilities.GetConfiguration("PathCityList"));
-                if (responseCityList != null && responseCityList.Count > 0)
-                {
-                    CityList.Clear();
-                    CityList = responseCityList;
-                    CityEntries.Source = CityList;
-                }
             }
             catch (Exception ex)
             {

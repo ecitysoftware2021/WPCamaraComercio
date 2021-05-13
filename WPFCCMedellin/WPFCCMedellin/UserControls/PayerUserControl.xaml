@@ -371,8 +371,8 @@
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"              
                 Width="500"
-                Grid.Row="7"
-                   Grid.ColumnSpan="2"
+                Grid.Row="6"
+                   Grid.Column="1"
                 TouchDown="Btn_payment_TouchDown"/>
         </Grid>
 

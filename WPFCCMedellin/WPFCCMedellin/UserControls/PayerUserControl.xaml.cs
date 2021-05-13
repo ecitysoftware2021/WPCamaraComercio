@@ -49,12 +49,21 @@ namespace WPFCCMedellin.UserControls
                     Row9 = "(*)Correo",
                     Row10 = "(*)Dirección",
                     OptionsEntries = new CollectionViewSource(),
+                    DepartmenEntries = new CollectionViewSource(),
+                    CityEntries = new CollectionViewSource(),
                     OptionsList = new List<MockupsModel>(),
                     DepartmentList = new List<MockupsModel>(),
                     CityList = new List<MockupsModel>(),
                     SourceCheckId = ImagesUrlResource.ImageCheckIn,
                     SourceCheckName = ImagesUrlResource.ImageCheckOut,
                 };
+
+                viewModel.Value1 = string.Empty;
+                viewModel.Value2 = string.Empty;
+                viewModel.Value3 = string.Empty;
+                viewModel.Value4 = string.Empty;
+                viewModel.Value9 = string.Empty;
+                viewModel.Value10 = string.Empty;
 
                 viewModel.TypePayer = ETypePayer.Person;
 
@@ -135,6 +144,7 @@ namespace WPFCCMedellin.UserControls
                     }
 
                     viewModel.LoadList(viewModel.TypePayer);
+                    viewModel.LoadListCity(new List<MockupsModel>());
 
                     viewModel.Value1 = string.Empty;
                     viewModel.Value2 = string.Empty;
@@ -160,10 +170,6 @@ namespace WPFCCMedellin.UserControls
                 {
                     SaveTransaction(((MockupsModel)cmb_type_id.SelectedItem).Key);
                 }
-                else
-                {
-                    Utilities.ShowModal(MessageResource.InfoIncorrect, EModalType.Error);
-                }
             }
             catch (Exception ex)
             {
@@ -175,36 +181,58 @@ namespace WPFCCMedellin.UserControls
         {
             try
             {
+                bool state = true;
+                string filds = string.Empty;
                 if (viewModel.Value1.Length < 6)
                 {
-                    return false;
+                    state = false;
+                    filds += "Documento, ";
                 }
 
                 if (string.IsNullOrEmpty(viewModel.Value2))
                 {
-                    return false;
+                    state = false;
+                    filds += "Nombre o Razón Social, ";
                 }
                 if (viewModel.TypePayer == ETypePayer.Person)
                 {
                     if (string.IsNullOrEmpty(viewModel.Value3))
                     {
-                        return false;
+                        state = false;
+                        filds += "Apellido, ";
                     }
                 }
                 if (!Utilities.IsValidEmailAddress(viewModel.Value9))
                 {
-                    return false;
+                    state = false;
+                    filds += "Correo, ";
                 }
 
                 if (viewModel.Value4.Length < 6)
                 {
-                    return false;
+                    state = false;
+                    filds += "Teléfono, ";
                 }
                 if (viewModel.Value10.Length < 5)
                 {
-                    return false;
+                    state = false;
+                    filds += "Dirección, ";
                 }
-                return true;
+                if ((MockupsModel)cmb_department_id.SelectedItem == null)
+                {
+                    state = false;
+                    filds += "Departamento, ";
+                }
+                if ((MockupsModel)cmb_city_id.SelectedItem == null)
+                {
+                    state = false;
+                    filds += "Ciudad, ";
+                }
+                if (!state)
+                {
+                    Utilities.ShowModal(string.Concat("Los datos: ", Environment.NewLine, filds, " son requeridos!"), EModalType.Error);
+                }
+                return state;
             }
             catch (Exception ex)
             {
@@ -221,7 +249,15 @@ namespace WPFCCMedellin.UserControls
                 {
                     try
                     {
-                        string codDepartamento = ((MockupsModel)cmb_department_id.SelectedItem).Key;
+                        string codDepartamento = string.Empty;
+                        string codCiudad = string.Empty;
+                        string municipio = string.Empty;
+                        await Dispatcher.BeginInvoke((Action)delegate
+                         {
+                             codDepartamento = ((MockupsModel)cmb_department_id.SelectedItem).Key;
+                             codCiudad = ((MockupsModel)cmb_city_id.SelectedItem).Key;
+                             municipio = ((MockupsModel)cmb_city_id.SelectedItem).Value;
+                         });
                         transaction.payer = new PAYER
                         {
                             IDENTIFICATION = viewModel.Value1,
@@ -232,8 +268,8 @@ namespace WPFCCMedellin.UserControls
                             EMAIL = viewModel.Value9,
                             ADDRESS = viewModel.Value10,
                             codDepartamento = int.Parse(codDepartamento.Substring(codDepartamento.Length - 2, 2)),
-                            codMunicipio = int.Parse(((MockupsModel)cmb_city_id.SelectedItem).Key),
-                            municipio = ((MockupsModel)cmb_city_id.SelectedItem).Value
+                            codMunicipio = int.Parse(codCiudad),
+                            municipio = municipio
                         };
 
                         if (viewModel.TypePayer == ETypePayer.Person)
@@ -360,39 +396,52 @@ namespace WPFCCMedellin.UserControls
 
         private void cmb_department_id_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string codDepartamento = ((MockupsModel)(sender as ComboBox).SelectedItem).Key;
-            GetCityByDepartment(codDepartamento.Substring(codDepartamento.Length - 2, 2));
+            if ((MockupsModel)(sender as ComboBox).SelectedItem != null)
+            {
+                string codDepartamento = ((MockupsModel)(sender as ComboBox).SelectedItem).Key;
+                GetCityByDepartment(codDepartamento.Substring(codDepartamento.Length - 2, 2));
+
+            }
         }
 
 
         public void GetCityByDepartment(string codDepartamento)
         {
-            List<MockupsModel> models = new List<MockupsModel>();
-            var response = AdminPayPlus.ApiIntegration.GetData(new RequestMunicipios
+            cmb_city_id.IsEnabled = false;
+            Task.Run(() =>
             {
-                pais = 169,
-                dpto = int.Parse(codDepartamento)
-            }, "ConsultarMunicipios").Result;
-
-            if (response.CodeError == 200 && response.Data != null)
-            {
-                var result = JsonConvert.DeserializeObject<City>(response.Data.ToString());
-
-                if (result != null && result.response != null && string.IsNullOrEmpty(result.response.codigo))
+                List<MockupsModel> models = new List<MockupsModel>();
+                var response = AdminPayPlus.ApiIntegration.GetData(new RequestMunicipios
                 {
-                    foreach (var item in result.response.resultados)
+                    pais = 169,
+                    dpto = int.Parse(codDepartamento)
+                }, "ConsultarMunicipios").Result;
+                Dispatcher.BeginInvoke((Action)delegate
+                {
+                    if (response.CodeError == 200 && response.Data != null)
                     {
-                        models.Add(new MockupsModel
+                        var result = JsonConvert.DeserializeObject<City>(response.Data.ToString());
+
+                        if (result != null && result.response != null && string.IsNullOrEmpty(result.response.codigo))
                         {
-                            Value = item.nombre,
-                            Key = item.codigo
-                        });
+                            foreach (var item in result.response.resultados)
+                            {
+                                models.Add(new MockupsModel
+                                {
+                                    Value = item.nombre,
+                                    Key = item.codigo
+                                });
+                            }
+                        }
                     }
-                }
-            }
 
 
-            viewModel.LoadListCity(models);
+                    viewModel.LoadListCity(models);
+                    cmb_city_id.SelectedItem = 0;
+                    cmb_city_id.IsEnabled = true;
+                });
+            });
+
         }
     }
 }

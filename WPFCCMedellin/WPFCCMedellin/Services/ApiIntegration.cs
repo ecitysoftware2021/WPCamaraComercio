@@ -21,6 +21,7 @@ namespace WPFCCMedellin.Services
         private HttpWebRequest client;
 
         private string basseAddress;
+        private string basseAddressPDF;
 
         private ASCIIEncoding encoding;
 
@@ -36,6 +37,7 @@ namespace WPFCCMedellin.Services
             encoding = new ASCIIEncoding();
 
             basseAddress = Utilities.GetConfiguration("basseAddressIntegration");
+            basseAddressPDF = Utilities.GetConfiguration("basseAddressPDF");
         }
 
         private string GenerateMD5()
@@ -86,7 +88,6 @@ namespace WPFCCMedellin.Services
                         Message = response.ErrorMessage
                     };
                 }
-                string sdds = JsonConvert.SerializeObject(requestCCM);
                 return new ResponseApi
                 {
                     CodeError = 200,
@@ -189,9 +190,9 @@ namespace WPFCCMedellin.Services
                                 }
 
                                 var nameFile = $"{transaction.consecutive}-{transaction.consecutive}" +
-                                    $"-{transaction.Enrollment}-{product.MatriculaEst ?? "0"}-{transaction.Tpcm}-{(i + 1).ToString()}";
+                                    $"-{transaction.Enrollment}-{product.MatriculaEst ?? "0"}-{product.IdCertificado}-{transaction.Tpcm}-{(i + 1).ToString()}";
 
-                                var patchFile = string.Concat(basseAddress,
+                                var patchFile = string.Concat(basseAddressPDF,
                                     Utilities.GetConfiguration("GetCertifiedString"),
                                     "?idcompra=", transaction.consecutive,
                                     "&IdCertificado=", product.IdCertificado,
