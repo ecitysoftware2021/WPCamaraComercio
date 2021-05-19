@@ -416,5 +416,10 @@ namespace WPFCCMedellin.UserControls
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
         }
+
+        private void Btn_cancelTrans_TouchDown(object sender, TouchEventArgs e)
+        {
+            Utilities.navigator.Navigate(UserControlView.LoginCancelTrans);
+        }
     }
 }

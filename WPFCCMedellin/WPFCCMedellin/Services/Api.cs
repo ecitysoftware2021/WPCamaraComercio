@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -7,6 +10,7 @@ using System.Threading.Tasks;
 using WPFCCMedellin.Classes;
 using WPFCCMedellin.DataModel;
 using WPFCCMedellin.Services.Object;
+using static WPFCCMedellin.Classes.LoginCancelTransaction;
 
 namespace WPFCCMedellin.Services
 {
@@ -131,6 +135,74 @@ namespace WPFCCMedellin.Services
 
             }
             return null;
+        }
+
+        public static async Task<UserSession2> Login(string username, string password)
+        {
+            try
+            {
+                RequestApi requestApi2 = new RequestApi
+                {
+                    Session = requestApi.Session,
+                    User = requestApi.User,
+                    Data = new RequestAuthentication2
+                    {
+                        Password = password,
+                        Type = 1,
+                        UserName = username
+                    }
+                };
+                ServicePointManager.Expect100Continue = false;
+                var json = JsonConvert.SerializeObject(requestApi2);
+                var content = new StringContent(json, Encoding.UTF8, "Application/json");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(Utilities.GetConfiguration("basseAddress"));
+                var url = "Users/Login";
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var response = client.PostAsync(url, content).Result;
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var result = await response.Content.ReadAsStringAsync();
+                var responseApi = JsonConvert.DeserializeObject<Response2>(result);
+                if (responseApi.CodeError != 200)
+                {
+                    return null;
+                }
+
+                var user = JsonConvert.DeserializeObject<List<UserViewModel2>>(responseApi.Data.ToString()).FirstOrDefault();
+                var userSession = new UserSession2
+                {
+                    CUSTOMER_ID = user.CUSTOMER_ID,
+                    EMAIL = user.EMAIL,
+                    IDENTIFICATION = user.IDENTIFICATION,
+                    IMAGE = user.IMAGE,
+                    NAME = user.NAME,
+                    PASSWORD = user.PASSWORD,
+                    PHONE = user.PHONE,
+                    STATE = user.STATE,
+                    USERNAME = user.USERNAME,
+                    USER_ID = user.USER_ID,
+                    Roles = new List<Role2>()
+                    {
+                        new Role2
+                        {
+                            DESCRIPTION = user.ROL_NAME,
+                            ROLE_ID = user.ROLE_ID
+                        }
+                    },
+
+                };
+
+                return userSession;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

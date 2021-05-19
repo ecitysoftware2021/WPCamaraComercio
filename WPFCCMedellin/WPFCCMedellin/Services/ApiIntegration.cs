@@ -237,11 +237,11 @@ namespace WPFCCMedellin.Services
                     var response = await GetData(new CancelPayment
                     {
                         IdCliente = Utilities.GetConfiguration("IdClient"),
-                        IdCompra = int.Parse(transaction.consecutive),
-                        ValorCompra = transaction.Amount,
-                        ReferenciaPago = transaction.IdTransactionAPi.ToString(),
+                        IdCompra = transaction.idCompra,
+                        ValorCompra = transaction.valorCompra,
+                        ReferenciaPago = transaction.referenciaPago,
                         PlataformaCliente = Utilities.GetConfiguration("ClientPlataform"),
-                        Observaciones = string.Empty
+                        Observaciones = transaction.observaciones
                     }, "BuyCancel");
 
                     if (response.CodeError == 200)

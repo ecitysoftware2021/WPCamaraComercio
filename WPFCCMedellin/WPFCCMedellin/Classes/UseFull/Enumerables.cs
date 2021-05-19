@@ -54,7 +54,9 @@ namespace WPFCCMedellin.Classes
         Config,
         Admin,
         Certificates,
-        PrintFile
+        PrintFile,
+        LoginCancelTrans,
+        CancelTransaction
     }
 
     public enum ETransactionState

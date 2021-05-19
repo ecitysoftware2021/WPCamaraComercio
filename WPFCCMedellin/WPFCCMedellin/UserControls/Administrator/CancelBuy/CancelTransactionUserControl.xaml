@@ -1,0 +1,207 @@
+﻿<UserControl x:Class="WPFCCMedellin.UserControls.Administrator.CancelBuy.CancelTransactionUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFCCMedellin.UserControls.Administrator.CancelBuy" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+            d:DesignHeight="1920" d:DesignWidth="1080">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/Backgrounds/bg-blanck.jpg"/>
+        </Grid.Background>
+
+        <TextBlock 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" 
+                    TextAlignment="Center"
+                    Width="900"
+                    TextWrapping="Wrap"
+                    Text="LLene los campos requeridos para poder cancelar la transacción" 
+                    Foreground="Black" 
+                    FontSize="55" 
+                    FontWeight="Bold" 
+                    Margin="0,270,0,0"/>
+        
+        <Border
+            Background="White"
+            Grid.Row="1"
+            Height="100"
+            Width="700"
+            VerticalAlignment="Center"
+            Margin="0,0,0,800"
+            CornerRadius="20"
+            >
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                <Image Source="/images/others/idPago.png"
+                    Width="90"
+                    Height="100"
+                    Margin="10,0,0,0"/>
+
+                <TextBox 
+                    TouchDown="txtform_TouchDown"
+                    TextChanged="txtIdCompra_TextChanged"
+                    x:Name="txtIdCompra"
+                    Tag="2"
+                    FontSize="50"
+                    Width="550"
+                    md:HintAssist.Hint="         Id de Compra*"
+                    TextAlignment="Center"
+                    Margin="20,0,0,0"
+                    FontFamily="Arial"
+                    FontWeight="Bold"
+                    Foreground="black"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                />
+            </StackPanel>
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect ShadowDepth="5" Color="Gray"/>
+            </Border.BitmapEffect>
+        </Border>
+
+        <Border
+            Background="White"
+            Grid.Row="1"
+            Height="100"
+            Width="700"
+            VerticalAlignment="Center"
+            Margin="0,0,0,400"
+            CornerRadius="20"
+            >
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                <Image Source="/images/others/valorCompra.png"
+                    Width="90"
+                    Height="100"
+                    Margin="10,0,0,0"/>
+
+                <TextBox 
+                    TouchDown="txtform_TouchDown"
+                    TextChanged="txtValorCompra_TextChanged"
+                    x:Name="txtValorCompra"
+                    Tag="2"
+                    FontSize="50"
+                    Width="550"
+                    md:HintAssist.Hint="      Valor de Compra*"
+                    TextAlignment="Center"
+                    Margin="20,0,0,0"
+                    FontFamily="Arial"
+                    FontWeight="Bold"
+                    Foreground="black"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                />
+            </StackPanel>
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect ShadowDepth="5" Color="Gray"/>
+            </Border.BitmapEffect>
+        </Border>
+
+        <Border
+            Background="White"
+            Grid.Row="1"
+            Height="100"
+            Width="700"
+            VerticalAlignment="Center"
+            Margin="0,0,0,0"
+            CornerRadius="20"
+            >
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                <Image Source="/images/others/referenciaPago.png"
+                    Width="90"
+                    Height="100"
+                    Margin="10,0,0,0"/>
+
+                <TextBox 
+                    TouchDown="txtform_TouchDown"
+                    TextChanged="txtReferenciaPago_TextChanged"
+                    x:Name="txtReferenciaPago"
+                    Tag="2"
+                    FontSize="50"
+                    Width="550"
+                    md:HintAssist.Hint="   Referencia de pago*"
+                    TextAlignment="Center"
+                    Margin="20,0,0,0"
+                    FontFamily="Arial"
+                    FontWeight="Bold"
+                    Foreground="black"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                />
+            </StackPanel>
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect ShadowDepth="5" Color="Gray"/>
+            </Border.BitmapEffect>
+        </Border>
+
+        <Border
+            Background="White"
+            Grid.Row="1"
+            Height="100"
+            Width="700"
+            VerticalAlignment="Center"
+            Margin="0,400,0,0"
+            CornerRadius="20"
+            >
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                <Image Source="/images/others/observaciones.png"
+                    Width="90"
+                    Height="100"
+                    Margin="10,0,0,0"/>
+
+                <TextBox 
+                    TouchDown="txtObservaciones_TouchDown"
+                    TextChanged="txtObservaciones_TextChanged"
+                    x:Name="txtObservaciones"
+                    Tag="2"
+                    FontSize="50"
+                    Width="550"
+                    md:HintAssist.Hint="       Observaciones"
+                    TextAlignment="Center"
+                    Margin="20,0,0,0"
+                    FontFamily="Arial"
+                    FontWeight="Bold"
+                    Foreground="black"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                />
+            </StackPanel>
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect ShadowDepth="5" Color="Gray"/>
+            </Border.BitmapEffect>
+        </Border>
+        
+        <Image x:Name="btn_consult"
+                   Source="/Images/Buttons/btn-acept.png"
+                   HorizontalAlignment="Center"
+                   Opacity="0.3"
+                   IsEnabled="False"
+                   VerticalAlignment="Center" 
+                   Width="350"
+                   Height="100" 
+                   Margin="0,800,0,0" 
+                   TouchDown="BtnConsult_TouchDown"/>
+
+        <Image x:Name="btn_Back"
+                   Source="/Images/Buttons/btn-back.png"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top" 
+                   Width="350"
+                   Height="95" 
+                   Margin="0,100,550,0" 
+                   TouchDown="BtnBack_TouchDown" />
+    </Grid>
+</UserControl>

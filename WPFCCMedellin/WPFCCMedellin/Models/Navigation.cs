@@ -7,6 +7,7 @@ using WPFCCMedellin.Classes;
 using WPFCCMedellin.Services.Object;
 using WPFCCMedellin.UserControls;
 using WPFCCMedellin.UserControls.Administrator;
+using WPFCCMedellin.UserControls.Administrator.CancelBuy;
 
 namespace WPFCCMedellin.Models
 {
@@ -69,6 +70,13 @@ namespace WPFCCMedellin.Models
                         break;
                     case UserControlView.PrintFile:
                         View = new PrintFileUserControl((Transaction)data);
+                        break;
+
+                    case UserControlView.LoginCancelTrans:
+                        View = new LoginCancelTransUserControl();
+                        break;
+                    case UserControlView.CancelTransaction:
+                        View = new CancelTransactionUserControl();
                         break;
                 }
 

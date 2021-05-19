@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using WPFCCMedellin.Classes;
 using WPFCCMedellin.DataModel;
+using WPFCCMedellin.Services;
 using WPFCCMedellin.Services.Object;
 using WPFCCMedellin.ViewModel;
 
@@ -16,6 +17,20 @@ namespace WPFCCMedellin.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
         }
+
+        //--------------------- Cancelar transacción -----------------------------
+
+        public int idCompra { get; set; }
+
+        public decimal valorCompra { get; set; }
+
+        public string referenciaPago { get; set; }
+
+        public string observaciones { get; set; }
+
+        public CancelPayment cancelPayment { get; set; }
+
+        //--------------------- Fin de cacelar transacción --------------------------
 
         public string consecutive { get; set; }
 

@@ -29,6 +29,15 @@
                    Width="250"
                    Margin="0,0,20,20"
                    TouchDown="Btn_exit_TouchDown" />
+
+            <Image Source="/Images/Buttons/btn-cancel-pay.png"
+                   Name="btn_cancelTrans"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Grid.Column="4"
+                   Width="350"
+                   Margin="20,0,0,20"
+                   TouchDown="Btn_cancelTrans_TouchDown" />
         </Grid>
 
         <Grid Grid.Row="1">
