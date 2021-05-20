@@ -60,6 +60,11 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
             {
                 txtObservaciones.Text = txtObservaciones.Text.Remove(txtObservaciones.Text.Length - 1);
             }
+            if (checkFields())
+            {
+                btn_consult.IsEnabled = true;
+                btn_consult.Opacity = 1;
+            }
         }
 
         private void txtReferenciaPago_TextChanged(object sender, TextChangedEventArgs e)
@@ -68,6 +73,11 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
             if (lenght > 20)
             {
                 txtReferenciaPago.Text = txtReferenciaPago.Text.Remove(txtReferenciaPago.Text.Length - 1);
+            }
+            if (checkFields())
+            {
+                btn_consult.IsEnabled = true;
+                btn_consult.Opacity = 1;
             }
         }
 
@@ -78,6 +88,11 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
             {
                 txtValorCompra.Text = txtValorCompra.Text.Remove(txtValorCompra.Text.Length - 1);
             }
+            if (checkFields())
+            {
+                btn_consult.IsEnabled = true;
+                btn_consult.Opacity = 1;
+            }
         }
 
         private void txtIdCompra_TextChanged(object sender, TextChangedEventArgs e)
@@ -86,6 +101,11 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
             if (lenght > 20)
             {
                 txtIdCompra.Text = txtIdCompra.Text.Remove(txtIdCompra.Text.Length - 1);
+            }
+            if (checkFields())
+            {
+                btn_consult.IsEnabled = true;
+                btn_consult.Opacity = 1;
             }
         }
 

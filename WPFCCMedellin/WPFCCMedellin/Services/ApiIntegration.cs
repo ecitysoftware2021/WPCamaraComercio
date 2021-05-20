@@ -232,11 +232,11 @@ namespace WPFCCMedellin.Services
         {
             try
             {
-                if (transaction != null && !string.IsNullOrEmpty(transaction.consecutive))
+                if (transaction != null)
                 {
                     var response = await GetData(new CancelPayment
                     {
-                        IdCliente = Utilities.GetConfiguration("IdClient"),
+                        IdCliente = AdminPayPlus.DataConfiguration.ID_PAYPAD.ToString(),
                         IdCompra = transaction.idCompra,
                         ValorCompra = transaction.valorCompra,
                         ReferenciaPago = transaction.referenciaPago,
@@ -244,7 +244,9 @@ namespace WPFCCMedellin.Services
                         Observaciones = transaction.observaciones
                     }, "BuyCancel");
 
-                    if (response.CodeError == 200)
+                    var result = JsonConvert.DeserializeObject<ResponsePay>(response.Data.ToString());
+
+                    if (response.CodeError == 200 && result.response.mensaje == "")
                     {
                         transaction.State = ETransactionState.Cancel;
                     }

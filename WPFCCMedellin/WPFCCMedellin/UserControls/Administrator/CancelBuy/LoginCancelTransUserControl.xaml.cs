@@ -28,12 +28,12 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
         }
 
         #region Eventos
-        private void txtPassword_TextChanged(object sender, RoutedEventArgs e)
+        private void txtPassword_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int lenght = txtPassword.Password.Length;
-            if (lenght > 15)
+            int lenght = txtPassword.Text.Length;
+            if (lenght > 25)
             {
-                txtPassword.Password = txtPassword.Password.Remove(txtPassword.Password.Length - 1);
+                txtPassword.Text = txtPassword.Text.Remove(txtPassword.Text.Length - 1);
             }
         }
 
@@ -61,7 +61,7 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
             {
                 Utilities.ShowModal("No se pudo encontrar información del usuario, por favor intente de nuevo.", EModalType.Error);
             }
-        } 
+        }
         #endregion
 
         #region Metodos
@@ -70,37 +70,19 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
             try
             {
                 string user = txtDocument.Text;
-                string pass = txtPassword.Password;
+                string pass = txtPassword.Text;
 
-                bool correct = true;
+                var result = Api.Login(user, pass).Result;
 
-                var t = Task.Run(() =>
-                {
-                    return Api.Login(user, pass).Result;
-                });
 
-                var c = t.ContinueWith((antecedent) => Dispatcher.BeginInvoke((Action)delegate
+
+                if (result == null)
                 {
-                    if (t.Status == TaskStatus.RanToCompletion)
-                    {
-                        if (antecedent.Result == null)
-                        {
-                            MessageBox.Show("Usuario y/o Contraseña incorrectos, intente de nuevo", "Usuario Incorrecto", MessageBoxButton.OK, MessageBoxImage.Information);
-                            txtPassword.Password = string.Empty;
-                            correct = false;
-                        }
-                    }
-                    else if (t.Status == TaskStatus.Faulted)
-                    {
-                        MessageBox.Show(t.Exception.GetBaseException().Message);
-                        correct = false;
-                    }
-                }));
-                if (correct)
-                {
-                    return true;
+                    MessageBox.Show("Usuario y/o Contraseña incorrectos, intente de nuevo", "Usuario Incorrecto", MessageBoxButton.OK, MessageBoxImage.Information);
+                    txtPassword.Text = string.Empty;
+                    return false;
                 }
-                return false;
+                return true;
             }
             catch (Exception ex)
             {
