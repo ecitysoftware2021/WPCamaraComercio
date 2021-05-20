@@ -131,10 +131,12 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
 
                         if (transaction.State == ETransactionState.Cancel)
                         {
+                            transaction.IdTransactionAPi = int.Parse(transaction.referenciaPago);
+
                             Utilities.ShowModal("Transacción cancelada exitosamente", EModalType.Information);
+                            
                             AdminPayPlus.UpdateTransaction(transaction);
 
-                            transaction.IdTransactionAPi = transaction.idCompra;
                             Utilities.navigator.Navigate(UserControlView.Main);
                         }
                         else
