@@ -115,6 +115,8 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
             {
                 if (checkFields())
                 {
+                    transaction.State = ETransactionState.CancelError;
+
                     transaction.idCompra = int.Parse(txtIdCompra.Text);
                     transaction.valorCompra = decimal.Parse(txtValorCompra.Text);
                     transaction.referenciaPago = txtReferenciaPago.Text;
@@ -130,12 +132,14 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
                         if (transaction.State == ETransactionState.Cancel)
                         {
                             Utilities.ShowModal("Transacción cancelada exitosamente", EModalType.Information);
+                            AdminPayPlus.UpdateTransaction(transaction);
+
+                            transaction.IdTransactionAPi = transaction.idCompra;
                             Utilities.navigator.Navigate(UserControlView.Main);
                         }
                         else
                         {
                             Utilities.ShowModal("No se ha podido cancelar la transacción, por favor intentelo más tarde", EModalType.Information);
-
                         }
                     });
                     Utilities.ShowModal(MessageResource.FinishTransaction, EModalType.Preload);
