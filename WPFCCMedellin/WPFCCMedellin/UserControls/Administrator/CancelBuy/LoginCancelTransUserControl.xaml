@@ -110,5 +110,14 @@
                    Height="100" 
                    Margin="0,500,0,0" 
                    TouchDown="BtnConsult_TouchDown" />
+
+        <Image x:Name="btn_salir"
+                   Source="/Images/Buttons/btn-exit.png"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top" 
+                   Width="300"
+                   Height="100" 
+                   Margin="0,100,600,0" 
+                   TouchDown="btn_salir_TouchDown" />
     </Grid>
 </UserControl>

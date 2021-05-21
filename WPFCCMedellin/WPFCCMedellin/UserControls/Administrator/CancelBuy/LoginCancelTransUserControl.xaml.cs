@@ -62,6 +62,11 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
                 Utilities.ShowModal("No se pudo encontrar información del usuario, por favor intente de nuevo.", EModalType.Error);
             }
         }
+
+        private void btn_salir_TouchDown(object sender, TouchEventArgs e)
+        {
+            Utilities.navigator.Navigate(UserControlView.Main);
+        }
         #endregion
 
         #region Metodos
