@@ -197,8 +197,11 @@ namespace WPFCCMedellin.Classes
                         {
                             new DataPrinter{ image = GetConfiguration("ImageBoucher"),  x = 2, y = 2 },
                             new DataPrinter{ brush = color, font = fontKey, value = "NIT:", x = xKey, y = y+=120 },
-                            new DataPrinter{ brush = color, font = fontValue,
-                                value = GetConfiguration("NIT") ?? string.Empty, x = x, y = y },
+                            new DataPrinter{ brush = color, font = fontValue,value = GetConfiguration("NIT") ?? string.Empty, x = x, y = y },
+
+                            new DataPrinter{ brush = color, font = fontKey, value = "Calle 53 No 45 – 77 Medellín", x = 20, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,value = "Régimen Común - Entidad Sin Ánimo de Lucro", x = 20, y = y+=sum },
+
                             new DataPrinter{ brush = color, font = fontKey, value = "Trámite:", x = xKey, y = y+=sum },
                             new DataPrinter{ brush = color, font = fontValue,
                                 value = GetConfiguration("ProductName") ?? string.Empty, x = x, y = y },
@@ -222,8 +225,13 @@ namespace WPFCCMedellin.Classes
                             new DataPrinter{ brush = color, font = fontValue,
                                 value = transaction.payer.NAME ?? string.Empty, x = x, y = y },
                             new DataPrinter{ brush = color, font = fontKey, value = "Teléfono:", x = xKey, y = y+=sum },
-                            new DataPrinter{ brush = color, font = fontValue,
-                                value = transaction.payer.PHONE.ToString() ?? string.Empty, x = x, y = y },
+                            new DataPrinter{ brush = color, font = fontValue, value = transaction.payer.PHONE.ToString() ?? string.Empty, x = x, y = y },
+
+                            new DataPrinter{ brush = color, font = fontKey, value = "Dirección:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue, value = transaction.payer.ADDRESS.ToString() ?? string.Empty, x = x, y = y },
+
+                            new DataPrinter{ brush = color, font = fontKey, value = "Correo:", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue, value = transaction.payer.EMAIL.ToString() ?? string.Empty, x = x, y = y },
                         };
 
                     data.Add(new DataPrinter { brush = color, font = fontKey, value = "Total:", x = xKey, y = y += sum });
@@ -241,8 +249,9 @@ namespace WPFCCMedellin.Classes
                     {
                         data.Add(new DataPrinter { brush = color, font = fontValue, value = transaction.Observation ?? string.Empty, x = 0, y = y += 50 });
                     }
-                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "Recuerde siempre esperar la tirilla de soporte de su", x = 10, y = y += sum });
-                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "transacción, es el único documento que lo respalda.", x = 10, y = y += 20 });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "Este comprobante de pago no corresponde a la factura", x = 0, y = y += sum });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "de venta. La factura electrónica será enviada", x = 0, y = y += 20 });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "al correo electrónico informado.", x = 0, y = y += 20 });
                     data.Add(new DataPrinter { brush = color, font = fontValue, value = "E-city Software", x = 100, y = y += sum });
 
                     AdminPayPlus.PrintService.Start(data);

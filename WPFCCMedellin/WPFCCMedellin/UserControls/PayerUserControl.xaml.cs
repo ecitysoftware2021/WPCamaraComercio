@@ -213,7 +213,7 @@ namespace WPFCCMedellin.UserControls
                     state = false;
                     filds += "Teléfono, ";
                 }
-                if (viewModel.Value10.Length < 5)
+                if (viewModel.Value10.Length < 8)
                 {
                     state = false;
                     filds += "Dirección, ";
