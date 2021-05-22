@@ -110,6 +110,43 @@ namespace WPFCCMedellin.Services
             {
                 if (transaction != null)
                 {
+
+                    string[] nombresSeparados = transaction.payer.NAME.Split(' ');
+                    string primerNombre = string.Empty;
+                    string segundoNombre = string.Empty;
+                    bool first = true;
+
+                    foreach (var item in nombresSeparados)
+                    {
+                        if (first)
+                        {
+                            primerNombre = item;
+                            first = false;
+                        }
+                        else
+                        {
+                            segundoNombre += item + " ";
+                        }
+                    }
+
+                    string[] apellidosSeparados = transaction.payer.LAST_NAME.Split(' ');
+                    string primerApellido = string.Empty;
+                    string segundoApellido = string.Empty;
+                    first = true;
+
+                    foreach (var item in apellidosSeparados)
+                    {
+                        if (first)
+                        {
+                            primerApellido = item;
+                            first = false;
+                        }
+                        else
+                        {
+                            segundoApellido += item + " ";
+                        }
+                    }
+
                     var response = await GetData(new RequestPayment
                     {
                         AutorizaEnvioEmail = "NO",
@@ -123,11 +160,11 @@ namespace WPFCCMedellin.Services
                         MunicipioComprador = transaction.payer.municipio,
                         NombreComprador = string.Concat(transaction.payer.NAME, " ", transaction.payer.LAST_NAME),
                         PlataformaCliente = Utilities.GetConfiguration("ClientPlataform"),
-                        PrimerApellidoComprador = transaction.payer.LAST_NAME,
-                        PrimerNombreComprador = transaction.payer.NAME,
+                        PrimerApellidoComprador = primerApellido,
+                        PrimerNombreComprador = primerNombre,
                         ReferenciaPago = transaction.IdTransactionAPi.ToString(),
-                        SegundoApellidoComprador = string.Empty,
-                        SegundoNombreComprador = string.Empty,
+                        SegundoApellidoComprador = segundoApellido,
+                        SegundoNombreComprador = segundoNombre,
                         TelefonoComprador = transaction.payer.PHONE.ToString(),
                         TipoComprador = transaction.payer.TYPE_PAYER,
                         TipoIdentificacionComprador = transaction.payer.TYPE_IDENTIFICATION,

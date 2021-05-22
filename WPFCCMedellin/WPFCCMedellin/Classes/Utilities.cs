@@ -191,7 +191,7 @@ namespace WPFCCMedellin.Classes
                     int y = 0;
                     int sum = 25;
                     int x = 150;
-                    int xKey = 20;
+                    int xKey = 15;
 
                     var data = new List<DataPrinter>()
                         {
@@ -199,8 +199,8 @@ namespace WPFCCMedellin.Classes
                             new DataPrinter{ brush = color, font = fontKey, value = "NIT:", x = xKey, y = y+=120 },
                             new DataPrinter{ brush = color, font = fontValue,value = GetConfiguration("NIT") ?? string.Empty, x = x, y = y },
 
-                            new DataPrinter{ brush = color, font = fontKey, value = "Calle 53 No 45 – 77 Medellín", x = 20, y = y+=sum },
-                            new DataPrinter{ brush = color, font = fontValue,value = "Régimen Común - Entidad Sin Ánimo de Lucro", x = 20, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue, value = "Calle 53 No 45 – 77 Medellín", x = xKey, y = y+=sum },
+                            new DataPrinter{ brush = color, font = fontValue,value = "Régimen Común - Entidad Sin Ánimo de Lucro", x = xKey, y = y+=sum },
 
                             new DataPrinter{ brush = color, font = fontKey, value = "Trámite:", x = xKey, y = y+=sum },
                             new DataPrinter{ brush = color, font = fontValue,
@@ -249,9 +249,9 @@ namespace WPFCCMedellin.Classes
                     {
                         data.Add(new DataPrinter { brush = color, font = fontValue, value = transaction.Observation ?? string.Empty, x = 0, y = y += 50 });
                     }
-                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "Este comprobante de pago no corresponde a la factura", x = 0, y = y += sum });
-                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "de venta. La factura electrónica será enviada", x = 0, y = y += 20 });
-                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "al correo electrónico informado.", x = 0, y = y += 20 });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "Este comprobante de pago no corresponde a", x = 0, y = y += sum });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "la factura de venta. La factura electrónica", x = 0, y = y += 20 });
+                    data.Add(new DataPrinter { brush = color, font = fontValue, value = "será enviada al correo electrónico informado.", x = 0, y = y += 20 });
                     data.Add(new DataPrinter { brush = color, font = fontValue, value = "E-city Software", x = 100, y = y += sum });
 
                     AdminPayPlus.PrintService.Start(data);

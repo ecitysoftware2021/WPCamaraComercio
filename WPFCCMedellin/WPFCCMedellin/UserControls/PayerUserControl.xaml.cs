@@ -218,6 +218,14 @@ namespace WPFCCMedellin.UserControls
                     state = false;
                     filds += "Dirección, ";
                 }
+                else
+                {
+                    if (viewModel.Value10.Contains("tiene"))
+                    {
+                        state = false;
+                        filds += "Dirección, ";
+                    }
+                }
                 if ((MockupsModel)cmb_department_id.SelectedItem == null)
                 {
                     state = false;
