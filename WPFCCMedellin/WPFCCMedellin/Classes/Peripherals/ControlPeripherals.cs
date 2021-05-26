@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Threading;
+using WPFCCMedellin.Services.Object;
 
 namespace WPFCCMedellin.Classes
 {
@@ -182,6 +183,16 @@ namespace WPFCCMedellin.Classes
                     _serialPortBills.RtsEnable = true;
                     _serialPortBills.Open();
                 }
+                else
+                {
+                    AdminPayPlus.SaveLog(new RequestLog
+                    {
+                        Reference = "",
+                        Description = "Mensaje a los perisfericos: El puerto del billetero está ocupado",
+                        State = 1,
+                        Date = DateTime.Now
+                    }, ELogType.General);
+                }
 
                 _serialPortBills.DataReceived += new SerialDataReceivedEventHandler(_serialPortBillsDataReceived);
             }
@@ -208,6 +219,16 @@ namespace WPFCCMedellin.Classes
                     _serialPortCoins.RtsEnable = true;
                     _serialPortCoins.Open();
                 }
+                else
+                {
+                    AdminPayPlus.SaveLog(new RequestLog
+                    {
+                        Reference = "",
+                        Description = "Mensaje a los perisfericos: El puerto del monedero está ocupado",
+                        State = 1,
+                        Date = DateTime.Now
+                    }, ELogType.General);
+                }
 
                 _serialPortCoins.DataReceived += new SerialDataReceivedEventHandler(_serialPortCoinsDataReceived);
             }
@@ -229,10 +250,17 @@ namespace WPFCCMedellin.Classes
         {
             try
             {
+                AdminPayPlus.SaveLog(new RequestLog
+                {
+                    Reference = "",
+                    Description = "Mensaje a los perisfericos: " + message,
+                    State = 1,
+                    Date = DateTime.Now
+                }, ELogType.General);
+
                 if (_serialPortBills.IsOpen)
                 {
                     Thread.Sleep(2000);
-                    callbackError?.Invoke(Tuple.Create("Info", string.Concat("Info, Se envio mensaje al billetero:  ", message)));
                     _serialPortBills.Write(message);
                     return true;
                 }
@@ -253,10 +281,16 @@ namespace WPFCCMedellin.Classes
         {
             try
             {
+                AdminPayPlus.SaveLog(new RequestLog
+                {
+                    Reference = "",
+                    Description = "Mensaje a los perisfericos: " + message,
+                    State = 1,
+                    Date = DateTime.Now
+                }, ELogType.General);
                 if (_serialPortCoins.IsOpen)
                 {
                     Thread.Sleep(2000);
-                    callbackError?.Invoke(Tuple.Create("Info", string.Concat("Info, Se envio mensaje al monedero:  ", message)));
                     _serialPortCoins.Write(message);
                 }
             }
@@ -280,9 +314,17 @@ namespace WPFCCMedellin.Classes
             try
             {
                 string response = _serialPortBills.ReadLine();
+
+                AdminPayPlus.SaveLog(new RequestLog
+                {
+                    Reference = "",
+                    Description = "Mensaje a los perisfericos: " + response,
+                    State = 1,
+                    Date = DateTime.Now
+                }, ELogType.General);
+
                 if (!string.IsNullOrEmpty(response))
                 {
-                    callbackError?.Invoke(Tuple.Create("Info", string.Concat("Info, Respondio el billetero:  ", response)));
                     ProcessResponseBills(response.Replace("\r", string.Empty));
                 }
             }
@@ -302,9 +344,17 @@ namespace WPFCCMedellin.Classes
             try
             {
                 string response = _serialPortCoins.ReadLine();
+
+                AdminPayPlus.SaveLog(new RequestLog
+                {
+                    Reference = "",
+                    Description = "Mensaje a los perisfericos: " + response,
+                    State = 1,
+                    Date = DateTime.Now
+                }, ELogType.General);
+
                 if (!string.IsNullOrEmpty(response))
                 {
-                    callbackError?.Invoke(Tuple.Create("Info", string.Concat("Info, Respondio el monedero:  ", response)));
                     ProcessResponseCoins(response.Replace("\r", string.Empty));
                 }
             }
