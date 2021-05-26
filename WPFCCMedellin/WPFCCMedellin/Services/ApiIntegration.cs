@@ -110,41 +110,50 @@ namespace WPFCCMedellin.Services
             {
                 if (transaction != null)
                 {
-
-                    string[] nombresSeparados = transaction.payer.NAME.Split(' ');
                     string primerNombre = string.Empty;
                     string segundoNombre = string.Empty;
-                    bool first = true;
 
-                    foreach (var item in nombresSeparados)
-                    {
-                        if (first)
-                        {
-                            primerNombre = item;
-                            first = false;
-                        }
-                        else
-                        {
-                            segundoNombre += item + " ";
-                        }
-                    }
-
-                    string[] apellidosSeparados = transaction.payer.LAST_NAME.Split(' ');
                     string primerApellido = string.Empty;
                     string segundoApellido = string.Empty;
-                    first = true;
 
-                    foreach (var item in apellidosSeparados)
+                    bool first = true;
+
+                    if (transaction.payer.NAME != null)
                     {
-                        if (first)
+                        string[] nombresSeparados = transaction.payer.NAME.Split(' ');                        
+
+                        foreach (var item in nombresSeparados)
                         {
-                            primerApellido = item;
-                            first = false;
-                        }
-                        else
+                            if (first)
+                            {
+                                primerNombre = item;
+                                first = false;
+                            }
+                            else
+                            {
+                                segundoNombre += item + " ";
+                            }
+                        } 
+                    }
+
+                    if (transaction.payer.LAST_NAME != null)
+                    {
+                        string[] apellidosSeparados = transaction.payer.LAST_NAME.Split(' ');
+
+                        first = true;
+
+                        foreach (var item in apellidosSeparados)
                         {
-                            segundoApellido += item + " ";
-                        }
+                            if (first)
+                            {
+                                primerApellido = item;
+                                first = false;
+                            }
+                            else
+                            {
+                                segundoApellido += item + " ";
+                            }
+                        } 
                     }
 
                     var response = await GetData(new RequestPayment
