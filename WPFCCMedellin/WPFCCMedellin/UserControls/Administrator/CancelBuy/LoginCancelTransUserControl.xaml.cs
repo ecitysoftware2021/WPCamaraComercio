@@ -22,20 +22,13 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
     /// </summary>
     public partial class LoginCancelTransUserControl : UserControl
     {
+        private string pass;
         public LoginCancelTransUserControl()
         {
             InitializeComponent();
         }
 
         #region Eventos
-        private void txtPassword_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            int lenght = txtPassword.Text.Length;
-            if (lenght > 25)
-            {
-                txtPassword.Text = txtPassword.Text.Remove(txtPassword.Text.Length - 1);
-            }
-        }
 
         private void txtDocument_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -75,7 +68,7 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
             try
             {
                 string user = txtDocument.Text;
-                string pass = txtPassword.Text;
+                string pass = txtPassword.Password;
 
                 var result = Api.Login(user, pass).Result;
 
@@ -84,7 +77,7 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
                 if (result == null)
                 {
                     MessageBox.Show("Usuario y/o Contraseña incorrectos, intente de nuevo", "Usuario Incorrecto", MessageBoxButton.OK, MessageBoxImage.Information);
-                    txtPassword.Text = string.Empty;
+                    txtPassword.Password = string.Empty;
                     return false;
                 }
                 return true;
@@ -95,5 +88,19 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
             }
         }
         #endregion
+
+        private void txtpass_TouchDown(object sender, TouchEventArgs e)
+        {
+            Utilities.OpenKeyboard(false, (PasswordBox)sender, this);
+        }
+
+        private void txtPassword_TextChanged(object sender, RoutedEventArgs e)
+        {
+            int lenght = txtPassword.Password.Length;
+            if (lenght > 25)
+            {
+                txtPassword.Password = txtPassword.Password.Remove(txtPassword.Password.Length - 1);
+            }
+        }
     }
 }

@@ -436,7 +436,7 @@ namespace WPFCCMedellin.Classes
             }
         }
 
-        public static void OpenKeyboard(bool keyBoard_Numeric, TextBox textBox, object thisView, int x = 0, int y = 0)
+        public static void OpenKeyboard(bool keyBoard_Numeric, Object textBox, object thisView, int x = 0, int y = 0)
         {
             try
             {

@@ -109,7 +109,7 @@
     </Reference>
     <Reference Include="WPKeyboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\WPFMidPoint\WPFMidPoint\WPFMidPoint\bin\Debug\WPKeyboard.dll</HintPath>
+      <HintPath>bin\Debug\WPKeyboard.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

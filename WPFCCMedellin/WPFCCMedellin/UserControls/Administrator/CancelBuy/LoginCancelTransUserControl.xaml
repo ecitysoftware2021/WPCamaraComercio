@@ -80,9 +80,9 @@
                     Height="70"
                     Margin="10,0,0,0"/>
 
-                <TextBox
-                    TouchDown="txtform_TouchDown"
-                    TextChanged="txtPassword_TextChanged"
+                <PasswordBox
+                    TouchDown="txtpass_TouchDown"
+                    PasswordChanged="txtPassword_TextChanged"
                     x:Name="txtPassword"
                     Tag="2"
                     FontSize="50"
