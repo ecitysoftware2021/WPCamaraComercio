@@ -141,7 +141,7 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
                         }
                         else
                         {
-                            Utilities.ShowModal("No se ha podido cancelar la transacción, por favor intentelo más tarde", EModalType.Information);
+                            Utilities.ShowModal(transaction.message, EModalType.Information);
                         }
                     });
                     Utilities.ShowModal(MessageResource.FinishTransaction, EModalType.Preload);

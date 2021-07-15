@@ -298,6 +298,10 @@ namespace WPFCCMedellin.Services
                     {
                         transaction.State = ETransactionState.Cancel;
                     }
+                    else
+                    {
+                        transaction.message = result.response.mensaje;
+                    }
                 }
             }
             catch (Exception ex)

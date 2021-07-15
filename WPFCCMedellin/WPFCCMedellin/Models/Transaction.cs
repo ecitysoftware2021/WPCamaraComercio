@@ -31,6 +31,7 @@ namespace WPFCCMedellin.Models
         public CancelPayment cancelPayment { get; set; }
 
         //--------------------- Fin de cacelar transacción --------------------------
+        public string message { get; set; }
 
         public string consecutive { get; set; }
 
