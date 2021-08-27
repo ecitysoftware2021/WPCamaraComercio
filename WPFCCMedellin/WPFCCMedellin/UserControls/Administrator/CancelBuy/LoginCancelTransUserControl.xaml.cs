@@ -76,7 +76,6 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
 
                 if (result == null)
                 {
-                    MessageBox.Show("Usuario y/o Contraseña incorrectos, intente de nuevo", "Usuario Incorrecto", MessageBoxButton.OK, MessageBoxImage.Information);
                     txtPassword.Password = string.Empty;
                     return false;
                 }
@@ -97,7 +96,7 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
         private void txtPassword_TextChanged(object sender, RoutedEventArgs e)
         {
             int lenght = txtPassword.Password.Length;
-            if (lenght > 25)
+            if (lenght > 35)
             {
                 txtPassword.Password = txtPassword.Password.Remove(txtPassword.Password.Length - 1);
             }

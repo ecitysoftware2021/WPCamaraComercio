@@ -318,7 +318,7 @@ namespace WPFCCMedellin.Classes
                 AdminPayPlus.SaveLog(new RequestLog
                 {
                     Reference = "",
-                    Description = "Mensaje a los perisfericos: " + response,
+                    Description = "Respuesta de los perisfericos: " + response,
                     State = 1,
                     Date = DateTime.Now
                 }, ELogType.General);
@@ -348,7 +348,7 @@ namespace WPFCCMedellin.Classes
                 AdminPayPlus.SaveLog(new RequestLog
                 {
                     Reference = "",
-                    Description = "Mensaje a los perisfericos: " + response,
+                    Description = "Respuesta de los perisfericos: " + response,
                     State = 1,
                     Date = DateTime.Now
                 }, ELogType.General);

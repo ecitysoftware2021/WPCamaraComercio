@@ -289,6 +289,9 @@ namespace WPFCCMedellin.UserControls
 
                         Utilities.CloseModal();
 
+                        AdminPayPlus.ReaderBarCode.callbackOut = null;
+                        AdminPayPlus.ReaderBarCode.callbackError = null;
+
                         if (this.transaction.IdTransactionAPi == 0)
                         {
                             Utilities.ShowModal(MessageResource.ErrorTransaction, EModalType.Error);
@@ -296,8 +299,6 @@ namespace WPFCCMedellin.UserControls
                         }
                         else
                         {
-                            AdminPayPlus.ReaderBarCode.callbackOut = null;
-                            AdminPayPlus.ReaderBarCode.callbackError = null;
                             Utilities.navigator.Navigate(UserControlView.Pay, false, transaction);
                         }
                     }
@@ -408,10 +409,8 @@ namespace WPFCCMedellin.UserControls
             {
                 string codDepartamento = ((MockupsModel)(sender as ComboBox).SelectedItem).Key;
                 GetCityByDepartment(codDepartamento.Substring(codDepartamento.Length - 2, 2));
-
             }
         }
-
 
         public void GetCityByDepartment(string codDepartamento)
         {
@@ -443,13 +442,11 @@ namespace WPFCCMedellin.UserControls
                         }
                     }
 
-
                     viewModel.LoadListCity(models);
                     cmb_city_id.SelectedItem = 0;
                     cmb_city_id.IsEnabled = true;
                 });
             });
-
         }
     }
 }
