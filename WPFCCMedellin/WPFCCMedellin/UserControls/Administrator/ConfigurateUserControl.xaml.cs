@@ -87,7 +87,7 @@ namespace WPFCCMedellin.UserControls.Administrator
         {
             Task.Run(() =>
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(3000);
                 if (state)
                 {
                     Utilities.navigator.Navigate(UserControlView.Main);

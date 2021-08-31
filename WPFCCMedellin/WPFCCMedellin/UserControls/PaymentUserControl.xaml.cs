@@ -52,9 +52,9 @@ namespace WPFCCMedellin.UserControls
                 };
 
                 this.DataContext = this.paymentViewModel;
-                //AdminPayPlus.ControlPeripherals.ResetValues();
-                //ActivateWallet();
-                SavePay();
+                AdminPayPlus.ControlPeripherals.ResetValues();
+                ActivateWallet();
+                //SavePay();
             }
             catch (Exception ex)
             {
@@ -62,36 +62,36 @@ namespace WPFCCMedellin.UserControls
             }
         }
 
-        private void InitTimer()
-        {
-            try
-            {
-                TimerService.Close();
-                TimerService.CallBackTimerOut = response =>
-                {
-                    AdminPayPlus.ControlPeripherals.StopAceptance();
-                    AdminPayPlus.ControlPeripherals.callbackLog = null;
-                    if (!this.paymentViewModel.StatePay)
-                    {
-                        if (paymentViewModel.ValorIngresado > 0)
-                        {
-                            transaction.Payment = paymentViewModel;
-                            Utilities.navigator.Navigate(UserControlView.ReturnMony, false, this.transaction);
-                        }
-                        else
-                        {
-                            Utilities.navigator.Navigate(UserControlView.Main);
-                        }
-                    }
-                };
+        //private void InitTimer()
+        //{
+        //    try
+        //    {
+        //        TimerService.Close();
+        //        TimerService.CallBackTimerOut = response =>
+        //        {
+        //            AdminPayPlus.ControlPeripherals.StopAceptance();
+        //            AdminPayPlus.ControlPeripherals.callbackLog = null;
+        //            if (!this.paymentViewModel.StatePay)
+        //            {
+        //                if (paymentViewModel.ValorIngresado > 0)
+        //                {
+        //                    transaction.Payment = paymentViewModel;
+        //                    Utilities.navigator.Navigate(UserControlView.ReturnMony, false, this.transaction);
+        //                }
+        //                else
+        //                {
+        //                    Utilities.navigator.Navigate(UserControlView.Main);
+        //                }
+        //            }
+        //        };
 
-                TimerService.Start(int.Parse(Utilities.GetConfiguration("DurationAlert")));
-            }
-            catch (Exception ex)
-            {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
-            }
-        }
+        //        TimerService.Start(int.Parse(Utilities.GetConfiguration("DurationAlert")));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
+        //    }
+        //}
 
         private void ActivateWallet()
         {
@@ -101,7 +101,7 @@ namespace WPFCCMedellin.UserControls
                 {
                     AdminPayPlus.ControlPeripherals.callbackValueIn = enterValue =>
                     {
-                        TimerService.Reset();
+                        //TimerService.Reset();
                         if (enterValue.Item1 > 0)
                         {
                             if (!this.paymentViewModel.StatePay)
@@ -117,7 +117,7 @@ namespace WPFCCMedellin.UserControls
 
                     AdminPayPlus.ControlPeripherals.callbackTotalIn = enterTotal =>
                     {
-                        TimerService.Stop();
+                        //TimerService.Stop();
                         if (!this.paymentViewModel.StatePay)
                         {
                             this.paymentViewModel.ImgContinue = Visibility.Hidden;
@@ -260,7 +260,6 @@ namespace WPFCCMedellin.UserControls
                     transaction.Payment = paymentViewModel;
                     transaction.State = statePay;
 
-                    
                     Task.Run(async () =>
                     {
                         if (transaction.IdTransactionAPi > 0)

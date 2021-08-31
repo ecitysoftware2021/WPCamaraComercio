@@ -123,6 +123,7 @@
     <Compile Include="Classes\Peripherals\ControlPeripherals.cs" />
     <Compile Include="Classes\Printer\PrinterFile.cs" />
     <Compile Include="Classes\UseFull\ReaderBarCode.cs" />
+    <Compile Include="Classes\UseFull\TimerGeneric.cs" />
     <Compile Include="Classes\UseFull\TimerService.cs" />
     <Compile Include="Classes\UseFull\Encryptor.cs" />
     <Compile Include="Classes\UseFull\Enumerables.cs" />

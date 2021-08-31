@@ -489,3 +489,7 @@ C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.csproj.CopyComplete
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.exe
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.pdb
+E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\CancelBuy\CancelTransactionUserControl.g.cs
+E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\CancelBuy\LoginCancelTransUserControl.g.cs
+E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\CancelBuy\CancelTransactionUserControl.baml
+E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\CancelBuy\LoginCancelTransUserControl.baml

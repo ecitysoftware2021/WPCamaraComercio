@@ -27,7 +27,7 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
         {
             InitializeComponent();
         }
-
+        
         #region Eventos
 
         private void txtDocument_TextChanged(object sender, TextChangedEventArgs e)
@@ -71,8 +71,6 @@ namespace WPFCCMedellin.UserControls.Administrator.CancelBuy
                 string pass = txtPassword.Password;
 
                 var result = Api.Login(user, pass).Result;
-
-
 
                 if (result == null)
                 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Threading;
+using WPFCCMedellin.Classes.UseFull;
 using WPFCCMedellin.Services.Object;
 
 namespace WPFCCMedellin.Classes
@@ -9,6 +10,10 @@ namespace WPFCCMedellin.Classes
     public class ControlPeripherals
     {
         #region References
+
+        #region "Timer"
+        private TimerGeneric timer;
+        #endregion
 
         #region SerialPorts
 
@@ -253,7 +258,7 @@ namespace WPFCCMedellin.Classes
                 AdminPayPlus.SaveLog(new RequestLog
                 {
                     Reference = "",
-                    Description = "Mensaje a los perisfericos: " + message,
+                    Description = "Mensaje a los billeteros: " + message,
                     State = 1,
                     Date = DateTime.Now
                 }, ELogType.General);
@@ -284,7 +289,7 @@ namespace WPFCCMedellin.Classes
                 AdminPayPlus.SaveLog(new RequestLog
                 {
                     Reference = "",
-                    Description = "Mensaje a los perisfericos: " + message,
+                    Description = "Mensaje a los monederos: " + message,
                     State = 1,
                     Date = DateTime.Now
                 }, ELogType.General);
@@ -318,7 +323,7 @@ namespace WPFCCMedellin.Classes
                 AdminPayPlus.SaveLog(new RequestLog
                 {
                     Reference = "",
-                    Description = "Respuesta de los perisfericos: " + response,
+                    Description = "Respuesta de los billeteros: " + response,
                     State = 1,
                     Date = DateTime.Now
                 }, ELogType.General);
@@ -348,7 +353,7 @@ namespace WPFCCMedellin.Classes
                 AdminPayPlus.SaveLog(new RequestLog
                 {
                     Reference = "",
-                    Description = "Respuesta de los perisfericos: " + response,
+                    Description = "Respuesta de los monederos: " + response,
                     State = 1,
                     Date = DateTime.Now
                 }, ELogType.General);
@@ -553,6 +558,7 @@ namespace WPFCCMedellin.Classes
             {
                 stateError = false;
                 dispenserValue = valueDispenser;
+                ActivateTimer();
                 ValidateValueDispenser();
             }
             catch (Exception ex)
@@ -740,6 +746,8 @@ namespace WPFCCMedellin.Classes
                     {
                         if (typeDispend == 0)
                         {
+                            timer.CallBackClose = null;
+                            timer.CallBackStop?.Invoke(1);
                             callbackTotalOut?.Invoke(deliveryValue);
                         }
                     }
@@ -748,6 +756,8 @@ namespace WPFCCMedellin.Classes
                 {
                     if (typeDispend == 0)
                     {
+                        timer.CallBackClose = null;
+                        timer.CallBackStop?.Invoke(1);
                         callbackOut?.Invoke(deliveryValue);
                     }
                 }
@@ -758,6 +768,33 @@ namespace WPFCCMedellin.Classes
             }
         }
 
+        #endregion
+
+        #region "TimerInactividad"
+        private void ActivateTimer()
+        {
+            try
+            {
+                string timerInactividad = Utilities.GetConfiguration("TimerInactividad");
+                timer = new TimerGeneric(timerInactividad);
+                timer.CallBackClose = response =>
+                {
+                    try
+                    {
+                        timer.CallBackClose = null;
+                        callbackOut?.Invoke(deliveryValue);
+                    }
+                    catch (Exception ex)
+                    {
+                        callbackError?.Invoke(Tuple.Create("ActivateTimer", ex.ToString()));
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                callbackError?.Invoke(Tuple.Create("DP", "Error (ActivateTimer), ha ocurrido una exepcion en ActivateTimer " + ex));
+            }
+        }
         #endregion
 
         #region Finish
