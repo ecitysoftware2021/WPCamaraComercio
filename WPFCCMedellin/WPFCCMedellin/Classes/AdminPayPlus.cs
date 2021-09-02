@@ -13,6 +13,7 @@ using WPFCCMedellin.Resources;
 using WPFCCMedellin.Services;
 using WPFCCMedellin.Services.Object;
 using WPFCCMedellin.Resources;
+using System.Collections.Generic;
 
 namespace WPFCCMedellin.Classes
 {
@@ -382,7 +383,7 @@ namespace WPFCCMedellin.Classes
         {
             try
             {
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
                     if (_dataConfiguration != null)
                     {
@@ -408,6 +409,22 @@ namespace WPFCCMedellin.Classes
                             ERROR_LEVEL_ID = (int)level,
                             REFERENCE = idTrensaction
                         };
+
+                        List<PAYPAD_ERROR_CONSOLE> consoleErro = new List<PAYPAD_ERROR_CONSOLE>()
+                        {
+                            new PAYPAD_ERROR_CONSOLE
+                            {
+                                PAYPAD_ID = (int)idPaypad,
+                                DATE = DateTime.Now,
+                                STATE = 1,
+                                DESCRIPTION = desciption,
+                                OBSERVATION = observation,
+                                ERROR_ID = (int)error,
+                                ERROR_LEVEL_ID = (int)level
+                            }
+                        };
+
+                        await api.CallApi("SaveErrorConsole", consoleErro);
 
                         SqliteDataAccess.InsetConsoleError(consoleError);
                     }

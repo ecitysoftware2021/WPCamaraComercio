@@ -25,11 +25,11 @@ namespace WPFCCMedellin.Classes
                     TYPE = 1,
                 }, ELogType.Error);
 
-                Utilities.ShowModal(description, EModalType.Error);
+                //Utilities.ShowModal(description, EModalType.Error);
             }
             catch (Exception)
             {
-                Utilities.ShowModal(MessageResource.Error, EModalType.Error);
+                //Utilities.ShowModal(MessageResource.Error, EModalType.Error);
             }
         }
 

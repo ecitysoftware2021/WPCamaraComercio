@@ -77,11 +77,11 @@ namespace WPFCCMedellin.Services
                 var client = new RestClient(string.Concat(basseAddress, Utilities.GetConfiguration(controlador)));
                 client.Timeout = -1;
                 var request = new RestRequest(Method.POST);
-                AdminPayPlus.SaveErrorControl($"Datos enviados: {controlador}", JsonConvert.SerializeObject(requestCCM), EError.Api, ELevelError.Medium);
+                AdminPayPlus.SaveErrorControl($"Datos enviados: {controlador} "+ JsonConvert.SerializeObject(requestCCM), JsonConvert.SerializeObject(requestCCM), EError.Api, ELevelError.Medium);
                 request.AddHeader("Content-Type", "application/json");
                 request.AddParameter("application/json", JsonConvert.SerializeObject(requestCCM), ParameterType.RequestBody);
                 IRestResponse response = client.Execute(request);
-                AdminPayPlus.SaveErrorControl($"Response getData: {controlador}", response.Content, EError.Aplication, ELevelError.Medium);
+                AdminPayPlus.SaveErrorControl($"Response getData: {controlador} "+ response.Content, response.Content, EError.Aplication, ELevelError.Medium);
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     return new ResponseApi

@@ -149,6 +149,7 @@
     <Compile Include="Models\ModalModel.cs" />
     <Compile Include="Models\Navigation.cs" />
     <Compile Include="Models\Payer.cs" />
+    <Compile Include="Models\PAYPAD_ERROR_CONSOLE.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\MockupsModel.cs" />
