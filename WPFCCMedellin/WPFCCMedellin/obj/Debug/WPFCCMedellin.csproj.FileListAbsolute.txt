@@ -415,7 +415,6 @@ C:\Users\H81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\D
 C:\Users\H81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.csproj.CopyComplete
 C:\Users\H81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.exe
 C:\Users\H81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.pdb
-C:\Users\H81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.csproj.AssemblyReference.cache
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.csprojAssemblyReference.cache
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\AdministratorUserControl.g.cs
 C:\Users\H-81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\CancelBuy\CancelTransactionUserControl.g.cs
@@ -493,3 +492,5 @@ E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Ad
 E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\CancelBuy\LoginCancelTransUserControl.g.cs
 E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\CancelBuy\CancelTransactionUserControl.baml
 E:\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\UserControls\Administrator\CancelBuy\LoginCancelTransUserControl.baml
+C:\Users\H81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.csproj.SuggestedBindingRedirects.cache
+C:\Users\H81\Documents\GitHub\WPCamaraComercio\WPFCCMedellin\WPFCCMedellin\obj\Debug\WPFCCMedellin.csproj.AssemblyReference.cache

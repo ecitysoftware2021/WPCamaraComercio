@@ -159,7 +159,7 @@ namespace WPFCCMedellin.UserControls
                     this.viewModel.StatePay = true;
                     transaction.Payment = viewModel;
 
-                    AdminPayPlus.ControlPeripherals.ResetValues();
+                    //AdminPayPlus.ControlPeripherals.ResetValues();
 
                     Task.Run(async () =>
                     {

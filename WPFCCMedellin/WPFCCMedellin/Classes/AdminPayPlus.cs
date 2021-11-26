@@ -14,9 +14,11 @@ using WPFCCMedellin.Services;
 using WPFCCMedellin.Services.Object;
 using WPFCCMedellin.Resources;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace WPFCCMedellin.Classes
 {
+
     public class AdminPayPlus : INotifyPropertyChanged
     {
         #region "Referencias"
@@ -139,10 +141,21 @@ namespace WPFCCMedellin.Classes
                 if (await ValidatePaypad())
                 {
 
+                    //DescriptionStatusPayPlus = MessageResource.ValidatePeripherals;
+
+                    //ValidatePeripherals();
+                    ////callbackResult?.Invoke(true);
+                    ///
                     DescriptionStatusPayPlus = MessageResource.ValidatePeripherals;
 
-                    ValidatePeripherals();
-                    //callbackResult?.Invoke(true);
+                    if (_dataPayPlus.PayPadConfiguration.enablE_VALIDATE_PERIPHERALS)
+                    {
+                        ValidatePeripherals();
+                    }
+                    else
+                    {
+                        callbackResult?.Invoke(true);
+                    }
 
                 }
                 else
@@ -174,15 +187,19 @@ namespace WPFCCMedellin.Classes
                         config.ID_SESSION = Convert.ToInt32(result.Session);
                         config.TOKEN_API = result.Token;
 
-                        if (SqliteDataAccess.UpdateConfiguration(config))
-                        {
-                            _dataConfiguration = config;
-                            return true;
-                        }
+                        _dataConfiguration = config;
+
+                        return true;
                     }
                     else
                     {
-                        SaveErrorControl(MessageResource.ErrorServiceLogin, MessageResource.NoGoInitial, EError.Api, ELevelError.Strong);
+                        SaveLog(new RequestLog
+                        {
+                            Reference = "",
+                            Description = "No se logro obtener el token",
+                            State = 2,
+                            Date = DateTime.Now
+                        }, ELogType.General);
                     }
                 }
             }
@@ -202,7 +219,19 @@ namespace WPFCCMedellin.Classes
                 {
                     _dataPayPlus = JsonConvert.DeserializeObject<DataPayPlus>(response.ToString());
 
-                    //Utilities.ImagesSlider = JsonConvert.DeserializeObject<List<string>>(data.ListImages.ToString());
+                    if (_dataPayPlus != null && _dataPayPlus.PayPadConfiguration != null)
+                    {
+                        _dataPayPlus.PayPadConfiguration.DeserializarExtraData();
+                        _dataPayPlus.PayPadConfiguration.ExtrA_DATA.dataIntegration.DefinirAmbiente(_dataPayPlus.PayPadConfiguration.iS_PRODUCTION);
+
+                        Application.Current.Dispatcher.Invoke(delegate
+                        {
+                            InitNext();
+                        });
+
+                        SqliteDataAccess.UpdateConfiguration(_dataConfiguration);
+                    }
+
                     if (_dataPayPlus.StateBalanece || _dataPayPlus.StateUpload)
                     {
                         SaveLog(new RequestLog
@@ -212,7 +241,6 @@ namespace WPFCCMedellin.Classes
                             State = 4,
                             Date = DateTime.Now
                         }, ELogType.General);
-                        return true;
                     }
                     if (_dataPayPlus.State && _dataPayPlus.StateAceptance && _dataPayPlus.StateDispenser)
                     {
@@ -227,8 +255,6 @@ namespace WPFCCMedellin.Classes
                             State = 6,
                             Date = DateTime.Now
                         }, ELogType.General);
-
-                        SaveErrorControl(MessageResource.NoGoInitial, _dataPayPlus.Message, EError.Aplication, ELevelError.Strong);
                     }
                 }
             }
@@ -239,37 +265,55 @@ namespace WPFCCMedellin.Classes
             return false;
         }
 
+        private static void InitNext()
+        {
+            //if (_printService == null)
+            //{
+            _printService = new PrintService();
+            //}
+
+            //if (_readerBarCode == null)
+            //{
+            _apiIntegration = new ApiIntegration();
+            //}
+
+            //if (_cootregua == null)
+            //{
+            _readerBarCode = new ReaderBarCode();
+            //}
+
+            //if (_cootregua == null)
+            //{
+            _printerFile = new PrinterFile(AdminPayPlus.DataPayPlus.PayPadConfiguration.ExtrA_DATA.dataComplementary.PrinterName, true);
+            //}
+        }
+
+
+
+
         private void ValidatePeripherals()
         {
             try
             {
                 if (_controlPeripherals == null)
                 {
-                    _controlPeripherals = new ControlPeripherals(Utilities.GetConfiguration("PortBills"),
-                        Utilities.GetConfiguration("PortCoins"), Utilities.GetConfiguration("ValuesDispenser"));
+                    _controlPeripherals = new ControlPeripherals(_dataPayPlus.PayPadConfiguration.unifieD_PORT,
+                        _dataPayPlus.PayPadConfiguration.dispenseR_CONFIGURATION);
                 }
 
                 _controlPeripherals.callbackError = error =>
                 {
-                    var log = new RequestLogDevice
+                    SaveLog(new RequestLog
                     {
-                        Code = "",
-                        Date = DateTime.Now,
-                        Description = error.Item2,
-                        Level = ELevelError.Strong
-                    };
+                        Reference = "",
+                        Description = string.Concat(MessageResource.ValidatePeripheralsFail, " ", error.Item2),
+                        State = 1,
+                        Date = DateTime.Now
+                    }, ELogType.General);
 
-                    if (!error.Item1.Equals("Info"))
-                    {
-                        SaveLog(log, ELogType.Device);
-                        DescriptionStatusPayPlus = MessageResource.ValidatePeripheralsFail;
-                        Finish(false);
-                    }
-                    else
-                    {
-                        log.Level = ELevelError.Mild;
-                        SaveLog(log, ELogType.Device);
-                    }
+                    DescriptionStatusPayPlus = MessageResource.ValidatePeripheralsFail;
+
+                    Finish(false);
                 };
 
                 _controlPeripherals.callbackToken = isSucces =>
@@ -283,7 +327,7 @@ namespace WPFCCMedellin.Classes
             }
             catch (Exception ex)
             {
-                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, "InitPaypad", ex, MessageResource.StandarError);
+                Error.SaveLogError(MethodBase.GetCurrentMethod().Name, "InitPaypad", ex, ex.ToString());
                 callbackResult?.Invoke(false);
             }
         }

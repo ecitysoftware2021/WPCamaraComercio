@@ -521,9 +521,9 @@ namespace WPFCCMedellin.Classes.DB
             return transaction;
         }
 
-        private static IDbConnection LoadConnectionString(string id = "ConnectionString")
+        private static IDbConnection LoadConnectionString()
         {
-            return new SQLiteConnection(@"" + Utilities.GetConfiguration(id, false).ToString());
+             return new SQLiteConnection("Data Source=" + AdminPayPlus.DataPayPlus.PayPadConfiguration.localdB_PATH);
         }
 
         public static List<T> Select<T>(string query)

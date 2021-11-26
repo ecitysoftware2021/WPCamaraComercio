@@ -52,7 +52,7 @@ namespace WPFCCMedellin.UserControls
                 };
 
                 this.DataContext = this.paymentViewModel;
-                AdminPayPlus.ControlPeripherals.ResetValues();
+                //AdminPayPlus.ControlPeripherals.ResetValues();
                 ActivateWallet();
                 //SavePay();
             }
