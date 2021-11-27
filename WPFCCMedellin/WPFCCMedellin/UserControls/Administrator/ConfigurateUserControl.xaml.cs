@@ -35,7 +35,6 @@ namespace WPFCCMedellin.UserControls.Administrator
                 Error.SaveLogError(MethodBase.GetCurrentMethod().Name, this.GetType().Name, ex, MessageResource.StandarError);
             }
         }
-
         private async void Initial()
         {
             try

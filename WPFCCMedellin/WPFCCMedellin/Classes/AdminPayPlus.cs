@@ -149,7 +149,7 @@ namespace WPFCCMedellin.Classes
                     DescriptionStatusPayPlus = MessageResource.ValidatePeripherals;
 
                     if (_dataPayPlus.PayPadConfiguration.enablE_VALIDATE_PERIPHERALS)
-                    {
+                    { 
                         ValidatePeripherals();
                     }
                     else
@@ -384,10 +384,14 @@ namespace WPFCCMedellin.Classes
             {
                 Task.Run(async () =>
                 {
-                    var saveResult = SqliteDataAccess.SaveLog(log, type);
+                    if (DataPayPlus != null && DataPayPlus.PayPadConfiguration != null)
+                    {
+                        var saveResult = SqliteDataAccess.SaveLog(log, type);
+                    }
+
                     object result = "false";
 
-                    if (log != null && saveResult != null)
+                    if (log != null)
                     {
                         if (type == ELogType.General)
                         {

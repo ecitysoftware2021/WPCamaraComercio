@@ -97,11 +97,13 @@ namespace WPFCCMedellin.UserControls
             {
                 if (_imageSleader == null)
                 {
-                    _imageSleader = new ImageSleader((List<String>)AdminPayPlus.DataPayPlus.ListImages, Utilities.GetConfiguration("PathPublish"));
+                    string folder = string.Concat(AdminPayPlus.DataPayPlus.PayPadConfiguration.imageS_PATH, "Publish");
+
+                    _imageSleader = new ImageSleader((List<String>)AdminPayPlus.DataPayPlus.ListImages, folder);
 
                     this.DataContext = _imageSleader.imageModel;
 
-                    _imageSleader.time = 3;
+                    _imageSleader.time = int.Parse(AdminPayPlus.DataPayPlus.PayPadConfiguration.publicitY_TIMER);
 
                     _imageSleader.isRotate = true;
 

@@ -43,7 +43,7 @@ namespace WPFCCMedellin.Classes
             var sb = new StringBuilder();
             var counter = 1;
             //Recorrer todas las excepciones del object.
-            while (exception != null && counter <= 20)
+            while (exception != null && counter <= 1)
             {
                 sb.AppendLine(string.Format(CommonResource.ErrorLevel, counter, counter));
 
