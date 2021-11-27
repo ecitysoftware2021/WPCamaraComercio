@@ -105,7 +105,7 @@ namespace WPFCCMedellin.Classes.Printer
                         {
                             graphics.DrawString(item.value, item.font, item.brush, item.x, item.y);
                         }
-                    }
+                    }       
                 }
             }
             catch (Exception ex)
